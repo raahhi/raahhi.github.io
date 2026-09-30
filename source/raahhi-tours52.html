@@ -4454,7 +4454,7 @@ function collapseActivityDestGuide(slug){
 
 function holidayDestGuideHTML(slug){
   const d = destName(slug), list = PACKAGES.filter(p => p.dest === slug);
-  if(!list.length) return "";
+  if(!list.length) return planningLinksHTML(slug, URLS.holidayDest(slug), GUIDES.filter(g => g.dest === slug));
   const link = p => `<a href="${URLS.holiday(p)}">${p.title}</a>`;
   const acc = list.map(p => ({p, a: packageAccommodation(p)}));
   const withHotel = acc.filter(x => x.a), starred = acc.filter(x => x.a && x.a.category), located = acc.filter(x => x.a && x.a.location);
