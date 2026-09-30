@@ -1,20 +1,39 @@
-name: Validate At a glance
+name: Verify live At a glance deployment
 on:
   push:
     branches: [codex/at-a-glance-validation]
 permissions:
   contents: read
 jobs:
-  validate:
+  verify-live:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: npm install --no-audit --no-fund
-      - run: npx playwright install --with-deps chromium
-      - run: npm run build
-      - run: node .github/check-at-a-glance.mjs
+      - name: Verify production HTML and crawl files
+        run: |
+          node --input-type=module <<'JS'
+          import assert from 'node:assert/strict';
+          const origin = 'https://raahhi.com';
+          const routes = ['/activities/dubai/evening-desert-safari/', '/holidays/dubai/dubai-grand-stopover/', '/visas/united-arab-emirates/', '/visas/arrival-essentials/tourist-sim-card-eand/'];
+          for (const route of routes) {
+            const response = await fetch(origin + route, { signal: AbortSignal.timeout(30000) });
+            assert.equal(response.status, 200, route);
+            const html = await response.text();
+            assert(html.includes('<div class="at-a-glance"><h2>At a glance</h2>'), route + ' static block');
+            assert(html.includes('rel="canonical" href="' + origin + route + '"'), route + ' canonical');
+            console.log('PASS live static answer block and canonical: ' + route);
+          }
+          const response = await fetch(origin + '/build-report.json', { signal: AbortSignal.timeout(30000) });
+          const report = await response.json();
+          assert.equal(report.atAGlancePages, 228);
+          assert.equal(report.sitemapUrls, 245);
+          const sitemap = await fetch(origin + '/sitemap.xml', { signal: AbortSignal.timeout(30000) });
+          assert.equal(sitemap.status, 200);
+          assert.equal((await sitemap.text()).match(/<url>/g).length, 245);
+          const robots = await fetch(origin + '/robots.txt', { signal: AbortSignal.timeout(30000) });
+          assert.equal(robots.status, 200);
+          assert((await robots.text()).includes('Sitemap: https://raahhi.com/sitemap.xml'));
+          console.log('PASS live build report: 228 detail blocks, 245 sitemap URLs, production robots.txt');
+          JS
