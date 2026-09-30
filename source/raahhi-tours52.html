@@ -1073,6 +1073,7 @@
 </div>
 
 <!-- ================= GUIDES (content built by renderGuide from GUIDES + the catalogue) ================= -->
+<div id="page-category" class="page"><section><div class="wrap" style="max-width:1100px;" id="categoryBody"></div></section></div>
 <div id="page-guide" class="page">
   <section>
     <div class="wrap" style="max-width:900px;" id="guideBody"></div>
@@ -1997,7 +1998,7 @@ const GENERAL_FAQ = [
    Never invents or patches data; it only reports what's wrong so real data can be fixed. */
 
 /* ============ ROUTER ============ */
-const routes = ["home","visas","visa-detail","tours","packages","tour-detail","pkg-detail","guide","about","contact","faq","terms","privacy","notfound"];
+const routes = ["home","visas","visa-detail","tours","packages","tour-detail","pkg-detail","guide","category","about","contact","faq","terms","privacy","notfound"];
 // Page ids that are reachable directly as a single-segment URL (/about/, ...). The other
 // ids in `routes` ("tour-detail", "pkg-detail", ...) are internal page containers only.
 const STATIC_ROUTES = ["home","visas","about","contact","faq","terms","privacy"];
@@ -2024,6 +2025,9 @@ function router(){
     CURRENT = {kind:"notfound"}; showPage("notfound");
 
   // --- Canonical semantic routes: /activities[...], /holidays[...], /visas[...] ---
+  } else if(route==="activities" && n===3 && seg1==="categories" && categoryBySlug(seg2)){
+    const category = categoryBySlug(seg2);
+    renderCategory(category); CURRENT = {kind:"category", category}; showPage("category", "activities");
   } else if(route==="activities" && n===3){
     renderTourDetail(seg2, seg1); // seg1 (destination) must match the activity's real destination, or this shows not-found
     const t = TOURS.find(x => x.id===seg2 && x.dest===seg1);
@@ -3375,7 +3379,7 @@ document.getElementById("tourCatTiles").innerHTML = categoryTilesHTML(slug);
     tiles.style.display = "";
     tiles.innerHTML = destTilesHTML("activities");
     index.hidden = false;
-    document.getElementById("toursIndexInner").innerHTML = toursIndexHTML();
+    document.getElementById("toursIndexInner").innerHTML = categoryDiscoveryHTML() + toursIndexHTML();
     faq.innerHTML = "";
     document.getElementById("toursDestGuide").innerHTML = "";
   }
@@ -3889,6 +3893,7 @@ function initReveal(){
 const URLS = {
   home: "/",
   visas: "/visas/", visa: v => "/visas/" + slugify(v.country) + "/",
+  activityCategory: c => "/activities/categories/" + c.slug + "/",
   activities: "/activities/", activityDest: slug => "/activities/" + slug + "/", activity: t => "/activities/" + t.dest + "/" + t.id + "/",
   holidays: "/holidays/", holidayDest: slug => "/holidays/" + slug + "/", holiday: p => "/holidays/" + p.dest + "/" + p.id + "/",
   about: "/about/", contact: "/contact/", faq: "/faq/", terms: "/terms/", privacy: "/privacy/",
@@ -4331,6 +4336,47 @@ const CATEGORY_INFO = {
   "Dining & Events": "Dining experiences, shows and date-specific events.",
   "Transfers": "Airport, intercity and in-city transfers, and vehicles with a driver.",
 };
+// One substantial page per catalogue category; no destination/category route permutations.
+const ACTIVITY_CATEGORIES = [
+  {name:"Desert Safari", slug:"desert-safaris", title:"UAE desert safaris", compare:"Compare the time of day, listed duration, camp activities and pickup arrangements. Read each listing for the activities included in that particular safari."},
+  {name:"City Tours", slug:"city-tours", title:"UAE city tours and sightseeing", compare:"Check the route and named stops, whether the listing is a guided tour or an individual venue, and the pickup or meeting point."},
+  {name:"Landmarks", slug:"landmarks", title:"UAE landmarks and attractions", compare:"Compare the venue, ticket option, listed visit time and entry conditions. Open the attraction page for its inclusions and restrictions."},
+  {name:"Theme Parks", slug:"theme-parks", title:"UAE theme parks", compare:"Compare the parks and ticket options. Check each listing for ride restrictions, what admission includes and any transfer option."},
+  {name:"Water Parks", slug:"water-parks", title:"UAE water parks", compare:"Check admission inclusions, slide restrictions and whether transfers are listed. Read the individual park page before choosing a ticket."},
+  {name:"Cruises", slug:"cruises", title:"UAE cruises and yacht trips", compare:"Compare departure location, listed duration, dining inclusions and whether the trip is shared or private. These details differ by listing."},
+  {name:"Adventure", slug:"adventure", title:"UAE adventure activities", compare:"Compare the activity and listed duration, then read the participant restrictions, equipment inclusions and meeting arrangements on its page."},
+  {name:"Nature & Wildlife", slug:"nature-wildlife", title:"UAE nature and wildlife attractions", compare:"Compare the venue and the experience described. Check whether the selected listing covers general admission or a specific encounter, plus its seasonal status."},
+  {name:"Water Activities", slug:"water-activities", title:"UAE water activities and boat rides", compare:"Compare the sport or boat trip, departure location and listed duration. Check participant restrictions, equipment and transfer arrangements on the activity page."},
+  {name:"Dining & Events", slug:"dining-events", title:"UAE dining experiences and events", compare:"Check the venue, menu or event described, the date or time and the listed inclusions. Seasonal listings and date-specific events need current availability confirmation."},
+  {name:"Transfers", slug:"transfers", title:"UAE transfers and driver services", compare:"Compare the route and vehicle service described. Confirm the pickup location, passenger and luggage requirements, timing and any waiting arrangements when enquiring."},
+].filter(c => TOURS.filter(t => t.cat === c.name).length >= 3);
+function categoryBySlug(slug){ return ACTIVITY_CATEGORIES.find(c => c.slug === slug); }
+function categoryTours(c){ return TOURS.filter(t => t.cat === c.name); }
+function categoryDiscoveryHTML(){
+  return `<nav class="detail-section" aria-label="Browse UAE activity categories"><h2>Browse activities by category</h2>
+    <ul class="link-list">${ACTIVITY_CATEGORIES.map(c => `<li><a href="${URLS.activityCategory(c)}">${escapeHTML(c.title)}</a> <span class="index-note">${categoryTours(c).length} listings</span></li>`).join("")}</ul></nav>`;
+}
+function renderCategory(c){
+  const list = categoryTours(c), dests = DESTINATIONS.filter(d => list.some(t => t.dest === d.slug));
+  const guides = GUIDES.filter(g => g.ids().some(id => list.some(t => t.id === id)));
+  document.getElementById("categoryBody").innerHTML = `
+    <nav class="breadcrumb" aria-label="Breadcrumb">${breadcrumbHTML([{label:"Home",href:"/"},{label:"Activities",href:URLS.activities},{label:c.name}])}</nav>
+    <p class="eyebrow" style="margin-top:20px;">Browse the UAE catalogue</p>
+    <h1 style="font-size:clamp(28px,4vw,44px);">${escapeHTML(c.title)}</h1>
+    <p class="lede" style="margin-top:18px;">${escapeHTML(CATEGORY_INFO[c.name])} RAAHHI TOURS lists ${list.length} experiences in ${joinList(dests.map(d => d.name))}. Prices and current availability are confirmed on enquiry.</p>
+    <section class="detail-section"><h2>Choosing an experience</h2><p class="body-copy">${escapeHTML(c.compare)}</p>
+    <p class="index-note">The list follows catalogue order within each destination. It is not a popularity ranking. Listed duration and status come from the individual activity record; they are not live availability.</p></section>
+    ${dests.map(d => `<section class="detail-section category-products" data-destination="${d.slug}"><h2>${escapeHTML(c.name)} in ${escapeHTML(d.name)}</h2>
+      <div class="table-scroll"><table class="data-table"><caption class="sr-only">${escapeHTML(c.name)} listings in ${escapeHTML(d.name)}</caption>
+        <thead><tr><th scope="col">Experience</th><th scope="col">Listed duration</th><th scope="col">Listing status</th></tr></thead>
+        <tbody>${list.filter(t => t.dest === d.slug).map(t => `<tr><th scope="row"><a href="${URLS.activity(t)}">${escapeHTML(t.title)}</a><p class="index-note">${escapeHTML(t.desc)}</p></th><td>${hasRealValue(t.duration) ? escapeHTML(t.duration) : "Confirmed on enquiry"}</td><td>${publicStatusOf(t) === "seasonal" ? "Seasonal — confirm dates" : "Listed — confirm availability"}</td></tr>`).join("")}</tbody>
+      </table></div><p class="index-note">${list.filter(t=>t.dest===d.slug).length} listings · <a href="${URLS.activityDest(d.slug)}">All ${escapeHTML(d.name)} activities</a></p></section>`).join("")}
+    <nav class="detail-section planning-links" aria-label="Related destinations and guides"><h2>Plan your visit</h2><ul class="link-list">
+      ${dests.map(d=>`<li><a href="${URLS.activityDest(d.slug)}">All ${escapeHTML(d.name)} activities</a></li>`).join("")}
+      ${guides.map(g=>`<li><a href="${URLS.guide(g.slug)}">${escapeHTML(g.name)}</a><span class="index-note planning-link-note">${escapeHTML(g.blurb)}</span></li>`).join("")}
+    </ul></nav><p class="index-note">Open a listing for inclusions, restrictions, cancellation terms and recorded source checks. Confirm current details before booking.</p>`;
+}
+
 // Groups a listed duration by the time it needs. Purely derived from the duration text.
 const DURATION_GROUPS = ["Up to 2 hours", "Up to 4 hours", "More than 4 hours", "Half day", "Half or full day", "Full day", "At a set time of day", "Timed entry", "Overnight"];
 function durationGroup(dur){
@@ -4369,6 +4415,10 @@ function planningLinksHTML(dest, currentPath, guides){
   const visa = visaBySlug("united-arab-emirates");
   if(visa) links.push({href:URLS.visa(visa), label:"UAE visa assistance", note:"Requirements depend on your passport and trip."});
   (guides || []).forEach(g => links.push({href:URLS.guide(g.slug), label:g.name, note:g.blurb}));
+  const context = routeKind(currentPath);
+  const categories = ACTIVITY_CATEGORIES.filter(c => categoryTours(c).some(t => t.dest === dest) &&
+    (context.kind === "activity" ? c.name === context.t.cat : context.kind === "guide" ? guideBySlug(context.key).categories.includes(c.name) : true));
+  categories.forEach(c => links.push({href:URLS.activityCategory(c), label:c.title, note:"Browse this category across the listed UAE destinations."}));
   const seen = new Set([currentPath]);
   const items = links.filter(x => !seen.has(x.href) && seen.add(x.href));
   if(!items.length) return "";
@@ -5377,6 +5427,14 @@ function pageMeta(c){
         itemListNode(absUrl(URLS.activities) + "#list", "UAE activity destinations", tourDests.map(d => ({path:URLS.activityDest(d.slug), name:`Things to do in ${d.name}`}))),
         itemListNode(absUrl(URLS.activities) + "#guides", "UAE activity guides", GUIDES.map(g => ({path:URLS.guide(g.slug), name:g.name})))];
       m.about = [{"@id":absUrl("/activities/#service")}]; m.mainEntity = {"@id":absUrl(URLS.activities) + "#list"}; m.image = DESTINATIONS[0].activityImage; break;
+    case "category": {
+      const category = c.category, list = categoryTours(category), url = absUrl(URLS.activityCategory(category));
+      m.path = URLS.activityCategory(category); m.title = `${category.title} | ${S}`;
+      m.description = `${list.length} ${category.name.toLowerCase()} listings in ${joinList([...new Set(list.map(t => destName(t.dest)))])}. Browse by destination, listed duration and status; price on enquiry.`;
+      m.pageType = "CollectionPage"; m.bc = [home, {name:"Activities",path:URLS.activities}, {name:category.name,path:m.path}];
+      m.nodes = [serviceNode("activities"), itemListNode(url + "#list", category.title, list.map(t=>({path:URLS.activity(t),name:t.title})))];
+      m.mainEntity = {"@id":url + "#list"}; m.about = [{"@id":absUrl("/activities/#service")}]; m.image = list[0].images[0]; break;
+    }
     case "activityDest": {
       const d = DESTINATIONS.find(x => x.slug === c.dest), list = TOURS.filter(t => t.dest === d.slug);
       m.path = URLS.activityDest(d.slug); m.title = `Things to Do in ${d.name}: Tours & Activities | ${S}`;
@@ -5515,6 +5573,7 @@ function routeKind(path){
   const h = String(path || "").replace(/^\/+|\/+$/g, "") || "home";
   const parts = h.split("/"), [r, a, b] = parts, n = parts.length, isDest = s => DESTINATIONS.some(d => d.slug === s);
   if(parts.some(x => !x)) return {kind:"notfound"};
+  if(r === "activities" && n === 3 && a === "categories"){ const category = categoryBySlug(b); return category ? {kind:"category",category} : {kind:"notfound"}; }
   if(r === "activities" && n === 3){ const t = TOURS.find(x => x.id === b && x.dest === a); return t ? {kind:"activity", t} : {kind:"notfound"}; }
   if(r === "holidays" && n === 3){ const p = PACKAGES.find(x => x.id === b && x.dest === a); return p ? {kind:"holiday", p} : {kind:"notfound"}; }
   if(r === "visas" && n === 3 && a === "arrival-essentials"){ const t = VISA_ADDONS.find(x => x.id === b); return t ? {kind:"addon", t} : {kind:"notfound"}; }
@@ -5530,7 +5589,7 @@ function routeKind(path){
 function seoRoutes(){
   return ["/", URLS.visas, ...VISAS.map(URLS.visa),
     ...VISA_ADDONS.map(URLS.addon),
-    URLS.activities, ...DESTINATIONS.filter(d => destHasTours(d.slug)).map(d => URLS.activityDest(d.slug)), ...TOURS.map(URLS.activity),
+    URLS.activities, ...ACTIVITY_CATEGORIES.map(URLS.activityCategory), ...DESTINATIONS.filter(d => destHasTours(d.slug)).map(d => URLS.activityDest(d.slug)), ...TOURS.map(URLS.activity),
     URLS.holidays, ...DESTINATIONS.map(d => URLS.holidayDest(d.slug)), ...PACKAGES.map(URLS.holiday),
     ...GUIDES.map(g => URLS.guide(g.slug)), URLS.about, URLS.contact, URLS.faq, URLS.terms, URLS.privacy];
 }
@@ -5578,7 +5637,8 @@ function llmsTxt(){
     sec("Guides", paths.filter(p => p.startsWith("/guides/"))) +
     sec("Visa assistance by destination", paths.filter(p => /^\/visas\/[^/]+\/$/.test(p))) +
     sec("UAE activity destinations", paths.filter(p => /^\/activities\/[^/]+\/$/.test(p))) +
-    sec("UAE activities", paths.filter(p => /^\/activities\/[^/]+\/[^/]+\/$/.test(p))) +
+    sec("UAE activity categories", ACTIVITY_CATEGORIES.map(URLS.activityCategory)) +
+    sec("UAE activities", paths.filter(p => /^\/activities\/(?!categories\/)[^/]+\/[^/]+\/$/.test(p))) +
     sec("UAE holiday destinations", paths.filter(p => /^\/holidays\/[^/]+\/$/.test(p))) +
     sec("UAE holiday packages", paths.filter(p => /^\/holidays\/[^/]+\/[^/]+\/$/.test(p)))).trim() + "\n";
 }

@@ -7,7 +7,7 @@ const ROOT = process.cwd();
 const DIST = join(ROOT, 'dist');
 const SOURCE_FILE = join(ROOT, 'source', 'raahhi-tours52.html');
 const EXPECTED_ORIGIN = 'https://raahhi.com';
-const EXPECTED_SITEMAP_URLS = 245;
+const EXPECTED_SITEMAP_URLS = 256;
 // Image errors can fire while the parser is still reading the page, before app.js loads.
 // hydrate() drains this queue using the real fallback handler once the app is ready.
 const EARLY_IMAGE_FALLBACK = '<script data-image-fallback-bootstrap>window.__imgFallbackQueue=[];window.imgFallback=function(el){window.__imgFallbackQueue.push(el);};</script>';
@@ -83,6 +83,19 @@ async function snapshot(route) {
         throw new Error('Empty or placeholder fact on ' + route);
       }
     }
+    if (detailKind === 'category') {
+      const result = await page.evaluate(() => {
+        const c = CURRENT.category, expected = categoryTours(c).map(URLS.activity);
+        const actual = [...document.querySelectorAll('.category-products tbody a')].map(a => a.getAttribute('href'));
+        const graph = JSON.parse(document.querySelector('script[type="application/ld+json"]').textContent)['@graph'];
+        const schema = graph.find(n => n['@type'] === 'ItemList');
+        return {expected, actual, schema: schema.itemListElement.map(n => n.url || n.item?.url), count:schema.numberOfItems};
+      });
+      if(result.expected.length < 3 || result.actual.length !== result.expected.length || new Set(result.actual).size !== result.actual.length || result.expected.some(url => !result.actual.includes(url))) {
+        throw new Error('Incomplete category product list: ' + route);
+      }
+      if(result.count !== result.expected.length || result.expected.some(url => !result.schema.includes(EXPECTED_ORIGIN + url))) throw new Error('Category schema mismatch: ' + route);
+    }
     const planning = await page.locator('.page.active .planning-links').evaluateAll(nodes => nodes.map(node => ({
       label:node.getAttribute('aria-label'),
       links:[...node.querySelectorAll('a')].map(a => ({href:a.getAttribute('href'), text:a.textContent.trim()})),
@@ -157,7 +170,7 @@ try {
         planningEdges.push({from:route, to:link.href});
       }
     }
-    if (['activity', 'holiday', 'guide', 'activityDest', 'holidayDest', 'addon'].includes(data.kind) && !(data.planning || []).length) {
+    if (['activity', 'holiday', 'guide', 'category', 'activityDest', 'holidayDest', 'addon'].includes(data.kind) && !(data.planning || []).length) {
       throw new Error('Missing contextual planning links on ' + route);
     }
   }
@@ -204,6 +217,7 @@ try {
     sitemapUrls: sitemapUrlCount(home.sitemapXml),
     intendedIndexableUrls: EXPECTED_SITEMAP_URLS,
     generated404: true,
+    categoryPages: [...routeResults.values()].filter(r => r.kind === "category").length,
     planningLinkPages: [...routeResults.values()].filter(r => r.planning?.length).length,
     planningLinks: planningEdges.length,
     atAGlancePages: [...routeResults.values()].filter(r => ['activity', 'holiday', 'visa', 'addon'].includes(r.kind)).length,
