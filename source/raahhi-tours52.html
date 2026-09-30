@@ -4371,6 +4371,7 @@ function renderCategory(c){
         <thead><tr><th scope="col">Experience</th><th scope="col">Listed duration</th><th scope="col">Listing status</th></tr></thead>
         <tbody>${list.filter(t => t.dest === d.slug).map(t => `<tr><th scope="row"><a href="${URLS.activity(t)}">${escapeHTML(t.title)}</a><p class="index-note">${escapeHTML(t.desc)}</p></th><td>${hasRealValue(t.duration) ? escapeHTML(t.duration) : "Confirmed on enquiry"}</td><td>${publicStatusOf(t) === "seasonal" ? "Seasonal — confirm dates" : "Listed — confirm availability"}</td></tr>`).join("")}</tbody>
       </table></div><p class="index-note">${list.filter(t=>t.dest===d.slug).length} listings · <a href="${URLS.activityDest(d.slug)}">All ${escapeHTML(d.name)} activities</a></p></section>`).join("")}
+    <section class="detail-section"><h2>Questions about ${escapeHTML(c.name.toLowerCase())}</h2>${qaHTML(categoryFaqItems(c))}</section>
     <nav class="detail-section planning-links" aria-label="Related destinations and guides"><h2>Plan your visit</h2><ul class="link-list">
       ${dests.map(d=>`<li><a href="${URLS.activityDest(d.slug)}">All ${escapeHTML(d.name)} activities</a></li>`).join("")}
       ${guides.map(g=>`<li><a href="${URLS.guide(g.slug)}">${escapeHTML(g.name)}</a><span class="index-note planning-link-note">${escapeHTML(g.blurb)}</span></li>`).join("")}
@@ -5106,7 +5107,7 @@ function renderTourDetail(id, expectedDest, opts){
       ["Price", price.known ? escapeHTML(price.text + (price.basis ? " " + price.basis : "")) : "Confirmed on enquiry"],
       ["Confirmed when you enquire", cap(joinList(confirm))], ["How to enquire", "Select Request to Book or Enquire on this page"]], "", freshnessSummaryHTML(t, isAddon ? "addon" : "activity"))}
     ${sections.join("")}
-    <div class="detail-section"><h2>${t.title}: common questions</h2>${qaHTML([...(t.faqs || []), ...(isAddon ? [] : activityFaqItems(t))])}</div>`;
+    <div class="detail-section"><h2>${t.title}: common questions</h2>${qaHTML(mergeFaqItems(t.faqs || [], isAddon ? [] : activityFaqItems(t)))}</div>`;
   document.getElementById("tourBookingBox").style.display = "";
   // Date and guests are passed into the enquiry by enquireAboutProduct(); nothing here books or reserves.
   document.getElementById("tourBookingBox").innerHTML = `
@@ -5198,7 +5199,7 @@ function renderPkgDetail(id, expectedDest){
     ${overview ? `<p class="pkg-overview">${overview}</p>` : ""}
     ${p.description ? `<p class="pkg-overview">${p.description}</p>` : ""}
     ${sections.join("")}
-    <div class="detail-section"><h2>${p.title}: common questions</h2>${qaHTML([...(p.faqs || []), ...packageFaqItems(p)])}</div>`;
+    <div class="detail-section"><h2>${p.title}: common questions</h2>${qaHTML(mergeFaqItems(p.faqs || [], packageFaqItems(p)))}</div>`;
   document.getElementById("pkgBookingBox").style.display = "";
   document.getElementById("pkgBookingBox").innerHTML = `
     ${price.known ? `<div class="bb-price">${escapeHTML(price.text)} <span>${escapeHTML(price.basis)}</span></div>` : `<div class="bb-price" style="font-size:22px;">${PACKAGE_PRICE_MISSING}</div>`}
@@ -5228,6 +5229,52 @@ function statusCTAs(t, kind){
     <button type="button" class="btn btn-navy btn-block" style="margin-top:10px;" ${go("")}>Enquire</button>
     <p class="form-note" style="text-align:center;">Request to Book prepares a booking enquiry for you to share with our team. Nothing is reserved, charged or sent automatically; price, availability and cancellation terms are confirmed by our team.</p>`;
 }
+// Keep authored questions; avoid repeating the same intent in generated questions.
+const FAQ_INTENTS = [
+  /cancel|refund/i, /not included|exclu|extra cost/i, /pickup|pick-up|transfer|meeting point|where.*meet/i,
+  /includ|ticket cover/i, /restriction|eligib|minimum age|children|child|height/i,
+  /opening|operating hours|what time|when.*open/i, /how long|duration|time.*allow/i,
+  /where|location/i, /cost|price/i, /customis|customiz/i, /enquir|how.*book/i, /hotel|accommodation/i,
+];
+function mergeFaqItems(authored, generated){
+  const items = [...authored], seen = new Set(authored.map(f => stripTags(f.q).toLowerCase()));
+  const covered = new Set(authored.map(f => FAQ_INTENTS.findIndex(re => re.test(f.q))).filter(i => i >= 0));
+  for(const f of generated){
+    const key = stripTags(f.q).toLowerCase(), topic = FAQ_INTENTS.findIndex(re => re.test(f.q));
+    if(seen.has(key) || (topic >= 0 && covered.has(topic))) continue;
+    items.push(f); seen.add(key); if(topic >= 0) covered.add(topic);
+  }
+  return items;
+}
+function catalogueFactFaqs(record, kind){
+  const items = [], name = escapeHTML(record.title);
+  const text = value => hasRealValue(value) ? escapeHTML(value) : "";
+  const list = values => (values || []).filter(hasRealValue).map(escapeHTML);
+  const add = (q, a) => { if(a) items.push({q, a, catalogueDerived:true}); };
+  if(kind === "activity"){
+    const included = list(record.inclusions);
+    if(included.length) add(`What is included in ${name}?`, `The listing includes: ${joinList(included)}. Confirm the inclusions for your selected option when enquiring.`);
+    const pickup = [record.meetingPoint && `Meeting point: ${text(record.meetingPoint)}`, record.pickup && `Pickup: ${text(record.pickup)}`].filter(Boolean);
+    if(pickup.length) add(`What are the meeting point and pickup arrangements for ${name}?`, `${pickup.join(". ")} Confirm the location and time for your selected date and option when enquiring.`);
+    const restrictions = [...list(record.restrictions), text(record.ageRestrictions)].filter(Boolean);
+    if(restrictions.length) add(`What restrictions apply to ${name}?`, `The listing states: ${joinList(restrictions)}. Confirm the requirements that apply to your group before booking.`);
+    if(text(record.timing)) add(`What opening or operating hours are listed for ${name}?`, `Listed timing: ${text(record.timing)}. Check current dates and times for your selected visit when enquiring.`);
+  }
+  const excluded = list(record.exclusions);
+  if(excluded.length) add(`What is not included in ${name}?`, `The listing excludes: ${joinList(excluded)}. Confirm any additional costs before booking.`);
+  if(text(record.cancellationPolicy)) add(`What cancellation terms are listed for ${name}?`, `The listed policy is: ${text(record.cancellationPolicy)} Confirm the terms for your selected option before booking.`);
+  return items;
+}
+function categoryFaqItems(c){
+  const list = categoryTours(c), dests = DESTINATIONS.filter(d => list.some(t => t.dest === d.slug));
+  return [
+    {q:`Where are ${escapeHTML(c.name.toLowerCase())} listed?`, a:`This category has ${list.length} listings across ${joinList(dests.map(d => `<a href="${URLS.activityDest(d.slug)}">${escapeHTML(d.name)}</a>`))}. The destination sections above link to every listing.`},
+    {q:`How should I compare ${escapeHTML(c.name.toLowerCase())}?`, a:escapeHTML(c.compare)},
+    {q:"Does every listing include the same things?", a:"No single set of inclusions applies to the whole category. Open the individual listing for its inclusions, exclusions and options; confirm the option you want before booking."},
+    {q:"Does a listing status confirm availability for my date?", a:"No. Status describes the listing, not live booking availability. Seasonal dates, current price and availability are confirmed when you enquire from the individual activity page."},
+  ];
+}
+
 function activityFaqItems(t){
   const d = destName(t.dest), items = [], price = priceInfo(t);
   if(hasRealValue(t.duration)) items.push({q:`How long is ${t.title}?`, a:`RAAHHI TOURS lists the duration or timing as: ${t.duration}. Exact times are confirmed when you enquire.`});
@@ -5237,6 +5284,7 @@ function activityFaqItems(t){
     : `Prices are not published on this website yet. Our team confirms the current price for your date and group size when you enquire.`});
   items.push({q:`How do I enquire about ${t.title}?`, a:`Choose a preferred date (optional) and the number of guests, then select Request to Book or Enquire and add your name and phone number. The website prepares a summary of your ${t.title} enquiry to share with our team by phone, WhatsApp or email — it is not sent automatically.`});
   items.push({q:`What else is there to do in ${d}?`, a:`Browse all <a class="contact-link" href="${URLS.activityDest(t.dest)}">${d} activities</a>${destHasPackages(t.dest) ? `, or see <a class="contact-link" href="${URLS.holidayDest(t.dest)}">${d} holiday packages</a> for multi-day trips` : ""}.`});
+  items.push(...catalogueFactFaqs(t, "activity"));
   return items;
 }
 function packageFaqItems(p){
@@ -5250,6 +5298,9 @@ function packageFaqItems(p){
     : `Prices are not published on this website yet. Our team confirms the price when you enquire, including how it applies to your group size and room configuration.`});
   items.push({q:`Can ${p.title} be customised?`, a:`You can ask. Tell us what you would like to change — extra nights, a different hotel or added tours — when you enquire, and our team will confirm what is possible.`});
   items.push({q:`How do I enquire about ${p.title}?`, a:`Choose a travel month (optional) and the number of travellers, then select Request to Book or Enquire and add your name and phone number. The website prepares a summary to share with our team by phone, WhatsApp or email — it is not sent automatically.`});
+  const accommodation = packageAccommodation(p);
+  if(accommodation) items.push({q:`What accommodation is listed for ${escapeHTML(p.title)}?`, a:`${escapeHTML(accommodationSummary(accommodation))}. ${accommodation.name ? "Confirm the hotel and room details for your dates when enquiring." : "The hotel name and room details are confirmed on enquiry."}`, catalogueDerived:true});
+  items.push(...catalogueFactFaqs(p, "holiday"));
   return items;
 }
 function holidayDestFaqItems(slug){
@@ -5271,6 +5322,9 @@ function generalFaqItems(){
   const withPickup = TOURS.filter(t => t.pickup).length;
   return [
     ...GENERAL_FAQ,
+    {q:"How do I check whether an activity suits my children or group?", a:"Open the activity page and read its restrictions and eligibility information. Where restrictions are recorded, the page also answers this in its common questions. Share your group details when enquiring so the applicable requirements can be confirmed."},
+    {q:"How do I compare activities before enquiring?", a:`Browse the <a class="contact-link" href="${URLS.activities}">UAE activities catalogue</a> by destination or category. Category pages show each listing's duration and status, and product pages provide inclusions, exclusions, pickup arrangements and cancellation terms where recorded.`},
+    {q:"Are listed facts and source checks live booking information?", a:"No. Recorded fact-check dates and source-link checks describe the information on the page. They do not confirm availability, price or current terms for your travel date; those are confirmed on enquiry."},
     noVisa ? {q:"Is a UAE visa included in RAAHHI TOURS holiday packages?", a:`No. None of the ${PACKAGES.length} holiday packages lists a visa among its inclusions. UAE visa assistance is a separate RAAHHI TOURS service — see <a class="contact-link" href="/visas/united-arab-emirates/">UAE visa assistance</a>.`} : null,
     {q:"Is hotel pickup included with UAE activities?", a: withPickup
       ? `Pickup details are shown on the ${withPickup} activity ${withPickup === 1 ? "page" : "pages"} where they are known. For every other activity, pickup is confirmed when you enquire.`
