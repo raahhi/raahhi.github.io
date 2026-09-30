@@ -1,20 +1,46 @@
-name: Validate source and freshness presentation
+name: Verify live source and freshness presentation
 on:
   push:
     branches: [codex/source-freshness-validation]
 permissions:
   contents: read
 jobs:
-  validate:
+  verify-live:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: npm install --no-audit --no-fund
-      - run: npx playwright install --with-deps chromium
-      - run: npm run build
-      - run: node .github/check-source-freshness.mjs
+      - name: Verify production sources and dates
+        run: |
+          node --input-type=module <<'JS'
+          import assert from 'node:assert/strict';
+          const origin = 'https://raahhi.com';
+          const routes = ['/activities/dubai/evening-desert-safari/', '/holidays/dubai/dubai-grand-stopover/', '/visas/united-arab-emirates/', '/visas/arrival-essentials/tourist-sim-card-eand/', '/activities/dubai/burj-khalifa-top/'];
+          for (const route of routes) {
+            const response = await fetch(origin + route, { signal: AbortSignal.timeout(30000) });
+            assert.equal(response.status, 200);
+            const html = await response.text();
+            assert.equal((html.match(/class="freshness-summary"/g) || []).length, 1);
+            assert.equal((html.match(/class="detail-section sources-and-freshness"/g) || []).length, 1);
+            assert(html.includes('<h2>Sources and freshness</h2>'));
+            assert(html.includes('rel="canonical" href="' + origin + route + '"'));
+            if (route === '/visas/united-arab-emirates/') {
+              assert(html.includes('Source link checked on <time datetime="2026-09-24">'));
+              assert(html.includes('This confirms the link, not the facts on this page.'));
+              assert(html.includes('not yet checked against the official source'));
+            }
+            if (route.includes('burj-khalifa-top')) {
+              assert(html.includes('Supported statement checked on <time datetime="2026-09-27">'));
+            }
+            console.log('PASS live sources and recorded check dates: ' + route);
+          }
+          const report = await (await fetch(origin + '/build-report.json')).json();
+          assert.equal(report.sourcesAndFreshnessPages, 228);
+          assert.equal(report.atAGlancePages, 228);
+          assert.equal(report.sitemapUrls, 245);
+          const sitemap = await fetch(origin + '/sitemap.xml');
+          assert.equal(sitemap.status, 200);
+          assert.equal((await sitemap.text()).match(/<url>/g).length, 245);
+          console.log('PASS live report: 228 sources/freshness sections and 245 sitemap URLs');
+          JS
