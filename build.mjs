@@ -63,6 +63,13 @@ async function snapshot(route) {
       if (!(await block.locator('.answer-lede').textContent())?.trim() || await block.locator('.key-facts dt').count() === 0) {
         throw new Error('Empty answer or facts on ' + route);
       }
+      if (await block.locator('.freshness-summary').count() !== 1 || await main.locator('.sources-and-freshness').count() !== 1) {
+        throw new Error('Missing source/freshness presentation on ' + route);
+      }
+      const dates = await main.locator('.freshness-summary time, .sources-and-freshness time').evaluateAll(els => els.map(el => ({iso:el.getAttribute('datetime'), text:el.textContent})));
+      if (dates.some(d => !/^\d{4}-\d{2}-\d{2}$/.test(d.iso || '') || !d.text?.trim())) {
+        throw new Error('Invalid recorded check date on ' + route);
+      }
       const facts = await block.locator('.key-facts dd').allTextContents();
       if (facts.some(v => !v.trim() || /^[\sXx–—-]*$/.test(v))) {
         throw new Error('Empty or placeholder fact on ' + route);
@@ -166,7 +173,8 @@ try {
     sitemapUrls: sitemapUrlCount(home.sitemapXml),
     intendedIndexableUrls: EXPECTED_SITEMAP_URLS,
     generated404: true,
-    atAGlancePages: [...routeResults.values()].filter(r => ['activity', 'holiday', 'visa', 'addon'].includes(r.kind)).length
+    atAGlancePages: [...routeResults.values()].filter(r => ['activity', 'holiday', 'visa', 'addon'].includes(r.kind)).length,
+    sourcesAndFreshnessPages: [...routeResults.values()].filter(r => ['activity', 'holiday', 'visa', 'addon'].includes(r.kind)).length
   };
   await writeFile(join(DIST, 'build-report.json'), JSON.stringify(report, null, 2) + '\n', 'utf8');
   console.log(JSON.stringify(report, null, 2));
