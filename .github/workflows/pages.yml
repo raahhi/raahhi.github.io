@@ -38,6 +38,9 @@ jobs:
       - name: Check responsive pages and early image failures
         run: node .github/check-site-ui.mjs
 
+      - name: Check catalogue search and related suggestions
+        run: node .github/check-search.mjs
+
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
 

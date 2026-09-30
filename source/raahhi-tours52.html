@@ -1130,7 +1130,7 @@
     <li>Visa pages link to the official government or tourism-authority source recorded for each destination. The visa type, validity and processing time shown are catalogue values that our team confirms for your trip.</li>
     <li>Record claims, such as the tallest building or the fastest roller coaster, are only stated with their source (Guinness World Records) and the date the record page was checked.</li>
     <li>Photos come from Unsplash, Pexels and Wikimedia Commons. Depending on what is verifiably available, a product's photos may be an exact photograph of that attraction, an exact photograph of its location or operator, a historically accurate photograph, or a representative real photograph of a similar experience; a representative photograph does not imply that the venue, operator or vessel pictured is necessarily the one you book. Photos whose licence requires credit are credited beneath the image.</li>
-    <li>Activities are not ranked by popularity: lists follow the catalogue order, and related suggestions use the same destination and category.</li>
+    <li>Activity browse lists follow catalogue order; search results follow how closely the query matches recorded information. Related suggestions stay within the same destination and use comparison groups, categories, listed duration or package itinerary stops. None of these is a popularity ranking.</li>
   </ul>
 </div>
       <div class="about-block">
@@ -1537,7 +1537,7 @@
   <div class="modal-box search-box" role="dialog" aria-modal="true" aria-labelledby="searchTitle">
     <button type="button" class="modal-close" aria-label="Close search" onclick="closeModal('searchModal')">✕</button>
     <h3 style="font-size:24px;" id="searchTitle">Search RAAHHI TOURS</h3>
-    <p class="gs-scope" id="searchScope">Searches <span data-catalogue-count="visas">41</span> visa destinations, <span data-catalogue-count="tours">36</span> UAE activities, <span data-catalogue-count="packages">12</span> UAE holiday packages and <span data-catalogue-count="guides">3</span> guides.</p>
+    <p class="gs-scope" id="searchScope">Searches <span data-catalogue-count="visas">41</span> visa destinations, <span data-catalogue-count="tours">36</span> UAE activities, <span data-catalogue-count="packages">12</span> UAE holiday packages, <span data-catalogue-count="guides">3</span> guides, <span data-catalogue-count="categories">11</span> categories and <span data-catalogue-count="comparisons">4</span> comparisons.</p>
     <form role="search" onsubmit="event.preventDefault()" class="gs-field">
       <label for="globalSearch" class="sr-only">Search visas, activities and holidays</label>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
@@ -3413,10 +3413,9 @@ function clearTourSearch(){
 function renderTours(){
   if(!activeTourDest) return;
   clearSlideTimers(); // grid rebuilds on every search/category change -- always start clean
-  // Searches the fields every activity actually has: title, description and category.
-  const q = (document.getElementById("tourSearch")?.value || "").toLowerCase().replace(/\s+/g," ").trim();
-  const list = TOURS.filter(t => t.dest===activeTourDest && (activeTourCat==="All" || t.cat===activeTourCat) && passesExtraFilters(t) &&
-    (!q || [t.title, t.desc, t.cat, ...(t.aliases || []), ...(t.options || [])].some(f => String(f).toLowerCase().includes(q))));
+  const q = document.getElementById("tourSearch")?.value || "";
+  const scope=ACTIVITY_SEARCH_INDEX.filter(e=>e.t.dest===activeTourDest && (activeTourCat==="All" || e.t.cat===activeTourCat) && passesExtraFilters(e.t));
+  const list=(normalizeSearch(q)?rankEntries(scope,q):scope).map(e=>e.t);
   // Keep the initial browse compact: four visual rows at the current breakpoint, then four more rows per click.
   const shown = list.slice(0, gridVisibleLimit("tour", tourRowsVisible));
   // The search text is never echoed back into this HTML.
@@ -3511,13 +3510,9 @@ function setActivePkgDest(slug){
 function renderPkgGrid(){
   if(!activePkgDest) return;
   clearSlideTimers(); // grid rebuilds on every destination change and search keystroke -- always start clean
-  const q = (document.getElementById("pkgSearch")?.value || "").toLowerCase().replace(/\s+/g," ").trim();
-  const inDest = PACKAGES.filter(p=>p.dest===activePkgDest);
-  // Searches only fields every package genuinely carries: title, inclusions and itinerary text.
-  const list = inDest.filter(p => !q ||
-    p.title.toLowerCase().includes(q) ||
-    (p.incl||[]).some(i=>i.toLowerCase().includes(q)) ||
-    (p.itinerary||[]).some(d=>(d.text||"").toLowerCase().includes(q)));
+  const q = document.getElementById("pkgSearch")?.value || "";
+  const inDest = PACKAGES.filter(p=>p.dest===activePkgDest), scope=PACKAGE_SEARCH_INDEX.filter(e=>e.p.dest===activePkgDest);
+  const list=(normalizeSearch(q)?rankEntries(scope,q):scope).map(e=>e.p);
   // No search box over a destination that has no packages at all.
   document.getElementById("pkgToolbar").style.display = inDest.length ? "" : "none";
   const shown = list.slice(0, gridVisibleLimit("package", pkgRowsVisible));
@@ -5169,12 +5164,10 @@ function renderTourDetail(id, expectedDest, opts){
     <div class="field"><label for="tourEnqDate">Preferred date (optional)</label><input type="date" id="tourEnqDate" min="${todayISO()}" aria-describedby="tourEnqDateErr" oninput="clearFieldError(this)"><p class="field-error" id="tourEnqDateErr" hidden></p></div>
     <div class="field"><label for="tourEnqGuests">Guests</label><input type="number" id="tourEnqGuests" min="1" value="2"></div>
     ${statusCTAs(t, isAddon ? "addon" : "activity")}`;
-  // Related: same destination only, same category first, then catalogue order -- a stated, factual rule.
-  const sameDest = isAddon ? [] : TOURS.filter(x=>x.dest===t.dest && x.id!==t.id);
-  const related = [...sameDest.filter(x=>x.cat===t.cat), ...sameDest.filter(x=>x.cat!==t.cat)].slice(0,3);
+  const related = isAddon ? [] : relatedActivities(t);
   if(relatedSection) relatedSection.style.display = related.length ? "" : "none";
   document.getElementById("tourRelatedTitle").textContent = `More ${dn} activities`;
-  document.getElementById("tourRelatedNote").textContent = related.some(x => x.cat === t.cat) ? `Other ${dn} activities, ${t.cat.toLowerCase()} first.` : `Other ${dn} activities.`;
+  document.getElementById("tourRelatedNote").textContent = `Other ${dn} experiences selected by comparison group, category and listed duration.`;
   document.getElementById("tourRelated").innerHTML = related.map(tourCard).join("");
   initSlideshows(document.getElementById("tourRelated"));
 }
@@ -5260,17 +5253,24 @@ function renderPkgDetail(id, expectedDest){
     <div class="field"><label for="pkgEnqMonth">Travel month (optional)</label><input type="month" id="pkgEnqMonth" min="${todayISO().slice(0,7)}" aria-describedby="pkgEnqMonthErr" oninput="clearFieldError(this)"><p class="field-error" id="pkgEnqMonthErr" hidden></p></div>
     <div class="field"><label for="pkgEnqTravellers">Travellers</label><input type="number" id="pkgEnqTravellers" min="1" value="2"></div>
     ${statusCTAs(p, "holiday")}`;
-  // Related: same destination only, closest in length first (then catalogue order).
-  const n0 = nightsOf(p);
-  const related = PACKAGES.filter(x => x.dest === p.dest && x.id !== p.id)
-    .map((x, i) => ({x, i, d: n0 != null && nightsOf(x) != null ? Math.abs(nightsOf(x) - n0) : 99}))
-    .sort((a, b) => a.d - b.d || a.i - b.i).slice(0, 3).map(r => r.x);
+  const related = relatedPackages(p);
   document.getElementById("pkgRelatedSection").style.display = related.length ? "" : "none";
   document.getElementById("pkgRelatedTitle").textContent = `More ${dn} holiday packages`;
-  document.getElementById("pkgRelatedNote").textContent = `Other ${dn} packages, closest in length first.`;
+  document.getElementById("pkgRelatedNote").textContent = `Other ${dn} packages, closest in stay length, then shared itinerary stops.`;
   document.getElementById("pkgRelated").innerHTML = related.map(pkgCard).join("");
   document.getElementById("pkgRelatedCross").innerHTML = destHasTours(p.dest) ? `Adding day trips? Browse <a class="contact-link" href="${URLS.activityDest(p.dest)}">${dn} activities</a>.` : "";
   initSlideshows(document.getElementById("pkgRelated"));
+}
+
+function relatedActivities(t){
+  const groups=comparisonsForIds([t.id]), peers=new Set(groups.flatMap(c=>c.ids())), duration=durationGroup(t.duration);
+  return TOURS.map((x,i)=>({x,i,score:(peers.has(x.id)?100:0)+(x.cat===t.cat?30:0)+(duration&&durationGroup(x.duration)===duration?10:0)}))
+    .filter(r=>r.x.dest===t.dest && r.x.id!==t.id).sort((a,b)=>b.score-a.score||a.i-b.i).slice(0,3).map(r=>r.x);
+}
+function relatedPackages(p){
+  const nights=nightsOf(p), stops=new Set(itineraryActivities(p).map(a=>a.t.id));
+  return PACKAGES.map((x,i)=>({x,i,d:nights!=null&&nightsOf(x)!=null?Math.abs(nightsOf(x)-nights):99,shared:itineraryActivities(x).filter(a=>stops.has(a.t.id)).length}))
+    .filter(r=>r.x.dest===p.dest && r.x.id!==p.id).sort((a,b)=>a.d-b.d||b.shared-a.shared||a.i-b.i).slice(0,3).map(r=>r.x);
 }
 
 /* ============ v41: PAGE-SPECIFIC QUESTIONS ============ */
@@ -5907,8 +5907,8 @@ function destTilesHTML(type){
    One matching engine for
    the header search (GLOBAL_SEARCH_INDEX) across visas, activities and holidays.
    Both only index fields that already exist in VISAS / TOURS / PACKAGES / DESTINATIONS.
-   Ranking is a fixed, transparent rule (see scoreEntry): exact title > title starts with the
-   query > a word in the title starts with it > alias / destination > category > other fields.
+   Ranking is a fixed, transparent rule (see scoreEntry): exact title > exact alias > title prefix > title word prefix > alias prefix >
+   destination > category > recorded details.
    There is no popularity score. User input is only ever rendered through escapeHTML(). */
 
 // Widely used abbreviations and official alternative names -- nothing promotional.
@@ -5933,7 +5933,15 @@ const SCHENGEN_MEMBERS = ["Austria", "Belgium", "Bulgaria", "Croatia", "Czechia"
   "France", "Germany", "Greece", "Hungary", "Iceland", "Italy", "Latvia", "Liechtenstein", "Lithuania", "Luxembourg", "Malta",
   "Netherlands", "Norway", "Poland", "Portugal", "Romania", "Slovakia", "Slovenia", "Spain", "Sweden", "Switzerland"];
 
-function normalizeSearch(s){ return String(s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, " ").trim(); }
+const SEARCH_WORDS = {activities:"activity", experiences:"experience", holidays:"holiday", packages:"package", parks:"park", safaris:"safari", cruises:"cruise", tickets:"ticket", transfers:"transfer", hours:"hour", minutes:"minute", nights:"night", days:"day"};
+function normalizeSearch(s){
+  return String(s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, " ").trim()
+    .replace(/\bwaterparks?\b/g,"water park").replace(/\bthemeparks?\b/g,"theme park").replace(/\babudhabi\b/g,"abu dhabi")
+    .replace(/(\d+)n\s*(\d+)d\b/g,"$1n $2d").split(/\s+/).map(w=>SEARCH_WORDS[w]||w).join(" ");
+}
+const SEARCH_FILLER = new Set(["find","show","me","in","the","a","an","to","of","and","for"]);
+function searchAliases(values){ return (values||[]).map(v=>({norm:normalizeSearch(v),hint:""})).filter(a=>a.norm); }
+function searchPlaces(dest){ return [normalizeSearch(destName(dest)),"uae",...(dest==="ras-al-khaimah"?["rak"]:[])]; }
 function wordPrefix(text, q){ return (" " + text).includes(" " + q); }
 
 // entry: {title, aliases[{norm, hint}], place[], category[], other[]} -- all pre-normalised; hint explains an alias match.
@@ -5950,13 +5958,13 @@ function scoreEntry(entry, q){
     entry.place.forEach(p => { if(p === t || wordPrefix(p, t)) hit(60, ""); });
     entry.category.forEach(c => { if(wordPrefix(c, t)) hit(50, ""); });
     if(t.length >= 3 && entry.title.includes(t)) hit(45, "");
-    if(t.length >= 3 && entry.other.some(o => o.includes(t))) hit(30, "");
+    if(entry.other.some(o => t.length >= 3 ? o.includes(t) : /^\d+$/.test(t) && o.split(" ").includes(t))) hit(30, "Listed details");
     return best;
   };
   const whole = one(q);
   if(whole) return whole;
-  const words = q.split(" ").filter(Boolean);
-  if(words.length < 2) return null;
+  const words = q.split(" ").filter(w=>w && !SEARCH_FILLER.has(w));
+  if(!words.length) return null;
   const parts = words.map(one);
   if(parts.some(p => !p)) return null;
   return {score: Math.round(Math.min(...parts.map(p => p.score)) * 0.9), why: parts.map(p => p.why).find(Boolean) || ""};
@@ -5986,33 +5994,43 @@ function listKeyNav(e, input, container, onEscape){
   else if(e.key === "End" && i >= 0){ e.preventDefault(); links[links.length - 1].focus(); }
   else if(e.key === "Escape" && onEscape){ onEscape(e); }
 }
+/* ---- Shared product indexes for global and destination search ---- */
+const ACTIVITY_SEARCH_INDEX = TOURS.map(t => ({type:"activity", t, url:URLS.activity(t), label:t.title,
+  sub:destName(t.dest)+" · "+t.cat+(publicStatusOf(t)==="seasonal"?" · Seasonal":""),
+  title:normalizeSearch(t.title), aliases:searchAliases([...(t.aliases||[]),...(t.options||[])]), place:searchPlaces(t.dest),
+  category:[normalizeSearch(t.cat),normalizeSearch("activity "+(t.productType||""))],
+  other:[t.desc,t.description,t.duration,t.timing,t.location,t.pickup,...(t.inclusions||[])].filter(hasRealValue).map(normalizeSearch)}));
+const PACKAGE_SEARCH_INDEX = PACKAGES.map(p => ({type:"holiday",p,url:URLS.holiday(p),label:p.title,
+  sub:destName(p.dest)+(hasRealValue(p.dur)?" · "+p.dur:""),title:normalizeSearch(p.title),aliases:[],place:searchPlaces(p.dest),
+  category:[normalizeSearch("holiday package"),normalizeSearch(p.dur)],
+  other:[...(p.incl||[]),...(p.itinerary||[]).map(d=>d.text),nightsOf(p)!=null?`${nightsOf(p)} nights`:""].map(normalizeSearch)}));
 /* ---- Global search ---- */
 const GLOBAL_SEARCH_INDEX = [
   ...VISA_SEARCH_INDEX.map(x => Object.assign({}, x, {label: x.v.country + " visa", sub: "Visa assistance" + (hasRealValue(x.v.type) ? " · " + x.v.type : "")})),
   ...DESTINATIONS.filter(d => destHasTours(d.slug)).map(d => ({type:"activity", url: URLS.activityDest(d.slug), label: `Things to do in ${d.name}`,
     sub: `All ${TOURS.filter(t => t.dest === d.slug).length} ${d.name} activities`, title: normalizeSearch(`${d.name} activities`),
-    aliases: [], place: [normalizeSearch(d.name)], category: [normalizeSearch("activities things to do")], other: [normalizeSearch(d.blurb)]})),
+    aliases: [], place: searchPlaces(d.slug), category: [normalizeSearch("activities things to do")], other: [normalizeSearch(d.blurb)]})),
   ...GUIDES.map(g => ({type:"guide", url: URLS.guide(g.slug), label: g.name, sub: destName(g.dest) + " · " + g.blurb.replace(/\.$/, ""),
-    title: normalizeSearch(g.name), aliases: [], place: [normalizeSearch(destName(g.dest))], category: [normalizeSearch("guide " + g.categories.join(" "))], other: [normalizeSearch(g.description)]})),
+    title: normalizeSearch(g.name), aliases: [], place: searchPlaces(g.dest), category: [normalizeSearch("guide " + g.categories.join(" "))], other: [normalizeSearch(g.description)]})),
   ...VISA_ADDONS.map(t => ({type:"visa", url: URLS.addon(t), label: t.title, sub: "Visa add-on · Arrival essentials",
-    title: normalizeSearch(t.title), aliases: (t.aliases || []).map(normalizeSearch), place: [normalizeSearch("UAE")], category: [normalizeSearch("sim card arrival visa add-on")], other: [normalizeSearch(t.desc)]})),
-  ...TOURS.map(t => ({type:"activity", url: URLS.activity(t), label: t.title, sub: destName(t.dest) + " · " + t.cat + (statusOf(t) === "operating" ? "" : " · " + statusInfo(t).label),
-    title: normalizeSearch(t.title), aliases: [...(t.aliases || []), ...(t.options || [])].map(normalizeSearch), place: [normalizeSearch(destName(t.dest))], category: [normalizeSearch(t.cat)],
-    other: [normalizeSearch(t.desc), normalizeSearch("activity")]})),
+    title: normalizeSearch(t.title), aliases: searchAliases(t.aliases), place: [normalizeSearch("UAE")], category: [normalizeSearch("sim card arrival visa add-on")], other: [normalizeSearch(t.desc)]})),
+  ...ACTIVITY_SEARCH_INDEX,
   ...DESTINATIONS.filter(d => destHasPackages(d.slug)).map(d => ({type:"holiday", url: URLS.holidayDest(d.slug), label: `${d.name} holiday packages`,
     sub: `All ${PACKAGES.filter(p => p.dest === d.slug).length} ${d.name} packages`, title: normalizeSearch(`${d.name} holiday packages`),
-    aliases: [], place: [normalizeSearch(d.name)], category: [normalizeSearch("holidays holiday packages")], other: []})),
-  ...PACKAGES.map(p => ({type:"holiday", url: URLS.holiday(p), label: p.title, sub: destName(p.dest) + (hasRealValue(p.dur) ? " · " + p.dur : ""),
-    title: normalizeSearch(p.title), aliases: [], place: [normalizeSearch(destName(p.dest))], category: [normalizeSearch("holiday package"), normalizeSearch(p.dur)],
-    other: [...(p.incl || []), ...(p.itinerary || []).map(d => d.text)].map(normalizeSearch)})),
+    aliases: [], place: searchPlaces(d.slug), category: [normalizeSearch("holidays holiday packages")], other: []})),
+  ...PACKAGE_SEARCH_INDEX,
+  ...ACTIVITY_CATEGORIES.map(c=>({type:"category",url:URLS.activityCategory(c),label:c.title,sub:`${categoryTours(c).length} listings · Browse by destination`,title:normalizeSearch(c.title),aliases:[],place:[...new Set(categoryTours(c).flatMap(t=>searchPlaces(t.dest)))],category:[normalizeSearch(c.name),"category"],other:[normalizeSearch(CATEGORY_INFO[c.name])]})),
+  ...COMPARISONS.map(c=>({type:"comparison",url:URLS.comparison(c),label:c.title,sub:`${comparisonTours(c).length} listings · Side-by-side comparison`,title:normalizeSearch(c.title),aliases:[],place:[...new Set(comparisonTours(c).flatMap(t=>searchPlaces(t.dest)))],category:["compare comparison",...comparisonTours(c).map(t=>normalizeSearch(t.cat))],other:[normalizeSearch(c.intro)]})),
 ];
-const SEARCH_GROUPS = [{type:"visa", heading:"Visas", label:"Visa", limit:6}, {type:"activity", heading:"Activities", label:"Activity", limit:8}, {type:"holiday", heading:"Holidays", label:"Holiday", limit:6}, {type:"guide", heading:"Guides", label:"Guide", limit:3}];
+const SEARCH_GROUPS = [{type:"visa", heading:"Visas", label:"Visa", limit:6}, {type:"activity", heading:"Activities", label:"Activity", limit:8}, {type:"holiday", heading:"Holidays", label:"Holiday", limit:6}, {type:"guide", heading:"Guides", label:"Guide", limit:3}, {type:"category", heading:"Categories", label:"Category", limit:4}, {type:"comparison", heading:"Comparisons", label:"Comparison", limit:4}];
 const SEARCH_SUGGESTIONS = ["Japan", "UK", "Desert safari", "Abu Dhabi", "Theme parks", "5N / 6D"];
 
+let globalSearchQuery = "", globalSearchLimits = {};
 function globalSearch(query){
   const box = document.getElementById("globalSearchResults");
   const status = document.getElementById("globalSearchStatus");
   const q = normalizeSearch(query);
+  if(q !== globalSearchQuery){ globalSearchQuery=q; globalSearchLimits={}; }
   if(!q){
     box.innerHTML = `<p class="gs-hint">Try:</p><div class="gs-suggest">${SEARCH_SUGGESTIONS.map(s => `<button type="button" class="gs-chip" onclick="setGlobalSearch('${s}')">${escapeHTML(s)}</button>`).join("")}</div>`;
     status.textContent = "";
@@ -6021,7 +6039,7 @@ function globalSearch(query){
   const ranked = rankEntries(GLOBAL_SEARCH_INDEX, query);
   if(!ranked.length){
     box.innerHTML = `
-      <p class="gs-empty">No matching visas, activities, holidays or guides found for “${escapeHTML(query.trim())}”.</p>
+      <p class="gs-empty">No matching catalogue pages found for “${escapeHTML(query.trim())}”.</p>
       <div class="gs-browse"><span>Browse instead:</span>
         <a href="/visas/" onclick="closeModal('searchModal')">All visa destinations</a>
         <a href="/activities/" onclick="closeModal('searchModal')">UAE activities</a>
@@ -6033,17 +6051,23 @@ function globalSearch(query){
   // Groups are ordered by their best match, so the most relevant kind of result comes first.
   const groups = SEARCH_GROUPS.map(g => ({g, items: ranked.filter(r => r.type === g.type)})).filter(x => x.items.length)
     .sort((a, b) => b.items[0].score - a.items[0].score);
-  box.innerHTML = groups.map(({g, items}) => `
-    <section class="gs-group" aria-label="${g.heading}">
+  box.innerHTML = groups.map(({g, items}) => { const limit=globalSearchLimits[g.type]||g.limit; return `
+    <section class="gs-group" data-search-group="${g.type}" aria-label="${g.heading}">
       <h4 class="gs-heading">${g.heading} <span>${items.length}</span></h4>
-      <ul>${items.slice(0, g.limit).map(r => `<li><a class="gs-item" href="${escapeHTML(r.url)}" onclick="closeModal('searchModal')">
+      <ul>${items.slice(0, limit).map(r => `<li><a class="gs-item" href="${escapeHTML(r.url)}" onclick="closeModal('searchModal')">
         <span class="gs-type">${g.label}</span>
         <span class="gs-label">${escapeHTML(r.label)}</span>
         <span class="gs-sub">${escapeHTML(r.sub)}${r.why ? " · " + escapeHTML(r.why) : ""}</span></a></li>`).join("")}</ul>
-      ${items.length > g.limit ? `<p class="gs-more">${items.length - g.limit} more — refine your search to narrow them down.</p>` : ""}
-    </section>`).join("");
+      ${items.length > limit ? `<button type="button" class="gs-chip" onclick="moreGlobalSearch('${g.type}')">Show ${Math.min(g.limit,items.length-limit)} more ${g.heading.toLowerCase()}</button>` : ""}
+    </section>`; }).join("");
   const counts = groups.map(({g, items}) => `${items.length} ${items.length === 1 ? g.label.toLowerCase() : g.heading.toLowerCase()}`);
   status.textContent = `${ranked.length} ${ranked.length === 1 ? "result" : "results"}: ${counts.join(", ")}.`;
+}
+function moreGlobalSearch(type){
+  const group=SEARCH_GROUPS.find(g=>g.type===type); if(!group)return;
+  const previous=globalSearchLimits[type]||group.limit;
+  globalSearchLimits[type]=previous+group.limit; globalSearch(document.getElementById("globalSearch").value);
+  document.querySelectorAll(`[data-search-group="${type}"] a.gs-item`)[previous]?.focus();
 }
 function setGlobalSearch(text){ const i = document.getElementById("globalSearch"); i.value = text; globalSearch(text); i.focus(); }
 function openSearch(){
@@ -6616,7 +6640,7 @@ document.querySelectorAll("[data-visa-count]").forEach(el => { el.textContent = 
 // data-catalogue-count="visas|tours|packages[:destination]" -- catalogue counts, always from the data.
 document.querySelectorAll("[data-catalogue-count]").forEach(el => {
   const [what, dest] = el.dataset.catalogueCount.split(":");
-  const list = what === "visas" ? VISAS : what === "tours" ? TOURS : what === "guides" ? GUIDES : PACKAGES;
+  const list = what === "visas" ? VISAS : what === "tours" ? TOURS : what === "guides" ? GUIDES : what === "categories" ? ACTIVITY_CATEGORIES : what === "comparisons" ? COMPARISONS : PACKAGES;
   el.textContent = dest ? list.filter(x => x.dest === dest).length : list.length;
 });
 document.querySelectorAll("[data-catalogue-nights]").forEach(el => { el.textContent = nightRange(PACKAGES); });
