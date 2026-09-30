@@ -89,6 +89,11 @@ try {
   if (!home.robotsTxt?.includes('Sitemap: ' + EXPECTED_ORIGIN + '/sitemap.xml')) {
     throw new Error('robots.txt does not point to the production sitemap.');
   }
+  for (const bot of ['OAI-SearchBot', 'Claude-SearchBot', 'PerplexityBot', 'ChatGPT-User', 'Claude-User', 'Perplexity-User']) {
+    if (!home.robotsTxt.includes('User-agent: ' + bot + '\nAllow: /\n')) {
+      throw new Error('Missing explicit retrieval crawler policy for ' + bot);
+    }
+  }
 
   const routeResults = new Map([['/', home]]);
   const queue = home.routes.filter(r => r !== '/');
@@ -106,6 +111,14 @@ try {
   for (const route of home.routes) {
     const data = routeResults.get(route);
     if (!data?.html) throw new Error('No HTML snapshot for ' + route);
+    if (route === '/visas/') {
+      const visaRoutes = home.routes.filter(r => /^\/visas\/[^/]+\/$/.test(r));
+      const index = data.html.match(/<nav\b[^>]*id="visaDestinationIndex"[^>]*>([\s\S]*?)<\/nav>/)?.[1];
+      const links = new Set([...((index || '').matchAll(/<a\b[^>]*href="([^"]+)"/g))].map(m => m[1]));
+      if (visaRoutes.length !== 41 || links.size !== visaRoutes.length || visaRoutes.some(r => !links.has(r))) {
+        throw new Error('Visa destination index must contain all 41 visa routes as anchor links.');
+      }
+    }
     const html = data.html.replace('<!--APP_SCRIPT-->', '<script id="appScript" src="/assets/app.js"></script>');
     if (!html.includes('src="/assets/app.js"')) throw new Error('Hydration script missing from ' + route);
     if (!html.includes('data-prerendered=')) throw new Error('Static marker missing from ' + route);

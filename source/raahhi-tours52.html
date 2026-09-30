@@ -414,6 +414,8 @@
   .link-list{ list-style:none; margin:10px 0 0; padding:0; display:grid; gap:8px; font-size:14.5px; }
   .link-list a{ color:var(--navy-950); font-weight:600; text-decoration:underline; text-decoration-color:var(--line); text-underline-offset:3px; }
   .link-list a:hover{ text-decoration-color:var(--gold-500); }
+  .visa-destination-index{ margin-top:32px; }
+  .visa-destination-index .link-list{ grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:10px 24px; }
   .index-title{ font-size:clamp(24px,3vw,32px); margin-bottom:26px; }
   .index-note{ color:var(--ink-400); font-size:13.5px; margin:0 0 6px; }
   .grid-title{ font-size:24px; margin:0 0 18px; }
@@ -859,6 +861,7 @@
         <p class="load-more-count" id="visaLoadMoreCount"></p>
         <button type="button" class="btn btn-navy btn-sm" onclick="loadMoreVisas()">Load more destinations</button>
       </div>
+      <nav class="visa-destination-index" id="visaDestinationIndex" aria-labelledby="visaDestinationIndexTitle"></nav>
     </div>
   </section>
   <section class="section-sand" id="visaAddonsSection">
@@ -4719,6 +4722,10 @@ function handleVisaSearchInput(){
 }
 function renderVisaGrid(){
   clearSlideTimers(); // this grid is rebuilt on every search/load-more change -- always start clean before re-initing
+  // Keep every destination discoverable independently of card pagination and search.
+  const index = document.getElementById("visaDestinationIndex");
+  if(index && !index.hasChildNodes()) index.innerHTML = `<h3 id="visaDestinationIndexTitle">Browse all visa destinations</h3>
+    <ul class="link-list">${[...VISAS].sort((a,b)=>a.country.localeCompare(b.country)).map(v=>`<li><a href="${URLS.visa(v)}">${escapeHTML(v.country)} visa assistance</a></li>`).join("")}</ul>`;
   const q = (document.getElementById("visaSearch")?.value || "").toLowerCase();
   const list = VISAS.filter(v => v.country.toLowerCase().includes(q));
   const shown = list.slice(0, gridVisibleLimit("visa", visaRowsVisible));
@@ -5472,6 +5479,13 @@ function robotsTxt(){
     "User-agent: Bingbot", "Allow: /", "",
     "# OpenAI's search crawler (ChatGPT search results).",
     "User-agent: OAI-SearchBot", "Allow: /", "",
+    "# Search indexing for Claude and Perplexity.",
+    "User-agent: Claude-SearchBot", "Allow: /", "",
+    "User-agent: PerplexityBot", "Allow: /", "",
+    "# User-requested page retrieval by AI assistants.",
+    "User-agent: ChatGPT-User", "Allow: /", "",
+    "User-agent: Claude-User", "Allow: /", "",
+    "User-agent: Perplexity-User", "Allow: /", "",
     base ? `Sitemap: ${base}/sitemap.xml` : "# Sitemap: added automatically once SEO_CONFIG.siteUrl holds the verified production domain.",
   ].join("\n") + "\n";
 }
