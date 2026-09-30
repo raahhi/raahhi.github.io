@@ -53,6 +53,21 @@ async function snapshot(route) {
   try {
     await page.goto(localOrigin + route + '?__prerender', { waitUntil: 'domcontentloaded', timeout: 45000 });
     await page.waitForSelector('#__prerender', { state: 'attached', timeout: 15000 });
+    const detailKind = await page.evaluate(() => CURRENT.kind);
+    if (['activity', 'holiday', 'visa', 'addon'].includes(detailKind)) {
+      const main = page.locator('.page.active');
+      const block = main.locator('.at-a-glance');
+      if (await block.count() !== 1 || await block.locator('h2').textContent() !== 'At a glance') {
+        throw new Error('Missing or duplicated At a glance block on ' + route);
+      }
+      if (!(await block.locator('.answer-lede').textContent())?.trim() || await block.locator('.key-facts dt').count() === 0) {
+        throw new Error('Empty answer or facts on ' + route);
+      }
+      const facts = await block.locator('.key-facts dd').allTextContents();
+      if (facts.some(v => !v.trim() || /^[\sXx–—-]*$/.test(v))) {
+        throw new Error('Empty or placeholder fact on ' + route);
+      }
+    }
     const raw = await page.locator('#__prerender').textContent();
     if (!raw) throw new Error('Missing prerender payload for ' + route);
     return JSON.parse(raw);
@@ -150,7 +165,8 @@ try {
     generatedRoutes: home.routes.length,
     sitemapUrls: sitemapUrlCount(home.sitemapXml),
     intendedIndexableUrls: EXPECTED_SITEMAP_URLS,
-    generated404: true
+    generated404: true,
+    atAGlancePages: [...routeResults.values()].filter(r => ['activity', 'holiday', 'visa', 'addon'].includes(r.kind)).length
   };
   await writeFile(join(DIST, 'build-report.json'), JSON.stringify(report, null, 2) + '\n', 'utf8');
   console.log(JSON.stringify(report, null, 2));

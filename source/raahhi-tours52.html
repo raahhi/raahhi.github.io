@@ -396,6 +396,12 @@
   .faq-h{ margin:0; font:inherit; }
   .answer-lede{ color:var(--ink-600); font-size:16.5px; line-height:1.65; margin-top:16px; }
   .answer-lede strong{ color:var(--ink-900); }
+  .at-a-glance{ margin-top:24px; padding:20px; border:1px solid var(--line); border-radius:var(--radius-m); }
+  .at-a-glance h2{ font-size:22px; margin:0; }
+  .at-a-glance .answer-lede{ margin:12px 0 0; }
+  .at-a-glance .key-facts{ margin-top:18px; }
+  .at-a-glance-note{ color:var(--ink-400); font-size:13.5px; margin:12px 0 0; }
+  @media(max-width:480px){ .at-a-glance{ padding:16px; } .at-a-glance .key-facts{ padding:14px; grid-template-columns:1fr; } }
   .key-facts{ display:grid; grid-template-columns:repeat(auto-fit, minmax(170px, 1fr)); gap:14px 20px; margin:22px 0 0; padding:18px 20px; background:var(--sand-100); border-radius:var(--radius-m); }
   .key-facts div{ min-width:0; }
   .key-facts dt{ font-size:11.5px; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:var(--ink-400); }
@@ -4009,6 +4015,15 @@ function qaHTML(items){
 function factsHTML(rows){
   return `<dl class="key-facts">${rows.filter(r => r[1]).map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join("")}</dl>`;
 }
+ // Shared answer block. The caller supplies existing catalogue facts and presentation fallbacks.
+ // Summary and fact values may contain the same internal links used by the detail templates.
+function atAGlanceHTML(summary, rows, note = ""){
+  return `<div class="at-a-glance"><h2>At a glance</h2>
+    <p class="answer-lede">${summary}</p>
+    ${factsHTML(rows)}
+    ${note ? `<p class="at-a-glance-note">${escapeHTML(note)}</p>` : ""}</div>`;
+}
+
 // Search-result title for a product: adds the destination when the product name doesn't already
 // contain it. Musandam is excluded -- that tour is listed under Ras Al Khaimah but its coastline is in Oman.
 const NO_PLACE_SUFFIX = ["musandam-dibba-tour"];
@@ -4808,12 +4823,7 @@ function renderVisaDetail(slug){
   document.getElementById("visaDetailMain").innerHTML = `
     <h1><span aria-hidden="true">${v.flag}</span> ${n} visa assistance</h1>
     <div class="detail-tags"><span class="tag">${typeText}</span><span class="tag">Validity: ${validityText}</span></div>
-    <p class="answer-lede">RAAHHI TOURS provides visa assistance for travel to ${n}: help understanding the visa options, confirming current requirements and fees, and preparing the information your application needs.${vm.type ? ` Visa type listed for ${n}: <strong>${vm.type}</strong>${vm.validity && !asIssued ? ` (listed validity: ${vm.validity})` : ""}.` : ""} Visa decisions are made by the relevant government authority, not by RAAHHI TOURS.</p>
-    <div class="detail-section">
-      <h2>${n} visa details</h2>
-      ${factsHTML([["Destination", n], ["Visa type", typeText], ["Validity", validityText], ["Typical processing time", dateText], ["Fee", feeText], ["Last verified", vm.lastVerified ? formatDate(vm.lastVerified) : ""]])}
-      <p style="color:var(--ink-400); font-size:13.5px; margin-top:12px;">${detailNote}</p>
-    </div>
+    ${atAGlanceHTML(`RAAHHI TOURS provides visa assistance for travel to ${n}: help understanding the visa options, confirming current requirements and fees, and preparing the information your application needs.${vm.type ? ` Visa type listed for ${n}: <strong>${vm.type}</strong>${vm.validity && !asIssued ? ` (listed validity: ${vm.validity})` : ""}.` : ""} Visa decisions are made by the relevant government authority, not by RAAHHI TOURS.`, [["Destination", n], ["Visa type", typeText], ["Validity", validityText], ["Typical processing time", dateText], ["Fee", feeText], ["Last verified", vm.lastVerified ? formatDate(vm.lastVerified) : ""]], detailNote)}
     <div class="detail-section">
       <h2>What ${n} visa requirements depend on</h2>
       <div class="depends-box">
@@ -4969,8 +4979,7 @@ function renderTourDetail(id, expectedDest, opts){
     <h1>${t.title}</h1>
     ${sti.note ? `<div class="status-banner status-${st}" role="status"><strong>${sti.label}.</strong> ${sti.note}</div>` : ""}
     <div class="detail-tags">${statusTagHTML(t)}<span class="tag">${dn}</span><span class="tag">${t.cat}</span>${hasRealValue(t.duration) ? `<span class="tag">${t.duration}</span>` : ""}</div>
-    <p class="answer-lede"><strong>${t.title}</strong> is ${isAddon ? "an arrival add-on listed under Visas" : `${aOrAn(phrase)} ${phrase} listed under ${dn} activities`} at RAAHHI TOURS. ${t.description || t.desc}${hasRealValue(t.duration) ? ` Listed duration or timing: ${t.duration}.` : ""}</p>
-    ${factsHTML([["Availability", sti.label], [isAddon ? "Service" : "Destination", isAddon ? `<a class="contact-link" href="/visas/">Visas · arrival essentials</a>` : `<a class="contact-link" href="${URLS.activityDest(t.dest)}">${dn}</a>`], ["Location", t.location || ""], ["Departs from", originLabel(t.origin)], ["Category", t.cat],
+    ${atAGlanceHTML(`<strong>${t.title}</strong> is ${isAddon ? "an arrival add-on listed under Visas" : `${aOrAn(phrase)} ${phrase} listed under ${dn} activities`} at RAAHHI TOURS. ${t.description || t.desc}${hasRealValue(t.duration) ? ` Listed duration or timing: ${t.duration}.` : ""}`, [["Availability", sti.label], [isAddon ? "Service" : "Destination", isAddon ? `<a class="contact-link" href="/visas/">Visas · arrival essentials</a>` : `<a class="contact-link" href="${URLS.activityDest(t.dest)}">${dn}</a>`], ["Location", t.location || ""], ["Departs from", originLabel(t.origin)], ["Category", t.cat],
       ["Duration / timing", hasRealValue(t.duration) ? t.duration : ""], ["Timing", t.timing || ""],
       ["Price", price.known ? escapeHTML(price.text + (price.basis ? " " + price.basis : "")) : "Confirmed on enquiry"],
       ["Confirmed when you enquire", cap(joinList(confirm))], ["How to enquire", "Select Request to Book or Enquire on this page"],
@@ -5059,14 +5068,13 @@ function renderPkgDetail(id, expectedDest){
     <h1>${p.title}</h1>
     ${psti.note ? `<div class="status-banner status-${pst}" role="status"><strong>${psti.label}.</strong> ${psti.note}</div>` : ""}
     <div class="detail-tags">${statusTagHTML(p)}<span class="tag">${dn}</span>${hasRealValue(p.dur) ? `<span class="tag">${p.dur}</span>` : ""}</div>
-    <p class="answer-lede"><strong>${p.title}</strong> is ${hasRealValue(p.dur) ? `a ${durAdj(p.dur)}` : "a"} holiday package based in ${dn}, listed under ${dn} holidays at RAAHHI TOURS.${(p.incl || []).length ? ` Its listed inclusions are ${joinList(p.incl)}.` : ""}</p>
-    ${overview ? `<p class="pkg-overview">${overview}</p>` : ""}
-    ${p.description ? `<p class="pkg-overview">${p.description}</p>` : ""}
-    ${factsHTML([["Destination", `<a class="contact-link" href="${URLS.holidayDest(p.dest)}">${dn}</a>`], ["Duration", hasRealValue(p.dur) ? durText(p.dur) : ""], ["Availability", psti.label],
+    ${atAGlanceHTML(`<strong>${p.title}</strong> is ${hasRealValue(p.dur) ? `a ${durAdj(p.dur)}` : "a"} holiday package based in ${dn}, listed under ${dn} holidays at RAAHHI TOURS.${(p.incl || []).length ? ` Its listed inclusions are ${joinList(p.incl)}.` : ""}`, [["Destination", `<a class="contact-link" href="${URLS.holidayDest(p.dest)}">${dn}</a>`], ["Duration", hasRealValue(p.dur) ? durText(p.dur) : ""], ["Availability", psti.label],
       ["Inclusions", joinList(p.incl || [])], ["Accommodation", acc ? escapeHTML(accommodationSummary(acc)) + (acc.name ? "" : " — hotel confirmed on enquiry") : ""],
       ["Transfers", transfers.length ? `Listed: ${joinList(transfers)}` : ""], ["Meals", acc && acc.board ? escapeHTML(acc.board) : ""],
       ["Price", price.known ? escapeHTML(price.text + (price.basis ? " " + price.basis : "")) : "Confirmed on enquiry"],
       ["Confirmed when you enquire", cap(joinList(confirm))], ["Last verified", p.lastVerified ? formatDate(p.lastVerified) : ""]])}
+    ${overview ? `<p class="pkg-overview">${overview}</p>` : ""}
+    ${p.description ? `<p class="pkg-overview">${p.description}</p>` : ""}
     ${sections.join("")}
     <div class="detail-section"><h2>${p.title}: common questions</h2>${qaHTML([...(p.faqs || []), ...packageFaqItems(p)])}</div>`;
   document.getElementById("pkgBookingBox").style.display = "";
