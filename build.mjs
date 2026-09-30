@@ -8,6 +8,14 @@ const DIST = join(ROOT, 'dist');
 const SOURCE_FILE = join(ROOT, 'source', 'raahhi-tours52.html');
 const EXPECTED_ORIGIN = 'https://raahhi.com';
 const EXPECTED_SITEMAP_URLS = 245;
+// Image errors can fire while the parser is still reading the page, before app.js loads.
+// hydrate() drains this queue using the real fallback handler once the app is ready.
+const EARLY_IMAGE_FALLBACK = '<script data-image-fallback-bootstrap>window.__imgFallbackQueue=[];window.imgFallback=function(el){window.__imgFallbackQueue.push(el);};</script>';
+
+function attachHydrationScripts(html) {
+  return html.replace('</head>', EARLY_IMAGE_FALLBACK + '</head>')
+    .replace('<!--APP_SCRIPT-->', '<script id="appScript" src="/assets/app.js"></script>');
+}
 
 function extractAppScript(source) {
   const m = source.match(/<script id="appScript">([\s\S]*?)<\/script>/);
@@ -164,7 +172,7 @@ try {
         throw new Error('Visa destination index must contain all 41 visa routes as anchor links.');
       }
     }
-    const html = data.html.replace('<!--APP_SCRIPT-->', '<script id="appScript" src="/assets/app.js"></script>');
+    const html = attachHydrationScripts(data.html);
     if (!html.includes('src="/assets/app.js"')) throw new Error('Hydration script missing from ' + route);
     if (!html.includes('data-prerendered=')) throw new Error('Static marker missing from ' + route);
     if (data.robots === 'index,follow') {
@@ -178,7 +186,7 @@ try {
   }
 
   const notFound = await snapshot('/404.html');
-  const notFoundHtml = notFound.html.replace('<!--APP_SCRIPT-->', '<script id="appScript" src="/assets/app.js"></script>');
+  const notFoundHtml = attachHydrationScripts(notFound.html);
   await writeFile(join(DIST, '404.html'), notFoundHtml, 'utf8');
 
   await writeBrandAssets();
