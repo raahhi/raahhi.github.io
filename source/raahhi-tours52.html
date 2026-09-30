@@ -599,6 +599,10 @@
   .source-list li{ padding:14px 16px; background:var(--sand-100); border-radius:var(--radius-m); font-size:14px; color:var(--ink-600); }
   .source-list .src-name{ display:block; font-weight:600; color:var(--ink-900); }
   .source-list .src-meta{ display:block; margin-top:4px; font-size:12.5px; color:var(--ink-400); }
+  .freshness-summary{ color:var(--ink-600); font-size:13.5px; line-height:1.6; margin:14px 0 0; }
+  .source-links{ margin-top:14px; }
+  .source-status{ color:var(--ink-600); font-size:13.5px; line-height:1.6; margin:14px 0 0; }
+  .source-list a{ overflow-wrap:anywhere; }
   .depends-box{ margin-top:14px; padding:16px 18px; border:1px solid var(--gold-400); border-radius:var(--radius-m); background:var(--gold-100); }
   .depends-box p{ margin:0 0 8px; color:var(--ink-900); font-size:14.5px; }
   .depends-box ul{ margin:0; padding-left:20px; color:var(--ink-600); font-size:14.5px; display:grid; gap:4px; }
@@ -4017,11 +4021,12 @@ function factsHTML(rows){
 }
  // Shared answer block. The caller supplies existing catalogue facts and presentation fallbacks.
  // Summary and fact values may contain the same internal links used by the detail templates.
-function atAGlanceHTML(summary, rows, note = ""){
+function atAGlanceHTML(summary, rows, note = "", freshness = ""){
   return `<div class="at-a-glance"><h2>At a glance</h2>
     <p class="answer-lede">${summary}</p>
     ${factsHTML(rows)}
-    ${note ? `<p class="at-a-glance-note">${escapeHTML(note)}</p>` : ""}</div>`;
+    ${note ? `<p class="at-a-glance-note">${escapeHTML(note)}</p>` : ""}
+    ${freshness}</div>`;
 }
 
 // Search-result title for a product: adds the destination when the product name doesn't already
@@ -4159,12 +4164,51 @@ function formatDate(iso){
   const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
   return `${parseInt(m[3], 10)} ${months[parseInt(m[2], 10) - 1]} ${m[1]}`;
 }
+// A recorded calendar date is required; source and fact checks never inherit build dates.
+function checkedDateHTML(iso){
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || "");
+  if(!m) return "";
+  const y = Number(m[1]), mo = Number(m[2]), day = Number(m[3]);
+  const date = new Date(Date.UTC(y, mo - 1, day));
+  if(date.getUTCFullYear() !== y || date.getUTCMonth() !== mo - 1 || date.getUTCDate() !== day) return "";
+  return `<time datetime="${escapeHTML(iso)}">${formatDate(iso)}</time>`;
+}
 function sourcesHTML(list){
-  return `<ul class="source-list">${(list || []).map(s => `<li>
+  return `<ul class="source-list">${(list || []).map(s => {
+    const linkDate = checkedDateHTML(s.linkCheckedOn), factsDate = checkedDateHTML(s.lastVerified);
+    const check = linkDate ? `Source link checked on ${linkDate}. This confirms the link, not the facts on this page.`
+      : factsDate ? `${s.supports ? "Supported statement checked on" : "Source checked on"} ${factsDate}.` : "Check date not recorded.";
+    return `<li>
       <span class="src-name"><a class="contact-link" href="${escapeHTML(s.url)}" target="_blank" rel="noopener noreferrer">${escapeHTML(s.name)}</a></span>
+      <span class="src-meta">${SOURCE_TYPES[s.type] || "Source"} · external website, opens in a new tab</span>
       ${s.supports ? `<span class="src-meta">Supports: ${escapeHTML(s.supports)}</span>` : ""}
-      <span class="src-meta">${SOURCE_TYPES[s.type] || "Source"}${s.lastVerified ? ` · checked ${formatDate(s.lastVerified)}` : ""} · external website, opens in a new tab</span>
-    </li>`).join("")}</ul>`;
+      <span class="src-meta">${check}</span>
+    </li>`;
+  }).join("")}</ul>`;
+}
+function freshnessSummaryHTML(record, kind){
+  const date = checkedDateHTML(record.lastVerified);
+  const label = kind === "visa" ? "Visa facts" : "Listing facts";
+  return `<p class="freshness-summary">${date ? `${label} checked on ${date}.`
+    : `${label}: check date not recorded. Current details confirmed on enquiry.`}</p>`;
+}
+function sourcesAndFreshnessHTML(record, kind){
+  const isVisa = kind === "visa";
+  const src = isVisa ? record.officialSource : null;
+  const sources = isVisa ? (src ? [{name:src.host, url:src.url, type:src.type, linkCheckedOn:src.linkCheckedOn}] : []) : (record.sources || []);
+  const explanation = isVisa
+    ? `Visa rules, fees and processing times for ${escapeHTML(record.country)} are set by government authorities and can change at short notice. Check the current rules before you travel.`
+    : `Listing details are from the RAAHHI TOURS catalogue.${sources.length ? " External sources below support the specific statements described." : ""} Confirm current prices, availability and applicable terms when you enquire.`;
+  const factsDate = isVisa ? checkedDateHTML(record.lastVerified) : "";
+  return `<div class="detail-section sources-and-freshness">
+    <h2>Sources and freshness</h2>
+    <p class="body-copy">${explanation}</p>
+    ${sources.length ? `<div class="source-links">${sourcesHTML(sources)}</div>`
+      : `<p class="source-status">${isVisa ? "No official source link is recorded for this destination. Our team can point you to the official source during your enquiry." : "External source links are not recorded for this listing."}</p>`}
+    ${isVisa ? `<p class="source-status"><strong>Visa type, validity and processing time:</strong> ${factsDate
+      ? `Checked against the official source on ${factsDate}.`
+      : "RAAHHI TOURS catalogue values, not yet checked against the official source. Our team confirms the current details for your trip."}</p>` : ""}
+  </div>`;
 }
 
 /* ---- Prices ----
@@ -4823,7 +4867,7 @@ function renderVisaDetail(slug){
   document.getElementById("visaDetailMain").innerHTML = `
     <h1><span aria-hidden="true">${v.flag}</span> ${n} visa assistance</h1>
     <div class="detail-tags"><span class="tag">${typeText}</span><span class="tag">Validity: ${validityText}</span></div>
-    ${atAGlanceHTML(`RAAHHI TOURS provides visa assistance for travel to ${n}: help understanding the visa options, confirming current requirements and fees, and preparing the information your application needs.${vm.type ? ` Visa type listed for ${n}: <strong>${vm.type}</strong>${vm.validity && !asIssued ? ` (listed validity: ${vm.validity})` : ""}.` : ""} Visa decisions are made by the relevant government authority, not by RAAHHI TOURS.`, [["Destination", n], ["Visa type", typeText], ["Validity", validityText], ["Typical processing time", dateText], ["Fee", feeText], ["Last verified", vm.lastVerified ? formatDate(vm.lastVerified) : ""]], detailNote)}
+    ${atAGlanceHTML(`RAAHHI TOURS provides visa assistance for travel to ${n}: help understanding the visa options, confirming current requirements and fees, and preparing the information your application needs.${vm.type ? ` Visa type listed for ${n}: <strong>${vm.type}</strong>${vm.validity && !asIssued ? ` (listed validity: ${vm.validity})` : ""}.` : ""} Visa decisions are made by the relevant government authority, not by RAAHHI TOURS.`, [["Destination", n], ["Visa type", typeText], ["Validity", validityText], ["Typical processing time", dateText], ["Fee", feeText]], detailNote, freshnessSummaryHTML(vm, "visa"))}
     <div class="detail-section">
       <h2>What ${n} visa requirements depend on</h2>
       <div class="depends-box">
@@ -4864,16 +4908,7 @@ function renderVisaDetail(slug){
       <h2>Documents</h2>
       <p style="color:var(--ink-600); font-size:14.5px;">Required documents depend on your nationality and visa category, and are confirmed during your enquiry.</p>
     </div>
-    <div class="detail-section">
-      <h2>Official ${n} visa information and sources</h2>
-      <p class="body-copy">Visa rules, fees and processing times for ${n} are set by government authorities and can change at short notice. Check the current rules before you travel.</p>
-      <ul class="source-list" style="margin-top:14px;">
-        ${src
-          ? `<li><span class="src-name">Official source: ${sourceLinkHTML(src.url)}</span><span class="src-meta">${SOURCE_TYPES[src.type]} · link checked ${formatDate(src.linkCheckedOn)} · external website, opens in a new tab</span></li>`
-          : `<li><span class="src-name">Official source</span><span class="src-meta">No official source is recorded for ${n} on this website yet. Our team can point you to the official government source during your enquiry.</span></li>`}
-        <li><span class="src-name">Visa type, validity and processing time shown on this page</span><span class="src-meta">${vm.lastVerified ? `Checked against the official source on ${formatDate(vm.lastVerified)}.` : `${SOURCE_TYPES.firstParty} values, not yet checked against the official source. Our team confirms the current details for your trip.`}</span></li>
-      </ul>
-    </div>
+    ${sourcesAndFreshnessHTML(vm, "visa")}
     <div class="detail-section">
       <h2>More visa destinations</h2>
       <p style="color:var(--ink-600); font-size:14.5px;">${more.map(x => `<a class="contact-link" href="${URLS.visa(x)}">${x.country} visa assistance</a>`).join(" · ")} · <a class="contact-link" href="/visas/">All ${VISAS.length} visa destinations</a></p>
@@ -4971,7 +5006,7 @@ function renderTourDetail(id, expectedDest, opts){
   }
   const guides = GUIDES.filter(g => g.ids().includes(t.id));
   if(guides.length) sections.push(`<div class="detail-section"><h2>Compare with similar activities</h2>${guides.map(g => p14(`The <a class="contact-link" href="${URLS.guide(g.slug)}">${g.name}</a> compares ${t.title} with ${g.ids().length - 1} other ${destName(g.dest)} ${g.ids().length - 1 === 1 ? "listing" : "listings"}.`)).join("")}</div>`);
-  if(t.sources && t.sources.length) sections.push(`<div class="detail-section"><h2>Sources</h2>${sourcesHTML(t.sources)}</div>`);
+  sections.push(sourcesAndFreshnessHTML(t, isAddon ? "addon" : "activity"));
 
   const phrase = CAT_PHRASE[t.cat] || "activity";
   const confirm = [!price.known && "price", "availability", !(t.inclusions||[]).length && "inclusions", !(t.pickup || t.meetingPoint) && "pickup", !t.cancellationPolicy && "cancellation terms"].filter(Boolean);
@@ -4982,8 +5017,7 @@ function renderTourDetail(id, expectedDest, opts){
     ${atAGlanceHTML(`<strong>${t.title}</strong> is ${isAddon ? "an arrival add-on listed under Visas" : `${aOrAn(phrase)} ${phrase} listed under ${dn} activities`} at RAAHHI TOURS. ${t.description || t.desc}${hasRealValue(t.duration) ? ` Listed duration or timing: ${t.duration}.` : ""}`, [["Availability", sti.label], [isAddon ? "Service" : "Destination", isAddon ? `<a class="contact-link" href="/visas/">Visas · arrival essentials</a>` : `<a class="contact-link" href="${URLS.activityDest(t.dest)}">${dn}</a>`], ["Location", t.location || ""], ["Departs from", originLabel(t.origin)], ["Category", t.cat],
       ["Duration / timing", hasRealValue(t.duration) ? t.duration : ""], ["Timing", t.timing || ""],
       ["Price", price.known ? escapeHTML(price.text + (price.basis ? " " + price.basis : "")) : "Confirmed on enquiry"],
-      ["Confirmed when you enquire", cap(joinList(confirm))], ["How to enquire", "Select Request to Book or Enquire on this page"],
-      ["Last verified", t.lastVerified ? formatDate(t.lastVerified) : ""]])}
+      ["Confirmed when you enquire", cap(joinList(confirm))], ["How to enquire", "Select Request to Book or Enquire on this page"]], "", freshnessSummaryHTML(t, isAddon ? "addon" : "activity"))}
     ${sections.join("")}
     <div class="detail-section"><h2>${t.title}: common questions</h2>${qaHTML([...(t.faqs || []), ...(isAddon ? [] : activityFaqItems(t))])}</div>`;
   document.getElementById("tourBookingBox").style.display = "";
@@ -5058,7 +5092,7 @@ function renderPkgDetail(id, expectedDest){
   if(p.importantInformation && p.importantInformation.length) sections.push(`<div class="detail-section"><h2>Important information</h2>${p.importantInformation.map(p14).join("")}</div>`);
   if(p.cancellationPolicy) sections.push(`<div class="detail-section"><h2>Cancellation policy</h2>${p14(p.cancellationPolicy)}</div>`);
   sections.push(commercialTermsNoteHTML(p.cancellationPolicy, p.importantInformation));
-  if(p.sources && p.sources.length) sections.push(`<div class="detail-section"><h2>Sources</h2>${sourcesHTML(p.sources)}</div>`);
+  sections.push(sourcesAndFreshnessHTML(p, "holiday"));
 
   const transfers = (p.incl || []).filter(i => /transfer/i.test(i));
   const confirm = [acc && !acc.name && "hotel name", "room type", !price.known && "price", "availability"].filter(Boolean);
@@ -5072,7 +5106,7 @@ function renderPkgDetail(id, expectedDest){
       ["Inclusions", joinList(p.incl || [])], ["Accommodation", acc ? escapeHTML(accommodationSummary(acc)) + (acc.name ? "" : " — hotel confirmed on enquiry") : ""],
       ["Transfers", transfers.length ? `Listed: ${joinList(transfers)}` : ""], ["Meals", acc && acc.board ? escapeHTML(acc.board) : ""],
       ["Price", price.known ? escapeHTML(price.text + (price.basis ? " " + price.basis : "")) : "Confirmed on enquiry"],
-      ["Confirmed when you enquire", cap(joinList(confirm))], ["Last verified", p.lastVerified ? formatDate(p.lastVerified) : ""]])}
+      ["Confirmed when you enquire", cap(joinList(confirm))]], "", freshnessSummaryHTML(p, "holiday"))}
     ${overview ? `<p class="pkg-overview">${overview}</p>` : ""}
     ${p.description ? `<p class="pkg-overview">${p.description}</p>` : ""}
     ${sections.join("")}
