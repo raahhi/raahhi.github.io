@@ -32,7 +32,12 @@ try {
     const old = await browser.newPage();
     await old.route('**/*', r => r.request().url().startsWith(base) ? r.continue() : r.abort());
     await old.goto(base + '/baseline/source.html#' + route.replace(/^\/+|\/+$/g, ''));
-    const oldFacts = await old.locator('.page.active .key-facts').first().innerText();
+    const oldFactsText = await old.locator('.page.active .key-facts').first().innerText();
+    const oldFacts = oldFactsText.replace(/\nLAST VERIFIED\n[^\n]+$/, '');
+    const recordedDate = await old.evaluate(() => {
+      const record = CURRENT.kind === 'visa' ? visaModel(CURRENT.v) : CURRENT.t || CURRENT.p;
+      return record.lastVerified || null;
+    });
     const oldAnswer = await old.locator('.page.active .answer-lede').first().innerText();
     await old.close();
     for (const width of [390, 1440]) {
@@ -44,6 +49,9 @@ try {
       assert.equal(await block.locator('.key-facts').innerText(), oldFacts, kind + ' facts preserved');
       assert.equal(await block.locator('.answer-lede').innerText(), oldAnswer, kind + ' answer preserved');
       assert.equal(await block.locator('.freshness-summary').count(), 1);
+      const factDates = await block.locator('.freshness-summary time').all();
+      assert.equal(factDates.length, recordedDate ? 1 : 0, kind + ' recorded fact date preserved');
+      if (recordedDate) assert.equal(await factDates[0].getAttribute('datetime'), recordedDate);
       const sources = page.locator('.page.active .sources-and-freshness');
       assert.equal(await sources.count(), 1);
       assert.equal(await sources.locator('h2').innerText(), 'Sources and freshness');
@@ -81,8 +89,9 @@ try {
   await probe.waitForFunction(() => typeof sourcesAndFreshnessHTML === 'function');
   const sourcePanel = probe.locator('.page.active .sources-and-freshness');
   assert((await sourcePanel.innerText()).includes('Supported statement checked on 27 September 2026.'));
-  assert.equal(await sourcePanel.locator('time').getAttribute('datetime'), '2026-09-27');
-  assert.equal(await sourcePanel.locator('a').getAttribute('href'), 'https://www.guinnessworldrecords.com/world-records/tallest-building');
+  const claim = sourcePanel.locator('.source-list li').filter({hasText:'Guinness World Records: Tallest building'});
+  assert.equal(await claim.locator('time').getAttribute('datetime'), '2026-09-27');
+  assert.equal(await claim.locator('a').getAttribute('href'), 'https://www.guinnessworldrecords.com/world-records/tallest-building');
   await probe.evaluate(() => {
     for (const value of ['', null, '2026-02-30', '2026-13-01', 'not-a-date']) {
       if (checkedDateHTML(value)) throw Error('Invalid date displayed: ' + value);
