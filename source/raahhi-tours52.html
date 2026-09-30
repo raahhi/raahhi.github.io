@@ -665,6 +665,10 @@
   .status-banner.status-temporarily-closed{ background:#F6E7E7; border-left-color:#B24A4A; }
   .tour-select{ font:inherit; font-size:14px; padding:8px 10px; border:1px solid rgba(20,30,50,.18); border-radius:10px; background:#fff; color:var(--ink-800,#1d2433); }
   .btn[disabled]{ background:#E4E6EA; color:#6B7383; cursor:not-allowed; border-color:transparent; }
+.planning-links .planning-link-note{display:block;margin-top:3px;}
+  .planning-links a{overflow-wrap:anywhere;}
+  .planning-links .link-list li{margin-bottom:12px;}
+  .uae-planning-links .planning-links{margin-top:20px;}
 </style>
 </head>
 <body>
@@ -4355,6 +4359,38 @@ function guideCardsHTML(list, eyebrow){
       <span class="gc-more" aria-hidden="true">Read the guide →</span>
     </li>`).join("")}</ul>`;
 }
+
+/* Contextual planning links use published destinations and catalogue guide membership. */
+function planningLinksHTML(dest, currentPath, guides){
+  if(!DESTINATIONS.some(d => d.slug === dest)) return "";
+  const name = destName(dest), links = [];
+  if(destHasTours(dest)) links.push({href:URLS.activityDest(dest), label:`${name} activities`, note:"Individual experiences and attraction listings."});
+  if(destHasPackages(dest)) links.push({href:URLS.holidayDest(dest), label:`${name} holiday packages`, note:"Hotel stays and day-by-day itineraries."});
+  const visa = visaBySlug("united-arab-emirates");
+  if(visa) links.push({href:URLS.visa(visa), label:"UAE visa assistance", note:"Requirements depend on your passport and trip."});
+  (guides || []).forEach(g => links.push({href:URLS.guide(g.slug), label:g.name, note:g.blurb}));
+  const seen = new Set([currentPath]);
+  const items = links.filter(x => !seen.has(x.href) && seen.add(x.href));
+  if(!items.length) return "";
+  return `<nav class="detail-section planning-links" aria-label="Plan your ${escapeHTML(name)} visit">
+    <h2>Plan your ${escapeHTML(name)} visit</h2>
+    <ul class="link-list">${items.map(x => `<li><a href="${escapeHTML(x.href)}">${escapeHTML(x.label)}</a><span class="index-note planning-link-note">${escapeHTML(x.note)}</span></li>`).join("")}</ul>
+    <p class="index-note">Activities, holiday packages and visa assistance are separate services. Inclusions and availability are confirmed on enquiry.</p>
+  </nav>`;
+}
+function packageGuides(p){
+  const ids = new Set(itineraryActivities(p).map(x => x.t.id));
+  return GUIDES.filter(g => g.ids().some(id => ids.has(id)));
+}
+function uaePlanningLinksHTML(){
+  return `<section class="detail-section uae-planning-links"><h2>Plan your UAE visit</h2>
+    <p class="body-copy">Browse the destinations listed by RAAHHI TOURS. Activities and holiday packages are separate services from visa assistance.</p>
+    ${DESTINATIONS.filter(d => destHasTours(d.slug) || destHasPackages(d.slug)).map(d =>
+      planningLinksHTML(d.slug, URLS.visa(visaBySlug("united-arab-emirates")), GUIDES.filter(g => g.dest === d.slug))
+        .replace(/<h2>/g, "<h3>").replace(/<\/h2>/g, "</h3>")).join("")}
+  </section>`;
+}
+
 function activityDestGuideHTML(slug){
   const d = destName(slug), list = TOURS.filter(t => t.dest === slug);
   if(!list.length) return "";
@@ -4383,6 +4419,7 @@ function activityDestGuideHTML(slug){
   return `<section class="dest-guide" aria-labelledby="actDestGuideTitle">
       <h2 id="actDestGuideTitle">Planning your ${d} activities</h2>
       <p class="body-copy">RAAHHI TOURS lists ${list.length} ${list.length === 1 ? "activity" : "activities"} in ${d}. Below they are grouped by category and by the time each listing needs, with the points our team confirms when you enquire.</p>
+      ${planningLinksHTML(slug, URLS.activityDest(slug), guides)}
       <button type="button" class="btn btn-line btn-sm dest-guide-toggle" data-guide-toggle="${slug}" aria-expanded="false" aria-controls="${detailsId}" onclick="toggleActivityDestGuide('${slug}', this)">Show more</button>
       <div class="dest-guide-details" id="${detailsId}" hidden>
         <div class="seo-cols">
@@ -4390,7 +4427,6 @@ function activityDestGuideHTML(slug){
           <div><h3>By time needed</h3><ul class="fact-list">${timeItems}</ul></div>
           <div><h3>Before you enquire</h3><ul class="plain-list">${notes.map(n => `<li>${n}</li>`).join("")}</ul></div>
         </div>
-        ${guides.length ? `<h3 class="dg-sub">${d} activity ${guides.length === 1 ? "guide" : "guides"}</h3>${guideCardsHTML(guides)}` : ""}
         <div class="dest-guide-collapse"><button type="button" class="btn btn-line btn-sm" onclick="collapseActivityDestGuide('${slug}')">Show less</button></div>
       </div>
     </section>`;
@@ -4418,7 +4454,7 @@ function collapseActivityDestGuide(slug){
 
 function holidayDestGuideHTML(slug){
   const d = destName(slug), list = PACKAGES.filter(p => p.dest === slug);
-  if(!list.length) return "";
+  if(!list.length) return planningLinksHTML(slug, URLS.holidayDest(slug), GUIDES.filter(g => g.dest === slug));
   const link = p => `<a href="${URLS.holiday(p)}">${p.title}</a>`;
   const acc = list.map(p => ({p, a: packageAccommodation(p)}));
   const withHotel = acc.filter(x => x.a), starred = acc.filter(x => x.a && x.a.category), located = acc.filter(x => x.a && x.a.location);
@@ -4443,6 +4479,7 @@ function holidayDestGuideHTML(slug){
   ].filter(Boolean);
   return `<section class="dest-guide" aria-labelledby="pkgDestGuideTitle">
       <h2 id="pkgDestGuideTitle">Compare ${d} holiday packages</h2>
+      ${planningLinksHTML(slug, URLS.holidayDest(slug), GUIDES.filter(g => g.dest === slug || list.some(p => packageGuides(p).includes(g))))}
       <p class="body-copy">Each ${d} package page lists a day-by-day itinerary, the inclusions and the accommodation details that are known. This table puts the ${list.length} packages side by side.</p>
       <div class="table-scroll"><table class="data-table">
         <caption class="sr-only">${d} holiday packages listed by RAAHHI TOURS, with duration, stay and listed inclusions</caption>
@@ -4643,7 +4680,7 @@ function guideBySlug(slug){ return GUIDES.find(g => g.slug === slug); }
 function renderGuide(slug){
   const g = guideBySlug(slug);
   const out = g.render(g);
-  document.getElementById("guideBody").innerHTML = out.html;
+  document.getElementById("guideBody").innerHTML = out.html + planningLinksHTML(g.dest, URLS.guide(g.slug), GUIDES.filter(x => x.dest === g.dest));
   return out.faq;
 }
 
@@ -4913,7 +4950,7 @@ function renderVisaDetail(slug){
       <h2>More visa destinations</h2>
       <p style="color:var(--ink-600); font-size:14.5px;">${more.map(x => `<a class="contact-link" href="${URLS.visa(x)}">${x.country} visa assistance</a>`).join(" · ")} · <a class="contact-link" href="/visas/">All ${VISAS.length} visa destinations</a></p>
     </div>
-    ${slugV === "united-arab-emirates" ? `<p class="cross-link">Planning what to do in the UAE? <a class="contact-link" href="/activities/">Explore UAE activities</a> or <a class="contact-link" href="/holidays/">UAE holiday packages →</a> These are separate services; a visa is not included in any activity or package.</p>` : ""}`;
+    ${slugV === "united-arab-emirates" ? uaePlanningLinksHTML() : ""}`;
   document.getElementById("visaBookingBox").style.display = "";
   document.getElementById("visaBookingBox").innerHTML = `
     ${vm.fee ? `<div class="bb-price">${vm.fee} <span>fee</span></div>` : `<div class="bb-price" style="font-size:22px;">Fee confirmed on enquiry</div>`}
@@ -5005,7 +5042,7 @@ function renderTourDetail(id, expectedDest, opts){
       <p class="index-note" style="margin-top:10px;">Holiday packages are separate products from this activity. What each package includes is listed on its own page and confirmed when you enquire.</p></div>`);
   }
   const guides = GUIDES.filter(g => g.ids().includes(t.id));
-  if(guides.length) sections.push(`<div class="detail-section"><h2>Compare with similar activities</h2>${guides.map(g => p14(`The <a class="contact-link" href="${URLS.guide(g.slug)}">${g.name}</a> compares ${t.title} with ${g.ids().length - 1} other ${destName(g.dest)} ${g.ids().length - 1 === 1 ? "listing" : "listings"}.`)).join("")}</div>`);
+  sections.push(planningLinksHTML(t.dest, itemURL(t), guides));
   sections.push(sourcesAndFreshnessHTML(t, isAddon ? "addon" : "activity"));
 
   const phrase = CAT_PHRASE[t.cat] || "activity";
@@ -5092,6 +5129,7 @@ function renderPkgDetail(id, expectedDest){
   if(p.importantInformation && p.importantInformation.length) sections.push(`<div class="detail-section"><h2>Important information</h2>${p.importantInformation.map(p14).join("")}</div>`);
   if(p.cancellationPolicy) sections.push(`<div class="detail-section"><h2>Cancellation policy</h2>${p14(p.cancellationPolicy)}</div>`);
   sections.push(commercialTermsNoteHTML(p.cancellationPolicy, p.importantInformation));
+  sections.push(planningLinksHTML(p.dest, URLS.holiday(p), packageGuides(p)));
   sections.push(sourcesAndFreshnessHTML(p, "holiday"));
 
   const transfers = (p.incl || []).filter(i => /transfer/i.test(i));
