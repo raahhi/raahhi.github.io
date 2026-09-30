@@ -1,4 +1,4 @@
-name: Validate contextual planning links
+name: Verify live contextual planning links
 on:
   push:
     branches: [codex/internal-links-validation]
@@ -14,7 +14,4 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: npm install --no-audit --no-fund
-      - run: npx playwright install --with-deps chromium
-      - run: npm run build
-      - run: node .github/check-internal-links.mjs
+      - run: node .github/check-live-internal-links.mjs
