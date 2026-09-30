@@ -75,9 +75,14 @@ async function snapshot(route) {
         throw new Error('Empty or placeholder fact on ' + route);
       }
     }
+    const planning = await page.locator('.page.active .planning-links').evaluateAll(nodes => nodes.map(node => ({
+      label:node.getAttribute('aria-label'),
+      links:[...node.querySelectorAll('a')].map(a => ({href:a.getAttribute('href'), text:a.textContent.trim()})),
+      visible:!node.closest('[hidden]') && node.getBoundingClientRect().width > 0
+    })));
     const raw = await page.locator('#__prerender').textContent();
     if (!raw) throw new Error('Missing prerender payload for ' + route);
-    return JSON.parse(raw);
+    return {...JSON.parse(raw), planning};
   } finally {
     await page.close();
   }
@@ -130,6 +135,24 @@ try {
     }
   }));
 
+  // Planning links must lead to published routes and remain available without opening a disclosure.
+  const published = new Set(home.routes), planningEdges = [];
+  for (const [route, data] of routeResults) {
+    for (const nav of data.planning || []) {
+      if(!nav.visible || !nav.label || !nav.links.length) throw new Error('Hidden or empty planning links on ' + route);
+      const seen = new Set();
+      for (const link of nav.links) {
+        if(!published.has(link.href) || link.href === route || !link.text || seen.has(link.href)) {
+          throw new Error('Invalid planning link from ' + route + ' to ' + link.href);
+        }
+        seen.add(link.href);
+        planningEdges.push({from:route, to:link.href});
+      }
+    }
+    if (['activity', 'holiday', 'guide', 'activityDest', 'holidayDest', 'addon'].includes(data.kind) && !(data.planning || []).length) {
+      throw new Error('Missing contextual planning links on ' + route);
+    }
+  }
   for (const route of home.routes) {
     const data = routeResults.get(route);
     if (!data?.html) throw new Error('No HTML snapshot for ' + route);
@@ -173,6 +196,8 @@ try {
     sitemapUrls: sitemapUrlCount(home.sitemapXml),
     intendedIndexableUrls: EXPECTED_SITEMAP_URLS,
     generated404: true,
+    planningLinkPages: [...routeResults.values()].filter(r => r.planning?.length).length,
+    planningLinks: planningEdges.length,
     atAGlancePages: [...routeResults.values()].filter(r => ['activity', 'holiday', 'visa', 'addon'].includes(r.kind)).length,
     sourcesAndFreshnessPages: [...routeResults.values()].filter(r => ['activity', 'holiday', 'visa', 'addon'].includes(r.kind)).length
   };
