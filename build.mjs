@@ -14,8 +14,8 @@ const EXPECTED_SITEMAP_URLS = 275;
 // hydrate() drains this queue using the real fallback handler once the app is ready.
 const EARLY_IMAGE_FALLBACK = '<script data-image-fallback-bootstrap>window.__imgFallbackQueue=[];window.imgFallback=function(el){window.__imgFallbackQueue.push(el);};</script>';
 
-function attachHydrationScripts(html) {
-  return assets.attach(html, EARLY_IMAGE_FALLBACK);
+function attachHydrationScripts(html, data = {}) {
+  return assets.attach(html, EARLY_IMAGE_FALLBACK, data.runtimeActivityId);
 }
 
 function extractAppScript(source) {
@@ -45,7 +45,7 @@ const authorSource = await readFile(SOURCE_FILE, 'utf8');
 const source = authorSource.replace('</head>', localMedia.bootstrap + '</head>');
 const appScript = extractAppScript(source);
 const logoPng = extractEmbeddedBrandPng(source);
-const assets = await compileSiteAssets(source, appScript.js);
+let assets;
 
 await rm(DIST, { recursive: true, force: true });
 await mkdir(DIST, { recursive: true });
@@ -115,7 +115,12 @@ async function snapshot(route) {
     })));
     const raw = await page.locator('#__prerender').textContent();
     if (!raw) throw new Error('Missing prerender payload for ' + route);
-    return {...JSON.parse(raw), planning};
+    const runtimeActivityId = await page.evaluate(() => CURRENT.kind === 'activity' ? CURRENT.t.id : null);
+    const runtimeCatalogue = route === '/' ? await page.evaluate(() => ({
+      tours: TOURS.map(t => ({...t, _cardSummary: activitySummaryText(t)})),
+      searchOther: Object.fromEntries(ACTIVITY_SEARCH_INDEX.map(e => [e.t.id, e.other]))
+    })) : null;
+    return {...JSON.parse(raw), planning, runtimeActivityId, runtimeCatalogue};
   } finally {
     await page.close();
   }
@@ -137,6 +142,7 @@ async function writeBrandAssets() {
 
 try {
   const home = await snapshot('/');
+  assets = await compileSiteAssets(source, appScript.js, home.runtimeCatalogue);
   if (home.siteUrl !== EXPECTED_ORIGIN) {
     throw new Error('Production origin mismatch: expected ' + EXPECTED_ORIGIN + ', got ' + home.siteUrl);
   }
@@ -197,7 +203,7 @@ try {
         throw new Error('Visa destination index must contain all 41 visa routes as anchor links.');
       }
     }
-    const html = attachHydrationScripts(data.html);
+    const html = attachHydrationScripts(data.html, data);
     if (!html.includes('src="' + assets.scriptUrl + '"')) throw new Error('Hydration script missing from ' + route);
     if (!html.includes('data-prerendered=')) throw new Error('Static marker missing from ' + route);
     if (data.robots === 'index,follow') {

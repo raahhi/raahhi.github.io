@@ -41,6 +41,9 @@ jobs:
       - name: Check catalogue search and related suggestions
         run: node .github/check-search.mjs
 
+      - name: Check published catalogue chunks and search
+        run: node .github/check-published-data.mjs
+
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
 
