@@ -1,0 +1,167 @@
+{
+  "checkedOn": "2026-10-01",
+  "scope": "Selected venue/reference facts only. No RAAHHI commercial inventory verified.",
+  "products": {
+    "ferrari-world-abu-dhabi": {
+      "fields": [
+        "Ride maintenance notice",
+        "Direct-ticket amendment guidance"
+      ],
+      "sources": [
+        {
+          "name": "Guinness World Records: Fastest rollercoaster",
+          "url": "https://www.guinnessworldrecords.com/world-records/93599-fastest-roller-coaster",
+          "type": "record",
+          "supports": "Formula Rossa at Ferrari World Abu Dhabi is the fastest rollercoaster, at 240 km/h",
+          "lastVerified": "2026-09-27"
+        },
+        {
+          "name": "Ferrari World: ride updates",
+          "url": "https://www.ferrariworldabudhabi.com/en/park-overview/rides-information",
+          "type": "operator",
+          "supports": "Formula Rossa maintenance closure; ride information can change.",
+          "lastVerified": "2026-10-01"
+        },
+        {
+          "name": "Ferrari World: direct-ticket FAQ",
+          "url": "https://www.ferrariworldabudhabi.com/en/faq",
+          "type": "operator",
+          "supports": "Direct-ticket exchanges and date changes are subject to review; these are not RAAHHI booking terms.",
+          "lastVerified": "2026-10-01"
+        }
+      ]
+    },
+    "jebel-jais-zipline": {
+      "fields": [
+        "Flight and Sky Tour distinction",
+        "Published zipline height and weight guidance"
+      ],
+      "sources": [
+        {
+          "name": "Guinness World Records: Longest zip wire",
+          "url": "https://www.guinnessworldrecords.com/world-records/67883-longest-zip-wire",
+          "type": "record",
+          "supports": "Jebel Jais Flight in Ras Al Khaimah is the longest zip wire, a single span of 2,831.88 m",
+          "lastVerified": "2026-09-27"
+        },
+        {
+          "name": "Jebel Jais: activity definitions",
+          "url": "https://visitjebeljais.com/play",
+          "type": "operator",
+          "supports": "Jais Flight is 2.83 km; Jais Sky Tour is a separate six-zipline experience.",
+          "lastVerified": "2026-10-01"
+        },
+        {
+          "name": "Jebel Jais: eligibility FAQ",
+          "url": "https://visitjebeljais.com/faqs",
+          "type": "operator",
+          "supports": "Published zipline weight range 40 to 120 kg and minimum height 122 cm; exact-product eligibility must be confirmed.",
+          "lastVerified": "2026-10-01"
+        }
+      ]
+    },
+    "aqua-fun-dubai": {
+      "fields": [
+        "Official-only ticket policy",
+        "Entry eligibility",
+        "Official Day Pass access and equipment"
+      ],
+      "sources": [
+        {
+          "name": "AquaFun: official visitor guidance",
+          "url": "https://aquafun.ae/",
+          "type": "operator",
+          "supports": "Location, minimum age and height, adult supervision and swimming guidance.",
+          "lastVerified": "2026-10-01"
+        },
+        {
+          "name": "AquaFun: ticket FAQ",
+          "url": "https://aquafun.ae/faq",
+          "type": "operator",
+          "supports": "Direct tickets only; Day Pass access, equipment and re-entry.",
+          "lastVerified": "2026-10-01"
+        }
+      ]
+    },
+    "burj-khalifa-top": {
+      "fields": [
+        "Standard Silver observation floors",
+        "Entrance location"
+      ],
+      "sources": [
+        {
+          "name": "Guinness World Records: Tallest building",
+          "url": "https://www.guinnessworldrecords.com/world-records/tallest-building",
+          "type": "record",
+          "supports": "Burj Khalifa is the tallest building, at 828 m",
+          "lastVerified": "2026-09-27"
+        },
+        {
+          "name": "At the Top: Silver experience",
+          "url": "https://ticket.atthetop.ae/experiences/at-the-top-burj-khalifa/",
+          "type": "operator",
+          "supports": "Silver access to levels 124 and 125 and entrance via Dubai Mall lower ground floor.",
+          "lastVerified": "2026-10-01"
+        }
+      ]
+    },
+    "dubai-frame": {
+      "fields": [
+        "Published opening hours",
+        "Gate 4 entrance",
+        "Age and free-admission guidance"
+      ],
+      "sources": [
+        {
+          "name": "Dubai Frame: plan your visit",
+          "url": "https://www.dubaiframe.ae/en/plan-your-visit",
+          "type": "operator",
+          "supports": "Published opening hours, Gate 4 location, under-12 adult supervision and free-admission categories.",
+          "lastVerified": "2026-10-01"
+        }
+      ]
+    },
+    "louvre-abu-dhabi": {
+      "fields": [
+        "Gallery hours",
+        "Monday closure"
+      ],
+      "sources": [
+        {
+          "name": "Louvre Abu Dhabi: opening times",
+          "url": "https://www.louvreabudhabi.ae/en/visit/plan-your-visit/opening-times",
+          "type": "operator",
+          "supports": "Published gallery opening hours and Monday closure. Last-admission timing is not verified here.",
+          "lastVerified": "2026-10-01"
+        }
+      ]
+    },
+    "evening-desert-safari": {
+      "fields": [
+        "Reference itinerary and sandboarding exclusion"
+      ],
+      "sources": [
+        {
+          "name": "Rayna Tours: safari reference",
+          "url": "https://www.raynatours.com/dubai/desert-safari-tours/dubai-desert-safari-with-dune-bashing-e-5962",
+          "type": "operator",
+          "supports": "Reference operator describes dune bashing, dinner and paid sandboarding add-on; not confirmation of RAAHHI supplier allocation or booking terms.",
+          "lastVerified": "2026-10-01"
+        }
+      ]
+    }
+  },
+  "media": {
+    "abu-dhabi-stay-play": {
+      "change": "First photo replaced with confirmed Ferrari World aerial photo; illustrates one possible park, not confirmed package park or hotel.",
+      "source": "https://www.pexels.com/photo/aerial-view-of-ferrari-world-in-abu-dhabi-36329344/",
+      "photographer": "Miguel Cuenca",
+      "license": "https://www.pexels.com/license/",
+      "downloadStatus": "Existing remote photo reused; direct download blocked."
+    },
+    "aqua-fun-dubai": {
+      "status": "Exact reusable photo not found; operator photos need permission.",
+      "source": "https://aquafun.ae/"
+    }
+  }
+}

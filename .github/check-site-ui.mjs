@@ -69,6 +69,15 @@ try{
    if(route==='/activities/dubai/aqua-fun-dubai/'){
     assert.equal(await p.locator('#tourDetailGallery img').count(),0,'No substitute JBR skyline on AquaFun');
     assert.equal(await p.locator('#tourDetailGallery .ph-card').count(),1);
+    assert.equal(await p.locator('.page.active [onclick*="enquireAboutProduct"]').count(),0,'Official-only listing has no RAAHHI ticket enquiry');
+    assert.equal(await p.locator('#tourBookingBox input').count(),0,'Official-only listing does not request dates or guests');
+    assert.equal(await p.locator('#tourBookingBox a').getAttribute('href'),'https://aquafun.ae/');
+    const graph=await p.locator('script[type="application/ld+json"]').evaluate(el=>JSON.parse(el.textContent)['@graph']);
+    const attraction=graph.find(n=>n['@type']==='TouristAttraction');
+    assert(attraction && attraction.sameAs==='https://aquafun.ae/','Official-only listing identifies the attraction');
+    assert(!graph.some(n=>n['@id']?.endsWith('/aqua-fun-dubai/#service')||n.offers),'No RAAHHI ticket service or offer claim');
+    await p.evaluate(()=>enquireAboutProduct('activity','aqua-fun-dubai'));
+    assert(!(await p.locator('#contactModal').isVisible()),'Official-only enquiry is guarded after hydration');
    }
    if(route==='/activities/dubai/img-worlds-of-adventure/'||route==='/activities/dubai/luxury-yacht-rental-dubai/'){
     const image=p.locator('#tourDetailGallery img.active');
