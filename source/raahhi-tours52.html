@@ -770,6 +770,9 @@
   .qa-item p,.plain-list,.body-copy,.seo-cols p,.link-list,.faq-a p,.pkg-overview{ font-size:16px; line-height:1.6; }
   .key-facts dt{ font-size:14px; letter-spacing:.02em; }
   .media-credit,.media-credit-compact{ font-size:13px; line-height:1.5; }
+  details.media-credit > summary{ display:inline-block; list-style:none; font:400 9px/1.5 Inter,system-ui,sans-serif; padding:0; margin:0; min-width:0; min-height:0; cursor:pointer; text-decoration:underline; text-underline-offset:2px; }
+  details.media-credit > summary::-webkit-details-marker{ display:none; }
+  .media-credit .credit-attribution{ margin:6px 0 0; font-size:14px; line-height:1.5; }
   .detail-back{ margin-bottom:16px; }
   .breadcrumb{ margin-bottom:8px; }
   .detail-layout{ gap:32px; margin-top:28px; }
@@ -8130,7 +8133,7 @@ function mediaInfo(src){
    position in the slideshow when there is more than one). */
 function mediaCreditHTML(images, opts){
   opts = opts || {};
-  const list = (images || []).slice(0, 5).map((src, i) => ({i, m: mediaInfo(src)})).filter(x => x.m.creditName);
+  const list = (images || []).slice(0, 5).map((src, i) => ({i, m: mediaInfo(src)})).filter(x => x.m.creditName && /^CC BY(?:-SA)? /.test(x.m.creditLicense || ""));
   if(!list.length) return "";
   const groups = {};
   list.forEach(x => { const k = [x.m.creditName, x.m.creditSource, x.m.creditLicense].join("|"); (groups[k] = groups[k] || []).push(x); });
@@ -8143,7 +8146,7 @@ function mediaCreditHTML(images, opts){
     return `${links}, <a href="${escapeHTML(m.licenseUrl)}" rel="noopener license">${escapeHTML(m.creditLicense)}</a>`;
   });
   const adapted = list.some(x => (window.RAAHHI_MEDIA || {})[imgBase(images[x.i])]);
-  return `<p class="media-credit${opts.compact ? " media-credit-compact" : ""}">Image credit: ${parts.join("; ")}${adapted ? "; resized and converted to WebP" : ""}</p>`;
+  return `<details class="media-credit${opts.compact ? " media-credit-compact" : ""}"><summary>Photo credits</summary><p class="credit-attribution">${parts.join("; ")}${adapted ? "; resized and converted to WebP" : ""}</p></details>`;
 }
 // Detail-page gallery: the photos (or the branded panel) plus the credit line beneath them.
 function setDetailGallery(galleryId, creditId, images, title, meta, photoContext){
