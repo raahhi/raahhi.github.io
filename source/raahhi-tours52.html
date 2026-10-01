@@ -786,7 +786,6 @@
   .slideshow:focus-within .slideshow-arrow{ opacity:1; }
   .hero-slideshow .slideshow-arrow{ top:auto; bottom:12px; transform:none; }
   .hero-slideshow .slideshow-dots{ bottom:12px; }
-  .slideshow-play{ position:absolute; top:16px; right:16px; z-index:3; min-height:44px; padding:8px 14px; border:1px solid rgba(255,255,255,.6); border-radius:24px; background:rgba(11,21,38,.78); color:#fff; font:600 14px Inter,sans-serif; }
   .dhv-slides .slideshow-arrow{ top:16px; transform:none; }
   .dhv-slides .slideshow-dots{ top:16px; bottom:auto; }
   .vc-type,.vc-guarantee,.vc-more,.dest-card-count{ font-size:14px; }
@@ -6608,39 +6607,24 @@ function slideshowHTML(images, alt, extraClass, opts){
     <button type="button" class="slideshow-arrow prev" aria-label="Previous image${of}" onclick="event.preventDefault();event.stopPropagation();slideStep('${id}',-1)">‹</button>
     <button type="button" class="slideshow-arrow next" aria-label="Next image${of}" onclick="event.preventDefault();event.stopPropagation();slideStep('${id}',1)">›</button>` : "";
   const region = label ? ` role="group" aria-roledescription="slideshow" aria-label="${label} photos"` : "";
-  const play = hero && imgs.length > 1 ? `<button type="button" class="slideshow-play" aria-label="Pause automatic slideshow" onclick="toggleHeroSlideshow(this)">Pause</button>` : "";
-  return `<div class="slideshow ${cls}" id="${id}" data-count="${imgs.length}" data-index="0"${region}>${imgTags}${link}${arrows}${dots}${play}</div>`; // credits: mediaCreditHTML(), outside the photo
+  return `<div class="slideshow ${cls}" id="${id}" data-count="${imgs.length}" data-index="0"${region}>${imgTags}${link}${arrows}${dots}</div>`; // credits: mediaCreditHTML(), outside the photo
 }
 // Only the homepage hero rotates automatically; other galleries load photos on demand.
 function initSlideshows(root){
   (root || document).querySelectorAll(".slideshow[data-count]").forEach(el=>{
     loadSlide(el.querySelector("img.active"));
     if(!el.classList.contains("hero-slideshow") || Number(el.dataset.count) < 2 || IS_PRERENDER_RUN || el._heroTimer) return;
-    el.dataset.paused = REDUCED_MOTION.matches ? "true" : "false";
-    updateHeroPlayButton(el);
     el._heroTimer = setInterval(()=>{
       if(!el.isConnected){ clearInterval(el._heroTimer); return; }
-      if(document.hidden || el.dataset.paused === "true" || el.matches(":hover, :focus-within") || !el.getClientRects().length) return;
+      if(document.hidden || !el.getClientRects().length) return;
       const next = (Number(el.dataset.index) + 1) % Number(el.dataset.count);
       const img = el.querySelectorAll("img")[next];
       loadSlide(img);
       if(img.complete && img.naturalWidth) slideGoTo(el.id, next);
     }, 5000);
-    if(!REDUCED_MOTION.matches) loadSlide(el.querySelectorAll("img")[1]);
+    loadSlide(el.querySelectorAll("img")[1]);
   });
 }
-function updateHeroPlayButton(el){
-  const button = el.querySelector(".slideshow-play"); if(!button) return;
-  const paused = el.dataset.paused === "true";
-  button.textContent = paused ? "Play" : "Pause";
-  button.setAttribute("aria-label", paused ? "Play automatic slideshow" : "Pause automatic slideshow");
-}
-function toggleHeroSlideshow(button){
-  const el = button.closest(".hero-slideshow");
-  el.dataset.paused = el.dataset.paused === "true" ? "false" : "true";
-  updateHeroPlayButton(el);
-}
-
 /* ============ v41: METADATA + STRUCTURED DATA ============ */
 function absUrl(p){ const b = siteBase(); return b ? b + p : p; }
 function orgNode(){
