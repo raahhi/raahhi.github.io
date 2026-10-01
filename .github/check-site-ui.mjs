@@ -4,7 +4,7 @@ import {readFile} from 'node:fs/promises';
 import assert from 'node:assert/strict';
 const server=createServer(async(req,res)=>{
  const p=new URL(req.url,'http://localhost').pathname;
- try{res.setHeader('Content-Type',p.endsWith('.js')?'text/javascript':p.endsWith('.png')?'image/png':'text/html');res.end(await readFile('dist'+(p.endsWith('/')?p+'index.html':p)));}
+ try{res.setHeader('Content-Type',p.endsWith('.js')?'text/javascript':p.endsWith('.css')?'text/css':p.endsWith('.png')?'image/png':p.endsWith('.jpg')?'image/jpeg':'text/html');res.end(await readFile('dist'+(p.endsWith('/')?p+'index.html':p)));}
  catch{res.statusCode=404;res.end();}
 });
 await new Promise(r=>server.listen(0,'127.0.0.1',r));const base='http://127.0.0.1:'+server.address().port;
@@ -18,7 +18,7 @@ try{
  const early=await browser.newPage();const earlyErrors=[];early.on('pageerror',e=>earlyErrors.push(e.message));
  let release;const gate=new Promise(r=>{release=r;});
  await early.route('**/*',async r=>{
-  if(r.request().url()===base+'/assets/app.js'){await gate;await r.continue();}
+  if(/^\/assets\/app\.[a-f0-9]+\.js$/.test(new URL(r.request().url()).pathname)){await gate;await r.continue();}
   else if(r.request().url().startsWith(base))await r.continue();else await r.abort();
  });
  const navigation=early.goto(base+'/');

@@ -2,6 +2,7 @@ import { createServer } from 'node:http';
 import { readFile, mkdir, writeFile, rm } from 'node:fs/promises';
 import { join, dirname } from 'node:path';
 import { chromium } from 'playwright';
+import { compileSiteAssets } from './scripts/site-assets.mjs';
 
 const ROOT = process.cwd();
 const DIST = join(ROOT, 'dist');
@@ -13,8 +14,7 @@ const EXPECTED_SITEMAP_URLS = 275;
 const EARLY_IMAGE_FALLBACK = '<script data-image-fallback-bootstrap>window.__imgFallbackQueue=[];window.imgFallback=function(el){window.__imgFallbackQueue.push(el);};</script>';
 
 function attachHydrationScripts(html) {
-  return html.replace('</head>', EARLY_IMAGE_FALLBACK + '</head>')
-    .replace('<!--APP_SCRIPT-->', '<script id="appScript" src="/assets/app.js"></script>');
+  return assets.attach(html, EARLY_IMAGE_FALLBACK);
 }
 
 function extractAppScript(source) {
@@ -42,6 +42,7 @@ function sitemapUrlCount(xml) {
 const source = await readFile(SOURCE_FILE, 'utf8');
 const appScript = extractAppScript(source);
 const logoPng = extractEmbeddedBrandPng(source);
+const assets = await compileSiteAssets(source, appScript.js);
 
 await rm(DIST, { recursive: true, force: true });
 await mkdir(DIST, { recursive: true });
@@ -192,7 +193,7 @@ try {
       }
     }
     const html = attachHydrationScripts(data.html);
-    if (!html.includes('src="/assets/app.js"')) throw new Error('Hydration script missing from ' + route);
+    if (!html.includes('src="' + assets.scriptUrl + '"')) throw new Error('Hydration script missing from ' + route);
     if (!html.includes('data-prerendered=')) throw new Error('Static marker missing from ' + route);
     if (data.robots === 'index,follow') {
       const canonical = EXPECTED_ORIGIN + route;
@@ -209,7 +210,7 @@ try {
   await writeFile(join(DIST, '404.html'), notFoundHtml, 'utf8');
 
   await writeBrandAssets();
-  await writeFile(join(DIST, 'assets', 'app.js'), appScript.js, 'utf8');
+  for (const [url, content] of assets.files) await writeFile(join(DIST, url.slice(1)), content);
   await writeFile(join(DIST, 'robots.txt'), home.robotsTxt, 'utf8');
   await writeFile(join(DIST, 'sitemap.xml'), home.sitemapXml, 'utf8');
   await writeFile(join(DIST, 'llms.txt'), home.llmsTxt || '', 'utf8');
@@ -217,6 +218,7 @@ try {
   await writeFile(join(DIST, 'CNAME'), 'raahhi.com\n', 'utf8');
 
   const report = {
+    assets: assets.report,
     source: 'raahhi-tours52.html',
     productionOrigin: home.siteUrl,
     generatedRoutes: home.routes.length,
