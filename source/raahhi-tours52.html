@@ -310,7 +310,9 @@
   .detail-gallery .g-main{ height:100%; }
   .detail-gallery .g-side{ display:grid; grid-template-rows:1fr 1fr; gap:12px; height:100%; }
   @media (max-width:760px){ .detail-gallery .g-side{ grid-template-columns:1fr 1fr; grid-template-rows:none; height:160px; } }
-  .detail-gallery img{ width:100%; height:100%; object-fit:cover; }
+  .detail-gallery .slideshow{ background:var(--sand-100); }
+  .detail-gallery .slideshow img{ width:100%; height:100%; object-fit:contain; object-position:center !important; }
+  .detail-gallery.is-yacht-gallery .slideshow img{ object-fit:cover; object-position:var(--photo-position,center 65%) !important; }
   .detail-layout{ display:grid; grid-template-columns:1.6fr 1fr; gap:52px; margin-top:48px; align-items:flex-start; }
   @media (max-width:900px){ .detail-layout{ grid-template-columns:1fr; } }
   .detail-main h1{ font-size:clamp(28px,3.6vw,38px); }
@@ -1945,7 +1947,7 @@ const TOURS = [
   {id:"aya-universe-dubai", dest:"dubai", cat:"Landmarks", badge:"", title:"AYA Universe Dubai", desc:"An immersive digital art and light experience in Dubai.", duration:"1–2 hours", price:"X – X", images:[IMG.ayaDome, IMG.ayaRedRoom, IMG.ayaLightGlobes]},
   {id:"dubai-miracle-garden", dest:"dubai", cat:"City Tours", badge:"", title:"Dubai Miracle Garden", desc:"A large outdoor flower garden in Dubai, in bloom seasonally.", duration:"~2 hours", price:"X – X", images:["https://commons.wikimedia.org/wiki/Special:Redirect/file/Dubai%20Miracle%20Garden.jpg"]},
   {id:"global-village-dubai", dest:"dubai", cat:"City Tours", badge:"", title:"Global Village Dubai", desc:"Pavilions, rides and street food representing cultures from across the world.", duration:"Evening", price:"X – X", images:["https://commons.wikimedia.org/wiki/Special:Redirect/file/Global%20village%20dubai.jpg"]},
-  {id:"img-worlds-of-adventure", dest:"dubai", cat:"Theme Parks", badge:"", title:"IMG Worlds of Adventure", desc:"An indoor theme park in Dubai with Marvel and Cartoon Network zones.", duration:"Full day", price:"X – X", images:[IMG.imgVelociraptor, IMG.imgPredator]},
+  {id:"img-worlds-of-adventure", dest:"dubai", cat:"Theme Parks", badge:"", title:"IMG Worlds of Adventure", desc:"An indoor theme park in Dubai with Marvel and Cartoon Network zones.", duration:"Full day", price:"X – X", images:[IMG.imgPredator, IMG.imgVelociraptor]},
   {id:"ferrari-world-abu-dhabi", dest:"abu-dhabi", cat:"Theme Parks", badge:"", title:"Ferrari World Abu Dhabi", desc:"A Ferrari-themed park on Yas Island with racing-themed rides, including the Formula Rossa roller coaster.", duration:"Full day", price:"X – X", images:["https://images.pexels.com/photos/36329344/pexels-photo-36329344/free-photo-of-aerial-view-of-ferrari-world-in-abu-dhabi.jpeg", IMG.ferrariWorldCoaster], location:"Yas Island, Abu Dhabi", description:"A Ferrari-themed park on Yas Island with racing-themed rides, including the Formula Rossa roller coaster. Guinness World Records lists Formula Rossa as the fastest rollercoaster, at 240 km/h.", sources:[CLAIM_SOURCES.fastestRollercoaster]},
   {id:"warner-bros-world", dest:"abu-dhabi", cat:"Theme Parks", badge:"", title:"Warner Bros. World Abu Dhabi", desc:"A theme park in Abu Dhabi with lands themed around DC, Looney Tunes and Cartoon Network.", duration:"Full day", price:"X – X", images:[IMG.wbWorldStore]},
   {id:"seaworld-abu-dhabi", dest:"abu-dhabi", cat:"Theme Parks", badge:"", title:"SeaWorld Abu Dhabi", desc:"A marine-life theme park in Abu Dhabi, with animal exhibits and rides.", duration:"Full day", price:"X – X", images:[IMG.seaworldPenguinIce, IMG.seaworldPenguins, IMG.seaworldTropicBird]},
@@ -1961,7 +1963,7 @@ const TOURS = [
   {id:"hot-air-balloon-dubai", dest:"dubai", cat:"Adventure", badge:"", title:"Hot Air Balloon Dubai", desc:"A sunrise flight over the desert, with breakfast and wildlife spotting.", duration:"Sunrise", price:"X – X", images:[IMG.balloonsSafari, "https://images.unsplash.com/photo-1717390700777-9f4f5becedf8", "https://images.unsplash.com/photo-1717981097333-6d89915f97d1"]},
   {id:"skydive-dubai-palm", dest:"dubai", cat:"Adventure", badge:"", title:"Skydive Dubai — Palm Dropzone", desc:"A tandem jump with views over Palm Jumeirah and the coastline.", duration:"Half day", price:"X – X", images:["https://images.pexels.com/photos/27917457/pexels-photo-27917457/free-photo-of-parachute.jpeg?auto=compress&cs=tinysrgb&w=1200"], location:"Palm Dropzone, Palm Jumeirah"},
   {id:"helicopter-tour-dubai", dest:"dubai", cat:"Adventure", badge:"", title:"Helicopter Tour Dubai", desc:"A short aerial tour over the Burj Khalifa, Palm and coastline.", duration:"12–25 minutes", price:"X – X", images:[IMG.helicopterDubai, IMG.burjAlArabAerial]},
-  {id:"luxury-yacht-rental-dubai", dest:"dubai", cat:"Cruises", badge:"", title:"Luxury Yacht Rental Dubai", desc:"Private yacht charters along the Marina and coastline, with a skipper included.", duration:"1–4 hours", price:"X – X", images:["https://images.pexels.com/photos/30047576/pexels-photo-30047576/free-photo-of-luxury-yacht-at-dubai-marina-waterfront.jpeg", IMG.marinaMooring, "https://images.pexels.com/photos/36070167/pexels-photo-36070167.jpeg"], location:"Dubai Marina"},
+  {id:"luxury-yacht-rental-dubai", dest:"dubai", cat:"Cruises", badge:"", title:"Luxury Yacht Rental Dubai", desc:"Private yacht charters along the Marina and coastline, with a skipper included.", duration:"1–4 hours", price:"X – X", images:["https://images.pexels.com/photos/36070167/pexels-photo-36070167.jpeg", "https://images.pexels.com/photos/30047576/pexels-photo-30047576/free-photo-of-luxury-yacht-at-dubai-marina-waterfront.jpeg"], location:"Dubai Marina"},
   {id:"jebel-jais-zipline", dest:"ras-al-khaimah", cat:"Adventure", badge:"", title:"Jebel Jais Zipline", desc:"A zipline experience on Jebel Jais, the mountain in Ras Al Khaimah.", duration:"Half / full day", price:"X – X", images:[IMG.jaisZiplineLaunch, IMG.jaisRoad, IMG.jaisPeaks], location:"Jebel Jais, Ras Al Khaimah", description:"A zipline experience on Jebel Jais, the mountain in Ras Al Khaimah. Jebel Jais is home to Jais Flight, which Guinness World Records lists as the longest zip wire (a single span of 2,831.88 m); the exact zipline experience and timings are confirmed when you enquire.", sources:[CLAIM_SOURCES.longestZipWire]},
 ];
 
@@ -3496,8 +3498,10 @@ const IMG_ALT = {
   "https://images.pexels.com/photos/34197935/pexels-photo-34197935.jpeg": "Kerbside drop-off lanes beside the curved glass facade of an Abu Dhabi airport terminal",
 };
 const IMG_POS = {
+  "https://images.pexels.com/photos/36070167/pexels-photo-36070167.jpeg": "center 65%",
+  "https://images.pexels.com/photos/30047576/pexels-photo-30047576/free-photo-of-luxury-yacht-at-dubai-marina-waterfront.jpeg": "center 86%",
   "https://upload.wikimedia.org/wikipedia/commons/2/2a/Warner_Bros._World_Abu_Dhabi_03.jpg": "center 55%",
-  "https://upload.wikimedia.org/wikipedia/commons/6/66/Velociraptor_%28IMG_Worlds_of_Adventure%29_1.jpg": "center 22%",
+  "https://upload.wikimedia.org/wikipedia/commons/6/66/Velociraptor_%28IMG_Worlds_of_Adventure%29_1.jpg": "center 60%",
   "https://upload.wikimedia.org/wikipedia/commons/7/78/Yas_Waterworld_Abu_Dhabi_2.jpg": "center 45%",
   "https://upload.wikimedia.org/wikipedia/commons/1/15/Yas_Waterworld_Abu_Dhabi_3.jpg": "center 60%",
   "https://upload.wikimedia.org/wikipedia/commons/1/1b/Twin_Chameleon_National_Aquarium_Abu_Dhabi.jpg": "center 30%",
@@ -3567,6 +3571,10 @@ const IMG_POS = {
    Neither licence covers trademarks, logos, or recognisable people/private property shown in a photo, so images of
    branded attractions (e.g. Atlantis, Ferrari World, Museum of the Future) still need human rights review before launch.
    Not shown to customers. */
+// These source-audited illustrative photos are not photos of the sold venue or experience.
+const ILLUSTRATIVE_PRODUCT_PHOTOS = new Set(["https://upload.wikimedia.org/wikipedia/commons/0/01/A_group_rafting_down_the_river_(50028512898).jpg", "https://upload.wikimedia.org/wikipedia/commons/0/01/Kidzania_Bangkok,_Dec_2017.jpg", "https://upload.wikimedia.org/wikipedia/commons/0/02/Towable_water_tube_in_Makadi_Bay.jpg", "https://upload.wikimedia.org/wikipedia/commons/0/05/Mercedes-Benz_Citaro_MUE_(Dubai).JPG", "https://upload.wikimedia.org/wikipedia/commons/0/0a/Ice_Bar.jpg", "https://upload.wikimedia.org/wikipedia/commons/1/11/Ames_room_forced_perspective.jpg", "https://upload.wikimedia.org/wikipedia/commons/1/19/Dubai_downtown.jpg", "https://upload.wikimedia.org/wikipedia/commons/1/1b/Dubai_Marina_by_night_(2).jpg", "https://upload.wikimedia.org/wikipedia/commons/1/1d/2009-2010_Lexus_GS_450h_(GWS191R)_sedan_01.jpg", "https://upload.wikimedia.org/wikipedia/commons/1/1d/Dubai_in_January_2025_03.jpg", "https://upload.wikimedia.org/wikipedia/commons/1/1e/WaterCar_Panther_at_High_Speeds.jpg", "https://upload.wikimedia.org/wikipedia/commons/2/25/Dubai_International_Airport_taxi_124130.jpg", "https://upload.wikimedia.org/wikipedia/commons/3/32/Dhow_(embarcaci%C3%B3n_t%C3%ADpica_de_las_costas_de_la_pen%C3%ADnsula_Ar%C3%A1biga),_anclado_frente_a_la_RAK_Corniche.jpg", "https://upload.wikimedia.org/wikipedia/commons/3/36/Yellow_Boats_Tour_@_Dubai_Marina_(15684551897).jpg", "https://upload.wikimedia.org/wikipedia/commons/3/39/Sunseeker_Predator_84_(7542162456).jpg", "https://upload.wikimedia.org/wikipedia/commons/3/39/Wakesurfing_on_Lake_Mead_(4a97d790-31b5-4ac9-a631-097f62f4b64c).jpg", "https://upload.wikimedia.org/wikipedia/commons/4/40/Open_dining_area_during_the_Desert_Safari_tour.jpg", "https://upload.wikimedia.org/wikipedia/commons/4/44/Dubai_Marina_Yacht_Club_%40_Yellow_Boats_Tour_%40_Dubai_Marina_(15250650403).jpg", "https://upload.wikimedia.org/wikipedia/commons/4/46/Marina_Walk.JPG", "https://upload.wikimedia.org/wikipedia/commons/4/48/Amphibious_sightseeing_bus_in_Budapest.jpg", "https://upload.wikimedia.org/wikipedia/commons/5/55/Trampoline_Park.jpg", "https://upload.wikimedia.org/wikipedia/commons/5/57/Dubai_Yacht_at_Port_Rashid.jpg", "https://upload.wikimedia.org/wikipedia/commons/5/5b/Speedboat_on_the_move-01.jpg", "https://upload.wikimedia.org/wikipedia/commons/5/5e/Dubai_marina_and_having_dinner_on_the_sky.jpg", "https://upload.wikimedia.org/wikipedia/commons/5/5f/Kidzania_delhi_ncr_external.jpg", "https://upload.wikimedia.org/wikipedia/commons/6/61/Dubai_Marina_Area.jpg", "https://upload.wikimedia.org/wikipedia/commons/6/67/Flicflac-2010-ffm-120.jpg", "https://upload.wikimedia.org/wikipedia/commons/6/6a/Stretch_limousine_in_nyc.jpg", "https://upload.wikimedia.org/wikipedia/commons/6/6b/Taxis_outside_Dubai_International_Airport_Terminal_2.jpg", "https://upload.wikimedia.org/wikipedia/commons/7/71/Madame_Tussauds_Istanbul.jpg", "https://upload.wikimedia.org/wikipedia/commons/7/74/Electric_Hydrofoil_Surfboard.jpg", "https://upload.wikimedia.org/wikipedia/commons/7/77/Palm_Jumeirah_from_Dubai_Marina.jpg", "https://upload.wikimedia.org/wikipedia/commons/7/79/Zero_Latency_Virtual_Reality_Experience.jpg", "https://upload.wikimedia.org/wikipedia/commons/7/7a/Ballon_ride_in_the_desert_(5768023311).jpg", "https://upload.wikimedia.org/wikipedia/commons/7/7b/Immersive_Experience.jpg", "https://upload.wikimedia.org/wikipedia/commons/7/7c/Jetlev_water_powered_jet_pack.jpg", "https://upload.wikimedia.org/wikipedia/commons/8/81/Amn%C3%A9ville_Snowhall_indoor_ski_slope.jpg", "https://upload.wikimedia.org/wikipedia/commons/8/87/Skyline_Abu_Dhabi.jpg", "https://upload.wikimedia.org/wikipedia/commons/8/8b/Beach_%40_Jumeirah_Beach_Residence_%40_Dubai_Marina_(15664871700).jpg", "https://upload.wikimedia.org/wikipedia/commons/9/9d/Malta_-_Attard_-_Ta%27_Qali_BOV_Adventure_Park_-_High_Ropes_Course_01_ies.jpg", "https://upload.wikimedia.org/wikipedia/commons/a/a0/Abu_Dhabi_corniche.jpg", "https://upload.wikimedia.org/wikipedia/commons/a/a0/Evening_Skyline_Marina.jpg", "https://upload.wikimedia.org/wikipedia/commons/b/b2/Fishing-Boat.jpg", "https://upload.wikimedia.org/wikipedia/commons/b/b6/Espace_Quilly_-_Jet_ski.jpg", "https://upload.wikimedia.org/wikipedia/commons/b/b6/Legoland_Water_Park_Malaysia_Entrance.jpg", "https://upload.wikimedia.org/wikipedia/commons/c/ca/Tethered_balloon.JPG", "https://upload.wikimedia.org/wikipedia/commons/d/d3/Sunset_Over_Dubai_Marina_by_weeneldo.jpg", "https://upload.wikimedia.org/wikipedia/commons/d/d5/South_Indian_food_dosa.jpg", "https://upload.wikimedia.org/wikipedia/commons/d/db/Dubai_Yacht.jpg", "https://upload.wikimedia.org/wikipedia/commons/d/df/Bruxelles_-_Dinner_in_the_Sky.jpg", "https://upload.wikimedia.org/wikipedia/commons/e/e0/Water_Jet_Pack,_Manteo,_Roanoke_Island,_North_Carolina_(14274149917).jpg", "https://upload.wikimedia.org/wikipedia/commons/e/e3/IFLY_Indoor_Skydiving_(46385498334).jpg", "https://upload.wikimedia.org/wikipedia/commons/e/e9/Autogyro%22Cavalon%22in_flight_(5774765042).jpg", "https://upload.wikimedia.org/wikipedia/commons/e/ec/Otto_Cieli_Gama_Motor_Yacht_of_Turkey_and_Seaesta_in_Kolona_Harbour_Port_of_Rhodes_28_August_2023.jpg", "https://upload.wikimedia.org/wikipedia/commons/f/f0/New_Year's_Eve_Fireworks_in_San_Francisco_(6682731795).jpg", "https://upload.wikimedia.org/wikipedia/commons/f/f3/Visitors_looking_at_an_exhibit_in_the_Reuben_H._Fleet_Science_Center.jpg", "https://upload.wikimedia.org/wikipedia/commons/f/f5/Al_Muntaha_restaurant_-_Burj_Al_Arab.jpg", "https://upload.wikimedia.org/wikipedia/commons/f/f6/Sheikh_Zayed_Road.jpg", "https://upload.wikimedia.org/wikipedia/commons/f/fb/Visitors_on_Edge_Walk_-_Tallinn_TV_Tower_-_Tallinn_-_Estonia_(35917778062).jpg", "https://upload.wikimedia.org/wikipedia/commons/f/ff/20250702_digital_exhibition.jpg"]);
+[...TOURS, ...PACKAGES].forEach(item => { item.images = (item.images || []).filter(src => !ILLUSTRATIVE_PRODUCT_PHOTOS.has(imgBase(src))); });
+
 const MEDIA_SOURCES = {
   // Media completion (verified Wikimedia + original RAAHHI illustrations), 2026-09-29
   "https://upload.wikimedia.org/wikipedia/commons/1/19/Dubai_downtown.jpg": ["Wikimedia Commons","https://commons.wikimedia.org/wiki/File:Dubai_downtown.jpg","Murtblackberry","","Real Dubai Downtown photograph; does not depict Sky Views Observatory itself. [REPRESENTATIVE_LOCATION]","CC-BY-SA-4.0"],
@@ -4216,7 +4224,8 @@ const FLICKR_SIZES = {
   "https://live.staticflickr.com/65535/53530515993_dcc5d0eab4_h.jpg": {800:"https://live.staticflickr.com/65535/53530515993_d5a1269669_c.jpg", 1024:"https://live.staticflickr.com/65535/53530515993_d5a1269669_b.jpg", 1600:"https://live.staticflickr.com/65535/53530515993_dcc5d0eab4_h.jpg", 2048:"https://live.staticflickr.com/65535/53530515993_8ca4eaa352_k.jpg"},
 };
 function imgAt(u, w){
-  const b = imgBase(u);
+  const b = imgBase(u), local = (window.RAAHHI_MEDIA || {})[b];
+  if(local) return (local.variants.find(v => v.width >= w) || local.variants[local.variants.length - 1]).url;
   if(FLICKR_SIZES[b]){ const sz = FLICKR_SIZES[b], ws = Object.keys(sz).map(Number); return sz[ws.find(x => x >= w) || ws[ws.length-1]]; }
   if(b.includes("images.unsplash.com")) return b + "?w=" + w + "&q=78&auto=format&fit=crop";
   if(b.includes("images.pexels.com")) return b + "?auto=compress&cs=tinysrgb&w=" + w;
@@ -4230,12 +4239,13 @@ function imgAt(u, w){
 const IMG_WIDTHS = [480, 800, 1200, 1600, 2000, 2600];
 const WIKI_WIDTHS = [500, 960, 1280, 1920];
 function imgSrcset(u){
-  const b = imgBase(u);
+  const b = imgBase(u), local = (window.RAAHHI_MEDIA || {})[b];
+  if(local) return local.variants.map(v => v.url + " " + v.width + "w").join(", ");
   if(FLICKR_SIZES[b]) return Object.keys(FLICKR_SIZES[b]).map(w => FLICKR_SIZES[b][w] + " " + w + "w").join(", ");
   if(b.includes("upload.wikimedia.org")) return WIKI_WIDTHS.map(w => imgAt(u, w) + " " + w + "w").join(", ");
   return /images\.(unsplash|pexels)\.com/.test(b) ? IMG_WIDTHS.map(w => imgAt(u, w) + " " + w + "w").join(", ") : "";
 }
-function imgPosStyle(u){ const p = IMG_POS[imgBase(u)]; return p ? ' style="object-position:' + p + '"' : ""; }
+function imgPosStyle(u){ const p = IMG_POS[imgBase(u)]; return p ? ' style="object-position:' + p + ';--photo-position:' + p + '"' : ""; }
 // Branded panel for listings without a verified photo: an intentional RAAHHI TOURS title card, not an error state.
 // Decorative (aria-hidden) -- the listing's name is in the heading beside it. Never used where a real photo exists.
 const PH_EMBLEM = `<svg class="ph-emblem" viewBox="0 0 40 40" aria-hidden="true" focusable="false"><g fill="none" stroke="#C9A15A" stroke-width="1.3"><rect x="10" y="10" width="20" height="20"/><rect x="10" y="10" width="20" height="20" transform="rotate(45 20 20)"/><circle cx="20" cy="20" r="3.6"/></g></svg>`;
@@ -4247,6 +4257,8 @@ function imgFallback(el){
   if(el.dataset.fb) return; // avoid loops if the fallback itself somehow fails
   el.dataset.fb = "1";
   el.onerror = null;
+  el.removeAttribute("srcset"); el.removeAttribute("sizes");
+  delete el.dataset.src; delete el.dataset.srcset;
   el.src = IMG_FALLBACK;
   el.classList.add("img-fallback");
 }
@@ -6504,6 +6516,7 @@ function slideshowHTML(images, alt, extraClass, opts){
   if(!imgs.length) return `<div class="slideshow slideshow-empty ${cls}">${placeholderHTML(alt, opts.meta)}${link}</div>`;
   const id = opts.id || ("sl" + (++_slideSeq).toString(36) + Math.random().toString(36).slice(2,6));
   const detail = cls.includes("detail-gallery"), hero = cls.includes("hero-slideshow");
+  const yacht = detail && alt === "Luxury Yacht Rental Dubai";
   const sizes = hero ? "100vw" : detail ? "(max-width: 760px) 100vw, 1200px" : "(max-width: 640px) 100vw, (max-width: 980px) 50vw, 400px";
   const decorative = alt === ""; // e.g. the homepage hero, which sits behind the headline
   const label = opts.label ? escapeHTML(opts.label) : "";
@@ -6511,11 +6524,15 @@ function slideshowHTML(images, alt, extraClass, opts){
   const imgTags = imgs.map((src,i)=>{
     const altText = decorative ? "" : (IMG_ALT[imgBase(src)] || alt);
     const srcset = imgSrcset(src);
+    const localPhoto = (window.RAAHHI_MEDIA || {})[imgBase(src)];
+    const dimensions = localPhoto && localPhoto.variants[localPhoto.variants.length - 1];
+    const ratio = dimensions ? dimensions.width / dimensions.height : null;
+    const photoSizes = detail && !yacht && ratio ? `(max-width: 760px) ${Math.ceil(280 * ratio)}px, ${Math.ceil(420 * ratio)}px` : sizes;
     const url = imgAt(src, detail || hero ? 1600 : 800);
     const load = i===0 && (hero || detail) ? ' fetchpriority="high"' : (hero || detail) ? ' loading="lazy" fetchpriority="low"' : ' loading="lazy"';
     if(opts.deferSlides && i > 0)
-      return `<img data-src="${url}"${srcset ? ` data-srcset="${srcset}" sizes="${sizes}"` : ""} alt="${altText}" class=""${imgPosStyle(src)} loading="lazy" decoding="async" onerror="imgFallback(this)">`;
-    return `<img src="${url}"${srcset ? ` srcset="${srcset}" sizes="${sizes}"` : ""} alt="${altText}" class="${i===0?'active':''}"${imgPosStyle(src)}${load} decoding="async" onerror="imgFallback(this)">`;
+      return `<img data-src="${url}"${srcset ? ` data-srcset="${srcset}" sizes="${photoSizes}"` : ""} alt="${altText}" class=""${imgPosStyle(src)} loading="lazy" decoding="async" onerror="imgFallback(this)">`;
+    return `<img src="${url}"${srcset ? ` srcset="${srcset}" sizes="${photoSizes}"` : ""} alt="${altText}" class="${i===0?'active':''}"${imgPosStyle(src)}${load} decoding="async" onerror="imgFallback(this)">`;
   }).join("");
   const of = label ? `: ${label}` : "";
   const dots = controls ? `<div class="slideshow-dots">${imgs.map((_,i)=>`<button type="button" aria-label="Show image ${i+1} of ${imgs.length}${of}"${i===0 ? ' aria-current="true"' : ""} class="${i===0?'active':''}" onclick="event.preventDefault();event.stopPropagation();slideGoTo('${id}',${i})"></button>`).join("")}</div>` : "";
@@ -6933,6 +6950,7 @@ let _slideSeq = 0;
 // Give a deferred slide its real src (no-op for slides that already have one).
 function loadSlide(img){
   if(!img || !img.dataset.src) return;
+  img.loading = "eager"; img.fetchPriority = "auto";
   if(img.dataset.srcset) img.srcset = img.dataset.srcset;
   img.src = img.dataset.src;
   delete img.dataset.src; delete img.dataset.srcset;
@@ -7611,15 +7629,20 @@ function mediaCreditHTML(images, opts){
       : `${who} (${g.map((x, j) => `<a href="${escapeHTML(x.m.creditUrl)}" rel="noopener" aria-label="Photo ${x.i + 1} on ${escapeHTML(m.creditSource)}">${j === 0 ? "photo " : ""}${x.i + 1}</a>`).join(", ")})`;
     return `${links}, <a href="${escapeHTML(m.licenseUrl)}" rel="noopener license">${escapeHTML(m.creditLicense)}</a>`;
   });
-  return `<p class="media-credit${opts.compact ? " media-credit-compact" : ""}">Image credit: ${parts.join("; ")}</p>`;
+  const adapted = list.some(x => (window.RAAHHI_MEDIA || {})[imgBase(images[x.i])]);
+  return `<p class="media-credit${opts.compact ? " media-credit-compact" : ""}">Image credit: ${parts.join("; ")}${adapted ? "; resized and converted to WebP" : ""}</p>`;
 }
 // Detail-page gallery: the photos (or the branded panel) plus the credit line beneath them.
 function setDetailGallery(galleryId, creditId, images, title, meta){
   const g = document.getElementById(galleryId), c = document.getElementById(creditId), has = (images || []).length > 0;
   g.style.display = "";
   g.classList.toggle("is-fallback", !has);
+  g.classList.toggle("is-yacht-gallery", title === "Luxury Yacht Rental Dubai");
   g.innerHTML = slideshowHTML(images, title, "detail-gallery-slideshow", {meta, label:title, deferSlides:true});
-  if(c) c.innerHTML = mediaCreditHTML(images);
+  if(c){
+    const yacht = title === "Luxury Yacht Rental Dubai";
+    c.innerHTML = mediaCreditHTML(images) + (yacht ? '<p class="media-credit">Dubai Marina yacht photography. The vessel for your booking is confirmed on enquiry.</p>' : "");
+  }
   initSlideshows(g);
 }
 function clearDetailCredit(creditId){ const c = document.getElementById(creditId); if(c) c.innerHTML = ""; }

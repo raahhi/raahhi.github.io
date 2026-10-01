@@ -1,0 +1,66 @@
+{
+  "https://upload.wikimedia.org/wikipedia/commons/6/66/Velociraptor_%28IMG_Worlds_of_Adventure%29_1.jpg": {
+    "variants": [
+      {
+        "width": 639,
+        "height": 426,
+        "file": "img-coaster-640-989ffdf7f2f9.webp",
+        "bytes": 38164
+      },
+      {
+        "width": 1280,
+        "height": 853,
+        "file": "img-coaster-1280-c8ff8370ab5d.webp",
+        "bytes": 155140
+      }
+    ]
+  },
+  "https://upload.wikimedia.org/wikipedia/commons/6/6f/Predator_%28IMG_Worlds_of_Adventure%29_1.jpg": {
+    "variants": [
+      {
+        "width": 639,
+        "height": 426,
+        "file": "img-indoor-640-e595cdfcdb56.webp",
+        "bytes": 69262
+      },
+      {
+        "width": 1280,
+        "height": 853,
+        "file": "img-indoor-1280-0479c4657b8f.webp",
+        "bytes": 225656
+      }
+    ]
+  },
+  "https://images.pexels.com/photos/30047576/pexels-photo-30047576/free-photo-of-luxury-yacht-at-dubai-marina-waterfront.jpeg": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 960,
+        "file": "yacht-day-640-18732459aeef.webp",
+        "bytes": 113768
+      },
+      {
+        "width": 1200,
+        "height": 1800,
+        "file": "yacht-day-1280-662a26747912.webp",
+        "bytes": 291894
+      }
+    ]
+  },
+  "https://images.pexels.com/photos/36070167/pexels-photo-36070167.jpeg": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 1137,
+        "file": "yacht-night-640-fd35c461cfc2.webp",
+        "bytes": 71622
+      },
+      {
+        "width": 1200,
+        "height": 2131,
+        "file": "yacht-night-1280-0ac4b9f4b944.webp",
+        "bytes": 204770
+      }
+    ]
+  }
+}

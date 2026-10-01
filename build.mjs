@@ -3,6 +3,7 @@ import { readFile, mkdir, writeFile, rm } from 'node:fs/promises';
 import { join, dirname } from 'node:path';
 import { chromium } from 'playwright';
 import { compileSiteAssets } from './scripts/site-assets.mjs';
+import { loadLocalMedia } from './scripts/local-media.mjs';
 
 const ROOT = process.cwd();
 const DIST = join(ROOT, 'dist');
@@ -39,7 +40,9 @@ function sitemapUrlCount(xml) {
   return (xml.match(/<url>/g) || []).length;
 }
 
-const source = await readFile(SOURCE_FILE, 'utf8');
+const localMedia = await loadLocalMedia(ROOT);
+const authorSource = await readFile(SOURCE_FILE, 'utf8');
+const source = authorSource.replace('</head>', localMedia.bootstrap + '</head>');
 const appScript = extractAppScript(source);
 const logoPng = extractEmbeddedBrandPng(source);
 const assets = await compileSiteAssets(source, appScript.js);
@@ -48,6 +51,8 @@ await rm(DIST, { recursive: true, force: true });
 await mkdir(DIST, { recursive: true });
 
 const server = createServer((req, res) => {
+  const media = localMedia.files.get(new URL(req.url, 'http://localhost').pathname);
+  if(media){ res.writeHead(200, {'Content-Type':'image/webp'}); res.end(media); return; }
   res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' });
   res.end(source);
 });
@@ -210,7 +215,8 @@ try {
   await writeFile(join(DIST, '404.html'), notFoundHtml, 'utf8');
 
   await writeBrandAssets();
-  for (const [url, content] of assets.files) await writeFile(join(DIST, url.slice(1)), content);
+  await mkdir(join(DIST, 'assets', 'media'), {recursive:true});
+  for (const [url, content] of [...assets.files, ...localMedia.files]) await writeFile(join(DIST, url.slice(1)), content);
   await writeFile(join(DIST, 'robots.txt'), home.robotsTxt, 'utf8');
   await writeFile(join(DIST, 'sitemap.xml'), home.sitemapXml, 'utf8');
   await writeFile(join(DIST, 'llms.txt'), home.llmsTxt || '', 'utf8');
@@ -218,7 +224,7 @@ try {
   await writeFile(join(DIST, 'CNAME'), 'raahhi.com\n', 'utf8');
 
   const report = {
-    assets: assets.report,
+    assets: {...assets.report, localImageVariants:localMedia.files.size, localImageBytes:[...localMedia.files.values()].reduce((sum,b)=>sum+b.length,0)},
     source: 'raahhi-tours52.html',
     productionOrigin: home.siteUrl,
     generatedRoutes: home.routes.length,

@@ -4,7 +4,7 @@ import {readFile} from 'node:fs/promises';
 import assert from 'node:assert/strict';
 const server=createServer(async(req,res)=>{
  const p=new URL(req.url,'http://localhost').pathname;
- try{res.setHeader('Content-Type',p.endsWith('.js')?'text/javascript':p.endsWith('.css')?'text/css':p.endsWith('.png')?'image/png':p.endsWith('.jpg')?'image/jpeg':'text/html');res.end(await readFile('dist'+(p.endsWith('/')?p+'index.html':p)));}
+ try{res.setHeader('Content-Type',p.endsWith('.js')?'text/javascript':p.endsWith('.css')?'text/css':p.endsWith('.png')?'image/png':p.endsWith('.jpg')?'image/jpeg':p.endsWith('.webp')?'image/webp':'text/html');res.end(await readFile('dist'+(p.endsWith('/')?p+'index.html':p)));}
  catch{res.statusCode=404;res.end();}
 });
 await new Promise(r=>server.listen(0,'127.0.0.1',r));const base='http://127.0.0.1:'+server.address().port;
@@ -12,7 +12,7 @@ const browser=await chromium.launch();
 const routes=['/','/visas/','/visas/united-arab-emirates/','/activities/','/activities/dubai/','/activities/dubai/evening-desert-safari/','/holidays/','/holidays/dubai/dubai-grand-stopover/','/guides/dubai-landmarks/','/contact/','/faq/','/terms/','/privacy/'];
 routes.push(...['desert-safaris','city-tours','landmarks','theme-parks','water-parks','cruises','adventure','nature-wildlife','water-activities','dining-events','transfers'].map(c=>'/activities/categories/'+c+'/'));
 routes.push(...['dubai-dinner-cruises','uae-water-parks','dubai-observation-decks','uae-balloon-helicopter-experiences'].map(c=>'/compare/'+c+'/'));
-routes.push('/holidays/ras-al-khaimah/','/holidays/ras-al-khaimah/ras-al-khaimah-zipline-safari/','/holidays/dubai/dubai-marina-overnight/','/holidays/dubai/dubai-family-theme-park-week/');
+routes.push('/activities/dubai/img-worlds-of-adventure/','/activities/dubai/aqua-fun-dubai/','/activities/dubai/luxury-yacht-rental-dubai/','/holidays/ras-al-khaimah/','/holidays/ras-al-khaimah/ras-al-khaimah-zipline-safari/','/holidays/dubai/dubai-marina-overnight/','/holidays/dubai/dubai-family-theme-park-week/');
 try{
  // Force an image to fail while app.js is held back, reproducing the parser-time race.
  const early=await browser.newPage();const earlyErrors=[];early.on('pageerror',e=>earlyErrors.push(e.message));
@@ -65,6 +65,19 @@ try{
    assert(await p.locator('.page.active .product-card .slideshow[data-count], .page.active .pkg-card .slideshow[data-count], .page.active .visa-card .slideshow[data-count], .page.active .dest-card .slideshow[data-count]').evaluateAll(es=>es.every(e=>e.dataset.count==='1')),route+' static card covers');
    if(route==='/holidays/dubai/dubai-family-theme-park-week/'){
     assert(await p.evaluate(()=>PACKAGES.find(p=>p.id==='dubai-family-theme-park-week').images[0]===IMG.imgVelociraptor),'Theme-park cover represents a listed inclusion');
+   }
+   if(route==='/activities/dubai/aqua-fun-dubai/'){
+    assert.equal(await p.locator('#tourDetailGallery img').count(),0,'No substitute JBR skyline on AquaFun');
+    assert.equal(await p.locator('#tourDetailGallery .ph-card').count(),1);
+   }
+   if(route==='/activities/dubai/img-worlds-of-adventure/'||route==='/activities/dubai/luxury-yacht-rental-dubai/'){
+    const image=p.locator('#tourDetailGallery img.active');
+    assert.equal(await image.evaluate(el=>getComputedStyle(el).objectFit),route.includes('luxury-yacht')?'cover':'contain','Product-specific framing');
+    assert(await image.evaluate(el=>el.complete&&el.naturalWidth>0&&new URL(el.currentSrc).pathname.startsWith('/assets/media/')),'Optimized same-host image loads');
+    const gallery=p.locator('#tourDetailGallery .slideshow');
+    await gallery.getByRole('button',{name:/^Next image/}).click();
+    await p.waitForFunction(()=>{const image=document.querySelector('#tourDetailGallery img.active');return image.complete&&image.naturalWidth>0;});
+    assert.equal(await p.locator('#tourDetailGallery img.active').getAttribute('loading'),'eager','User-selected photo starts immediately');
    }
    if(route==='/activities/dubai/evening-desert-safari/'){
     const gallery=p.locator('#tourDetailGallery .slideshow');
