@@ -175,7 +175,7 @@
   .section-head h2{ font-size:clamp(28px,3.4vw,40px); margin-top:8px; max-width:640px; }
 
   /* ---------- VISAS PAGE ---------- */
-  .visa-hero{ position:relative; color:var(--sand-50); padding:76px 0 0; background:
+  .visa-hero{ position:relative; color:var(--sand-50); padding:76px 0 48px; background:
     linear-gradient(90deg, rgba(11,21,38,.96) 0%, rgba(11,21,38,.88) 42%, rgba(11,21,38,.56) 72%, rgba(11,21,38,.42) 100%),
     url("https://images.unsplash.com/photo-1581553673739-c4906b5d0de8?w=1200&q=78&auto=format&fit=crop") center 55% / cover no-repeat; }
   .visa-hero h1{ color:var(--sand-50); font-size:clamp(34px,5vw,54px); max-width:720px; }
@@ -217,7 +217,7 @@
   .vc-guarantee{ font-size:12px; color:var(--gold-400); font-weight:600; margin-top:4px; }
 
   /* v51: visa autocomplete + progressive catalogue reveal */
-  .visa-search-wrap{ position:relative; max-width:480px; margin-top:24px; }
+  .visa-search-wrap{ position:relative; max-width:480px; margin:0 0 24px; }
   .visa-search-wrap .search-inline{ max-width:none; margin:0; }
   .visa-search-suggestions{ position:absolute; left:0; right:0; top:calc(100% + 8px); z-index:40; background:var(--white); border:1px solid var(--line); border-radius:var(--radius-m); box-shadow:var(--shadow-3); padding:6px; max-height:320px; overflow-y:auto; }
   .visa-search-suggestions[hidden]{ display:none; }
@@ -952,10 +952,7 @@
       <p class="eyebrow">Visas</p>
       <h1>Visa assistance for <span data-visa-count>41</span> destinations</h1>
       <p class="lede">RAAHHI TOURS helps you understand the visa options for <span data-visa-count>41</span> destinations. Each page lists the visa type, validity and typical processing time. Our team confirms current fees and requirements when you enquire. Visa decisions are made by the relevant government authority.</p>
-      <div class="visa-search-wrap" id="visaSearchWrap">
-        <div class="search-inline">⌕ <input type="text" id="visaSearch" placeholder="Search by country name" aria-label="Search visa destinations by country name" role="combobox" aria-autocomplete="list" aria-controls="visaSearchSuggestions" aria-expanded="false" autocomplete="off" oninput="handleVisaSearchInput()" onkeydown="handleVisaSearchKeydown(event)"></div>
-        <div class="visa-search-suggestions" id="visaSearchSuggestions" role="listbox" aria-label="Matching visa destinations" hidden></div>
-      </div>
+
     </div>
   </section>
 
@@ -983,6 +980,10 @@
           <p class="eyebrow">All destinations</p>
           <h2><span data-visa-count>41</span> destinations covered</h2>
         </div>
+      </div>
+      <div class="visa-search-wrap" id="visaSearchWrap">
+        <div class="search-inline">⌕ <input type="text" id="visaSearch" placeholder="Search by country name" aria-label="Search visa destinations by country name" role="combobox" aria-autocomplete="list" aria-controls="visaSearchSuggestions" aria-expanded="false" autocomplete="off" oninput="handleVisaSearchInput()" onkeydown="handleVisaSearchKeydown(event)"></div>
+        <div class="visa-search-suggestions" id="visaSearchSuggestions" role="listbox" aria-label="Matching visa destinations" hidden></div>
       </div>
       <div class="grid-cards" id="visaGrid"></div>
       <div class="load-more-wrap" id="visaLoadMore" hidden>
