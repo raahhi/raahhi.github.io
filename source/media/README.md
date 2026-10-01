@@ -14,3 +14,13 @@ Each photo has a smaller and a larger variant. Filenames include content hashes.
 The yacht photos illustrate yachts in Dubai Marina, rather than a confirmed supplier vessel. A visible gallery caption explains that the booked vessel is confirmed on enquiry.
 
 The source catalogue retains the original media audit. Photos marked as representative substitutes are excluded from activity and package image arrays by ILLUSTRATIVE_PRODUCT_PHOTOS. Listings without an exact approved photograph use the existing RAAHHI title panel.
+
+## Approved additions, 1 October 2026
+
+| Listings | Photographer | Licence | Source |
+| --- | --- | --- | --- |
+| sky-views-observatory | Fabien BELLANGER | [Unsplash License](https://unsplash.com/license) | [Source photo](https://unsplash.com/photos/burj-khalifa-skyline-in-dubai-WyfXOHgI49s) |
+| al-ain-adventure | Anaskmohamed | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) | [Source photo](https://commons.wikimedia.org/wiki/File:Al_Ain_Adventure_Rafting.jpg) |
+| lotus-mega-yacht-brunch-cruise, lotus-mega-yacht-dinner-cruise, lotus-mega-yacht-sunset-cruise | Dina | [Pexels License](https://www.pexels.com/license/) | [Source photo](https://www.pexels.com/photo/aerial-view-of-the-lotus-mega-yacht-in-the-harbor-in-dubai-uae-19960510/) |
+
+The added files are resized without cropping. Source licences also apply to the converted copies, including CC BY-SA 4.0 for Al Ain Adventure. Visible attribution and context appear beneath the product gallery. approved-photos.json records exact source URLs, reuse terms, checking date and affected listings. The Lotus photograph is shared only across three listings for the same named vessel.

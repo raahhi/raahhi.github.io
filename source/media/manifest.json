@@ -62,5 +62,53 @@
         "bytes": 204770
       }
     ]
+  },
+  "https://images.unsplash.com/photo-1708361089093-beef4c4584e7": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 455,
+        "file": "sky-views-640-abb56862122d.webp",
+        "bytes": 49470
+      },
+      {
+        "width": 1280,
+        "height": 910,
+        "file": "sky-views-1280-32ea8cf411bc.webp",
+        "bytes": 176890
+      }
+    ]
+  },
+  "https://upload.wikimedia.org/wikipedia/commons/4/47/Al_Ain_Adventure_Rafting.jpg": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 1138,
+        "file": "al-ain-adventure-640-38620dcd94e3.webp",
+        "bytes": 74370
+      },
+      {
+        "width": 1080,
+        "height": 1920,
+        "file": "al-ain-adventure-1080-25528474d3ef.webp",
+        "bytes": 162794
+      }
+    ]
+  },
+  "https://images.pexels.com/photos/19960510/pexels-photo-19960510.jpeg": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 427,
+        "file": "lotus-mega-yacht-640-bbb4817111d0.webp",
+        "bytes": 85036
+      },
+      {
+        "width": 1280,
+        "height": 854,
+        "file": "lotus-mega-yacht-1280-b227a6e7a61a.webp",
+        "bytes": 272408
+      }
+    ]
   }
 }

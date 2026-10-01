@@ -21,8 +21,8 @@ Checked on 1 October 2026. This is a selected-field verification pass, not a cer
 
 1. Written supplier product/option mapping, valid travel dates, price and currency/basis, tax/fee inclusions, transfers, age/health eligibility, cancellation and weather-disruption terms.
 2. For all 26 holidays: allocated hotel or documented 'or similar' standard, category, room/board, transfers, ticket options, departure availability and amendment/refund terms. Reference packages are not supplier agreements; one inspected Rayna page still contains a pricing table valid only until May 2026.
-3. Approved exact photos for 60 activity listings currently using the title panel. Start with visible/featured listings. AquaFun operator images require explicit permission; no suitable freely reusable exact photograph was confirmed.
-4. Local image optimization for newly approved files. This session's direct Pexels/Wikimedia downloads were blocked, so no new same-host bitmap was added. Existing optimized WebP assets remain available.
+3. Approved exact photos for 56 activity listings currently using the title panel. Start with visible/featured listings. AquaFun operator images require explicit permission; no suitable freely reusable exact photograph was confirmed.
+4. Newly approved photographs use same-host responsive WebP files. Direct downloads succeeded in this pass; original sources, licences, dimensions and changes are recorded in source/media/approved-photos.json.
 5. IMG Worlds' official pages returned no readable text through the research service; do not advance their fact-check dates on that basis.
 
 ## How to maintain
@@ -34,3 +34,7 @@ Update only the fields actually supported by evidence. Record the source, checki
 The second pass adds three intent-based choice prompts to each of the four existing comparisons, with links restricted to the products actually compared. Choices explain relevant distinctions and conditions, without rankings, ratings or price claims. Generated activity answers summarize selected inclusions, options and restrictions and link to the full visible details; those links preserve the single-file preview route and move keyboard focus to the target heading.
 
 Sky Views observation floors, Glass Walk and published slide height/weight guidance, and The View’s level 52/54 distinction were checked on the official pages on 1 October 2026. These checks do not certify RAAHHI ticket inventory or commercial terms. Prices and contact details remain on hold at the user’s request.
+
+## Photo completion pass
+
+Added licensed photographs to Sky Views Observatory, Al Ain Adventure, Lotus Mega Yacht Dinner Cruise and Lotus Mega Yacht Sunset Cruise. The existing Lotus brunch photo now uses the same optimized files. Captions distinguish the view, venue activity and moored vessel from ticket inclusions and scheduled sailings. Rechecked the Lotus photo page and updated the current photographer credit to Dina (the earlier audit named Cristhian David Duarte). No general listing fact-check dates were advanced. The other 56 missing-photo listings require further exact-image evidence or operator-supplied files with written promotional-use permission; rights to images displayed on supplier websites are not assumed.

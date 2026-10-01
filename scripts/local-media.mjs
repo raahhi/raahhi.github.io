@@ -1,7 +1,7 @@
 import {readFile} from 'node:fs/promises';
 import {join} from 'node:path';
 
-// Four existing, rights-recorded photos are served from the same host as the page.
+// Rights-recorded photos are served from the same host as the page.
 // Their original catalogue URLs remain the keys for alt text and licence attribution.
 export async function loadLocalMedia(root) {
   const manifest = JSON.parse(await readFile(join(root,'source','media','manifest.json'),'utf8'));
