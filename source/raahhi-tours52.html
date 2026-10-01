@@ -733,6 +733,52 @@
   .planning-links a{overflow-wrap:anywhere;}
   .planning-links .link-list li{margin-bottom:12px;}
   .uae-planning-links .planning-links{margin-top:20px;}
+
+  /* Catalogue typography and rhythm: display headings retain the brand serif. */
+  .product-card h3,.pkg-card h3,.visa-card h3,.dest-card-body h2,.dest-card-body h3,
+  .faq-q,.qa-item h3,.field label,.booking-box label{ font-family:'Inter',system-ui,-apple-system,sans-serif; }
+  .product-card h3,.pkg-card h3{ font-size:19px; line-height:1.4; min-height:2.8em; }
+  .dest-card-body h2,.dest-card-body h3{ font-size:21px; line-height:1.4; }
+  .pc-meta{ flex-wrap:wrap; justify-content:flex-start; gap:6px 12px; font-size:14px; }
+  .pc-summary{ margin:0; font-size:16px; line-height:1.5; color:var(--ink-600); min-height:4.5em; display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:3; overflow:hidden; }
+  .pkg-card{ display:flex; flex-direction:column; }
+  .pkg-body{ display:flex; flex-direction:column; flex:1; }
+  .pkg-media{ height:210px; }
+  .pkg-incl{ gap:8px; align-items:flex-start; }
+  .pkg-incl span{ font-size:14px; line-height:1.45; }
+  .pkg-dur,.pkg-stay,.pkg-stay-label,.status-tag,.detail-tags .status-tag,
+  .field label,.form-note,.load-more-count,.breadcrumb,.index-note,.freshness-summary{ font-size:14px; }
+  .pkg-stay-label{ letter-spacing:.03em; }
+  .pkg-stay{ margin-bottom:16px; }
+  .pc-foot,.pkg-price-row{ gap:12px; flex-wrap:wrap; margin-top:auto; }
+  .pc-foot .pc-price,.pkg-price-row .pc-price{ flex-basis:100%; font-family:'Inter',system-ui,sans-serif; font-size:14px; }
+  .pc-foot .btn,.pkg-price-row .btn{ width:100%; }
+  .qa-item p,.plain-list,.body-copy,.seo-cols p,.link-list,.faq-a p,.pkg-overview{ font-size:16px; line-height:1.6; }
+  .key-facts dt{ font-size:14px; letter-spacing:.02em; }
+  .media-credit,.media-credit-compact{ font-size:13px; line-height:1.5; }
+  .detail-back{ margin-bottom:16px; }
+  .breadcrumb{ margin-bottom:8px; }
+  .detail-layout{ gap:32px; margin-top:28px; }
+  #page-tours>section,#page-packages>section,#page-tour-detail>section,
+  #page-pkg-detail>section,#page-visa-detail>section,#page-category>section,#page-comparison>section{ padding:56px 0; }
+  /* Manual galleries expose controls on touch and keyboard as well as mouse. */
+  .slideshow-arrow{ width:44px; height:44px; opacity:1; background:rgba(11,21,38,.78); font-size:22px; }
+  .slideshow-dots button{ width:44px; height:44px; }
+  .slideshow-dots{ bottom:4px; }
+  .slideshow:focus-within .slideshow-arrow{ opacity:1; }
+  .hero-slideshow .slideshow-arrow{ top:auto; bottom:12px; transform:none; }
+  .hero-slideshow .slideshow-dots{ bottom:12px; }
+  .dhv-slides .slideshow-arrow{ top:16px; transform:none; }
+  .dhv-slides .slideshow-dots{ top:16px; bottom:auto; }
+  .vc-type,.vc-guarantee,.vc-more,.dest-card-count{ font-size:14px; }
+  @media(max-width:640px){
+    .product-card h3,.pkg-card h3,.pc-summary{ min-height:0; }
+    .hero-content{ padding-bottom:80px; }
+    #page-tours>section,#page-packages>section,#page-tour-detail>section,
+    #page-pkg-detail>section,#page-visa-detail>section,#page-category>section,#page-comparison>section{ padding:36px 0; }
+  }
+  @media(prefers-reduced-motion:reduce){ .slideshow img{ transition:none; } }
+
 </style>
 </head>
 <body>
@@ -2911,6 +2957,21 @@ const PACKAGES = [
 
 ];
 
+// Package cover choices use existing, attributed catalogue media for listed experiences.
+const PACKAGE_COVER_CHOICES = {
+  "dubai-family-theme-park-week": IMG.imgVelociraptor,
+  "dubai-sky-sea-adventure": IMG.jetSkiDubai,
+  "dubai-city-safari-value": IMG.safariDubaiDunes2,
+  "dubai-gardens-seasonal-escape": TOURS.find(t=>t.id === "dubai-miracle-garden")?.images[0],
+  "dubai-waterpark-city-explorer": TOURS.find(t=>t.id === "atlantis-aquaventure")?.images[0],
+  "dubai-family-discovery-waterpark": TOURS.find(t=>t.id === "wild-wadi-water-park")?.images[0],
+  "ras-al-khaimah-zipline-safari": IMG.jaisZiplineLaunch,
+};
+Object.entries(PACKAGE_COVER_CHOICES).forEach(([id, cover])=>{
+  const p = PACKAGES.find(p=>p.id === id);
+  if(p && cover) p.images = [cover, ...p.images.filter(src=>src !== cover)];
+});
+
 const VISA_FAQ = [
   {q:"How much does my visa cost?", a:"Fees depend on the destination, the visa type and your circumstances. Our team confirms the current fees, including any applicable government charges, during your enquiry before you proceed."},
   {q:"Which documents will I need?", a:"Requirements vary by destination, visa type and nationality. Our team confirms the documents that apply to your trip during your enquiry."},
@@ -2943,7 +3004,7 @@ function showPage(id, navRoute){
   if(navRoute) document.querySelector('[data-route="'+navRoute+'"]')?.classList.add("active");
 }
 function router(){
-  clearSlideTimers(); // every navigation starts clean -- the route branch below re-inits whatever slideshows the new page needs
+  resetSlideGesture(); // discard a gesture started on the previous route
   const hash = routeString() || "home";
   const parts = hash.split("/");
   const [route, seg1, seg2] = parts;
@@ -4160,17 +4221,8 @@ function imgFallback(el){
   el.classList.add("img-fallback");
 }
 
-let _slideTimers = [];
-// Shared visibility-aware autoplay: one IntersectionObserver plus one ~4.2s interval for every
-// slideshow currently on the page, instead of one setInterval per card (see initSlideshows()).
-let _slideObserver = null;
-let _visibleSlides = new Set();
-function clearSlideTimers(){
-  _slideTimers.forEach(t=>clearInterval(t)); _slideTimers = [];
-  if(_slideObserver){ _slideObserver.disconnect(); _slideObserver = null; }
-  _visibleSlides = new Set();
-}
-
+// A route or grid rebuild cancels a swipe that began on an old gallery.
+function resetSlideGesture(){ _swipe = null; }
 
 function slideStep(id, dir){
   const el = document.getElementById(id); if(!el) return;
@@ -4320,9 +4372,9 @@ function setActiveTourDest(slug){
     document.getElementById("toursDestGuide").innerHTML = "";
   }
   renderTourFilters();
-  renderTours(); // clears then re-registers the shared slideshow scheduler for #tourGrid only
-  initSlideshows(intro); // re-register the destination hero's slideshow, rebuilt above, after renderTours()'s clear
-  if(!slug) initSlideshows(tiles); // re-register root destination-tile slideshows, rebuilt above
+  renderTours(); // rebuilds cards and prepares their active covers
+  initSlideshows(intro); // prepare the rebuilt destination gallery
+  if(!slug) initSlideshows(tiles); // prepare destination tile covers
   initReveal();
 }
 function renderTourFilters(){
@@ -4347,7 +4399,7 @@ function clearTourSearch(){
 }
 function renderTours(){
   if(!activeTourDest) return;
-  clearSlideTimers(); // grid rebuilds on every search/category change -- always start clean
+  resetSlideGesture(); // discard a gesture started on the previous grid
   const q = document.getElementById("tourSearch")?.value || "";
   const scope=ACTIVITY_SEARCH_INDEX.filter(e=>e.t.dest===activeTourDest && (activeTourCat==="All" || e.t.cat===activeTourCat) && passesExtraFilters(e.t));
   const list=(normalizeSearch(q)?rankEntries(scope,q):scope).map(e=>e.t);
@@ -4363,8 +4415,7 @@ function renderTours(){
     </div>`;
   updateLoadMore("tourLoadMore", "tourLoadMoreCount", shown.length, list.length);
   initSlideshows(document.getElementById("tourGrid"));
-  // The destination hero (outside this grid) shares the same clearSlideTimers() call above --
-  // re-register it too, or a search/category/filter change would silently orphan it.
+  // Prepare the current destination photo without advancing the gallery.
   const heroIntro = document.getElementById("toursDestIntro");
   if(heroIntro) initSlideshows(heroIntro);
   initReveal();
@@ -4440,14 +4491,14 @@ function setActivePkgDest(slug){
     faq.innerHTML = "";
     document.getElementById("pkgDestGuide").innerHTML = "";
   }
-  renderPkgGrid(); // clears then re-registers the shared slideshow scheduler for #pkgGrid only
-  initSlideshows(intro); // re-register the destination hero's slideshow, rebuilt above, after renderPkgGrid()'s clear
-  if(!slug) initSlideshows(tiles); // re-register root destination-tile slideshows, rebuilt above
+  renderPkgGrid(); // rebuilds package covers
+  initSlideshows(intro); // prepare the rebuilt destination gallery
+  if(!slug) initSlideshows(tiles); // prepare destination tile covers
   initReveal();
 }
 function renderPkgGrid(){
   if(!activePkgDest) return;
-  clearSlideTimers(); // grid rebuilds on every destination change and search keystroke -- always start clean
+  resetSlideGesture(); // grid rebuilds on every destination change and search keystroke -- always start clean
   const q = document.getElementById("pkgSearch")?.value || "";
   const inDest = PACKAGES.filter(p=>p.dest===activePkgDest), scope=PACKAGE_SEARCH_INDEX.filter(e=>e.p.dest===activePkgDest);
   const list=(normalizeSearch(q)?rankEntries(scope,q):scope).map(e=>e.p);
@@ -4463,8 +4514,7 @@ function renderPkgGrid(){
     : `<p style="color:var(--ink-400);">No holiday packages are listed for ${destName(activePkgDest)} yet. You can browse <a class="contact-link" href="/activities/${activePkgDest}/">${destName(activePkgDest)} tours &amp; attractions</a>, or <a class="contact-link" href="/contact/">get in touch</a> about planning a trip.</p>`;
   updateLoadMore("pkgLoadMore", "pkgLoadMoreCount", shown.length, list.length);
   initSlideshows(document.getElementById("pkgGrid"));
-  // The destination hero (outside this grid) shares the same clearSlideTimers() call above --
-  // re-register it too, or a search rebuild would silently orphan it.
+  // Prepare the current destination photo without advancing the gallery.
   const heroIntro = document.getElementById("pkgDestIntro");
   if(heroIntro) initSlideshows(heroIntro);
   initReveal();
@@ -5786,8 +5836,8 @@ function renderVisaAddons(){
   el.innerHTML = VISA_ADDONS.map(tourCard).join("");
   initSlideshows(el);
 }
-function tourCard(t, opts = {}){
-  const images = opts.staticCover === true ? t.images.slice(0,1) : t.images;
+function tourCard(t){
+  const images = t.images.slice(0,1);
   const href = itemURL(t), price = priceInfo(t);
   // The `badge` field (Popular / New / …) is never rendered: no data backs popularity or recency claims.
   return `<article class="product-card reveal">
@@ -5795,27 +5845,39 @@ function tourCard(t, opts = {}){
     <div class="pc-content">
       <h3><a href="${href}">${t.title}</a></h3>
       <div class="pc-meta">${statusTagHTML(t)}<span>${t.cat}</span>${hasRealValue(t.duration) ? `<span>${t.duration}</span>` : ""}</div>
-      <p style="margin:0; font-size:14px; color:var(--ink-600);">${escapeHTML(activitySummaryText(t))}</p>
+      <p class="pc-summary">${escapeHTML(activitySummaryText(t))}</p>
       <div class="pc-foot" style="margin-top:auto;">
         ${price.known ? `<div class="pc-price">${escapeHTML(price.text)}${price.basis ? `<span>${escapeHTML(price.basis)}</span>` : ""}</div>`
-          : `<div class="pc-price" style="font-family:'Inter',sans-serif; font-size:13.5px; font-weight:600; color:var(--ink-600);">${ACTIVITY_PRICE_MISSING}</div>`}
+          : `<div class="pc-price" style="font-family:'Inter',sans-serif; font-size:14px; font-weight:600; color:var(--ink-600);">${ACTIVITY_PRICE_MISSING}</div>`}
         <a href="${href}" class="btn btn-navy btn-sm">View details<span class="sr-only"> for ${t.title}</span></a>
       </div>
       ${mediaCreditHTML(images, {compact:true})}
     </div>
   </article>`;
 }
-function pkgCard(p, opts = {}){
-  const images = opts.staticCover === true ? p.images.slice(0,1) : p.images;
-  const href = URLS.holiday(p), incl = p.incl || [], price = priceInfo(p);
+// Highlight existing inclusions; accommodation and meals also have their own Stay line.
+function packageCardHighlights(p){
+  const generic = /^(?:hotel|[345]-star hotel|yas island hotel|breakfast|dinner|transfers|private transfers)$/i;
+  const features = (p.incl || []).filter(text=>!generic.test(text) && !/transfers/i.test(text));
+  const focus = /theme-park|family/i.test(p.title) ? /IMG Worlds|Dubai Parks|KidZania|Play DXB|Aquaventure|Wild Wadi/i
+    : /waterpark/i.test(p.title) ? /Aquaventure|Wild Wadi/i
+    : /safari/i.test(p.title) ? /safari|dune bashing/i
+    : /gardens/i.test(p.title) ? /garden|Global Village/i : null;
+  return features.map((text,index)=>({text,index,score:focus?.test(text) ? 1 : 0}))
+    .sort((a,b)=>b.score-a.score || a.index-b.index).slice(0,3).map(x=>x.text);
+}
+
+function pkgCard(p){
+  const images = p.images.slice(0,1);
+  const href = URLS.holiday(p), highlights = packageCardHighlights(p), price = priceInfo(p);
   return `<article class="pkg-card reveal">
     <div class="pkg-media">${slideshowHTML(images, p.title, "", {href, meta:`${destName(p.dest)} · ${durText(p.dur)}`, deferSlides:true})}${hasRealValue(p.dur) ? `<span class="pkg-dur">${p.dur}</span>` : ""}</div>
     <div class="pkg-body">
       <h3><a href="${href}">${p.title}</a></h3>
-      <div class="pkg-incl">${statusTagHTML(p)}${incl.slice(0,3).map(i=>`<span>${i}</span>`).join("")}${incl.length>3 ? `<span>+${incl.length-3} more</span>` : ""}</div>
+      <div class="pkg-incl">${statusTagHTML(p)}${highlights.map(i=>`<span>${escapeHTML(i)}</span>`).join("")}</div>
       ${accommodationCardHTML(p)}
       <div class="pkg-price-row">${price.known ? `<div class="pc-price">${escapeHTML(price.text)}${price.basis ? `<span style="display:block; font-size:11px; color:var(--ink-400);">${escapeHTML(price.basis)}</span>` : ""}</div>`
-        : `<div class="pc-price" style="font-family:'Inter',sans-serif; font-size:13.5px; font-weight:600; color:var(--ink-600);">${PACKAGE_PRICE_MISSING}</div>`}
+        : `<div class="pc-price" style="font-family:'Inter',sans-serif; font-size:14px; font-weight:600; color:var(--ink-600);">${PACKAGE_PRICE_MISSING}</div>`}
       <a href="${href}" class="btn btn-navy btn-sm">View package<span class="sr-only">: ${p.title}</span></a></div>
       ${mediaCreditHTML(images, {compact:true})}
     </div>
@@ -5825,8 +5887,8 @@ function pkgCard(p, opts = {}){
 function renderHomeSelections(){
   const activities = ["evening-desert-safari", "ferrari-world-abu-dhabi", "jebel-jais-zipline"].map(byId).filter(Boolean);
   const packages = ["dubai-city-safari-value", "abu-dhabi-stay-play", "ras-al-khaimah-mountain-coast"].map(id=>PACKAGES.find(p=>p.id===id)).filter(Boolean);
-  document.getElementById("homeActivitySelection").innerHTML = activities.map(t=>tourCard(t, {staticCover:true})).join("");
-  document.getElementById("homePackageSelection").innerHTML = packages.map(p=>pkgCard(p, {staticCover:true})).join("");
+  document.getElementById("homeActivitySelection").innerHTML = activities.map(t=>tourCard(t)).join("");
+  document.getElementById("homePackageSelection").innerHTML = packages.map(p=>pkgCard(p)).join("");
 }
 
 let visaSuggestionIndex = -1;
@@ -5881,7 +5943,7 @@ function handleVisaSearchInput(){
   renderVisaGrid();
 }
 function renderVisaGrid(){
-  clearSlideTimers(); // this grid is rebuilt on every search/load-more change -- always start clean before re-initing
+  resetSlideGesture(); // this grid is rebuilt on every search/load-more change -- always start clean before re-initing
   // Keep every destination discoverable independently of card pagination and search.
   const index = document.getElementById("visaDestinationIndex");
   if(index && !index.hasChildNodes()) index.innerHTML = `<h3 id="visaDestinationIndexTitle">Browse all visa destinations</h3>
@@ -5890,12 +5952,12 @@ function renderVisaGrid(){
   const list = VISAS.filter(v => v.country.toLowerCase().includes(q));
   const shown = list.slice(0, gridVisibleLimit("visa", visaRowsVisible));
   // The card is an <article>; the country link's ::after covers it, so the whole card opens the page.
-  // Visa cards show rotating photos without arrows or dots (they sat under the card text and could not be used).
+  // Visa cards use a single cover; the full destination gallery is on the detail page.
   document.getElementById("visaGrid").innerHTML = list.length ? shown.map(v => {
     const slug = slugify(v.country), href = URLS.visa(v);
     return `
     <article class="visa-card reveal">
-      ${slideshowHTML(v.images, v.country, "", {controls:false})}
+      ${slideshowHTML(v.images.slice(0,1), v.country, "", {controls:false})}
       <div class="vc-scrim"></div>
       <div class="vc-content">
         <div class="vc-top"><span class="vc-flag" aria-hidden="true">${v.flag}</span><div><h3><a class="vc-link" href="${href}">${v.country}<span class="sr-only"> visa assistance</span></a></h3><span class="vc-type">${v.type}</span></div></div>
@@ -5906,7 +5968,7 @@ function renderVisaGrid(){
           <div class="vc-guarantee">${hasRealValue(v.date) ? "Typical processing: "+v.date : "Processing time confirmed on enquiry"}</div>
           <span class="vc-more" aria-hidden="true">View visa details →</span>
           <button type="button" class="btn btn-gold btn-sm btn-block" style="margin-top:12px;" onclick="openVisaEnquiry('${slug}')">Start Visa Enquiry<span class="sr-only">: ${v.country}</span></button>
-          ${mediaCreditHTML(v.images, {compact:true})}
+          ${mediaCreditHTML(v.images.slice(0,1), {compact:true})}
         </div>
       </div>
     </article>`;
@@ -5924,7 +5986,7 @@ document.addEventListener("pointerdown", e => {
 
 /* ============ v41: VISA DETAIL ============ */
 function renderVisaDetail(slug){
-  clearSlideTimers();
+  resetSlideGesture();
   const v = visaBySlug(slug);
   const backLink = document.getElementById("visaDetailBack");
   backLink.href = "/visas/";
@@ -6041,7 +6103,7 @@ function commercialTermsNoteHTML(cancellationPolicy, importantInformation){
 }
 /* ============ v41: ACTIVITY DETAIL ============ */
 function renderTourDetail(id, expectedDest, opts){
-  clearSlideTimers();
+  resetSlideGesture();
   const isAddon = !!(opts && opts.addon);
   let t = (isAddon ? VISA_ADDONS : TOURS).find(x=>x.id===id);
   // The clean /activities/:destination/:id/ form must match the activity's real destination.
@@ -6143,7 +6205,7 @@ function renderTourDetail(id, expectedDest, opts){
 
 /* ============ v41: HOLIDAY PACKAGE DETAIL ============ */
 function renderPkgDetail(id, expectedDest){
-  clearSlideTimers();
+  resetSlideGesture();
   let p = PACKAGES.find(x=>x.id===id);
   if(p && expectedDest && p.dest !== expectedDest) p = undefined;
   const breadcrumb = document.getElementById("pkgBreadcrumb");
@@ -6440,42 +6502,9 @@ function slideshowHTML(images, alt, extraClass, opts){
   const region = label ? ` role="group" aria-roledescription="slideshow" aria-label="${label} photos"` : "";
   return `<div class="slideshow ${cls}" id="${id}" data-count="${imgs.length}" data-index="0"${region}>${imgTags}${link}${arrows}${dots}</div>`; // credits: mediaCreditHTML(), outside the photo
 }
-// Warms a slideshow's second image only once it is actually visible, instead of every slideshow
-// on the page 600ms after load (most are off-screen and may never be viewed).
-function slideVisibilityCallback(entries){
-  entries.forEach(entry => {
-    const el = entry.target;
-    if(entry.isIntersecting){ _visibleSlides.add(el); loadSlide(el.querySelectorAll("img")[1]); }
-    else _visibleSlides.delete(el);
-  });
-}
+// Load only the active photo; arrow, dot and swipe controls call slideGoTo() on demand.
 function initSlideshows(root){
-  const scope = root || document;
-  const slides = [...scope.querySelectorAll(".slideshow[data-count]")];
-  if(!slides.length) return;
-  if(typeof IntersectionObserver === "function"){
-    if(!_slideObserver) _slideObserver = new IntersectionObserver(slideVisibilityCallback, {threshold:0.1});
-    slides.forEach(el => _slideObserver.observe(el));
-  } else {
-    // Conservative fallback with no IntersectionObserver: treat every slideshow as visible so
-    // warm-up and autoplay still function, just without the off-screen skipping.
-    slides.forEach(el => { _visibleSlides.add(el); loadSlide(el.querySelectorAll("img")[1]); });
-  }
-  if(REDUCED_MOTION.matches) return; // no auto-rotation; arrows, dots, swipe and manual selection still work
-  if(_slideTimers.length) return; // the one shared scheduler is already running
-  // One shared ~4.2s tick drives every currently-visible, multi-image slideshow, instead of a
-  // setInterval per card. Pauses per-slideshow while hovered or while it holds keyboard focus.
-  const timer = setInterval(()=>{
-    _visibleSlides.forEach(el=>{
-      if(!document.body.contains(el)){ _visibleSlides.delete(el); return; } // stale/disconnected
-      const count = parseInt(el.dataset.count,10);
-      if(!(count > 1)) return;
-      const host = el.closest(".product-card, .pkg-card, .visa-card, .dest-card") || el;
-      if(host.matches(":hover") || host.contains(document.activeElement)) return;
-      slideStep(el.id,1);
-    });
-  }, 4200);
-  _slideTimers.push(timer);
+  (root || document).querySelectorAll(".slideshow[data-count]").forEach(el=>loadSlide(el.querySelector("img.active")));
 }
 
 /* ============ v41: METADATA + STRUCTURED DATA ============ */
@@ -6888,7 +6917,7 @@ function loadSlide(img){
 function slideGoTo(id, idx){
   const el = document.getElementById(id); if(!el) return;
   const imgs = el.querySelectorAll("img"); const dots = el.querySelectorAll(".slideshow-dots button");
-  loadSlide(imgs[idx]); loadSlide(imgs[(idx + 1) % imgs.length]); // the next one is ready before it's needed
+  loadSlide(imgs[idx]); // only the selected photo is requested
   imgs.forEach((im,i)=>im.classList.toggle("active", i===idx));
   dots.forEach((d,i)=>{ d.classList.toggle("active", i===idx); if(i===idx) d.setAttribute("aria-current", "true"); else d.removeAttribute("aria-current"); });
   el.dataset.index = idx;
@@ -6902,12 +6931,12 @@ function destTilesHTML(type){
     // The heading link's ::after covers the card, so the whole card opens the destination;
     // the slideshow's buttons sit above that layer and only change the image.
     return `<article class="dest-card reveal">
-      <div class="dest-card-media">${slideshowHTML(destinationMedia(type, d.slug), d.name, "dest-slideshow", {id:`ds-${type}-${d.slug}`, label:title, deferSlides:true})}</div>
+      <div class="dest-card-media">${slideshowHTML(destinationMedia(type, d.slug).slice(0,1), d.name, "dest-slideshow", {id:`ds-${type}-${d.slug}`, label:title, deferSlides:true})}</div>
       <div class="dest-card-body">
         <h2><a class="dest-card-link" href="/${type}/${d.slug}/">${title}</a></h2>
         <p>${d.blurb}</p>
         <span class="dest-card-count">${count} ${type==="activities" ? (count===1?"experience":"experiences") : (count===1?"package":"packages")} <span aria-hidden="true">→</span></span>
-        ${mediaCreditHTML(destinationMedia(type, d.slug), {compact:true})}
+        ${mediaCreditHTML(destinationMedia(type, d.slug).slice(0,1), {compact:true})}
       </div>
     </article>`;
   }).join("");
@@ -7566,7 +7595,7 @@ function setDetailGallery(galleryId, creditId, images, title, meta){
   const g = document.getElementById(galleryId), c = document.getElementById(creditId), has = (images || []).length > 0;
   g.style.display = "";
   g.classList.toggle("is-fallback", !has);
-  g.innerHTML = slideshowHTML(images, title, "detail-gallery-slideshow", {meta});
+  g.innerHTML = slideshowHTML(images, title, "detail-gallery-slideshow", {meta, label:title, deferSlides:true});
   if(c) c.innerHTML = mediaCreditHTML(images);
   initSlideshows(g);
 }
@@ -7644,7 +7673,7 @@ if(PRERENDERED){
   const to = HASH_MODE ? null : legacyHashTarget(); // e.g. this file deployed with an SPA-style rewrite
   if(to) location.replace(to);
   else {
-    document.getElementById("homeHeroMedia").innerHTML = slideshowHTML([IMG.dubaiDuskPanorama, IMG.desertSunsetHero, IMG.mosqueTwilight, IMG.rakSunriseMountains, IMG.wingSunset], "", "hero-slideshow");
+    document.getElementById("homeHeroMedia").innerHTML = slideshowHTML([IMG.dubaiDuskPanorama, IMG.desertSunsetHero, IMG.mosqueTwilight, IMG.rakSunriseMountains, IMG.wingSunset], "", "hero-slideshow", {label:"UAE travel inspiration", deferSlides:true});
     initSlideshows(document.getElementById("homeHeroMedia"));
     renderHomeSelections();
     renderVisaGrid();

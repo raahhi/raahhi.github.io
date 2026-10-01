@@ -40,6 +40,19 @@ try{
    const overflow=await p.evaluate(()=>({width:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth}));
    assert(overflow.scroll<=overflow.width+1,route+' overflow '+JSON.stringify(overflow));
    assert.equal(errors.length,0,route+' runtime errors '+errors.join('; '));
+   assert(await p.locator('.page.active .product-card .slideshow[data-count], .page.active .pkg-card .slideshow[data-count], .page.active .visa-card .slideshow[data-count], .page.active .dest-card .slideshow[data-count]').evaluateAll(es=>es.every(e=>e.dataset.count==='1')),route+' static card covers');
+   if(route==='/holidays/dubai/dubai-family-theme-park-week/'){
+    assert(await p.evaluate(()=>PACKAGES.find(p=>p.id==='dubai-family-theme-park-week').images[0]===IMG.imgVelociraptor),'Theme-park cover represents a listed inclusion');
+   }
+   if(route==='/activities/dubai/evening-desert-safari/'){
+    const gallery=p.locator('#tourDetailGallery .slideshow');
+    await gallery.getByRole('button',{name:/^Next image/}).click();
+    assert.equal(await gallery.getAttribute('data-index'),'1');
+    const arrow=await gallery.getByRole('button',{name:/^Next image/}).boundingBox();
+    assert(arrow.width>=44&&arrow.height>=44,'Manual gallery touch target');
+    await gallery.getByRole('button',{name:/^Previous image/}).click();
+    assert.equal(await gallery.getAttribute('data-index'),'0');
+   }
    if(route==='/'){
     assert.equal(await p.locator('#homeActivitySelection .product-card').count(),3);
     assert.equal(await p.locator('#homePackageSelection .pkg-card').count(),3);
