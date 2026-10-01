@@ -2,7 +2,7 @@
 
 Checked on 1 October 2026. This is a selected-field verification pass, not a certification of the entire catalogue or live bookability.
 
-`checked-fields.json` records the evidence inspected for seven priority activities. The authoritative HTML's `PRODUCT_FACT_CHECKS` applies the corrections after the original catalogue data is assembled. Selected-field dates do not replace whole-listing verification dates. Sources on each page explain exactly which statements they support.
+`checked-fields.json` records the evidence inspected for nine priority activities. The authoritative HTML's `PRODUCT_FACT_CHECKS` applies the corrections after the original catalogue data is assembled. Selected-field dates do not replace whole-listing verification dates. Sources on each page explain exactly which statements they support.
 
 `review-queue.csv` covers all 174 activity and 26 holiday records. All 199 enquiry listings still require written supplier allocation/quote evidence before commercial facts can be certified. AquaFun is an official-purchase-only visitor listing, with no RAAHHI ticket enquiry or RAAHHI Service/Offer schema.
 
@@ -28,3 +28,9 @@ Checked on 1 October 2026. This is a selected-field verification pass, not a cer
 ## How to maintain
 
 Update only the fields actually supported by evidence. Record the source, checking date and exact scope. Do not publish source operator prices or refund terms as RAAHHI offers. Verify that cards, detail text, FAQs, guides and structured data agree after changes. Review dynamic closures and schedules again before travel; a checking date is not a live availability feed.
+
+## Direct answers and comparisons
+
+The second pass adds three intent-based choice prompts to each of the four existing comparisons, with links restricted to the products actually compared. Choices explain relevant distinctions and conditions, without rankings, ratings or price claims. Generated activity answers summarize selected inclusions, options and restrictions and link to the full visible details; those links preserve the single-file preview route and move keyboard focus to the target heading.
+
+Sky Views observation floors, Glass Walk and published slide height/weight guidance, and The View’s level 52/54 distinction were checked on the official pages on 1 October 2026. These checks do not certify RAAHHI ticket inventory or commercial terms. Prices and contact details remain on hold at the user’s request.

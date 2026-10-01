@@ -50,6 +50,10 @@ try{
     assert.equal(await faq.getAttribute('open'),null);
    }
    if(route.startsWith('/compare/')){
+    assert.equal(await p.locator('.comparison-choice').count(),3,'Three useful choice prompts');
+    const comparisonLinks=await p.locator('.comparison-choice a').evaluateAll(es=>es.map(e=>e.getAttribute('href')));
+    const tableLinks=await p.locator('.comparison-table tbody th a').evaluateAll(es=>es.map(e=>e.getAttribute('href')));
+    assert(comparisonLinks.length>=3 && comparisonLinks.every(url=>tableLinks.includes(url)),'Choices link only to products actually compared');
     assert.equal(await p.locator('.comparison-table').evaluate(el=>getComputedStyle(el).display),width===390?'block':'table');
     if(width===390)assert(await p.locator('.comparison-table tbody tr').evaluateAll(es=>es.every(el=>el.scrollWidth<=el.clientWidth+1)),'Comparison cards fit mobile width');
    }

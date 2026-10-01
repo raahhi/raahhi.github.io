@@ -48,6 +48,13 @@ try {
  await page.goto('file://'+process.cwd()+'/source/raahhi-tours52.html#/activities/dubai');
  await page.locator('#tourSearch').fill('waterparks');
  assert(await page.locator('#tourGrid .product-card').count()>0,'Destination search uses common category spelling');
+ await page.goto('file://'+process.cwd()+'/source/raahhi-tours52.html#/activities/dubai/burj-khalifa-top');
+ const optionsFaq=page.locator('.page.active .qa-item').filter({has:page.locator('a[href="#activity-options"]')}).first();
+ await optionsFaq.locator('summary').click();
+ const productUrl=page.url();
+ await optionsFaq.locator('a[href="#activity-options"]').click();
+ assert.equal(page.url(),productUrl,'Fact links preserve the preview route');
+ assert(await page.locator('#activity-options').evaluate(el=>el===document.activeElement),'Fact link moves keyboard focus to its full detail');
  assert.equal(errors.length,0,errors.join('; '));
  console.log('PASS catalogue queries, aliases, exact ranking, published links, relevant suggestions, more-results/reset/focus, escaping and destination search');
 } finally {await browser.close();}

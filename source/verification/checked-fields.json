@@ -149,6 +149,36 @@
           "lastVerified": "2026-10-01"
         }
       ]
+    },
+    "sky-views-observatory": {
+      "fields": [
+        "Observation floors and Glass Walk",
+        "Published Glass Slide height and weight limits"
+      ],
+      "sources": [
+        {
+          "name": "Sky Views: Observatory and Glass Slide",
+          "url": "https://www.skyviewsdubai.com/observatory/",
+          "type": "operator",
+          "supports": "Observatory on levels 52 and 53; Glass Walk; published Glass Slide height and weight limits. Ticket inclusions are confirmed for the selected product.",
+          "lastVerified": "2026-10-01"
+        }
+      ]
+    },
+    "the-view-at-the-palm": {
+      "fields": [
+        "Level 52 deck",
+        "Separate Level 54 experience"
+      ],
+      "sources": [
+        {
+          "name": "The View: observation levels",
+          "url": "https://www.theviewpalm.ae/en/about-the-view",
+          "type": "operator",
+          "supports": "The View is on level 52; The Next Level is on level 54. Access depends on the selected ticket.",
+          "lastVerified": "2026-10-01"
+        }
+      ]
     }
   },
   "media": {
