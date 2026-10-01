@@ -78,6 +78,12 @@ async function snapshot(route) {
       if (dates.some(d => !/^\d{4}-\d{2}-\d{2}$/.test(d.iso || '') || !d.text?.trim())) {
         throw new Error('Invalid recorded check date on ' + route);
       }
+      const heading = main.locator('.detail-heading');
+      if (await heading.locator('h1').count() !== 1 || await block.locator('.key-facts dd').count() > 6) {
+        throw new Error('Missing product heading or excessive glance facts on ' + route);
+      }
+      const headingBeforeGallery = await heading.evaluate(el => !!(el.compareDocumentPosition(el.parentElement.querySelector('.detail-gallery')) & Node.DOCUMENT_POSITION_FOLLOWING));
+      if (!headingBeforeGallery) throw new Error('Product heading must precede gallery on ' + route);
       const facts = await block.locator('.key-facts dd').allTextContents();
       if (facts.some(v => !v.trim() || /^[\sXx–—-]*$/.test(v))) {
         throw new Error('Empty or placeholder fact on ' + route);

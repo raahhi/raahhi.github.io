@@ -43,6 +43,9 @@ try{
    const bar=p.locator('.page.active .mobile-enquiry-bar');
    if(await bar.count()){
     assert.equal(await bar.count(),1,route+' one contextual bottom bar');
+    assert.equal(await p.locator('.page.active .detail-heading h1').count(),1,route+' heading above gallery');
+    assert(await p.locator('.page.active .at-a-glance .key-facts dd').count()<=6,route+' compact facts');
+
     assert.equal(await p.locator('.page.active .detail-enquiry-actions button').count(),1,route+' title enquiry action');
     assert.equal(await bar.isVisible(),width===390,route+' mobile-only bar');
     assert.equal(await p.locator('.page.active .booking-box button').count(),1,route+' one primary enquiry action');
@@ -52,6 +55,21 @@ try{
    if(route==='/visas/united-arab-emirates/'){
     await (width===390 ? bar.getByRole('button') : p.locator('.page.active .detail-enquiry-actions button')).click();
     assert(await p.locator('#visaEnquiryModal').isVisible());assert((await p.locator('#visaEnqCountry').innerText()).includes('United Arab Emirates'));
+    if(width===390){
+     await p.locator('#visaEnqName').fill('Test Traveller');
+     await p.locator('#visaEnqEmail').fill('test@example.com');
+     await p.locator('#visaEnqPhone').fill('+971501234567');
+     await p.locator('#visaOptional summary').click();
+     await p.locator('#visaEnqDate').fill('2020-01-01');
+     await p.locator('#visaOptional summary').click();
+     await p.locator('#visaEnqForm button[type="submit"]').click();
+     assert.equal(await p.locator('#visaOptional').getAttribute('open'),'');
+     assert(await p.locator('#visaEnqDateErr').isVisible());
+     await p.locator('#visaEnqDate').fill('2027-01-15');
+     await p.locator('#visaEnqForm button[type="submit"]').click();
+     const summary=await p.locator('#visaEnqSummary').innerText();
+     assert(summary.includes('United Arab Emirates')&&summary.includes('2027')&&summary.includes('Page:'));
+    }
     await p.locator('#visaEnquiryModal button.modal-close').click();
    }
    if(route==='/activities/dubai/evening-desert-safari/'){

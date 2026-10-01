@@ -300,6 +300,21 @@
   .booking-box .bb-price span{ font-size:13px; color:var(--ink-400); font-family:'Inter',sans-serif; font-weight:500; }
   .booking-box .field{ margin-top:14px; }
 
+  .detail-heading h1{ font-size:clamp(28px,3.6vw,38px); line-height:1.2; }
+  .detail-heading .detail-tags{ margin:14px 0 18px; }
+  .detail-heading:empty{ display:none; }
+  #contactModal .modal-box, #visaEnquiryModal .modal-box{ padding:24px; }
+  #contactModal .visa-enq-box, #visaEnquiryModal .visa-enq-box{ padding:14px; margin:14px 0; }
+  #contactModal #callbackContextKind{ display:none; }
+  #callbackContextDetails{ gap:2px !important; margin-top:6px; }
+  #callbackContextDetails p{ font-size:13.5px; }
+  .enquiry-optional{ margin-top:14px; }
+  .enquiry-optional summary{ cursor:pointer; font-size:14px; font-weight:600; color:var(--navy-950); padding:8px 0; }
+  @media(max-width:480px){
+    .at-a-glance .key-facts{ grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px 12px; padding:14px; }
+    .at-a-glance .key-facts dd{ font-size:14px; }
+  }
+
   /* Product enquiry access: shared by activities, holidays and visa details. */
   .detail-enquiry-actions{ display:flex; align-items:center; gap:14px; flex-wrap:wrap; margin:0 0 24px; }
   .detail-enquiry-actions p{ margin:0; color:var(--ink-600); font-size:14px; max-width:300px; }
@@ -417,7 +432,7 @@
   .at-a-glance .answer-lede{ margin:12px 0 0; }
   .at-a-glance .key-facts{ margin-top:18px; }
   .at-a-glance-note{ color:var(--ink-400); font-size:13.5px; margin:12px 0 0; }
-  @media(max-width:480px){ .at-a-glance{ padding:16px; } .at-a-glance .key-facts{ padding:14px; grid-template-columns:1fr; } }
+  @media(max-width:480px){ .at-a-glance{ padding:16px; } .at-a-glance .key-facts{ padding:14px; grid-template-columns:repeat(2,minmax(0,1fr)); } }
   .key-facts{ display:grid; grid-template-columns:repeat(auto-fit, minmax(170px, 1fr)); gap:14px 20px; margin:22px 0 0; padding:18px 20px; background:var(--sand-100); border-radius:var(--radius-m); }
   .key-facts div{ min-width:0; }
   .key-facts dt{ font-size:11.5px; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:var(--ink-400); }
@@ -952,6 +967,7 @@
     <div class="wrap">
       <nav class="breadcrumb" id="visaBreadcrumb" aria-label="Breadcrumb"></nav>
       <a href="/visas/" class="detail-back" id="visaDetailBack">← Back to all visas</a>
+      <div class="detail-heading" id="visaDetailHeading"></div>
       <div class="detail-gallery" id="visaDetailGallery"></div>
       <p class="media-credit" id="visaDetailCredit"></p>
       <div class="detail-layout">
@@ -1013,6 +1029,7 @@
     <div class="wrap">
       <nav class="breadcrumb" id="tourBreadcrumb" aria-label="Breadcrumb"></nav>
       <a href="/activities/" class="detail-back" id="tourDetailBack">← Back to all activities</a>
+      <div class="detail-heading" id="tourDetailHeading"></div>
       <div class="detail-gallery" id="tourDetailGallery"></div>
       <p class="media-credit" id="tourDetailCredit"></p>
       <div class="detail-layout">
@@ -1073,6 +1090,7 @@
     <div class="wrap">
       <nav class="breadcrumb" id="pkgBreadcrumb" aria-label="Breadcrumb"></nav>
       <a href="/holidays/" class="detail-back" id="pkgDetailBack">← Back to all holidays</a>
+      <div class="detail-heading" id="pkgDetailHeading"></div>
       <div class="detail-gallery" id="pkgDetailGallery"></div>
       <p class="media-credit" id="pkgDetailCredit"></p>
       <div class="detail-layout">
@@ -1502,8 +1520,10 @@
       <form id="callbackForm" novalidate onsubmit="submitCallback(event)">
         <div class="field" style="margin-top:18px;"><label for="callbackName">Full name</label><input type="text" id="callbackName" autocomplete="name" required aria-describedby="callbackNameErr" oninput="clearFieldError(this)"><p class="field-error" id="callbackNameErr" hidden></p></div>
         <div class="field" style="margin-top:14px;"><label for="callbackPhone">Phone / WhatsApp</label><input type="tel" id="callbackPhone" autocomplete="tel" placeholder="e.g. +971 50 123 4567" required aria-describedby="callbackPhoneErr" oninput="clearFieldError(this)"><p class="field-error" id="callbackPhoneErr" hidden></p></div>
+        <details class="enquiry-optional" id="callbackOptional"><summary>Add a preferred call time or notes</summary>
         <div class="field" style="margin-top:14px;"><label for="callbackTime">Best time to call (optional)</label><input type="text" id="callbackTime" placeholder="e.g. Today, 6–8 PM"></div>
         <div class="field" style="margin-top:14px;"><label for="callbackNotes">Notes / requirements (optional)</label><textarea id="callbackNotes" rows="3" placeholder="Anything else we should know?"></textarea></div>
+        </details>
         <button class="btn btn-gold btn-block" style="margin-top:20px;" id="callbackSubmit">Prepare Callback Request</button>
       </form>
     </div>
@@ -1533,8 +1553,10 @@
         <div class="field" style="margin-top:18px;"><label for="visaEnqName">Full name</label><input type="text" id="visaEnqName" name="name" autocomplete="name" required aria-describedby="visaEnqNameErr" oninput="clearVisaEnqError(this)"><p class="field-error" id="visaEnqNameErr" hidden></p></div>
         <div class="field" style="margin-top:14px;"><label for="visaEnqEmail">Email</label><input type="email" id="visaEnqEmail" name="email" autocomplete="email" required aria-describedby="visaEnqEmailErr" oninput="clearVisaEnqError(this)"><p class="field-error" id="visaEnqEmailErr" hidden></p></div>
         <div class="field" style="margin-top:14px;"><label for="visaEnqPhone">Phone / WhatsApp</label><input type="tel" id="visaEnqPhone" name="phone" autocomplete="tel" placeholder="e.g. +971 50 123 4567" required aria-describedby="visaEnqPhoneErr" oninput="clearVisaEnqError(this)"><p class="field-error" id="visaEnqPhoneErr" hidden></p></div>
+        <details class="enquiry-optional" id="visaOptional"><summary>Add travel dates or trip details</summary>
         <div class="field" style="margin-top:14px;"><label for="visaEnqDate">Travel date (optional)</label><input type="date" id="visaEnqDate" name="travelDate" aria-describedby="visaEnqDateErr" oninput="clearVisaEnqError(this)"><p class="field-error" id="visaEnqDateErr" hidden></p></div>
         <div class="field" style="margin-top:14px;"><label for="visaEnqMessage">Message (optional)</label><textarea id="visaEnqMessage" name="message" placeholder="Nationality, number of travellers, anything else we should know..."></textarea></div>
+        </details>
         <button type="submit" class="btn btn-gold btn-block" style="margin-top:20px;">Prepare Enquiry</button>
         <p class="form-note" style="text-align:center;">No payment required to enquire</p>
       </form>
@@ -4545,7 +4567,7 @@ const CALLBACK_INTRO = "Leave your name, number and the best time to reach you �
 function setCallbackWording(context){
   const set = (id, text) => { document.getElementById(id).textContent = text; };
   set("callbackTitle", context ? `Enquire about this ${context.noun}` : "Prepare a callback request");
-  set("callbackIntro", context ? "Leave your name, number and the best time to reach you. Your selection below is included in the enquiry summary." : CALLBACK_INTRO);
+  set("callbackIntro", context ? "Add your contact details to prepare an enquiry summary." : CALLBACK_INTRO);
   set("callbackSubmit", context ? "Prepare Enquiry" : "Prepare Callback Request");
   set("callbackDoneTitle", context ? "Your enquiry summary is ready" : "Your callback request is ready to copy");
   set("callbackDoneEyebrow", context ? (context.noun === "activity" ? "Activity enquiry" : "Holiday enquiry") : "Callback request");
@@ -4557,7 +4579,7 @@ function openCallback(context){
   if(callbackContext){
     document.getElementById("callbackContextKind").textContent = callbackContext.kind;
     document.getElementById("callbackContextTitle").textContent = callbackContext.title;
-    renderSummaryRows(document.getElementById("callbackContextDetails"), callbackContext.details || []);
+    renderSummaryRows(document.getElementById("callbackContextDetails"), (callbackContext.details || []).filter(([label]) => ["Preferred date", "Guests", "Travel month", "Travellers"].includes(label)));
     document.getElementById("callbackContext").hidden = false;
   }
   openModal("contactModal");
@@ -4606,6 +4628,7 @@ function submitCallback(e){
   document.getElementById("callbackDoneTitle").focus();
 }
 function resetCallback(){
+  document.getElementById("callbackOptional").open = false;
   callbackContext = null;
   document.getElementById("callbackForm").reset();
   CALLBACK_FIELDS.forEach(id => setFieldError(id, ""));
@@ -4713,6 +4736,7 @@ function openVisaEnquiry(slug){
   openModal("visaEnquiryModal");
 }
 function resetVisaEnquiry(){
+  document.getElementById("visaOptional").open = false;
   visaEnquiryVisa = null;
   document.getElementById("visaEnqForm").reset();
   // Hidden inputs aren't cleared by form.reset() once .value has been set.
@@ -4742,14 +4766,14 @@ function submitVisaEnquiry(e){
   };
   VISA_ENQ_FIELDS.forEach(id => setVisaEnqError(id, errors[id]));
   const firstInvalid = VISA_ENQ_FIELDS.find(id => errors[id] && id!=="visaEnqSlug");
-  if(firstInvalid) document.getElementById(firstInvalid).focus();
+  if(firstInvalid){ if(firstInvalid === "visaEnqDate") document.getElementById("visaOptional").open = true; document.getElementById(firstInvalid).focus(); }
   if(VISA_ENQ_FIELDS.some(id => errors[id])) return;
 
   // Show what was entered -- as text, never as HTML.
   renderSummaryRows(document.getElementById("visaEnqSummary"), [
     ["Destination", v.flag+" "+v.country], ["Visa type", v.type], ["Name", name], ["Email", email], ["Phone / WhatsApp", phone],
     ["Travel date", date && new Date(date+"T00:00").toLocaleDateString(undefined,{day:"numeric", month:"long", year:"numeric"})],
-    ["Message", message]]);
+    ["Message", message], ["Page", location.href]]);
   document.getElementById("visaEnqDoneName").textContent = name;
   document.getElementById("visaEnqForm").reset();
   document.getElementById("visaEnqFormView").hidden = true;
@@ -5900,6 +5924,7 @@ function renderVisaDetail(slug){
     document.getElementById("visaDetailGallery").innerHTML = "";
     document.getElementById("visaDetailGallery").style.display = "none";
     clearDetailCredit("visaDetailCredit");
+    document.getElementById("visaDetailHeading").replaceChildren();
     document.getElementById("visaDetailMain").innerHTML = `
       <h1>Visa destination not found</h1>
       <p style="color:var(--ink-600); font-size:16px;">We couldn't find a visa destination matching "${escapeHTML(slug)}".</p>
@@ -5932,7 +5957,7 @@ function renderVisaDetail(slug){
     <h1><span aria-hidden="true">${v.flag}</span> ${n} visa assistance</h1>
     <div class="detail-tags"><span class="tag">${typeText}</span><span class="tag">Validity: ${validityText}</span></div>
     ${detailEnquiryHTML(v, "visa", slugV)}
-    ${atAGlanceHTML(`RAAHHI TOURS provides visa assistance for travel to ${n}: help understanding the visa options, confirming current requirements and fees, and preparing the information your application needs.${vm.type ? ` Visa type listed for ${n}: <strong>${vm.type}</strong>${vm.validity && !asIssued ? ` (listed validity: ${vm.validity})` : ""}.` : ""} Visa decisions are made by the relevant government authority, not by RAAHHI TOURS.`, [["Destination", n], ["Visa type", typeText], ["Validity", validityText], ["Typical processing time", dateText], ["Fee", feeText]], detailNote, freshnessSummaryHTML(vm, "visa"))}
+    ${atAGlanceHTML(`RAAHHI TOURS helps you understand ${n} visa options and prepare your application information. Requirements, fees and eligibility are confirmed for your passport and trip; government authorities decide approval.`, [["Destination", n], ["Visa type", typeText], ["Validity", validityText], ["Typical processing time", dateText], ["Fee", feeText]], detailNote, freshnessSummaryHTML(vm, "visa"))}
     <div class="detail-section">
       <h2>What ${n} visa requirements depend on</h2>
       <div class="depends-box">
@@ -5979,6 +6004,7 @@ function renderVisaDetail(slug){
       <p style="color:var(--ink-600); font-size:14.5px;">${more.map(x => `<a class="contact-link" href="${URLS.visa(x)}">${x.country} visa assistance</a>`).join(" · ")} · <a class="contact-link" href="/visas/">All ${VISAS.length} visa destinations</a></p>
     </div>
     ${slugV === "united-arab-emirates" ? uaePlanningLinksHTML() : ""}`;
+  moveDetailHeading("visa");
   document.getElementById("visaBookingBox").style.display = "";
   document.getElementById("visaBookingBox").innerHTML = `
     ${vm.fee ? `<div class="bb-price">${vm.fee} <span>fee</span></div>` : `<div class="bb-price" style="font-size:22px;">Fee confirmed on enquiry</div>`}
@@ -6018,6 +6044,7 @@ function renderTourDetail(id, expectedDest, opts){
     document.getElementById("tourDetailGallery").innerHTML = "";
     document.getElementById("tourDetailGallery").style.display = "none";
     clearDetailCredit("tourDetailCredit");
+    document.getElementById("tourDetailHeading").replaceChildren();
     document.getElementById("tourDetailMain").innerHTML = `
       <h1>Activity not found</h1>
       <p style="color:var(--ink-600); font-size:16px;">${knownDest
@@ -6047,6 +6074,8 @@ function renderTourDetail(id, expectedDest, opts){
      notes above TOURS); a missing field means no section and no empty heading. */
   const p14 = s => `<p style="color:var(--ink-600); font-size:14.5px;">${s}</p>`;
   const sections = [];
+  if(t.description || t.desc) sections.push(`<div class="detail-section"><h2>About this ${isAddon ? "service" : "activity"}</h2>${p14(t.description || t.desc)}</div>`);
+  if(t.location || t.origin) sections.push(`<div class="detail-section"><h2>Location</h2>${t.location ? p14(t.location) : ""}${t.origin ? p14(`<strong>Departs from:</strong> ${originLabel(t.origin)}`) : ""}</div>`);
   if(t.highlights && t.highlights.length) sections.push(`<div class="detail-section"><h2>Highlights</h2><div class="incl-grid">${t.highlights.map(h=>`<div class="incl-item">${h}</div>`).join("")}</div></div>`);
   if((t.inclusions && t.inclusions.length) || (t.exclusions && t.exclusions.length)) sections.push(`<div class="detail-section"><h2>${(t.exclusions||[]).length ? ((t.inclusions||[]).length ? "Inclusions &amp; exclusions" : "Exclusions") : "What's included"}</h2><div class="incl-grid">
       ${(t.inclusions||[]).map(i=>`<div class="incl-item">✓ ${i}</div>`).join("")}${(t.exclusions||[]).map(i=>`<div class="incl-item no">✗ ${i}</div>`).join("")}</div></div>`);
@@ -6080,12 +6109,10 @@ function renderTourDetail(id, expectedDest, opts){
     ${sti.note ? `<div class="status-banner status-${st}" role="status"><strong>${sti.label}.</strong> ${sti.note}</div>` : ""}
     <div class="detail-tags">${statusTagHTML(t)}<span class="tag">${dn}</span><span class="tag">${t.cat}</span>${hasRealValue(t.duration) ? `<span class="tag">${t.duration}</span>` : ""}</div>
     ${detailEnquiryHTML(t, isAddon ? "addon" : "activity")}
-    ${atAGlanceHTML(`<strong>${t.title}</strong> is ${isAddon ? "an arrival add-on listed under Visas" : `${aOrAn(phrase)} ${phrase} listed under ${dn} activities`} at RAAHHI TOURS. ${t.description || t.desc}${hasRealValue(t.duration) ? ` Listed duration or timing: ${t.duration}.` : ""}`, [["Availability", sti.label], [isAddon ? "Service" : "Destination", isAddon ? `<a class="contact-link" href="/visas/">Visas · arrival essentials</a>` : `<a class="contact-link" href="${URLS.activityDest(t.dest)}">${dn}</a>`], ["Location", t.location || ""], ["Departs from", originLabel(t.origin)], ["Category", t.cat],
-      ["Duration / timing", hasRealValue(t.duration) ? t.duration : ""], ["Timing", t.timing || ""],
-      ["Price", price.known ? escapeHTML(price.text + (price.basis ? " " + price.basis : "")) : "Confirmed on enquiry"],
-      ["Confirmed when you enquire", cap(joinList(confirm))], ["How to enquire", "Select Enquire on this page"]], "", freshnessSummaryHTML(t, isAddon ? "addon" : "activity"))}
+    ${atAGlanceHTML(compactDescription(t), [[isAddon ? "Service" : "Destination", isAddon ? `<a class="contact-link" href="/visas/">UAE arrival essentials</a>` : `<a class="contact-link" href="${URLS.activityDest(t.dest)}">${dn}</a>`], ["Category", t.cat], ["Duration", hasRealValue(t.duration) ? t.duration : ""], ["Timing", t.timing || ""], ["Availability", sti.label], ["Price", price.known ? escapeHTML(price.text + (price.basis ? " " + price.basis : "")) : "Confirmed on enquiry"]], "", freshnessSummaryHTML(t, isAddon ? "addon" : "activity"))}
     ${sections.join("")}
     <div class="detail-section"><h2>${t.title}: common questions</h2>${qaHTML(mergeFaqItems(t.faqs || [], isAddon ? [] : activityFaqItems(t)))}</div>`;
+  moveDetailHeading("tour");
   document.getElementById("tourBookingBox").style.display = "";
   // Date and guests are passed into the enquiry by enquireAboutProduct(); nothing here books or reserves.
   document.getElementById("tourBookingBox").innerHTML = `
@@ -6116,6 +6143,7 @@ function renderPkgDetail(id, expectedDest){
     document.getElementById("pkgDetailGallery").innerHTML = "";
     document.getElementById("pkgDetailGallery").style.display = "none";
     clearDetailCredit("pkgDetailCredit");
+    document.getElementById("pkgDetailHeading").replaceChildren();
     document.getElementById("pkgDetailMain").innerHTML = `
       <h1>Holiday package not found</h1>
       <p style="color:var(--ink-600); font-size:16px;">${knownDest
@@ -6168,15 +6196,12 @@ function renderPkgDetail(id, expectedDest){
     ${psti.note ? `<div class="status-banner status-${pst}" role="status"><strong>${psti.label}.</strong> ${psti.note}</div>` : ""}
     <div class="detail-tags">${statusTagHTML(p)}<span class="tag">${dn}</span>${hasRealValue(p.dur) ? `<span class="tag">${p.dur}</span>` : ""}</div>
     ${detailEnquiryHTML(p, "holiday")}
-    ${atAGlanceHTML(`<strong>${p.title}</strong> is ${hasRealValue(p.dur) ? `a ${durAdj(p.dur)}` : "a"} holiday package based in ${dn}, listed under ${dn} holidays at RAAHHI TOURS.${(p.incl || []).length ? ` Its listed inclusions are ${joinList(p.incl)}.` : ""}`, [["Destination", `<a class="contact-link" href="${URLS.holidayDest(p.dest)}">${dn}</a>`], ["Duration", hasRealValue(p.dur) ? durText(p.dur) : ""], ["Availability", psti.label],
-      ["Inclusions", joinList(p.incl || [])], ["Accommodation", acc ? escapeHTML(accommodationSummary(acc)) + (acc.name ? "" : " — hotel confirmed on enquiry") : ""],
-      ["Transfers", transfers.length ? `Listed: ${joinList(transfers)}` : ""], ["Meals", acc && acc.board ? escapeHTML(acc.board) : ""],
-      ["Price", price.known ? escapeHTML(price.text + (price.basis ? " " + price.basis : "")) : "Confirmed on enquiry"],
-      ["Confirmed when you enquire", cap(joinList(confirm))]], "", freshnessSummaryHTML(p, "holiday"))}
+    ${atAGlanceHTML(`${escapeHTML(p.title)} is ${hasRealValue(p.dur) ? `a ${durAdj(p.dur)}` : "a"} holiday package based in ${dn}.`, [["Destination", `<a class="contact-link" href="${URLS.holidayDest(p.dest)}">${dn}</a>`], ["Duration", hasRealValue(p.dur) ? durText(p.dur) : ""], ["Accommodation", acc ? escapeHTML(accommodationSummary(acc)) + (acc.name ? "" : " — confirmed on enquiry") : ""], ["Meals", acc && acc.board ? escapeHTML(acc.board) : ""], ["Availability", psti.label], ["Price", price.known ? escapeHTML(price.text + (price.basis ? " " + price.basis : "")) : "Confirmed on enquiry"]], "", freshnessSummaryHTML(p, "holiday"))}
     ${overview ? `<p class="pkg-overview">${overview}</p>` : ""}
     ${p.description ? `<p class="pkg-overview">${p.description}</p>` : ""}
     ${sections.join("")}
     <div class="detail-section"><h2>${p.title}: common questions</h2>${qaHTML(mergeFaqItems(p.faqs || [], packageFaqItems(p)))}</div>`;
+  moveDetailHeading("pkg");
   document.getElementById("pkgBookingBox").style.display = "";
   document.getElementById("pkgBookingBox").innerHTML = `
     ${price.known ? `<div class="bb-price">${escapeHTML(price.text)} <span>${escapeHTML(price.basis)}</span></div>` : `<div class="bb-price" style="font-size:22px;">${PACKAGE_PRICE_MISSING}</div>`}
@@ -6205,6 +6230,16 @@ function relatedPackages(p){
 
 /* ============ v41: PAGE-SPECIFIC QUESTIONS ============ */
 // Shared enquiry actions preserve the selected date and group size in the existing form.
+function moveDetailHeading(prefix){
+  const main = document.getElementById(prefix + "DetailMain"), heading = document.getElementById(prefix + "DetailHeading");
+  heading.replaceChildren();
+  [...main.children].filter(el => el.matches("h1, .status-banner, .detail-tags, .detail-enquiry-actions, .mobile-enquiry-bar")).forEach(el => heading.append(el));
+}
+function compactDescription(record){
+  const description = String(record.description || record.desc || "").replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim();
+  const sentence = description.match(/^.*?[.!?](?:\s|$)/)?.[0]?.trim() || description;
+  return escapeHTML(sentence.split(/\s+/).length > 45 ? sentence.split(/\s+/).slice(0,45).join(" ") + "…" : sentence);
+}
 function enquiryAction(record, kind, visaSlug){
   return kind === "visa" ? `openVisaEnquiry('${visaSlug}')` : `enquireAboutProduct('${kind}', '${record.id}')`;
 }
