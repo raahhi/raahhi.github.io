@@ -1058,7 +1058,7 @@
       <a href="/visas/" class="detail-back" id="visaDetailBack">← Back to all visas</a>
       <div class="detail-heading" id="visaDetailHeading"></div>
       <div class="detail-gallery" id="visaDetailGallery"></div>
-      <p class="media-credit" id="visaDetailCredit"></p>
+      <div class="media-credit" id="visaDetailCredit"></div>
       <div class="detail-layout">
         <div class="detail-main" id="visaDetailMain"></div>
         <div><div class="booking-box" id="visaBookingBox"></div></div>
@@ -1120,7 +1120,7 @@
       <a href="/activities/" class="detail-back" id="tourDetailBack">← Back to all activities</a>
       <div class="detail-heading" id="tourDetailHeading"></div>
       <div class="detail-gallery" id="tourDetailGallery"></div>
-      <p class="media-credit" id="tourDetailCredit"></p>
+      <div class="media-credit" id="tourDetailCredit"></div>
       <div class="detail-layout">
         <div class="detail-main" id="tourDetailMain"></div>
         <div>
@@ -1181,7 +1181,7 @@
       <a href="/holidays/" class="detail-back" id="pkgDetailBack">← Back to all holidays</a>
       <div class="detail-heading" id="pkgDetailHeading"></div>
       <div class="detail-gallery" id="pkgDetailGallery"></div>
-      <p class="media-credit" id="pkgDetailCredit"></p>
+      <div class="media-credit" id="pkgDetailCredit"></div>
       <div class="detail-layout">
         <div class="detail-main" id="pkgDetailMain"></div>
         <div><div class="booking-box" id="pkgBookingBox"></div></div>
@@ -3590,9 +3590,11 @@ const PRODUCT_FACT_CHECKS = {"ferrari-world-abu-dhabi":{"desc":"A Ferrari-themed
 TOURS.forEach(t => { if(PRODUCT_FACT_CHECKS[t.id]) Object.assign(t, PRODUCT_FACT_CHECKS[t.id]); });
 
 // Exact venue photographs with recorded reuse licences, checked 1 October 2026.
-const APPROVED_PRODUCT_PHOTOS = {"sky-views-observatory": "https://images.unsplash.com/photo-1708361089093-beef4c4584e7", "al-ain-adventure": "https://upload.wikimedia.org/wikipedia/commons/4/47/Al_Ain_Adventure_Rafting.jpg", "lotus-mega-yacht-dinner-cruise": "https://images.pexels.com/photos/19960510/pexels-photo-19960510.jpeg", "lotus-mega-yacht-sunset-cruise": "https://images.pexels.com/photos/19960510/pexels-photo-19960510.jpeg"};
+const APPROVED_PRODUCT_PHOTOS = {"sky-views-observatory": "https://images.unsplash.com/photo-1708361089093-beef4c4584e7", "al-ain-adventure": "https://upload.wikimedia.org/wikipedia/commons/4/47/Al_Ain_Adventure_Rafting.jpg", "lotus-mega-yacht-dinner-cruise": "https://images.pexels.com/photos/19960510/pexels-photo-19960510.jpeg", "lotus-mega-yacht-sunset-cruise": "https://images.pexels.com/photos/19960510/pexels-photo-19960510.jpeg", "new-years-eve-cruises-dubai-marina": "https://images.pexels.com/photos/19960510/pexels-photo-19960510.jpeg"};
 TOURS.forEach(t => { if(APPROVED_PRODUCT_PHOTOS[t.id]) t.images = [APPROVED_PRODUCT_PHOTOS[t.id]]; });
 const PHOTO_CONTEXT = {"https://images.unsplash.com/photo-1708361089093-beef4c4584e7": "The skyline view from Sky Views Observatory. This photo does not show the Glass Slide or Edge Walk.", "https://upload.wikimedia.org/wikipedia/commons/4/47/Al_Ain_Adventure_Rafting.jpg": "Rafting at Al Ain Adventure. Activities included in your entry ticket are confirmed for the selected option.", "https://images.pexels.com/photos/19960510/pexels-photo-19960510.jpeg": "The Lotus mega yacht photographed while moored. Sailing time, onboard setup and ticket inclusions are confirmed before booking."};
+
+const PRODUCT_PHOTO_CONTEXT = {"new-years-eve-cruises-dubai-marina": "The photo shows the Lotus mega yacht, one of the vessel options described in this listing. Al Mansour and Ocean Empress are not pictured. Your vessel, sailing date and New Year programme must be confirmed before booking."};
 const stayPlay = PACKAGES.find(p => p.id === "abu-dhabi-stay-play");
 if(stayPlay) stayPlay.importantInformation = [...(stayPlay.importantInformation || []), "The cover photograph shows Ferrari World. The selected theme park and hotel for this package are confirmed before booking."];
 if(stayPlay) stayPlay.images = ["https://images.pexels.com/photos/36329344/pexels-photo-36329344/free-photo-of-aerial-view-of-ferrari-world-in-abu-dhabi.jpeg", ...stayPlay.images.slice(1)];
@@ -6220,7 +6222,7 @@ function renderTourDetail(id, expectedDest, opts){
   backLink.href = isAddon ? "/visas/" : URLS.activityDest(t.dest);
   backLink.textContent = isAddon ? "← Back to visas" : "← Back to "+dn+" activities";
   const st = statusOf(t), sti = statusInfo(t);
-  setDetailGallery("tourDetailGallery", "tourDetailCredit", t.images, t.title, `${dn} · ${t.cat}`);
+  setDetailGallery("tourDetailGallery", "tourDetailCredit", t.images, t.title, `${dn} · ${t.cat}`, PRODUCT_PHOTO_CONTEXT[t.id]);
 
   /* Every optional section renders only when the activity carries that data (see the schema
      notes above TOURS); a missing field means no section and no empty heading. */
@@ -7663,7 +7665,7 @@ const MEDIA_VERIFICATION = [
   // Stage 5I (B9 dining, shows, RAK, transfers & essentials), 2026-09-28
   ["https://images.pexels.com/photos/34197935/pexels-photo-34197935.jpeg", "abu-dhabi", "abu-dhabi-airport-transfer"],
 ];
-MEDIA_VERIFICATION.push(["https://images.unsplash.com/photo-1708361089093-beef4c4584e7", "dubai", "sky-views-observatory"], ["https://upload.wikimedia.org/wikipedia/commons/4/47/Al_Ain_Adventure_Rafting.jpg", "abu-dhabi", "al-ain-adventure"], ["https://images.pexels.com/photos/19960510/pexels-photo-19960510.jpeg", "dubai", ["lotus-mega-yacht-brunch-cruise", "lotus-mega-yacht-dinner-cruise", "lotus-mega-yacht-sunset-cruise"]]);
+MEDIA_VERIFICATION.push(["https://images.unsplash.com/photo-1708361089093-beef4c4584e7", "dubai", "sky-views-observatory"], ["https://upload.wikimedia.org/wikipedia/commons/4/47/Al_Ain_Adventure_Rafting.jpg", "abu-dhabi", "al-ain-adventure"], ["https://images.pexels.com/photos/19960510/pexels-photo-19960510.jpeg", "dubai", ["lotus-mega-yacht-brunch-cruise", "lotus-mega-yacht-dinner-cruise", "lotus-mega-yacht-sunset-cruise", "new-years-eve-cruises-dubai-marina"]]);
 const MEDIA_VERIFIED = Object.fromEntries(MEDIA_VERIFICATION.map(([src, dest, product]) => [imgBase(src), {dest, product}]));
 function mediaInfo(src){
   const b = imgBase(src), c = IMG_CREDIT[b] || {}, v = MEDIA_VERIFIED[b] || {};
@@ -7695,7 +7697,7 @@ function mediaCreditHTML(images, opts){
   return `<p class="media-credit${opts.compact ? " media-credit-compact" : ""}">Image credit: ${parts.join("; ")}${adapted ? "; resized and converted to WebP" : ""}</p>`;
 }
 // Detail-page gallery: the photos (or the branded panel) plus the credit line beneath them.
-function setDetailGallery(galleryId, creditId, images, title, meta){
+function setDetailGallery(galleryId, creditId, images, title, meta, photoContext){
   const g = document.getElementById(galleryId), c = document.getElementById(creditId), has = (images || []).length > 0;
   g.style.display = "";
   g.classList.toggle("is-fallback", !has);
@@ -7703,7 +7705,7 @@ function setDetailGallery(galleryId, creditId, images, title, meta){
   g.innerHTML = slideshowHTML(images, title, "detail-gallery-slideshow", {meta, label:title, deferSlides:true});
   if(c){
     const yacht = title === "Luxury Yacht Rental Dubai";
-    const contexts = [...new Set((images || []).map(src => PHOTO_CONTEXT[imgBase(src)]).filter(Boolean))];
+    const contexts = photoContext ? [photoContext] : [...new Set((images || []).map(src => PHOTO_CONTEXT[imgBase(src)]).filter(Boolean))];
     c.innerHTML = mediaCreditHTML(images) + contexts.map(text => `<p class="media-credit">${escapeHTML(text)}</p>`).join("") + (yacht ? '<p class="media-credit">Dubai Marina yacht photography. The vessel for your booking is confirmed on enquiry.</p>' : "");
   }
   initSlideshows(g);

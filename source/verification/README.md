@@ -21,7 +21,7 @@ Checked on 1 October 2026. This is a selected-field verification pass, not a cer
 
 1. Written supplier product/option mapping, valid travel dates, price and currency/basis, tax/fee inclusions, transfers, age/health eligibility, cancellation and weather-disruption terms.
 2. For all 26 holidays: allocated hotel or documented 'or similar' standard, category, room/board, transfers, ticket options, departure availability and amendment/refund terms. Reference packages are not supplier agreements; one inspected Rayna page still contains a pricing table valid only until May 2026.
-3. Approved exact photos for 56 activity listings currently using the title panel. Start with visible/featured listings. AquaFun operator images require explicit permission; no suitable freely reusable exact photograph was confirmed.
+3. Approved exact photos for 55 activity listings currently using the title panel. Start with visible/featured listings. AquaFun operator images require explicit permission; no suitable freely reusable exact photograph was confirmed.
 4. Newly approved photographs use same-host responsive WebP files. Direct downloads succeeded in this pass; original sources, licences, dimensions and changes are recorded in source/media/approved-photos.json.
 5. IMG Worlds' official pages returned no readable text through the research service; do not advance their fact-check dates on that basis.
 
@@ -38,3 +38,7 @@ Sky Views observation floors, Glass Walk and published slide height/weight guida
 ## Photo completion pass
 
 Added licensed photographs to Sky Views Observatory, Al Ain Adventure, Lotus Mega Yacht Dinner Cruise and Lotus Mega Yacht Sunset Cruise. The existing Lotus brunch photo now uses the same optimized files. Captions distinguish the view, venue activity and moored vessel from ticket inclusions and scheduled sailings. Rechecked the Lotus photo page and updated the current photographer credit to Dina (the earlier audit named Cristhian David Duarte). No general listing fact-check dates were advanced. The other 56 missing-photo listings require further exact-image evidence or operator-supplied files with written promotional-use permission; rights to images displayed on supplier websites are not assumed.
+
+## Photo sourcing follow-up
+
+The New Year’s Eve listing now uses the licensed Lotus photo for its explicitly described Lotus option, with a gallery caption distinguishing it from Al Mansour and Ocean Empress. This does not verify a future departure or programme. source/media/photo-requests.csv lists the 55 remaining photo gaps, the exact shot needed and the required reuse evidence. It is a supplier handoff list, not evidence that every operator’s licence has been reviewed. No supplier was contacted. Dubai Parks and Resorts terms (Copyright Notice, checked 1 October 2026) require express written permission to reproduce or commercially exploit website content; LEGOLAND operator images were not copied.
