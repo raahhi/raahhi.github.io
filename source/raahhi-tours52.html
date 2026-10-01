@@ -300,6 +300,22 @@
   .booking-box .bb-price span{ font-size:13px; color:var(--ink-400); font-family:'Inter',sans-serif; font-weight:500; }
   .booking-box .field{ margin-top:14px; }
 
+  /* Product enquiry access: shared by activities, holidays and visa details. */
+  .detail-enquiry-actions{ display:flex; align-items:center; gap:14px; flex-wrap:wrap; margin:0 0 24px; }
+  .detail-enquiry-actions p{ margin:0; color:var(--ink-600); font-size:14px; max-width:300px; }
+  .mobile-enquiry-bar{ display:none; }
+  @media(max-width:900px){
+    .page.active:has(.mobile-enquiry-bar){ padding-bottom:calc(90px + env(safe-area-inset-bottom,0px)); }
+    .page.active .mobile-enquiry-bar{ position:fixed; inset:auto 0 0; z-index:250; display:flex; align-items:center; gap:14px; padding:12px 18px calc(12px + env(safe-area-inset-bottom,0px)); background:var(--sand-50); border-top:1px solid var(--line); box-shadow:0 -4px 18px rgba(11,21,38,.08); }
+    .mobile-enquiry-summary{ min-width:0; flex:1; }
+    .mobile-enquiry-summary strong{ display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:14px; color:var(--navy-950); }
+    .mobile-enquiry-summary span{ display:block; font-size:13px; color:var(--ink-600); }
+    .mobile-enquiry-bar .btn{ flex:none; min-height:48px; padding:12px 20px; }
+    body:has(.page.active .mobile-enquiry-bar) .fab-stack{ display:none; }
+    .detail-enquiry-actions{ align-items:stretch; }
+    .detail-enquiry-actions .btn{ width:100%; white-space:normal; }
+  }
+
   /* ---------- PACKAGES ---------- */
   .pkg-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:26px; }
   @media (max-width:980px){ .pkg-grid{ grid-template-columns:repeat(2,1fr); } }
@@ -794,7 +810,7 @@
     <div class="steps-row home-steps">
       <div class="step-card"><div class="step-num">1</div><h3>Browse</h3><p>Choose a visa destination, a UAE activity or a holiday package.</p></div>
       <div class="step-card"><div class="step-num">2</div><h3>Review the details</h3><p>Each page lists the facts on file: visa type and processing time, activity duration, or a package's itinerary and inclusions.</p></div>
-      <div class="step-card"><div class="step-num">3</div><h3>Enquire</h3><p>Select Start Visa Enquiry, Request to Book or Enquire. The website prepares a summary of your enquiry for you to share with our team by phone, WhatsApp or email — it isn't sent automatically.</p></div>
+      <div class="step-card"><div class="step-num">3</div><h3>Enquire</h3><p>Select Start Visa Enquiry or Enquire. The website prepares a summary of your enquiry for you to share with our team by phone, WhatsApp or email — it isn't sent automatically.</p></div>
       <div class="step-card"><div class="step-num">4</div><h3>Our team confirms</h3><p>The team confirms current prices, availability, visa requirements and hotel details with you.</p></div>
     </div>
     <p class="home-note">Nothing is booked, reserved or paid for on this website.</p>
@@ -1109,7 +1125,7 @@
       <div class="about-block">
         <h2>How enquiries work</h2>
         <ol class="about-list">
-          <li>Choose a visa destination, activity or holiday package and select Start Visa Enquiry, Request to Book or Enquire.</li>
+          <li>Choose a visa destination, activity or holiday package and select Start Visa Enquiry, Enquire.</li>
           <li>Enter your details. The website prepares a summary of your enquiry — it is not sent automatically yet.</li>
           <li>Share the summary with our team by phone, WhatsApp or email (see <a class="contact-link" href="/contact/">Contact</a>). The team confirms prices, availability and requirements.</li>
         </ol>
@@ -4262,7 +4278,7 @@ function setActiveTourDest(slug){
 <a href="/activities/" class="detail-back">← All destinations</a>
   ${destinationHeroHTML({type:"activities", slug, eyebrow:`UAE Activities — ${name}`, title:`Things to do in ${name}`, gridId:"tourGridTitle",
     count:list.length, countLabel:list.length === 1 ? "activity" : "activities",
-    lede:`RAAHHI TOURS lists ${list.length} ${name} ${list.length === 1 ? "activity" : "activities"}: ${catSummary(list)}. ${(DESTINATIONS.find(d=>d.slug===slug)||{}).blurb || ""} Open an activity for its details, then use Request to Book or Enquire to confirm price and availability with our team.`})}`;
+    lede:`RAAHHI TOURS lists ${list.length} ${name} ${list.length === 1 ? "activity" : "activities"}: ${catSummary(list)}. ${(DESTINATIONS.find(d=>d.slug===slug)||{}).blurb || ""} Open an activity for its details, then use Enquire to confirm price and availability with our team.`})}`;
 document.getElementById("tourCatTiles").innerHTML = categoryTilesHTML(slug);
     tiles.style.display = "none";
     document.getElementById("tourGridTitle").textContent = `All ${name} activities`;
@@ -4554,7 +4570,7 @@ function enquireAboutProduct(kind, id, mode){
     const t = (kind === "addon" ? VISA_ADDONS : TOURS).find(x => x.id === id);
     if(!t) return;
     const rawDate = val("tourEnqDate");
-    if(rawDate && rawDate < todayISO()){ setFieldError("tourEnqDate", "Preferred date can't be in the past."); return; }
+    if(rawDate && rawDate < todayISO()){ setFieldError("tourEnqDate", "Preferred date can't be in the past."); document.getElementById("tourEnqDate").scrollIntoView({block:"center"}); document.getElementById("tourEnqDate").focus({preventScroll:true}); return; }
     setFieldError("tourEnqDate", "");
     openCallback({kind: mode === "booking" ? "Booking request" : mode === "updates" ? "Update request" : (kind === "addon" ? "Visa add-on" : "Activity"), noun:"activity", title:t.title, details:[
       ["Destination", kind === "addon" ? "UAE arrival" : destName(t.dest)], ["Availability", statusInfo(t).label],
@@ -4566,7 +4582,7 @@ function enquireAboutProduct(kind, id, mode){
     const p = PACKAGES.find(x => x.id === id);
     if(!p) return;
     const rawMonth = val("pkgEnqMonth");
-    if(rawMonth && rawMonth < todayISO().slice(0,7)){ setFieldError("pkgEnqMonth", "Travel month can't be in the past."); return; }
+    if(rawMonth && rawMonth < todayISO().slice(0,7)){ setFieldError("pkgEnqMonth", "Travel month can't be in the past."); document.getElementById("pkgEnqMonth").scrollIntoView({block:"center"}); document.getElementById("pkgEnqMonth").focus({preventScroll:true}); return; }
     setFieldError("pkgEnqMonth", "");
     openCallback({kind: mode === "booking" ? "Booking request" : mode === "updates" ? "Update request" : "Holiday package", noun:"package", title:p.title, details:[
       ["Destination", destName(p.dest)], ["Duration", p.dur], ["Availability", statusInfo(p).label],
@@ -4969,7 +4985,7 @@ function activityDestFaqItems(slug){
   const safaris = list.filter(t => t.cat === "Desert Safari");
   if(safaris.length) items.push({q:`Which desert safaris are listed for ${d}?`, a:`${joinList(safaris.map(t => link(t) + (hasRealValue(t.duration) ? ` (${t.duration})` : "")))}.${slug === "dubai" ? ` The <a class="contact-link" href="${URLS.safariGuide}">Dubai desert safari guide</a> compares them side by side.` : ""}`});
   items.push({q:`Are prices shown for ${d} activities?`, a:`Not on this website yet. Prices, availability and cancellation terms are confirmed by our team when you enquire.`});
-  items.push({q:`How do I enquire about a ${d} activity?`, a:`Open the activity, choose a preferred date and the number of guests, and select Request to Book or Enquire. The website prepares a summary of your enquiry to share with our team by phone, WhatsApp or email.`});
+  items.push({q:`How do I enquire about a ${d} activity?`, a:`Open the activity, choose a preferred date and the number of guests, and select Enquire. The website prepares a summary of your enquiry to share with our team by phone, WhatsApp or email.`});
   if(destHasPackages(slug)) items.push({q:`Are there holiday packages in ${d}?`, a:`Yes — see <a class="contact-link" href="${URLS.holidayDest(slug)}">${d} holiday packages</a> for multi-day itineraries.`});
   return items;
 }
@@ -5915,6 +5931,7 @@ function renderVisaDetail(slug){
   document.getElementById("visaDetailMain").innerHTML = `
     <h1><span aria-hidden="true">${v.flag}</span> ${n} visa assistance</h1>
     <div class="detail-tags"><span class="tag">${typeText}</span><span class="tag">Validity: ${validityText}</span></div>
+    ${detailEnquiryHTML(v, "visa", slugV)}
     ${atAGlanceHTML(`RAAHHI TOURS provides visa assistance for travel to ${n}: help understanding the visa options, confirming current requirements and fees, and preparing the information your application needs.${vm.type ? ` Visa type listed for ${n}: <strong>${vm.type}</strong>${vm.validity && !asIssued ? ` (listed validity: ${vm.validity})` : ""}.` : ""} Visa decisions are made by the relevant government authority, not by RAAHHI TOURS.`, [["Destination", n], ["Visa type", typeText], ["Validity", validityText], ["Typical processing time", dateText], ["Fee", feeText]], detailNote, freshnessSummaryHTML(vm, "visa"))}
     <div class="detail-section">
       <h2>What ${n} visa requirements depend on</h2>
@@ -6062,10 +6079,11 @@ function renderTourDetail(id, expectedDest, opts){
     <h1>${t.title}</h1>
     ${sti.note ? `<div class="status-banner status-${st}" role="status"><strong>${sti.label}.</strong> ${sti.note}</div>` : ""}
     <div class="detail-tags">${statusTagHTML(t)}<span class="tag">${dn}</span><span class="tag">${t.cat}</span>${hasRealValue(t.duration) ? `<span class="tag">${t.duration}</span>` : ""}</div>
+    ${detailEnquiryHTML(t, isAddon ? "addon" : "activity")}
     ${atAGlanceHTML(`<strong>${t.title}</strong> is ${isAddon ? "an arrival add-on listed under Visas" : `${aOrAn(phrase)} ${phrase} listed under ${dn} activities`} at RAAHHI TOURS. ${t.description || t.desc}${hasRealValue(t.duration) ? ` Listed duration or timing: ${t.duration}.` : ""}`, [["Availability", sti.label], [isAddon ? "Service" : "Destination", isAddon ? `<a class="contact-link" href="/visas/">Visas · arrival essentials</a>` : `<a class="contact-link" href="${URLS.activityDest(t.dest)}">${dn}</a>`], ["Location", t.location || ""], ["Departs from", originLabel(t.origin)], ["Category", t.cat],
       ["Duration / timing", hasRealValue(t.duration) ? t.duration : ""], ["Timing", t.timing || ""],
       ["Price", price.known ? escapeHTML(price.text + (price.basis ? " " + price.basis : "")) : "Confirmed on enquiry"],
-      ["Confirmed when you enquire", cap(joinList(confirm))], ["How to enquire", "Select Request to Book or Enquire on this page"]], "", freshnessSummaryHTML(t, isAddon ? "addon" : "activity"))}
+      ["Confirmed when you enquire", cap(joinList(confirm))], ["How to enquire", "Select Enquire on this page"]], "", freshnessSummaryHTML(t, isAddon ? "addon" : "activity"))}
     ${sections.join("")}
     <div class="detail-section"><h2>${t.title}: common questions</h2>${qaHTML(mergeFaqItems(t.faqs || [], isAddon ? [] : activityFaqItems(t)))}</div>`;
   document.getElementById("tourBookingBox").style.display = "";
@@ -6149,6 +6167,7 @@ function renderPkgDetail(id, expectedDest){
     <h1>${p.title}</h1>
     ${psti.note ? `<div class="status-banner status-${pst}" role="status"><strong>${psti.label}.</strong> ${psti.note}</div>` : ""}
     <div class="detail-tags">${statusTagHTML(p)}<span class="tag">${dn}</span>${hasRealValue(p.dur) ? `<span class="tag">${p.dur}</span>` : ""}</div>
+    ${detailEnquiryHTML(p, "holiday")}
     ${atAGlanceHTML(`<strong>${p.title}</strong> is ${hasRealValue(p.dur) ? `a ${durAdj(p.dur)}` : "a"} holiday package based in ${dn}, listed under ${dn} holidays at RAAHHI TOURS.${(p.incl || []).length ? ` Its listed inclusions are ${joinList(p.incl)}.` : ""}`, [["Destination", `<a class="contact-link" href="${URLS.holidayDest(p.dest)}">${dn}</a>`], ["Duration", hasRealValue(p.dur) ? durText(p.dur) : ""], ["Availability", psti.label],
       ["Inclusions", joinList(p.incl || [])], ["Accommodation", acc ? escapeHTML(accommodationSummary(acc)) + (acc.name ? "" : " — hotel confirmed on enquiry") : ""],
       ["Transfers", transfers.length ? `Listed: ${joinList(transfers)}` : ""], ["Meals", acc && acc.board ? escapeHTML(acc.board) : ""],
@@ -6185,14 +6204,31 @@ function relatedPackages(p){
 }
 
 /* ============ v41: PAGE-SPECIFIC QUESTIONS ============ */
-// Status-aware booking-box buttons. None of them books, reserves or confirms anything online.
+// Shared enquiry actions preserve the selected date and group size in the existing form.
+function enquiryAction(record, kind, visaSlug){
+  return kind === "visa" ? `openVisaEnquiry('${visaSlug}')` : `enquireAboutProduct('${kind}', '${record.id}')`;
+}
+function enquiryLabel(record, kind){
+  if(kind === "visa") return "Start Visa Enquiry";
+  if(publicStatusOf(record) === "seasonal") return "Enquire about seasonal dates";
+  return kind === "holiday" ? "Enquire about this package" : kind === "addon" ? "Enquire about this service" : "Enquire about this activity";
+}
+function detailEnquiryHTML(record, kind, visaSlug){
+  const title = kind === "visa" ? `${record.country} visa assistance` : record.title;
+  const action = enquiryAction(record, kind, visaSlug), label = enquiryLabel(record, kind);
+  return `<div class="detail-enquiry-actions">
+      <button type="button" class="btn btn-gold" onclick="${action}">${label}</button>
+      <p>Prepares a summary to share with our team.</p>
+    </div>
+    <div class="mobile-enquiry-bar" role="region" aria-label="Enquire about ${escapeHTML(title)}">
+      <div class="mobile-enquiry-summary"><strong>${escapeHTML(title)}</strong><span>${kind === "visa" ? "Fee" : "Price"} confirmed on enquiry</span></div>
+      <button type="button" class="btn btn-gold" aria-label="Enquire about ${escapeHTML(title)}" onclick="${action}">Enquire</button>
+    </div>`;
+}
 function statusCTAs(t, kind){
-  const st = publicStatusOf(t), go = mode => `onclick="enquireAboutProduct('${kind}', '${t.id}'${mode ? `, '${mode}'` : ""})"`;
-  if(st === "seasonal") return `<button type="button" class="btn btn-gold btn-block" style="margin-top:16px;" ${go("")}>Enquire about seasonal dates</button>
-    <p class="form-note" style="text-align:center;">Seasonal experience: dates, price and availability are confirmed with your enquiry.</p>`;
-  return `<button type="button" class="btn btn-gold btn-block" style="margin-top:16px;" ${go("booking")}>Request to Book</button>
-    <button type="button" class="btn btn-navy btn-block" style="margin-top:10px;" ${go("")}>Enquire</button>
-    <p class="form-note" style="text-align:center;">Request to Book prepares a booking enquiry for you to share with our team. Nothing is reserved, charged or sent automatically; price, availability and cancellation terms are confirmed by our team.</p>`;
+  const seasonal = publicStatusOf(t) === "seasonal";
+  return `<button type="button" class="btn btn-gold btn-block" style="margin-top:16px;" onclick="${enquiryAction(t, kind)}">${enquiryLabel(t, kind)}</button>
+    <p class="form-note" style="text-align:center;">${seasonal ? "Seasonal dates, price and availability are confirmed on enquiry. " : ""}Prepares a summary to share with our team. Nothing is reserved, charged or sent automatically.</p>`;
 }
 // Keep authored questions; avoid repeating the same intent in generated questions.
 const FAQ_INTENTS = [
@@ -6247,7 +6283,7 @@ function activityFaqItems(t){
   items.push({q:`How much does ${t.title} cost?`, a: price.known
     ? `The listed price is ${escapeHTML(price.text + (price.basis ? " " + price.basis : ""))}. Availability and the final price are confirmed when you enquire.`
     : `Prices are not published on this website yet. Our team confirms the current price for your date and group size when you enquire.`});
-  items.push({q:`How do I enquire about ${t.title}?`, a:`Choose a preferred date (optional) and the number of guests, then select Request to Book or Enquire and add your name and phone number. The website prepares a summary of your ${t.title} enquiry to share with our team by phone, WhatsApp or email — it is not sent automatically.`});
+  items.push({q:`How do I enquire about ${t.title}?`, a:`Choose a preferred date (optional) and the number of guests, then select Enquire and add your name and phone number. The website prepares a summary of your ${t.title} enquiry to share with our team by phone, WhatsApp or email — it is not sent automatically.`});
   items.push({q:`What else is there to do in ${d}?`, a:`Browse all <a class="contact-link" href="${URLS.activityDest(t.dest)}">${d} activities</a>${destHasPackages(t.dest) ? `, or see <a class="contact-link" href="${URLS.holidayDest(t.dest)}">${d} holiday packages</a> for multi-day trips` : ""}.`});
   items.push(...catalogueFactFaqs(t, "activity"));
   return items;
@@ -6262,7 +6298,7 @@ function packageFaqItems(p){
     ? `The listed price is ${escapeHTML(price.text + (price.basis ? " " + price.basis : ""))}. Availability and the final price are confirmed when you enquire.`
     : `Prices are not published on this website yet. Our team confirms the price when you enquire, including how it applies to your group size and room configuration.`});
   items.push({q:`Can ${p.title} be customised?`, a:`You can ask. Tell us what you would like to change — extra nights, a different hotel or added tours — when you enquire, and our team will confirm what is possible.`});
-  items.push({q:`How do I enquire about ${p.title}?`, a:`Choose a travel month (optional) and the number of travellers, then select Request to Book or Enquire and add your name and phone number. The website prepares a summary to share with our team by phone, WhatsApp or email — it is not sent automatically.`});
+  items.push({q:`How do I enquire about ${p.title}?`, a:`Choose a travel month (optional) and the number of travellers, then select Enquire and add your name and phone number. The website prepares a summary to share with our team by phone, WhatsApp or email — it is not sent automatically.`});
   const accommodation = packageAccommodation(p);
   if(accommodation) items.push({q:`What accommodation is listed for ${escapeHTML(p.title)}?`, a:`${escapeHTML(accommodationSummary(accommodation))}. ${accommodation.name ? "Confirm the hotel and room details for your dates when enquiring." : "The hotel name and room details are confirmed on enquiry."}`, catalogueDerived:true});
   items.push(...catalogueFactFaqs(p, "holiday"));
@@ -6278,7 +6314,7 @@ function holidayDestFaqItems(slug){
     ? `${joinList(withVisa.map(p => p.title))} ${withVisa.length === 1 ? "lists" : "list"} a visa among the inclusions; the others don't.`
     : `No ${d} package lists a visa among its inclusions. RAAHHI TOURS offers <a class="contact-link" href="/visas/united-arab-emirates/">UAE visa assistance</a> as a separate service.`});
   items.push({q:`Can I customise a ${d} holiday package?`, a:`Yes, you can ask. Tell us what you would like to change — extra nights, a different hotel or added tours — when you enquire from the package page, and our team will confirm what is possible.`});
-  items.push({q:`How do I enquire about a ${d} holiday package?`, a:`Open the package, choose a travel month and the number of travellers, and select Request to Book or Enquire. The website prepares a summary to share with our team by phone, WhatsApp or email.`});
+  items.push({q:`How do I enquire about a ${d} holiday package?`, a:`Open the package, choose a travel month and the number of travellers, and select Enquire. The website prepares a summary to share with our team by phone, WhatsApp or email.`});
   return items;
 }
 // General questions for the FAQ page; answers that describe the catalogue are computed from it.

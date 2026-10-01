@@ -40,15 +40,33 @@ try{
    const overflow=await p.evaluate(()=>({width:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth}));
    assert(overflow.scroll<=overflow.width+1,route+' overflow '+JSON.stringify(overflow));
    assert.equal(errors.length,0,route+' runtime errors '+errors.join('; '));
+   const bar=p.locator('.page.active .mobile-enquiry-bar');
+   if(await bar.count()){
+    assert.equal(await bar.count(),1,route+' one contextual bottom bar');
+    assert.equal(await p.locator('.page.active .detail-enquiry-actions button').count(),1,route+' title enquiry action');
+    assert.equal(await bar.isVisible(),width===390,route+' mobile-only bar');
+    assert.equal(await p.locator('.page.active .booking-box button').count(),1,route+' one primary enquiry action');
+    if(width===390)assert.equal(await p.locator('.fab-stack').isVisible(),false,route+' callback does not overlap bar');
+   }
    if(width===390){await p.getByRole('button',{name:'Open menu',exact:true}).click();assert.equal(await p.locator('#mobileNavToggle').getAttribute('aria-expanded'),'true');await p.locator('#mobile-nav').getByRole('button',{name:'Close menu',exact:true}).click();assert.equal(await p.locator('#mobileNavToggle').getAttribute('aria-expanded'),'false');}
    if(route==='/visas/united-arab-emirates/'){
-    await p.getByRole('button',{name:'Start Visa Enquiry',exact:true}).click();
+    await (width===390 ? bar.getByRole('button') : p.locator('.page.active .detail-enquiry-actions button')).click();
     assert(await p.locator('#visaEnquiryModal').isVisible());assert((await p.locator('#visaEnqCountry').innerText()).includes('United Arab Emirates'));
     await p.locator('#visaEnquiryModal button.modal-close').click();
    }
    if(route==='/activities/dubai/evening-desert-safari/'){
-    await p.getByRole('button',{name:'Request to Book',exact:true}).click();
-    assert(await p.locator('#contactModal').isVisible());assert((await p.locator('#callbackContextTitle').innerText()).includes('Evening Desert Safari'));
+    await p.locator('#tourEnqGuests').fill('4');
+    await (width===390 ? bar.getByRole('button') : p.locator('.page.active .detail-enquiry-actions button')).click();
+    assert(await p.locator('#contactModal').isVisible());assert((await p.locator('#callbackContextTitle').innerText()).includes('Evening Desert Safari'));assert((await p.locator('#callbackContextDetails').innerText()).includes('Guests: 4'));
+    await p.locator('#contactModal button.modal-close').click();
+   }
+   if(route==='/holidays/dubai/dubai-family-theme-park-week/'){
+    await p.locator('#pkgEnqTravellers').fill('5');
+    await p.locator('#pkgEnqMonth').fill('2027-01');
+    await (width===390 ? bar.getByRole('button') : p.locator('.page.active .detail-enquiry-actions button')).click();
+    assert(await p.locator('#contactModal').isVisible());
+    assert((await p.locator('#callbackContextTitle').innerText()).includes('Dubai Family Theme-Park Week'));
+    const context=await p.locator('#callbackContextDetails').innerText();assert(context.includes('Travellers: 5')&&context.includes('2027'));
     await p.locator('#contactModal button.modal-close').click();
    }
    await p.close();console.log('PASS responsive, hydration, navigation and applicable enquiry context: '+width+' '+route);
