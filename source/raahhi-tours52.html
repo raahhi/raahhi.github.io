@@ -111,7 +111,7 @@
   .section-dark .lede{ color:rgba(245,241,231,.72); }
 
   /* ---------- Hero (home) ---------- */
-  .hero-home{ position:relative; overflow:hidden; min-height:580px; color:var(--sand-50); }
+  .hero-home{ position:relative; overflow:hidden; padding:0; min-height:580px; color:var(--sand-50); }
   .hero-home #homeHeroMedia{ position:absolute; inset:0; }
   .hero-home #homeHeroMedia .slideshow{ width:100%; height:100%; }
   .hero-scrim{ position:absolute; inset:0; background:linear-gradient(100deg, rgba(11,21,38,.92) 0%, rgba(11,21,38,.62) 42%, rgba(11,21,38,.18) 72%); z-index:1; }
@@ -139,6 +139,36 @@
   .tc-overlay{ position:absolute; inset:0; background:linear-gradient(180deg, rgba(11,21,38,0) 40%, rgba(11,21,38,.82) 100%); display:flex; flex-direction:column; justify-content:flex-end; padding:22px; color:var(--sand-50); }
   .tc-overlay h3{ color:var(--sand-50); font-size:22px; }
   .tc-overlay span{ font-size:13.5px; color:var(--gold-400); font-weight:600; margin-top:6px; }
+
+
+  /* Compact service entry points keep the first product selection close to the hero. */
+  .home-shortcuts{ padding:24px 0; border-bottom:1px solid var(--line); background:var(--sand-50); }
+  .home-shortcuts .wrap{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; }
+  .home-shortcuts a{ position:relative; display:flex; flex-direction:column; gap:6px; padding:16px 42px 16px 18px; border:1px solid var(--line); border-radius:var(--radius-s); color:var(--navy-800); }
+  .home-shortcuts a:hover{ background:var(--sand-100); }
+  .home-shortcuts a>span:first-child{ font-size:16px; font-weight:700; }
+  .home-shortcuts small{ font-size:14px; color:var(--ink-600); }
+  .shortcut-arrow{ position:absolute; right:18px; top:18px; }
+  .home-selection{ padding:52px 0; }
+  .home-selection .section-head{ margin-bottom:16px; gap:14px; }
+  .selection-intro{ font-size:16px; color:var(--ink-600); max-width:760px; margin:0 0 26px; }
+  .home-selection .product-grid,.home-selection .pkg-grid{ padding-bottom:0; }
+  .category-picker{ display:flex; align-items:center; gap:12px; margin:0 0 20px; }
+  .category-picker label{ font-size:14px; font-weight:600; }
+  .category-picker select{ min-height:44px; min-width:240px; max-width:100%; }
+  .tour-results-count{ margin:0 0 20px; font-size:14px; color:var(--ink-600); }
+  @media(max-width:640px){
+    .home-shortcuts .wrap{ grid-template-columns:1fr; gap:8px; }
+    .home-shortcuts{ padding:16px 0; }
+    .home-shortcuts a{ display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:center; padding:12px 42px 12px 14px; gap:8px; }
+    .home-selection{ padding:36px 0; }
+    .category-picker{ display:block; }
+    .category-picker label{ display:block; margin-bottom:8px; }
+    .category-picker select{ width:100%; min-width:0; }
+    #toursBrowse .toolbar{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+    #toursBrowse .search-inline{ grid-column:1 / -1; min-width:0; }
+    #toursBrowse .toolbar .tour-select{ min-height:44px; width:100%; }
+  }
 
   /* section headers */
   .section-head{ display:flex; align-items:flex-end; justify-content:space-between; gap:24px; margin-bottom:40px; flex-wrap:wrap; }
@@ -752,70 +782,35 @@
       <div class="hero-content">
         <p class="eyebrow hero-eyebrow">RAAHHI TOURS</p>
         <h1>Visa assistance, UAE activities and holidays</h1>
-        <p class="lede">RAAHHI TOURS offers visa help for <span data-catalogue-count="visas">41</span> destinations, plus activities in Dubai, Abu Dhabi and Ras Al Khaimah and multi-day UAE holiday packages. Prices, availability and requirements are confirmed by our team when you enquire.</p>
+        <p class="lede">Explore Dubai, Abu Dhabi and Ras Al Khaimah, or get visa assistance for <span data-catalogue-count="visas">41</span> destinations worldwide. Choose your trip and enquire for current prices and availability.</p>
         <div class="hero-cta-row">
           <a class="btn btn-gold" href="/activities/">Explore activities</a>
-          <a class="btn btn-navy" href="/visas/">Visa assistance</a>
-          <a class="btn btn-ghost-light" href="/holidays/">Holiday packages</a>
         </div>
       </div>
     </div>
   </section>
 
-<section style="padding:26px 0;">
+<nav class="home-shortcuts" aria-label="Browse RAAHHI services">
   <div class="wrap">
-    <p class="trust-strip-slim fact-strip">
-      <span><b data-catalogue-count="visas">41</b> visa destinations</span><span class="ts-dot" aria-hidden="true">·</span>
-      <span><b data-catalogue-count="tours">36</b> UAE activities</span><span class="ts-dot" aria-hidden="true">·</span>
-      <span><b data-catalogue-count="packages">12</b> UAE holiday packages</span><span class="ts-dot" aria-hidden="true">·</span>
-      <span>Enquiry-based: nothing is booked or paid online</span>
-    </p>
+    <a href="/activities/"><span>UAE activities</span><small><b data-catalogue-count="tours">174</b> experiences</small><span class="shortcut-arrow" aria-hidden="true">→</span></a>
+    <a href="/holidays/"><span>Holiday packages</span><small><b data-catalogue-count="packages">26</b> UAE trips</small><span class="shortcut-arrow" aria-hidden="true">→</span></a>
+    <a href="/visas/"><span>Visa assistance</span><small><b data-catalogue-count="visas">41</b> destinations</small><span class="shortcut-arrow" aria-hidden="true">→</span></a>
+  </div>
+</nav>
+
+<section class="home-selection" aria-labelledby="homeActivitiesTitle">
+  <div class="wrap">
+    <div class="section-head"><div><p class="eyebrow">Explore the UAE</p><h2 id="homeActivitiesTitle">Explore UAE activities</h2></div><a class="contact-link" href="/activities/">Browse all activities →</a></div>
+    <p class="selection-intro">Compare a Dubai safari, an Abu Dhabi theme park and a Ras Al Khaimah mountain adventure.</p>
+    <div class="product-grid" id="homeActivitySelection"></div>
   </div>
 </section>
 
-  <section>
-    <div class="wrap">
-      <div class="tab-cards">
-        <a href="/visas/" class="tab-card reveal">
-          <img src="https://images.unsplash.com/photo-1581553673739-c4906b5d0de8?w=800&amp;q=78&amp;auto=format&amp;fit=crop" srcset="https://images.unsplash.com/photo-1581553673739-c4906b5d0de8?w=480&amp;q=78&amp;auto=format&amp;fit=crop 480w, https://images.unsplash.com/photo-1581553673739-c4906b5d0de8?w=800&amp;q=78&amp;auto=format&amp;fit=crop 800w, https://images.unsplash.com/photo-1581553673739-c4906b5d0de8?w=1200&amp;q=78&amp;auto=format&amp;fit=crop 1200w" sizes="(max-width: 860px) 100vw, 33vw" alt="Open passport with colourful entry stamps" style="object-position:center 55%" loading="lazy" decoding="async">
-          <div class="tc-overlay"><h2>Visas</h2><span>Visa assistance for <span data-visa-count>41</span> destinations →</span></div>
-        </a>
-        <a href="/activities/" class="tab-card reveal">
-          <img src="https://images.unsplash.com/photo-1686918269961-507270a5a238?w=800&amp;q=78&amp;auto=format&amp;fit=crop" srcset="https://images.unsplash.com/photo-1686918269961-507270a5a238?w=480&amp;q=78&amp;auto=format&amp;fit=crop 480w, https://images.unsplash.com/photo-1686918269961-507270a5a238?w=800&amp;q=78&amp;auto=format&amp;fit=crop 800w, https://images.unsplash.com/photo-1686918269961-507270a5a238?w=1200&amp;q=78&amp;auto=format&amp;fit=crop 1200w" sizes="(max-width: 860px) 100vw, 33vw" alt="Museum of the Future in Dubai" style="object-position:center 50%" loading="lazy" decoding="async">
-          <div class="tc-overlay"><h2>Activities</h2><span>UAE tours, attractions and experiences →</span></div>
-        </a>
-        <a href="/holidays/" class="tab-card reveal">
-          <img src="https://images.unsplash.com/photo-1640808476588-e96ae8e7a419?w=800&amp;q=78&amp;auto=format&amp;fit=crop" srcset="https://images.unsplash.com/photo-1640808476588-e96ae8e7a419?w=480&amp;q=78&amp;auto=format&amp;fit=crop 480w, https://images.unsplash.com/photo-1640808476588-e96ae8e7a419?w=800&amp;q=78&amp;auto=format&amp;fit=crop 800w, https://images.unsplash.com/photo-1640808476588-e96ae8e7a419?w=1200&amp;q=78&amp;auto=format&amp;fit=crop 1200w" sizes="(max-width: 860px) 100vw, 33vw" alt="Aerial view of Palm Jumeirah at sunset" style="object-position:center 50%" loading="lazy" decoding="async">
-          <div class="tc-overlay"><h2>Holidays</h2><span>Multi-day UAE holiday packages →</span></div>
-        </a>
-      </div>
-    </div>
-  </section>
-<section class="section-sand" aria-labelledby="homeOfferTitle">
+<section class="section-sand home-selection" aria-labelledby="homePackagesTitle">
   <div class="wrap">
-    <div class="section-head"><div><p class="eyebrow">About RAAHHI TOURS</p><h2 id="homeOfferTitle">What RAAHHI TOURS offers</h2></div></div>
-    <p class="lede" style="max-width:780px;">RAAHHI TOURS offers three services: visa assistance for <span data-catalogue-count="visas">41</span> destinations, UAE activities in Dubai, Abu Dhabi and Ras Al Khaimah, and UAE holiday packages in Dubai, Abu Dhabi and Ras Al Khaimah. Enquire about your preferred trip and our team will confirm prices, availability and visa requirements. Bookings and payments are arranged directly with the team.</p>
-    <div class="seo-cols offer-cols" style="margin-top:36px;">
-      <div>
-        <h3>Visa assistance</h3>
-        <p>Visa assistance for <span data-catalogue-count="visas">41</span> destinations, including the United Arab Emirates, the Schengen Area, the United Kingdom, the United States and Japan. Each destination page lists the visa type, validity and typical processing time on file, and links to the official source where one is recorded.</p>
-        <p><strong>What the assistance covers:</strong> explaining the visa options, confirming the current requirements, documents and fees for your nationality and trip, and helping you prepare the information an application needs.</p>
-        <p><strong>What RAAHHI TOURS does not control:</strong> visa decisions and processing times, which are set by government authorities. Approval and timing are never guaranteed.</p>
-        <ul class="link-list"><li><a href="/visas/">All visa destinations</a></li><li><a href="/visas/united-arab-emirates/">UAE visa assistance</a></li><li><a href="/visas/schengen-area/">Schengen visa assistance</a></li></ul>
-      </div>
-      <div>
-        <h3>UAE activities</h3>
-        <p><span data-catalogue-count="tours">36</span> activities: <span data-catalogue-count="tours:dubai">23</span> in Dubai, <span data-catalogue-count="tours:abu-dhabi">11</span> in Abu Dhabi and <span data-catalogue-count="tours:ras-al-khaimah">2</span> in Ras Al Khaimah. These cover 11 categories, including desert safaris, city tours, landmarks, theme parks, water parks, cruises and adventure activities.</p>
-        <p><strong>On each activity page:</strong> the destination, category and listed duration, what the listing describes, and the points confirmed when you enquire, including price, availability, pickup and cancellation terms.</p>
-        <ul class="link-list"><li><a href="/activities/dubai/">Things to do in Dubai</a></li><li><a href="/activities/abu-dhabi/">Things to do in Abu Dhabi</a></li><li><a href="/activities/ras-al-khaimah/">Things to do in Ras Al Khaimah</a></li></ul>
-      </div>
-      <div>
-        <h3>UAE holiday packages</h3>
-        <p><span data-catalogue-count="packages">26</span> multi-day packages: <span data-catalogue-count="packages:dubai">15</span> based in Dubai, <span data-catalogue-count="packages:abu-dhabi">5</span> in Abu Dhabi and <span data-catalogue-count="packages:ras-al-khaimah">6</span> in Ras Al Khaimah, from <span data-catalogue-nights="packages">1 to 6 nights</span>.</p>
-        <p><strong>On each package page:</strong> a day-by-day itinerary, the listed inclusions and the accommodation details that are known (nights, and the hotel category or location where a package states it). Hotel names, room types and prices are confirmed when you enquire.</p>
-        <ul class="link-list"><li><a href="/holidays/dubai/">Dubai holiday packages</a></li><li><a href="/holidays/abu-dhabi/">Abu Dhabi holiday packages</a></li><li><a href="/holidays/ras-al-khaimah/">Ras Al Khaimah holiday packages</a></li><li><a href="/holidays/">Compare all UAE holiday packages</a></li></ul>
-      </div>
-    </div>
+    <div class="section-head"><div><p class="eyebrow">Stay a little longer</p><h2 id="homePackagesTitle">Plan a UAE holiday</h2></div><a class="contact-link" href="/holidays/">Browse all holiday packages →</a></div>
+    <p class="selection-intro">Compare multi-day trips by itinerary, listed accommodation and inclusions. Prices, hotel details and availability are confirmed on enquiry.</p>
+    <div class="pkg-grid" id="homePackageSelection"></div>
   </div>
 </section>
 
@@ -1003,14 +998,14 @@
   </section>
   <section id="toursBrowse" style="display:none;">
     <div class="wrap">
-      <div id="tourCatTiles"></div>
       <h2 class="grid-title" id="tourGridTitle"></h2>
-      <div class="filter-bar" id="tourFilters"></div>
+      <div class="category-picker" id="tourFilters"></div>
       <div class="toolbar">
         <div class="search-inline">⌕ <input type="text" id="tourSearch" placeholder="Search activities" aria-label="Search activities in this destination" oninput="resetTourPagination(); renderTours()"></div>
         <select id="tourAvailFilter" class="tour-select" aria-label="Filter by listing status" onchange="resetTourPagination(); renderTours()" hidden></select>
         <select id="tourDurFilter" class="tour-select" aria-label="Filter by duration" onchange="resetTourPagination(); renderTours()" hidden></select>
       </div>
+      <p class="tour-results-count" id="tourResultsCount" role="status" aria-live="polite"></p>
       <div class="product-grid" id="tourGrid"></div>
       <div class="load-more-wrap" id="tourLoadMore" hidden>
         <p class="load-more-count" id="tourLoadMoreCount"></p>
@@ -4265,6 +4260,7 @@ function setActiveTourDest(slug){
   const browse = document.getElementById("toursBrowse");
   const intro = document.getElementById("toursDestIntro");
   const tiles = document.getElementById("toursDestTiles");
+  tiles.closest("section").hidden = Boolean(slug);
   const index = document.getElementById("toursIndex");
   const faq = document.getElementById("toursDestFaq");
   // A leftover search query from a previous destination must not silently filter
@@ -4300,8 +4296,7 @@ function setActiveTourDest(slug){
 <a href="/activities/" class="detail-back">← All destinations</a>
   ${destinationHeroHTML({type:"activities", slug, eyebrow:`UAE activities in ${name}`, title:`Things to do in ${name}`, gridId:"tourGridTitle",
     count:list.length, countLabel:list.length === 1 ? "activity" : "activities",
-    lede:`RAAHHI TOURS lists ${list.length} ${name} ${list.length === 1 ? "activity" : "activities"}: ${catSummary(list)}. ${(DESTINATIONS.find(d=>d.slug===slug)||{}).blurb || ""} Open an activity for its details, then use Enquire to confirm price and availability with our team.`})}`;
-document.getElementById("tourCatTiles").innerHTML = categoryTilesHTML(slug);
+    lede:`Browse ${list.length} activities in ${name}. Filter by category, duration or listing status, then open an activity to review its inclusions. Prices and availability are confirmed on enquiry.`})}`;
     tiles.style.display = "none";
     document.getElementById("tourGridTitle").textContent = `All ${name} activities`;
     faq.innerHTML = `<h2>Questions about ${name} activities</h2>${qaHTML(activityDestFaqItems(slug))}`;
@@ -4335,8 +4330,14 @@ function renderTourFilters(){
   const catsPresent = TOUR_CATS.filter(c => c==="All" || inScope.some(t=>t.cat===c));
   renderExtraFilters(inScope);
   if(!catsPresent.includes(activeTourCat)) activeTourCat = "All";
-  document.getElementById("tourFilters").innerHTML = catsPresent.map(c=>
-    `<button type="button" class="filter-chip ${c===activeTourCat?'active':''}" aria-pressed="${c===activeTourCat}" onclick="setTourCat('${c}')">${c}</button>`).join("");
+  const picker = document.getElementById("tourFilters");
+  let select = document.getElementById("tourCategoryFilter");
+  if(!select){
+    picker.innerHTML = `<label for="tourCategoryFilter">Activity category</label><select class="tour-select" id="tourCategoryFilter" onchange="setTourCat(this.value)"></select>`;
+    select = document.getElementById("tourCategoryFilter");
+  }
+  select.innerHTML = catsPresent.map(c=>`<option value="${escapeHTML(c)}">${c === "All" ? "All categories" : escapeHTML(c)} (${c === "All" ? inScope.length : inScope.filter(t=>t.cat===c).length})</option>`).join("");
+  select.value = activeTourCat;
 }
 function setTourCat(c){ activeTourCat = c; resetTourPagination(); renderTourFilters(); renderTours(); }
 function clearTourSearch(){
@@ -4350,6 +4351,8 @@ function renderTours(){
   const q = document.getElementById("tourSearch")?.value || "";
   const scope=ACTIVITY_SEARCH_INDEX.filter(e=>e.t.dest===activeTourDest && (activeTourCat==="All" || e.t.cat===activeTourCat) && passesExtraFilters(e.t));
   const list=(normalizeSearch(q)?rankEntries(scope,q):scope).map(e=>e.t);
+  document.getElementById("tourGridTitle").textContent = activeTourCat === "All" ? `All ${destName(activeTourDest)} activities` : `${activeTourCat} in ${destName(activeTourDest)}`;
+  document.getElementById("tourResultsCount").textContent = `${list.length} ${list.length === 1 ? "activity" : "activities"} ${normalizeSearch(q) || activeTourCat !== "All" || document.getElementById("tourAvailFilter")?.value || document.getElementById("tourDurFilter")?.value ? `${list.length === 1 ? "matches" : "match"} your filters` : "to explore"}`;
   // Keep the initial browse compact: four visual rows at the current breakpoint, then four more rows per click.
   const shown = list.slice(0, gridVisibleLimit("tour", tourRowsVisible));
   // The search text is never echoed back into this HTML.
@@ -4376,6 +4379,7 @@ function setActivePkgDest(slug){
   const browse = document.getElementById("pkgBrowse");
   const intro = document.getElementById("pkgDestIntro");
   const tiles = document.getElementById("pkgDestTiles");
+  tiles.closest("section").hidden = Boolean(slug);
   const index = document.getElementById("pkgIndex");
   const faq = document.getElementById("pkgDestFaq");
   // Same as activities: a previous destination's search query must not carry over.
@@ -5782,11 +5786,12 @@ function renderVisaAddons(){
   el.innerHTML = VISA_ADDONS.map(tourCard).join("");
   initSlideshows(el);
 }
-function tourCard(t){
+function tourCard(t, opts = {}){
+  const images = opts.staticCover === true ? t.images.slice(0,1) : t.images;
   const href = itemURL(t), price = priceInfo(t);
   // The `badge` field (Popular / New / …) is never rendered: no data backs popularity or recency claims.
   return `<article class="product-card reveal">
-    <div class="pc-media">${slideshowHTML(t.images, t.title, "", {href, meta:`${destName(t.dest)} · ${t.cat}`, deferSlides:true})}</div>
+    <div class="pc-media">${slideshowHTML(images, t.title, "", {href, meta:`${destName(t.dest)} · ${t.cat}`, deferSlides:true})}</div>
     <div class="pc-content">
       <h3><a href="${href}">${t.title}</a></h3>
       <div class="pc-meta">${statusTagHTML(t)}<span>${t.cat}</span>${hasRealValue(t.duration) ? `<span>${t.duration}</span>` : ""}</div>
@@ -5796,14 +5801,15 @@ function tourCard(t){
           : `<div class="pc-price" style="font-family:'Inter',sans-serif; font-size:13.5px; font-weight:600; color:var(--ink-600);">${ACTIVITY_PRICE_MISSING}</div>`}
         <a href="${href}" class="btn btn-navy btn-sm">View details<span class="sr-only"> for ${t.title}</span></a>
       </div>
-      ${mediaCreditHTML(t.images, {compact:true})}
+      ${mediaCreditHTML(images, {compact:true})}
     </div>
   </article>`;
 }
-function pkgCard(p){
+function pkgCard(p, opts = {}){
+  const images = opts.staticCover === true ? p.images.slice(0,1) : p.images;
   const href = URLS.holiday(p), incl = p.incl || [], price = priceInfo(p);
   return `<article class="pkg-card reveal">
-    <div class="pkg-media">${slideshowHTML(p.images, p.title, "", {href, meta:`${destName(p.dest)} · ${durText(p.dur)}`, deferSlides:true})}${hasRealValue(p.dur) ? `<span class="pkg-dur">${p.dur}</span>` : ""}</div>
+    <div class="pkg-media">${slideshowHTML(images, p.title, "", {href, meta:`${destName(p.dest)} · ${durText(p.dur)}`, deferSlides:true})}${hasRealValue(p.dur) ? `<span class="pkg-dur">${p.dur}</span>` : ""}</div>
     <div class="pkg-body">
       <h3><a href="${href}">${p.title}</a></h3>
       <div class="pkg-incl">${statusTagHTML(p)}${incl.slice(0,3).map(i=>`<span>${i}</span>`).join("")}${incl.length>3 ? `<span>+${incl.length-3} more</span>` : ""}</div>
@@ -5811,10 +5817,18 @@ function pkgCard(p){
       <div class="pkg-price-row">${price.known ? `<div class="pc-price">${escapeHTML(price.text)}${price.basis ? `<span style="display:block; font-size:11px; color:var(--ink-400);">${escapeHTML(price.basis)}</span>` : ""}</div>`
         : `<div class="pc-price" style="font-family:'Inter',sans-serif; font-size:13.5px; font-weight:600; color:var(--ink-600);">${PACKAGE_PRICE_MISSING}</div>`}
       <a href="${href}" class="btn btn-navy btn-sm">View package<span class="sr-only">: ${p.title}</span></a></div>
-      ${mediaCreditHTML(p.images, {compact:true})}
+      ${mediaCreditHTML(images, {compact:true})}
     </div>
   </article>`;
 }
+// Hand-selected catalogue entries, with no inferred popularity or live inventory claim.
+function renderHomeSelections(){
+  const activities = ["evening-desert-safari", "ferrari-world-abu-dhabi", "jebel-jais-zipline"].map(byId).filter(Boolean);
+  const packages = ["dubai-city-safari-value", "abu-dhabi-stay-play", "ras-al-khaimah-mountain-coast"].map(id=>PACKAGES.find(p=>p.id===id)).filter(Boolean);
+  document.getElementById("homeActivitySelection").innerHTML = activities.map(t=>tourCard(t, {staticCover:true})).join("");
+  document.getElementById("homePackageSelection").innerHTML = packages.map(p=>pkgCard(p, {staticCover:true})).join("");
+}
+
 let visaSuggestionIndex = -1;
 function matchingVisas(q){
   const needle = String(q || "").toLowerCase().trim();
@@ -7122,24 +7136,6 @@ function scrollToDestGrid(id){
   const el = document.getElementById(id);
   if(el) el.scrollIntoView({behavior: REDUCED_MOTION.matches ? "auto" : "smooth", block:"start"});
 }
-// Photographic category row on an activities destination page: one tile per category present,
-// pictured with a photo of an activity from that category. Choosing a tile filters the grid.
-function categoryTilesHTML(slug){
-  const list = TOURS.filter(t => t.dest === slug);
-  const cats = TOUR_CATS.filter(c => c !== "All" && list.some(t => t.cat === c));
-  if(cats.length < 2) return "";
-  return `<div class="cat-tiles" role="list">${cats.map(c => {
-      const items = list.filter(t => t.cat === c);
-      const withImg = items.find(t => (t.images || []).length);
-      const img = withImg ? withImg.images[0] : null;
-      return `<button type="button" role="listitem" class="cat-tile" onclick="chooseTourCat('${c}')" aria-label="Show ${items.length} ${c} ${items.length === 1 ? "activity" : "activities"}">
-        <span class="cat-tile-media">${img ? `<img src="${imgAt(img, 480)}" alt="" aria-hidden="true"${imgPosStyle(img)} loading="lazy" decoding="async" onerror="imgFallback(this)">` : ""}</span>
-        <span class="cat-tile-body"><span class="cat-tile-name">${c}</span><span class="cat-tile-count">${items.length}</span></span>
-      </button>`;
-    }).join("")}</div>`;
-}
-function chooseTourCat(c){ setTourCat(c); scrollToDestGrid("tourGridTitle"); }
-
 /* ============ HOLIDAY ACCOMMODATION (v40) ============
    A structured accommodation record per package. Every value is taken from that package's own
    data -- its duration and its listed inclusions -- and nothing else:
@@ -7650,6 +7646,7 @@ if(PRERENDERED){
   else {
     document.getElementById("homeHeroMedia").innerHTML = slideshowHTML([IMG.dubaiDuskPanorama, IMG.desertSunsetHero, IMG.mosqueTwilight, IMG.rakSunriseMountains, IMG.wingSunset], "", "hero-slideshow");
     initSlideshows(document.getElementById("homeHeroMedia"));
+    renderHomeSelections();
     renderVisaGrid();
     renderVisaAddons();
     buildFaq("visaFaq", VISA_FAQ);

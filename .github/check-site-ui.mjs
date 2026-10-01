@@ -40,6 +40,25 @@ try{
    const overflow=await p.evaluate(()=>({width:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth}));
    assert(overflow.scroll<=overflow.width+1,route+' overflow '+JSON.stringify(overflow));
    assert.equal(errors.length,0,route+' runtime errors '+errors.join('; '));
+   if(route==='/'){
+    assert.equal(await p.locator('#homeActivitySelection .product-card').count(),3);
+    assert.equal(await p.locator('#homePackageSelection .pkg-card').count(),3);
+    assert.equal(await p.locator('.home-shortcuts a').count(),3);
+    assert.equal(await p.locator('.home-selection .slideshow[data-count="1"]').count(),6,'Static covers on selected products');
+    const selectedLinks=await p.locator('.home-selection h3 a').evaluateAll(es=>es.map(e=>e.getAttribute('href')));
+    assert.equal(new Set(selectedLinks).size,6,'Six distinct published product links');
+    assert(await p.evaluate(urls=>urls.every(url=>seoRoutes().includes(url)),selectedLinks));
+   }
+   if(route==='/activities/dubai/'){
+    assert.equal(await p.getByLabel('Activity category',{exact:true}).count(),1);
+    assert.equal(await p.locator('.cat-tile, #tourFilters .filter-chip').count(),0,'One category control');
+    await p.getByLabel('Activity category',{exact:true}).selectOption('Landmarks');
+    assert((await p.locator('#tourGridTitle').innerText()).includes('Landmarks'));
+    assert(await p.locator('#tourGrid .product-card').count()>0);
+    const cards=await p.locator('#tourGrid h3 a').evaluateAll(es=>es.map(e=>e.getAttribute('href')));
+    assert(await p.evaluate(urls=>urls.every(url=>TOURS.some(t=>URLS.activity(t)===url&&t.cat==='Landmarks'&&t.dest==='dubai')),cards));
+    await p.getByLabel('Activity category',{exact:true}).selectOption('All');
+   }
    const bar=p.locator('.page.active .mobile-enquiry-bar');
    if(await bar.count()){
     assert.equal(await bar.count(),1,route+' one contextual bottom bar');
