@@ -619,6 +619,11 @@
   .acc-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:14px 20px; margin:0; }
   .acc-grid dt{ font-size:11.5px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; color:var(--ink-400); }
   .acc-grid dd{ margin:4px 0 0; font-size:15px; color:var(--ink-900); font-weight:500; }
+  .acc-options{ display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:14px; list-style:none; padding:0; margin:0 0 16px; }
+  .acc-option{ border:1px solid var(--line); border-radius:var(--radius-m); background:#fff; padding:18px; }
+  .acc-category{ display:block; font-size:14px; color:var(--gold-text); font-weight:700; margin-bottom:8px; }
+  .acc-option h3{ font-family:Inter,sans-serif; font-size:17px; line-height:1.45; margin:0; }
+  .acc-option .acc-similar{ margin:6px 0 0; font-size:14px; }
   .acc-similar{ font-size:13px; font-weight:400; color:var(--ink-400); }
   .acc-note{ margin:14px 0 0; padding-top:12px; border-top:1px solid var(--line); font-size:13px; color:var(--ink-400); }
 
@@ -2025,8 +2030,8 @@ function breadcrumbHTML(items){
      (nights, stated hotel category / location, listed meals). Verified hotel details -- name, orSimilar,
      category, roomType, board, transfers -- go in PACKAGE_ACCOMMODATION_OVERRIDES, keyed by package id.
    price: the "X – X" placeholder or {amount, currency, basis, type, validFrom, includes} -- see priceInfo().
-   No package currently has a hotel name, room type or per-tier price, so no 3/4/5-star table or
-   "upgrade" control is rendered -- that would imply data this site does not have. */
+   Named hotel examples live in PACKAGE_ACCOMMODATION_OVERRIDES. Room allocation and prices
+   are confirmed on enquiry; no upgrade pricing or guaranteed availability is inferred. */
 const PACKAGES = [
   {id:"dubai-grand-stopover", dest:"dubai", dur:"3N / 4D", title:"Dubai Grand Stopover Experience", status:"unable-to-verify", incl:["Hotel", "Transfers", "Abu Dhabi Day", "Breakfast"], price:"X – X", images:[IMG.burjIlluminated, IMG.downtownTowers, IMG.mosqueSunsetPool], itinerary:[
     {day:"Day 1", text:"Arrival, private transfer to hotel, evening at leisure."},
@@ -6520,6 +6525,7 @@ function packageFaqItems(p){
   items.push({q:`Can ${p.title} be customised?`, a:`You can request extra nights, a different hotel or added tours. Our team confirms which changes are possible for your dates.`});
   items.push({q:`How do I enquire about ${p.title}?`, a:`Choose a travel month (optional) and the number of travellers, then select Enquire and add your name and phone number. The website prepares a summary to share with our team by phone, WhatsApp or email. It is not sent automatically.`});
   const accommodation = packageAccommodation(p);
+  if(accommodation && accommodation.options) items.push({q:"Which hotels can I request?", a:`The hotel examples for this itinerary are ${escapeHTML(accommodation.options.map(o=>o.name + (o.orSimilar ? " or similar" : "")).join("; "))}. Your selected hotel, category and room type are confirmed in your quote before booking.`, catalogueDerived:true});
   if(accommodation) items.push({q:`What accommodation is listed for ${escapeHTML(p.title)}?`, a:`${escapeHTML(accommodationSummary(accommodation))}. ${accommodation.name ? "Confirm the hotel and room details for your dates when enquiring." : "The hotel name and room details are confirmed on enquiry."}`, catalogueDerived:true});
   items.push(...catalogueFactFaqs(p, "holiday"));
   return items;
@@ -7297,20 +7303,428 @@ function scrollToDestGrid(id){
   const el = document.getElementById(id);
   if(el) el.scrollIntoView({behavior: REDUCED_MOTION.matches ? "auto" : "smooth", block:"start"});
 }
-/* ============ HOLIDAY ACCOMMODATION (v40) ============
-   A structured accommodation record per package. Every value is taken from that package's own
-   data -- its duration and its listed inclusions -- and nothing else:
-     nights    <- the "3N / 4D" duration
-     category  <- only when an inclusion states it ("5-Star Hotel")
-     location  <- only when an inclusion states it ("Yas Island Hotel")
-     board     <- only meal inclusions that are listed (Breakfast, Kosher Dining, Jain / Indian Meals)
-     name      <- null everywhere: no package names a hotel, so none is shown
-   To show a real hotel later, fill in `name` (and `orSimilar: true` only if that is how it is
-   offered); the card and the detail panel pick it up without any UI change. */
+/* ============ HOLIDAY ACCOMMODATION ============
+   Stay length and meals come from RAAHHI's package record. Named options are examples from the
+   matching supplier itinerary, never confirmed inventory. Conflicting categories remain null;
+   operator/tourism evidence can resolve them. Evidence: verification/package-hotels.json. */
 const MEAL_INCLUSIONS = ["Breakfast", "Dinner", "Kosher Dining", "Jain Meals", "Indian Meals"];
 const PACKAGE_ACCOMMODATION_OVERRIDES = {
-  // Explicit, verified hotel details go here, keyed by package id. Currently none are established.
+  "dubai-grand-stopover": {
+    "category": null,
+    "options": [
+      {
+        "name": "Admiral Plaza Hotel Dubai",
+        "stars": 3,
+        "orSimilar": true
+      },
+      {
+        "name": "Asiana Hotel",
+        "stars": 5,
+        "orSimilar": true
+      },
+      {
+        "name": "Knight Castle Hotel",
+        "stars": 5,
+        "orSimilar": true
+      }
+    ],
+    "hotelSourceUrl": "https://www.raynatours.com/dubai-packages/dubai-grand-stopover-experience-547",
+    "hotelSourceCheckedOn": "2026-10-01"
+  },
+  "ultimate-dubai-explorer": {
+    "category": null,
+    "options": [
+      {
+        "name": "Asiana Hotel",
+        "stars": 5,
+        "orSimilar": true
+      },
+      {
+        "name": "Knight Castle Hotel",
+        "stars": 5,
+        "orSimilar": true
+      }
+    ],
+    "hotelSourceUrl": "https://www.raynatours.com/dubai-packages/ultimate-dubai-explorer-549",
+    "hotelSourceCheckedOn": "2026-10-01"
+  },
+  "dubai-premium-kosher": {
+    "category": null,
+    "options": [
+      {
+        "name": "Grand Millennium Hotel",
+        "stars": null,
+        "orSimilar": true
+      },
+      {
+        "name": "Hilton Garden Inn Dubai Jumeirah",
+        "stars": null,
+        "orSimilar": true
+      },
+      {
+        "name": "JW Marriott Hotel Marina Dubai",
+        "stars": 5,
+        "orSimilar": true
+      }
+    ],
+    "hotelSourceUrl": "https://www.raynatours.com/dubai-packages/dubai-premium-explorer-kosher-journey-556",
+    "hotelSourceCheckedOn": "2026-10-01"
+  },
+  "dubai-sky-sea-adventure": {
+    "category": null,
+    "options": [
+      {
+        "name": "Asiana Hotel",
+        "stars": 5,
+        "orSimilar": true
+      },
+      {
+        "name": "Knight Castle Hotel",
+        "stars": 5,
+        "orSimilar": true
+      }
+    ],
+    "hotelSourceUrl": "https://www.raynatours.com/dubai-packages/dubai-sky-sea-adventure-escape-560",
+    "hotelSourceCheckedOn": "2026-10-01"
+  },
+  "dubai-jain-comfort": {
+    "category": null,
+    "options": [
+      {
+        "name": "Royal Ascot / Ascot Hotel",
+        "stars": null,
+        "orSimilar": true
+      },
+      {
+        "name": "Grand Excelsior Hotel Bur Dubai",
+        "stars": 4,
+        "orSimilar": true
+      },
+      {
+        "name": "Sea View Hotel Dubai",
+        "stars": 4,
+        "orSimilar": true
+      }
+    ],
+    "hotelSourceUrl": "https://www.raynatours.com/dubai-packages/dubai-jain-comfort-getaway-572",
+    "hotelSourceCheckedOn": "2026-10-01"
+  },
+  "dubai-group-indian-meals": {
+    "category": null,
+    "options": [
+      {
+        "name": "Sunday Hotel Holiday International Dubai",
+        "stars": null,
+        "orSimilar": true
+      }
+    ],
+    "hotelSourceUrl": "https://www.raynatours.com/dubai-packages/dubai-group-departures-with-indian-meals-614",
+    "hotelSourceCheckedOn": "2026-10-01"
+  },
+  "abu-dhabi-stay-play": {
+    "category": null,
+    "options": [
+      {
+        "name": "W Abu Dhabi – Yas Island",
+        "stars": 5,
+        "orSimilar": true
+      }
+    ],
+    "hotelSourceUrl": "https://www.raynatours.com/abu-dhabi-packages/abu-dhabi-stay-and-play-luxury-package-628",
+    "hotelSourceCheckedOn": "2026-10-01"
+  },
+  "abu-dhabi-grand-with-dubai-day": {
+    "category": null,
+    "options": [
+      {
+        "name": "W Abu Dhabi – Yas Island",
+        "stars": 5,
+        "orSimilar": true
+      },
+      {
+        "name": "Radisson Blu Hotel, Abu Dhabi Yas Island",
+        "stars": null,
+        "orSimilar": true
+      }
+    ],
+    "hotelSourceUrl": "https://www.raynatours.com/abu-dhabi-packages/abu-dhabi-grand-experiences-with-dubai-day-tour-670",
+    "hotelSourceCheckedOn": "2026-10-01"
+  },
+  "abu-dhabi-express-getaway": {
+    "category": null,
+    "options": [
+      {
+        "name": "W Abu Dhabi – Yas Island",
+        "stars": 5,
+        "orSimilar": true
+      },
+      {
+        "name": "Radisson Blu Hotel, Abu Dhabi Yas Island",
+        "stars": null,
+        "orSimilar": true
+      }
+    ],
+    "hotelSourceUrl": "https://www.raynatours.com/abu-dhabi-packages/abu-dhabi-express-getaway-629",
+    "hotelSourceCheckedOn": "2026-10-01"
+  },
+  "abu-dhabi-explorer-dubai-iconic": {
+    "category": null,
+    "options": [
+      {
+        "name": "W Abu Dhabi – Yas Island",
+        "stars": 5,
+        "orSimilar": true
+      },
+      {
+        "name": "Radisson Blu Hotel, Abu Dhabi Yas Island",
+        "stars": null,
+        "orSimilar": true
+      }
+    ],
+    "hotelSourceUrl": "https://www.raynatours.com/abu-dhabi-packages/abu-dhabi-explorer-and-dubai-iconic-tour-632",
+    "hotelSourceCheckedOn": "2026-10-01"
+  },
+  "dubai-marina-overnight": {
+    "category": null,
+    "options": [
+      {
+        "name": "Admiral Plaza Hotel Dubai",
+        "stars": 3,
+        "orSimilar": true
+      },
+      {
+        "name": "Asiana Hotel",
+        "stars": 5,
+        "orSimilar": true
+      },
+      {
+        "name": "Knight Castle Hotel",
+        "stars": 5,
+        "orSimilar": true
+      }
+    ],
+    "hotelSourceUrl": "https://www.raynatours.com/dubai-packages/dubai-stopover-delight-545",
+    "hotelSourceCheckedOn": "2026-10-01"
+  },
+  "dubai-skyline-overnight": {
+    "category": null,
+    "options": [
+      {
+        "name": "Admiral Plaza Hotel Dubai",
+        "stars": 3,
+        "orSimilar": true
+      },
+      {
+        "name": "Asiana Hotel",
+        "stars": 5,
+        "orSimilar": true
+      },
+      {
+        "name": "Knight Castle Hotel",
+        "stars": 5,
+        "orSimilar": true
+      }
+    ],
+    "hotelSourceUrl": "https://www.raynatours.com/dubai-packages/dubai-stopover-express-544",
+    "hotelSourceCheckedOn": "2026-10-01"
+  },
+  "dubai-gardens-seasonal-escape": {
+    "category": null,
+    "options": [
+      {
+        "name": "Admiral Plaza Hotel Dubai",
+        "stars": 3,
+        "orSimilar": true
+      },
+      {
+        "name": "Asiana Hotel",
+        "stars": 5,
+        "orSimilar": true
+      },
+      {
+        "name": "Knight Castle Hotel",
+        "stars": 5,
+        "orSimilar": true
+      }
+    ],
+    "hotelSourceUrl": "https://www.raynatours.com/dubai-packages/dubai-seasonal-stopover-546",
+    "hotelSourceCheckedOn": "2026-10-01"
+  },
+  "dubai-city-safari-value": {
+    "category": null,
+    "options": [
+      {
+        "name": "Pearl Swiss Hotel",
+        "stars": null,
+        "orSimilar": true
+      },
+      {
+        "name": "Zain International Hotel",
+        "stars": 3,
+        "orSimilar": true
+      }
+    ],
+    "hotelSourceUrl": "https://www.raynatours.com/dubai-packages/super-saver-dubai-holiday-541",
+    "hotelSourceCheckedOn": "2026-10-01"
+  },
+  "dubai-downtown-discovery": {
+    "category": null,
+    "options": [
+      {
+        "name": "Admiral Plaza Hotel Dubai",
+        "stars": 3,
+        "orSimilar": true
+      },
+      {
+        "name": "Asiana Hotel",
+        "stars": 5,
+        "orSimilar": true
+      }
+    ],
+    "hotelSourceUrl": "https://www.raynatours.com/dubai-packages/dubai-budget-explorer-with-dubai-mall-attractions-543",
+    "hotelSourceCheckedOn": "2026-10-01"
+  },
+  "dubai-waterpark-city-explorer": {
+    "category": null,
+    "options": [
+      {
+        "name": "Admiral Plaza Hotel Dubai",
+        "stars": 3,
+        "orSimilar": true
+      },
+      {
+        "name": "Asiana Hotel",
+        "stars": 5,
+        "orSimilar": true
+      },
+      {
+        "name": "Knight Castle Hotel",
+        "stars": 5,
+        "orSimilar": true
+      }
+    ],
+    "hotelSourceUrl": "https://www.raynatours.com/dubai-packages/dubai-complete-experience-551",
+    "hotelSourceCheckedOn": "2026-10-01"
+  },
+  "dubai-family-discovery-waterpark": {
+    "category": null,
+    "options": [
+      {
+        "name": "Admiral Plaza Hotel Dubai",
+        "stars": 3,
+        "orSimilar": true
+      },
+      {
+        "name": "Asiana Hotel",
+        "stars": 5,
+        "orSimilar": true
+      },
+      {
+        "name": "Knight Castle Hotel",
+        "stars": 5,
+        "orSimilar": true
+      }
+    ],
+    "hotelSourceUrl": "https://www.raynatours.com/dubai-packages/dubai-little-explorers-kids-holiday-package-552",
+    "hotelSourceCheckedOn": "2026-10-01"
+  },
+  "dubai-family-theme-park-week": {
+    "category": null,
+    "options": [
+      {
+        "name": "Admiral Plaza Hotel Dubai",
+        "stars": 3,
+        "orSimilar": true
+      },
+      {
+        "name": "Asiana Hotel",
+        "stars": 5,
+        "orSimilar": true
+      },
+      {
+        "name": "Knight Castle Hotel",
+        "stars": 5,
+        "orSimilar": true
+      }
+    ],
+    "hotelSourceUrl": "https://www.raynatours.com/dubai-packages/dubai-kids-adventure-and-theme-park-holiday-package-553",
+    "hotelSourceCheckedOn": "2026-10-01"
+  },
+  "ras-al-khaimah-coast-heritage": {
+    "category": null,
+    "options": [
+      {
+        "name": "Hampton by Hilton Marjan Island",
+        "stars": 4,
+        "orSimilar": true
+      }
+    ],
+    "hotelSourceUrl": "https://www.raynatours.com/ras-al-khaimah-packages/ras-al-khaimah-wonders-with-all-inclusive-city-tour-219",
+    "hotelSourceCheckedOn": "2026-10-01"
+  },
+  "ras-al-khaimah-safari-short-break": {
+    "category": null,
+    "options": [
+      {
+        "name": "Hilton Garden Inn Ras Al Khaimah",
+        "stars": null,
+        "orSimilar": true
+      }
+    ],
+    "hotelSourceUrl": "https://www.raynatours.com/ras-al-khaimah-packages/ras-al-khaimah-central-stay-with-desert-safari-220",
+    "hotelSourceCheckedOn": "2026-10-01"
+  },
+  "ras-al-khaimah-mountain-coast": {
+    "category": null,
+    "options": [
+      {
+        "name": "Hampton by Hilton Marjan Island",
+        "stars": 4,
+        "orSimilar": true
+      }
+    ],
+    "hotelSourceUrl": "https://www.raynatours.com/ras-al-khaimah-packages/epic-ras-al-khaimah-adventure-with-the-worlds-longest-zipline-218",
+    "hotelSourceCheckedOn": "2026-10-01"
+  },
+  "ras-al-khaimah-coastal-safari": {
+    "category": null,
+    "options": [
+      {
+        "name": "Hampton by Hilton Marjan Island",
+        "stars": 4,
+        "orSimilar": true
+      }
+    ],
+    "hotelSourceUrl": "https://www.raynatours.com/ras-al-khaimah-packages/sensational-ras-al-khaimah-getaway-with-desert-safari-217",
+    "hotelSourceCheckedOn": "2026-10-01"
+  },
+  "ras-al-khaimah-heritage-desert": {
+    "category": null,
+    "options": [
+      {
+        "name": "The Ritz-Carlton Ras Al Khaimah, Al Wadi Desert",
+        "stars": null,
+        "orSimilar": true
+      }
+    ],
+    "hotelSourceUrl": "https://www.raynatours.com/ras-al-khaimah-packages/ras-al-khaimah-heritage-escape-with-city-tour-and-desert-safari-222",
+    "hotelSourceCheckedOn": "2026-10-01"
+  },
+  "ras-al-khaimah-zipline-safari": {
+    "category": null,
+    "options": [
+      {
+        "name": "Pullman Resort Al Marjan Island",
+        "stars": 5,
+        "orSimilar": true
+      }
+    ],
+    "hotelSourceUrl": "https://www.raynatours.com/ras-al-khaimah-packages/sleek-ras-al-khaimah-stay-with-jais-zipline-and-desert-safari-221",
+    "hotelSourceCheckedOn": "2026-10-01"
+  }
 };
+// A named example does not commit the customer to the old generic single-category inclusion.
+PACKAGES.forEach(p=>{ if(PACKAGE_ACCOMMODATION_OVERRIDES[p.id]) p.incl = p.incl.map(item=>/^\d-Star Hotel$/i.test(item) ? "Hotel" : item); });
 function packageAccommodation(p){
   const incl = p.incl || [];
   const hotelItem = incl.find(i => /hotel/i.test(i));
@@ -7327,6 +7741,11 @@ function packageAccommodation(p){
   }, PACKAGE_ACCOMMODATION_OVERRIDES[p.id] || {});
 }
 function accommodationSummary(a){
+  if(a.options && a.options.length){
+    const stars = [...new Set(a.options.map(o=>o.stars).filter(Boolean))].sort();
+    const category = stars.length ? `${stars.join(" / ")} star hotel options` : "Hotel options";
+    return [category, a.nights ? `${a.nights} ${a.nights === 1 ? "night" : "nights"}` : null].filter(Boolean).join(" · ");
+  }
   const hotel = a.name ? `${a.name}${a.orSimilar ? " or similar" : ""}` : (a.category ? a.category[0].toUpperCase() + a.category.slice(1) : "Hotel");
   return [hotel, a.location, a.nights ? `${a.nights} ${a.nights === 1 ? "night" : "nights"}` : null].filter(Boolean).join(" · ");
 }
@@ -7340,18 +7759,20 @@ function accommodationCardHTML(p){
 function accommodationPanelHTML(p){
   const a = packageAccommodation(p);
   if(!a) return "";
+  const options = a.options || [];
   const rows = [
     ["Hotel", a.name ? `${escapeHTML(a.name)}${a.orSimilar ? " <span class=\"acc-similar\">or similar</span>" : ""}` : "Confirmed on enquiry"],
     ["Category", a.category ? escapeHTML(a.category[0].toUpperCase() + a.category.slice(1)) : null],
     ["Location", a.location ? escapeHTML(a.location) : escapeHTML(destName(p.dest))],
     ["Nights", a.nights ? String(a.nights) : null],
     ["Meals", a.board ? escapeHTML(a.board) : null],
-  ].filter(r => r[1]);
+  ].filter(r => r[1] && !(options.length && (r[0] === "Hotel" || r[0] === "Category")));
   return `<div class="detail-section acc-section">
-      <h2>Accommodation</h2>
+      <h2>${options.length ? "Hotel options" : "Accommodation"}</h2>
+      ${options.length ? `<ul class="acc-options">${options.map(o=>`<li class="acc-option"><span class="acc-category">${o.stars ? `${o.stars} star hotel` : "Category confirmed on enquiry"}</span><h3>${escapeHTML(o.name)}</h3><p class="acc-similar">${o.orSimilar ? "or similar" : ""}</p></li>`).join("")}</ul>` : ""}
       <div class="acc-panel">
         <dl class="acc-grid">${rows.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join("")}</dl>
-        <p class="acc-note">${a.name ? "Hotel shown as offered for this package; availability is confirmed when you enquire." : "The hotel for your dates is named and confirmed when you enquire, together with the room type and price."}</p>
+        <p class="acc-note">${options.length ? "Hotels shown are examples for this itinerary, subject to availability. Your selected hotel, category and room type are confirmed in your quote before booking. If unavailable, a similar hotel in the agreed category will be proposed for your approval." : a.name ? "Hotel shown as offered for this package; availability is confirmed when you enquire." : "The hotel for your dates is named and confirmed when you enquire, together with the room type and price."}</p>
       </div>
     </div>`;
 }

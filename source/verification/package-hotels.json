@@ -1,0 +1,373 @@
+{
+  "checkedOn": "2026-10-01",
+  "scope": "Named hotel examples for matching reference itineraries; not confirmed inventory. Prices and photos excluded. No 3/4/5 tier is invented when the matching reference does not establish it.",
+  "substitutionPolicy": "Or similar means an alternative of the agreed category proposed for customer approval before booking.",
+  "hotels": {
+    "admiral": {
+      "name": "Admiral Plaza Hotel Dubai",
+      "stars": 3,
+      "categorySource": "Matching Rayna stay-options table"
+    },
+    "asiana": {
+      "name": "Asiana Hotel",
+      "stars": 5,
+      "categorySource": "https://asianahospitality.com/hotels/asiana-hotel/",
+      "finding": "Rayna labels this 4 star; the hotel identifies itself as 5 star."
+    },
+    "knight": {
+      "name": "Knight Castle Hotel",
+      "stars": 5,
+      "categorySource": "https://www.knightcastlehotel.com/en/"
+    },
+    "grandmillennium": {
+      "name": "Grand Millennium Hotel",
+      "stars": null,
+      "finding": "The package does not identify the precise Grand Millennium property."
+    },
+    "gardendubai": {
+      "name": "Hilton Garden Inn Dubai Jumeirah",
+      "stars": null,
+      "finding": "Rayna puts all three choices under 5-star headings. This category has not been confirmed for this hotel."
+    },
+    "jwmarina": {
+      "name": "JW Marriott Hotel Marina Dubai",
+      "stars": 5,
+      "categorySource": "Matching Rayna stay-options table"
+    },
+    "royalascot": {
+      "name": "Royal Ascot / Ascot Hotel",
+      "stars": null,
+      "finding": "Two properties are grouped in one Rayna option under a questionable 3-star heading; allocation and classification need confirmation."
+    },
+    "excelsior": {
+      "name": "Grand Excelsior Hotel Bur Dubai",
+      "stars": 4,
+      "categorySource": "Matching Rayna stay-options table"
+    },
+    "seaview": {
+      "name": "Sea View Hotel Dubai",
+      "stars": 4,
+      "categorySource": "https://www.seaviewhoteldubai.com/en",
+      "finding": "Rayna labels this 5 star; the hotel identifies itself as 4 star."
+    },
+    "sunday": {
+      "name": "Sunday Hotel Holiday International Dubai",
+      "stars": null,
+      "finding": "Hotel name is listed; no verified category recorded."
+    },
+    "pearl": {
+      "name": "Pearl Swiss Hotel",
+      "stars": null,
+      "finding": "Rayna pricing headings include 3/4 star, but its stay table marks both hotels 3 star; category unresolved."
+    },
+    "zain": {
+      "name": "Zain International Hotel",
+      "stars": 3,
+      "categorySource": "Matching Rayna stay-options table"
+    },
+    "w": {
+      "name": "W Abu Dhabi – Yas Island",
+      "stars": 5,
+      "categorySource": "https://www.marriott.com/en-us/hotels/auhwh-w-abu-dhabi-yas-island/overview/",
+      "finding": "Rayna labels this 4 star; Marriott identifies it as 5 star."
+    },
+    "radisson": {
+      "name": "Radisson Blu Hotel, Abu Dhabi Yas Island",
+      "stars": null,
+      "finding": "Rayna labels this 5 star; other listings disagree. Category remains unassigned."
+    },
+    "hampton": {
+      "name": "Hampton by Hilton Marjan Island",
+      "stars": 4,
+      "categorySource": "https://visitrasalkhaimah.com/plan-your-trip/accommodations/hampton-by-hilton-marjan-island/",
+      "finding": "Rayna hotel heading misspells Marjan as Marian and its overview says 5 star; RAK Tourism identifies it as 4 star."
+    },
+    "gardenrak": {
+      "name": "Hilton Garden Inn Ras Al Khaimah",
+      "stars": null,
+      "finding": "Hotel name listed in the Hotel Options section; category not established."
+    },
+    "ritz": {
+      "name": "The Ritz-Carlton Ras Al Khaimah, Al Wadi Desert",
+      "stars": null,
+      "finding": "Named resort reference; classification not checked in this pass."
+    },
+    "pullman": {
+      "name": "Pullman Resort Al Marjan Island",
+      "stars": 5,
+      "categorySource": "https://all.accor.com/hotel/A0D2/index.en.shtml",
+      "finding": "Rayna itinerary and hotel section name Pullman; its inclusions instead name Hilton Inn. Exact allocation needs confirmation."
+    }
+  },
+  "packages": [
+    {
+      "packageId": "dubai-grand-stopover",
+      "sourceUrl": "https://www.raynatours.com/dubai-packages/dubai-grand-stopover-experience-547",
+      "sourceCheckedOn": "2026-10-01",
+      "hotelKeys": [
+        "admiral",
+        "asiana",
+        "knight"
+      ],
+      "supplierAvailabilityVerified": false,
+      "allocationNote": "Hotel choice, category, room and availability must be confirmed in the quote."
+    },
+    {
+      "packageId": "ultimate-dubai-explorer",
+      "sourceUrl": "https://www.raynatours.com/dubai-packages/ultimate-dubai-explorer-549",
+      "sourceCheckedOn": "2026-10-01",
+      "hotelKeys": [
+        "asiana",
+        "knight"
+      ],
+      "supplierAvailabilityVerified": false,
+      "allocationNote": "Hotel choice, category, room and availability must be confirmed in the quote."
+    },
+    {
+      "packageId": "dubai-premium-kosher",
+      "sourceUrl": "https://www.raynatours.com/dubai-packages/dubai-premium-explorer-kosher-journey-556",
+      "sourceCheckedOn": "2026-10-01",
+      "hotelKeys": [
+        "grandmillennium",
+        "gardendubai",
+        "jwmarina"
+      ],
+      "supplierAvailabilityVerified": false,
+      "allocationNote": "Hotel choice, category, room and availability must be confirmed in the quote."
+    },
+    {
+      "packageId": "dubai-sky-sea-adventure",
+      "sourceUrl": "https://www.raynatours.com/dubai-packages/dubai-sky-sea-adventure-escape-560",
+      "sourceCheckedOn": "2026-10-01",
+      "hotelKeys": [
+        "asiana",
+        "knight"
+      ],
+      "supplierAvailabilityVerified": false,
+      "allocationNote": "Hotel choice, category, room and availability must be confirmed in the quote."
+    },
+    {
+      "packageId": "dubai-jain-comfort",
+      "sourceUrl": "https://www.raynatours.com/dubai-packages/dubai-jain-comfort-getaway-572",
+      "sourceCheckedOn": "2026-10-01",
+      "hotelKeys": [
+        "royalascot",
+        "excelsior",
+        "seaview"
+      ],
+      "supplierAvailabilityVerified": false,
+      "allocationNote": "Hotel choice, category, room and availability must be confirmed in the quote."
+    },
+    {
+      "packageId": "dubai-group-indian-meals",
+      "sourceUrl": "https://www.raynatours.com/dubai-packages/dubai-group-departures-with-indian-meals-614",
+      "sourceCheckedOn": "2026-10-01",
+      "hotelKeys": [
+        "sunday"
+      ],
+      "supplierAvailabilityVerified": false,
+      "allocationNote": "Hotel choice, category, room and availability must be confirmed in the quote."
+    },
+    {
+      "packageId": "abu-dhabi-stay-play",
+      "sourceUrl": "https://www.raynatours.com/abu-dhabi-packages/abu-dhabi-stay-and-play-luxury-package-628",
+      "sourceCheckedOn": "2026-10-01",
+      "hotelKeys": [
+        "w"
+      ],
+      "supplierAvailabilityVerified": false,
+      "allocationNote": "Hotel choice, category, room and availability must be confirmed in the quote."
+    },
+    {
+      "packageId": "abu-dhabi-grand-with-dubai-day",
+      "sourceUrl": "https://www.raynatours.com/abu-dhabi-packages/abu-dhabi-grand-experiences-with-dubai-day-tour-670",
+      "sourceCheckedOn": "2026-10-01",
+      "hotelKeys": [
+        "w",
+        "radisson"
+      ],
+      "supplierAvailabilityVerified": false,
+      "allocationNote": "Hotel choice, category, room and availability must be confirmed in the quote."
+    },
+    {
+      "packageId": "abu-dhabi-express-getaway",
+      "sourceUrl": "https://www.raynatours.com/abu-dhabi-packages/abu-dhabi-express-getaway-629",
+      "sourceCheckedOn": "2026-10-01",
+      "hotelKeys": [
+        "w",
+        "radisson"
+      ],
+      "supplierAvailabilityVerified": false,
+      "allocationNote": "Hotel choice, category, room and availability must be confirmed in the quote."
+    },
+    {
+      "packageId": "abu-dhabi-explorer-dubai-iconic",
+      "sourceUrl": "https://www.raynatours.com/abu-dhabi-packages/abu-dhabi-explorer-and-dubai-iconic-tour-632",
+      "sourceCheckedOn": "2026-10-01",
+      "hotelKeys": [
+        "w",
+        "radisson"
+      ],
+      "supplierAvailabilityVerified": false,
+      "allocationNote": "Hotel choice, category, room and availability must be confirmed in the quote."
+    },
+    {
+      "packageId": "dubai-marina-overnight",
+      "sourceUrl": "https://www.raynatours.com/dubai-packages/dubai-stopover-delight-545",
+      "sourceCheckedOn": "2026-10-01",
+      "hotelKeys": [
+        "admiral",
+        "asiana",
+        "knight"
+      ],
+      "supplierAvailabilityVerified": false,
+      "allocationNote": "Hotel choice, category, room and availability must be confirmed in the quote."
+    },
+    {
+      "packageId": "dubai-skyline-overnight",
+      "sourceUrl": "https://www.raynatours.com/dubai-packages/dubai-stopover-express-544",
+      "sourceCheckedOn": "2026-10-01",
+      "hotelKeys": [
+        "admiral",
+        "asiana",
+        "knight"
+      ],
+      "supplierAvailabilityVerified": false,
+      "allocationNote": "Hotel choice, category, room and availability must be confirmed in the quote."
+    },
+    {
+      "packageId": "dubai-gardens-seasonal-escape",
+      "sourceUrl": "https://www.raynatours.com/dubai-packages/dubai-seasonal-stopover-546",
+      "sourceCheckedOn": "2026-10-01",
+      "hotelKeys": [
+        "admiral",
+        "asiana",
+        "knight"
+      ],
+      "supplierAvailabilityVerified": false,
+      "allocationNote": "Hotel choice, category, room and availability must be confirmed in the quote."
+    },
+    {
+      "packageId": "dubai-city-safari-value",
+      "sourceUrl": "https://www.raynatours.com/dubai-packages/super-saver-dubai-holiday-541",
+      "sourceCheckedOn": "2026-10-01",
+      "hotelKeys": [
+        "pearl",
+        "zain"
+      ],
+      "supplierAvailabilityVerified": false,
+      "allocationNote": "Hotel choice, category, room and availability must be confirmed in the quote."
+    },
+    {
+      "packageId": "dubai-downtown-discovery",
+      "sourceUrl": "https://www.raynatours.com/dubai-packages/dubai-budget-explorer-with-dubai-mall-attractions-543",
+      "sourceCheckedOn": "2026-10-01",
+      "hotelKeys": [
+        "admiral",
+        "asiana"
+      ],
+      "supplierAvailabilityVerified": false,
+      "allocationNote": "Hotel choice, category, room and availability must be confirmed in the quote."
+    },
+    {
+      "packageId": "dubai-waterpark-city-explorer",
+      "sourceUrl": "https://www.raynatours.com/dubai-packages/dubai-complete-experience-551",
+      "sourceCheckedOn": "2026-10-01",
+      "hotelKeys": [
+        "admiral",
+        "asiana",
+        "knight"
+      ],
+      "supplierAvailabilityVerified": false,
+      "allocationNote": "Hotel choice, category, room and availability must be confirmed in the quote."
+    },
+    {
+      "packageId": "dubai-family-discovery-waterpark",
+      "sourceUrl": "https://www.raynatours.com/dubai-packages/dubai-little-explorers-kids-holiday-package-552",
+      "sourceCheckedOn": "2026-10-01",
+      "hotelKeys": [
+        "admiral",
+        "asiana",
+        "knight"
+      ],
+      "supplierAvailabilityVerified": false,
+      "allocationNote": "Hotel choice, category, room and availability must be confirmed in the quote."
+    },
+    {
+      "packageId": "dubai-family-theme-park-week",
+      "sourceUrl": "https://www.raynatours.com/dubai-packages/dubai-kids-adventure-and-theme-park-holiday-package-553",
+      "sourceCheckedOn": "2026-10-01",
+      "hotelKeys": [
+        "admiral",
+        "asiana",
+        "knight"
+      ],
+      "supplierAvailabilityVerified": false,
+      "allocationNote": "Hotel choice, category, room and availability must be confirmed in the quote."
+    },
+    {
+      "packageId": "ras-al-khaimah-coast-heritage",
+      "sourceUrl": "https://www.raynatours.com/ras-al-khaimah-packages/ras-al-khaimah-wonders-with-all-inclusive-city-tour-219",
+      "sourceCheckedOn": "2026-10-01",
+      "hotelKeys": [
+        "hampton"
+      ],
+      "supplierAvailabilityVerified": false,
+      "allocationNote": "Hotel choice, category, room and availability must be confirmed in the quote."
+    },
+    {
+      "packageId": "ras-al-khaimah-safari-short-break",
+      "sourceUrl": "https://www.raynatours.com/ras-al-khaimah-packages/ras-al-khaimah-central-stay-with-desert-safari-220",
+      "sourceCheckedOn": "2026-10-01",
+      "hotelKeys": [
+        "gardenrak"
+      ],
+      "supplierAvailabilityVerified": false,
+      "allocationNote": "Hotel choice, category, room and availability must be confirmed in the quote."
+    },
+    {
+      "packageId": "ras-al-khaimah-mountain-coast",
+      "sourceUrl": "https://www.raynatours.com/ras-al-khaimah-packages/epic-ras-al-khaimah-adventure-with-the-worlds-longest-zipline-218",
+      "sourceCheckedOn": "2026-10-01",
+      "hotelKeys": [
+        "hampton"
+      ],
+      "supplierAvailabilityVerified": false,
+      "allocationNote": "Hotel choice, category, room and availability must be confirmed in the quote."
+    },
+    {
+      "packageId": "ras-al-khaimah-coastal-safari",
+      "sourceUrl": "https://www.raynatours.com/ras-al-khaimah-packages/sensational-ras-al-khaimah-getaway-with-desert-safari-217",
+      "sourceCheckedOn": "2026-10-01",
+      "hotelKeys": [
+        "hampton"
+      ],
+      "supplierAvailabilityVerified": false,
+      "allocationNote": "Hotel choice, category, room and availability must be confirmed in the quote."
+    },
+    {
+      "packageId": "ras-al-khaimah-heritage-desert",
+      "sourceUrl": "https://www.raynatours.com/ras-al-khaimah-packages/ras-al-khaimah-heritage-escape-with-city-tour-and-desert-safari-222",
+      "sourceCheckedOn": "2026-10-01",
+      "hotelKeys": [
+        "ritz"
+      ],
+      "supplierAvailabilityVerified": false,
+      "allocationNote": "Hotel choice, category, room and availability must be confirmed in the quote."
+    },
+    {
+      "packageId": "ras-al-khaimah-zipline-safari",
+      "sourceUrl": "https://www.raynatours.com/ras-al-khaimah-packages/sleek-ras-al-khaimah-stay-with-jais-zipline-and-desert-safari-221",
+      "sourceCheckedOn": "2026-10-01",
+      "hotelKeys": [
+        "pullman"
+      ],
+      "supplierAvailabilityVerified": false,
+      "allocationNote": "Hotel choice, category, room and availability must be confirmed in the quote."
+    }
+  ],
+  "unmatchedPackages": [
+    "dubai-easter-short-break",
+    "ufc-arena-stay"
+  ]
+}
