@@ -779,6 +779,43 @@
   }
   @media(prefers-reduced-motion:reduce){ .slideshow img{ transition:none; } }
 
+
+  /* Native disclosures keep their content crawlable and work without JavaScript. */
+  .qa-item,.qa-item:first-child{ padding:0; }
+  .qa-item summary,.comparison-notes summary{ display:flex; align-items:center; justify-content:space-between; gap:16px; padding:18px 4px; min-height:52px; cursor:pointer; list-style:none; color:var(--navy-950); font:600 16px/1.5 'Inter',system-ui,sans-serif; }
+  .qa-item summary::-webkit-details-marker,.comparison-notes summary::-webkit-details-marker{ display:none; }
+  .qa-item summary::after,.comparison-notes summary::after{ content:"+"; flex:none; font-size:22px; color:var(--gold-text); }
+  .qa-item[open]>summary::after,.comparison-notes[open]>summary::after{ content:"−"; }
+  .qa-answer{ padding:0 4px 20px; }
+  .qa-answer p{ margin:0; }
+  .comparison-notes{ border-top:1px solid var(--line); padding:0; }
+  .comparison-notes .key-facts{ margin-top:0; }
+  .comparison-mobile-label{ display:none; }
+  .comparison-table th,.comparison-table td{ font-size:14px; }
+  .modal-close{ width:44px; height:44px; top:14px; right:14px; }
+  .header-actions .icon-btn,#mobile-nav .close-x{ width:44px; height:44px; }
+  .modal-box>div>h3:first-child{ padding-right:44px; }
+  .fab-enquiry{ width:auto; height:auto; min-height:48px; padding:12px 18px; border-radius:999px; font:600 15px/1.5 'Inter',system-ui,sans-serif; background:var(--navy-950); color:var(--gold-400); }
+  footer h2{ color:var(--sand-50); font:600 16px/1.5 'Inter',system-ui,sans-serif; margin:0 0 14px; }
+  footer ul{ gap:2px; }
+  footer ul a{ display:inline-flex; align-items:center; min-height:44px; font-size:14px; }
+  footer .footer-enquiry-copy{ margin:0 0 16px; font-size:14px; line-height:1.6; }
+  footer .bottom-bar{ padding-bottom:84px; }
+  .footer-grid{ gap:28px; padding-bottom:32px; }
+  @media(max-width:760px){
+    .header-actions .search-trigger{ width:44px; height:44px; }
+    .comparison-scroll{ overflow:visible; }
+    .comparison-table{ display:block; width:100%; min-width:0; }
+    .comparison-table thead{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0); }
+    .comparison-table tbody{ display:grid; gap:18px; }
+    .comparison-table tr{ display:block; border:1px solid var(--line); border-radius:var(--radius-m); padding:18px; background:var(--white); }
+    .comparison-table th,.comparison-table td{ display:block; width:100%; padding:12px 0; border:none; overflow-wrap:anywhere; }
+    .comparison-table th{ padding-top:0; font-family:'Inter',system-ui,sans-serif; font-size:17px; }
+    .comparison-table td{ border-top:1px solid var(--line); }
+    .comparison-mobile-label{ display:block; margin-bottom:8px; font-weight:700; color:var(--ink-600); }
+    .comparison-notes summary{ padding:16px 0; }
+  }
+
 </style>
 </head>
 <body>
@@ -996,7 +1033,7 @@
       <h2 style="margin-top:10px;">Talk to our visa team.</h2>
       <p class="lede" style="margin:16px auto 0;">Get help understanding your visa options and requirements, with no obligation to book.</p>
       <div class="hero-cta-row" style="justify-content:center; margin-top:28px;">
-        <button type="button" class="btn btn-gold" onclick="openCallback()">Request Callback</button>
+        <button type="button" class="btn btn-gold" onclick="openCallback()">Prepare an enquiry</button>
       </div>
     </div>
   </section>
@@ -1506,32 +1543,25 @@
   <ul>
     <li><a href="/visas/">Visa assistance</a></li>
     <li><a href="/activities/">UAE activities</a></li>
-    <li><a href="/activities/dubai/">Dubai activities</a></li>
-    <li><a href="/activities/abu-dhabi/">Abu Dhabi activities</a></li>
-    <li><a href="/activities/ras-al-khaimah/">Ras Al Khaimah activities</a></li>
     <li><a href="/holidays/">UAE holiday packages</a></li>
     <li><a href="/holidays/dubai/">Dubai holidays</a></li>
     <li><a href="/holidays/abu-dhabi/">Abu Dhabi holidays</a></li>
+    <li><a href="/holidays/ras-al-khaimah/">Ras Al Khaimah holidays</a></li>
   </ul>
 </div>
 <div>
-  <h2>Guides &amp; help</h2>
+  <h2>Help &amp; company</h2>
   <ul>
-    <li><a href="/guides/dubai-desert-safari/">Dubai desert safari guide</a></li>
-    <li><a href="/guides/dubai-landmarks/">Dubai landmarks guide</a></li>
-    <li><a href="/guides/abu-dhabi-theme-parks/">Abu Dhabi theme parks guide</a></li>
     <li><a href="/about/">About RAAHHI TOURS</a></li>
     <li><a href="/contact/">Contact us</a></li>
     <li><a href="/faq/">FAQs</a></li>
-    <li><a href="/terms/">Terms of service</a></li>
-    <li><a href="/privacy/">Privacy policy</a></li>
   </ul>
       </div>
       <div>
-        <h2>Stay in the loop</h2>
-        <p style="font-size:14px;">Newsletter and marketing-email signup is not currently available through this website.</p>
-        <p style="font-size:14px; margin-top:8px;">For travel enquiries, use the <a class="contact-link" href="/contact/">Contact</a> page.</p>
-        <p style="font-size:13px; margin-top:20px;"><a data-contact="phone"></a><br><a data-contact="whatsapp"></a><br><a data-contact="email"></a></p>
+        <h2>Plan your trip</h2>
+        <p class="footer-enquiry-copy">Open a listing for a product enquiry, or prepare a general enquiry with your name, number and travel question.</p>
+        <button type="button" class="btn btn-gold btn-sm" onclick="openCallback()">Prepare an enquiry</button>
+        <p class="footer-enquiry-copy" style="margin-top:12px;">The form prepares a summary for you to share. It is not sent automatically.</p>
       </div>
     </div>
     <div class="bottom-bar">
@@ -1543,7 +1573,7 @@
 
 <!-- Floating actions -->
 <div class="fab-stack">
-  <button class="fab fab-call" aria-label="Request a callback" onclick="openCallback()">☎</button>
+  <button type="button" class="fab fab-enquiry" aria-label="Prepare an enquiry" onclick="openCallback()">Enquire</button>
 </div>
 
 <!-- Modals -->
@@ -1551,8 +1581,8 @@
   <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="callbackTitle">
     <button type="button" class="modal-close" aria-label="Close" onclick="closeModal('contactModal')">✕</button>
     <div id="callbackFormView">
-      <h3 style="font-size:24px;" id="callbackTitle">Prepare a callback request</h3>
-      <p style="color:var(--ink-600); font-size:14.5px; margin-top:8px;" id="callbackIntro">Leave your name, number and preferred call time for help with your visa, activity or holiday.</p>
+      <h3 style="font-size:24px;" id="callbackTitle">Prepare an enquiry</h3>
+      <p style="color:var(--ink-600); font-size:14.5px; margin-top:8px;" id="callbackIntro">Add your name and number, then describe your travel question under Optional details.</p>
       <!-- Filled by openCallback(context) when opened from an activity or holiday page -->
       <div class="visa-enq-box" id="callbackContext" hidden>
         <div class="field"><label id="callbackContextKind"></label><p class="visa-enq-value" id="callbackContextTitle"></p></div>
@@ -1565,11 +1595,11 @@
         <div class="field" style="margin-top:14px;"><label for="callbackTime">Best time to call (optional)</label><input type="text" id="callbackTime" placeholder="e.g. Today, 6–8 PM"></div>
         <div class="field" style="margin-top:14px;"><label for="callbackNotes">Notes / requirements (optional)</label><textarea id="callbackNotes" rows="3" placeholder="Anything else we should know?"></textarea></div>
         </details>
-        <button class="btn btn-gold btn-block" style="margin-top:20px;" id="callbackSubmit">Prepare Callback Request</button>
+        <button class="btn btn-gold btn-block" style="margin-top:20px;" id="callbackSubmit">Prepare Enquiry</button>
       </form>
     </div>
     <div id="callbackDone" hidden>
-      <div class="success-head"><span class="success-icon" aria-hidden="true">✓</span><div><p class="success-eyebrow" id="callbackDoneEyebrow">Callback request</p><h3 style="font-size:22px;" tabindex="-1" id="callbackDoneTitle">Your callback request is ready to copy</h3></div></div>
+      <div class="success-head"><span class="success-icon" aria-hidden="true">✓</span><div><p class="success-eyebrow" id="callbackDoneEyebrow">General enquiry</p><h3 style="font-size:22px;" tabindex="-1" id="callbackDoneTitle">Your enquiry summary is ready to copy</h3></div></div>
       <div class="notice-box" id="callbackSummary"></div>
       <div class="next-steps"><h4>What happens next</h4><ol><li>Copy your details with the button below.</li><li>Share them with our team on <a class="contact-link" data-contact="phone"></a>, <a class="contact-link" data-contact="whatsapp"></a> or <a class="contact-link" data-contact="email"></a>. Enquiries aren't sent automatically from this website yet, and no confirmation email will follow.</li></ol></div>
       <div class="success-actions"><button type="button" class="btn btn-line" onclick="copySummary('callbackSummary', this)">Copy details</button><button type="button" class="btn btn-navy" onclick="closeModal('contactModal')">Done</button></div>
@@ -4252,18 +4282,7 @@ document.addEventListener("touchend", e=>{
 
 
 function buildFaq(containerId, items){
-  document.getElementById(containerId).innerHTML = items.map((f,i)=>`
-    <div class="faq-item" id="${containerId}-${i}">
-      <h3 class="faq-h"><button type="button" class="faq-q" aria-expanded="false" aria-controls="${containerId}-${i}-a" onclick="toggleFaq('${containerId}-${i}')">${f.q}<span class="faq-plus" aria-hidden="true">+</span></button></h3>
-      <div class="faq-a" id="${containerId}-${i}-a"><p>${f.a}</p></div>
-    </div>`).join("");
-}
-function toggleFaq(id){
-  const el = document.getElementById(id);
-  const open = el.classList.toggle("open");
-  el.querySelector(".faq-q")?.setAttribute("aria-expanded", open);
-  const a = el.querySelector(".faq-a");
-  if(a) a.style.maxHeight = open ? a.scrollHeight + "px" : "";
+  document.getElementById(containerId).innerHTML = qaHTML(items);
 }
 
 const GRID_ROWS_STEP = 4;
@@ -4616,15 +4635,15 @@ const fieldValue = id => document.getElementById(id).value.trim();
    promising a reply. User input is only ever displayed as text. */
 const CALLBACK_FIELDS = ["callbackName","callbackPhone"];
 let callbackContext = null; // {kind, noun, title, details:[[label, value]]} when opened from a product page
-const CALLBACK_INTRO = "Leave your name, number and preferred call time for help with your visa, activity or holiday.";
-// Product "Enquire Now" uses enquiry wording (matching the visa enquiry); the generic form keeps call-back wording.
+const CALLBACK_INTRO = "Add your name and number, then describe your travel question under Optional details.";
+// The shared form prepares a product enquiry or a general enquiry summary.
 function setCallbackWording(context){
   const set = (id, text) => { document.getElementById(id).textContent = text; };
-  set("callbackTitle", context ? `Enquire about this ${context.noun}` : "Prepare a callback request");
+  set("callbackTitle", context ? `Enquire about this ${context.noun}` : "Prepare an enquiry");
   set("callbackIntro", context ? "Add your contact details to prepare an enquiry summary." : CALLBACK_INTRO);
-  set("callbackSubmit", context ? "Prepare Enquiry" : "Prepare Callback Request");
-  set("callbackDoneTitle", context ? "Your enquiry summary is ready" : "Your callback request is ready to copy");
-  set("callbackDoneEyebrow", context ? (context.noun === "activity" ? "Activity enquiry" : "Holiday enquiry") : "Callback request");
+  set("callbackSubmit", context ? "Prepare Enquiry" : "Prepare Enquiry");
+  set("callbackDoneTitle", context ? "Your enquiry summary is ready" : "Your enquiry summary is ready to copy");
+  set("callbackDoneEyebrow", context ? (context.noun === "activity" ? "Activity enquiry" : "Holiday enquiry") : "General enquiry");
 }
 function openCallback(context){
   resetCallback();
@@ -5014,9 +5033,9 @@ function nightRange(list){
   return lo === hi ? `${lo} nights` : `${lo} to ${hi} nights`;
 }
 function stripTags(s){ return String(s).replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim(); }
-// Visible question-and-answer list (not collapsed), used on product, visa, destination and guide pages.
+// Native accordions preserve every answer in HTML, including when JavaScript is unavailable.
 function qaHTML(items){
-  return `<div class="qa-list">${items.map(f => `<div class="qa-item"><h3>${f.q}</h3><p>${f.a}</p></div>`).join("")}</div>`;
+  return `<div class="qa-list">${items.map(f => `<details class="qa-item"><summary>${f.q}</summary><div class="qa-answer"><p>${f.a}</p></div></details>`).join("")}</div>`;
 }
 function factsHTML(rows){
   return `<dl class="key-facts">${rows.filter(r => r[1]).map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join("")}</dl>`;
@@ -5383,7 +5402,7 @@ function renderCategory(c){
     <section class="detail-section"><h2>Questions about ${escapeHTML(c.name.toLowerCase())}</h2>${qaHTML(categoryFaqItems(c))}</section>
     <nav class="detail-section planning-links" aria-label="Related destinations and guides"><h2>Plan your visit</h2><ul class="link-list">
       ${dests.map(d=>`<li><a href="${URLS.activityDest(d.slug)}">All ${escapeHTML(d.name)} activities</a></li>`).join("")}
-      ${guides.map(g=>`<li><a href="${URLS.guide(g.slug)}">${escapeHTML(g.name)}</a><span class="index-note planning-link-note">${escapeHTML(g.blurb)}</span></li>`).join("")}
+      ${guides.slice(0,2).map(g=>`<li><a href="${URLS.guide(g.slug)}">${escapeHTML(g.name)}</a><span class="index-note planning-link-note">${escapeHTML(g.blurb)}</span></li>`).join("")}
     </ul></nav><p class="index-note">Open a listing for inclusions, restrictions, cancellation terms and recorded source checks. Confirm current details before booking.</p>`;
 }
 
@@ -5404,9 +5423,10 @@ function comparisonLinksHTML(list){
 function renderComparison(c){
   const list=comparisonTours(c), dests=DESTINATIONS.filter(d=>list.some(t=>t.dest===d.slug));
   const categories=ACTIVITY_CATEGORIES.filter(cat=>list.some(t=>t.cat===cat.name));
-  const guides=GUIDES.filter(g=>g.ids().some(id=>list.some(t=>t.id===id)));
+  const guides=GUIDES.filter(g=>g.ids().some(id=>list.some(t=>t.id===id))).slice(0,1);
   const missing="Not stated. Confirm on enquiry.", value=v=>hasRealValue(v)?escapeHTML(v):missing;
   const bullets=values=>(values||[]).filter(hasRealValue).length?`<ul>${values.filter(hasRealValue).map(v=>`<li>${escapeHTML(v)}</li>`).join("")}</ul>`:missing;
+  const cell=(label, content)=>`<td role="cell"><span class="comparison-mobile-label" aria-hidden="true">${label}</span>${content}</td>`;
   document.getElementById("comparisonBody").innerHTML=`
     <nav class="breadcrumb" aria-label="Breadcrumb">${breadcrumbHTML([{label:"Home",href:"/"},{label:"Activities",href:URLS.activities},{label:"Comparison"}])}</nav>
     <p class="eyebrow" style="margin-top:20px;">${list.length} catalogue listings compared</p>
@@ -5414,16 +5434,16 @@ function renderComparison(c){
     <p class="lede" style="margin-top:18px;">${escapeHTML(c.intro)}</p>
     <section class="detail-section"><h2>How to choose</h2><p class="body-copy">${escapeHTML(c.decision)}</p>
       <p class="index-note">These are selected catalogue listings, not a ranking. Prices and live availability are confirmed on enquiry. Missing information means it is not recorded, not that a service is excluded. Inclusions can depend on the option you select.</p></section>
-    <section class="detail-section"><h2>Side-by-side comparison</h2><p class="index-note">On a small screen, scroll the table sideways to see every column.</p>
-      <div class="table-scroll" tabindex="0" role="region" aria-label="${escapeHTML(c.title)} table"><table class="data-table comparison-table">
+    <section class="detail-section"><h2>Side-by-side comparison</h2><p class="index-note">Compare recorded duration, inclusions and pickup arrangements for each listing.</p>
+      <div class="table-scroll comparison-scroll" tabindex="0" role="region" aria-label="${escapeHTML(c.title)} table"><table class="data-table comparison-table" role="table">
         <caption class="sr-only">Listed duration, inclusions and pickup for ${list.length} experiences</caption>
-        <thead><tr><th scope="col">Experience</th><th scope="col">Listed duration / timing</th><th scope="col">Listed inclusions</th><th scope="col">Meeting point / pickup</th></tr></thead>
-        <tbody>${list.map(t=>`<tr data-product-id="${t.id}"><th scope="row"><a href="${URLS.activity(t)}">${escapeHTML(t.title)}</a><p class="index-note">${escapeHTML(destName(t.dest))} · ${escapeHTML(statusInfo(t).label)}</p></th><td>${value(t.duration)}</td><td>${bullets(t.inclusions)}</td><td>${hasRealValue(t.meetingPoint)||hasRealValue(t.pickup) ? [hasRealValue(t.meetingPoint)?`<strong>Meeting point:</strong> ${escapeHTML(t.meetingPoint)}`:"",hasRealValue(t.pickup)?`<strong>Pickup:</strong> ${escapeHTML(t.pickup)}`:""].filter(Boolean).join("<br><br>") : missing}</td></tr>`).join("")}
+        <thead role="rowgroup"><tr role="row"><th scope="col" role="columnheader">Experience</th><th scope="col" role="columnheader">Listed duration / timing</th><th scope="col" role="columnheader">Listed inclusions</th><th scope="col" role="columnheader">Meeting point / pickup</th></tr></thead>
+        <tbody role="rowgroup">${list.map(t=>`<tr role="row" data-product-id="${t.id}"><th scope="row" role="rowheader"><a href="${URLS.activity(t)}">${escapeHTML(t.title)}</a><p class="index-note">${escapeHTML(destName(t.dest))} · ${escapeHTML(statusInfo(t).label)}</p></th>${cell("Listed duration / timing",value(t.duration))}${cell("Listed inclusions",bullets(t.inclusions))}${cell("Meeting point / pickup",hasRealValue(t.meetingPoint)||hasRealValue(t.pickup) ? [hasRealValue(t.meetingPoint)?`<strong>Meeting point:</strong> ${escapeHTML(t.meetingPoint)}`:"",hasRealValue(t.pickup)?`<strong>Pickup:</strong> ${escapeHTML(t.pickup)}`:""].filter(Boolean).join("<br><br>") : missing)}</tr>`).join("")}
         </tbody></table></div></section>
     <section class="detail-section"><h2>Restrictions, exclusions and terms</h2>
-      ${list.map(t=>`<article class="detail-section comparison-notes" data-product-id="${t.id}"><h3><a href="${URLS.activity(t)}">${escapeHTML(t.title)}</a></h3>
+      ${list.map(t=>`<details class="detail-section comparison-notes" data-product-id="${t.id}"><summary>${escapeHTML(t.title)}: restrictions and terms</summary>
         ${factsHTML([["Exclusions",bullets(t.exclusions)],["Restrictions / eligibility",(t.restrictions||[]).length||hasRealValue(t.ageRestrictions)?bullets([...(t.restrictions||[]),t.ageRestrictions].filter(hasRealValue)):missing],["Accessibility",value(t.accessibility)],["Cancellation terms",value(t.cancellationPolicy)]])}
-        ${freshnessSummaryHTML(t,"activity")}<p class="index-note">These details are from the individual listing. <a href="${URLS.activity(t)}">Read its full description, options and supporting sources</a> and confirm applicable terms before booking.</p></article>`).join("")}
+        ${freshnessSummaryHTML(t,"activity")}<p class="index-note">These details are from the individual listing. <a href="${URLS.activity(t)}">Read its full description, options and supporting sources</a> and confirm applicable terms before booking.</p></details>`).join("")}
     </section><nav class="detail-section planning-links" aria-label="Related categories, destinations and guides"><h2>Explore the catalogue</h2><ul class="link-list">
       ${categories.map(cat=>`<li><a href="${URLS.activityCategory(cat)}">${escapeHTML(cat.title)}</a></li>`).join("")}
       ${dests.map(d=>`<li><a href="${URLS.activityDest(d.slug)}">All ${escapeHTML(d.name)} activities</a></li>`).join("")}
@@ -5462,24 +5482,27 @@ function guideCardsHTML(list, eyebrow){
 /* Contextual planning links use published destinations and catalogue guide membership. */
 function planningLinksHTML(dest, currentPath, guides){
   if(!DESTINATIONS.some(d => d.slug === dest)) return "";
-  const name = destName(dest), links = [];
-  if(destHasTours(dest)) links.push({href:URLS.activityDest(dest), label:`${name} activities`, note:"Individual experiences and attraction listings."});
-  if(destHasPackages(dest)) links.push({href:URLS.holidayDest(dest), label:`${name} holiday packages`, note:"Hotel stays and day-by-day itineraries."});
+  const name = destName(dest), context = routeKind(currentPath);
+  const tours = context.kind === "activity" ? [context.t] : context.kind === "guide" ? guideBySlug(context.key).ids().map(byId).filter(Boolean)
+    : context.kind === "holiday" ? itineraryActivities(context.p).map(x=>x.t)
+    : context.kind === "holidayDest" ? PACKAGES.filter(p=>p.dest === dest).flatMap(p=>itineraryActivities(p).map(x=>x.t))
+    : context.kind === "activityDest" ? TOURS.filter(t=>t.dest === dest) : [];
+  const ids = new Set(tours.map(t=>t.id)), links = [];
+  comparisonsForIds([...ids]).slice(0,1).forEach(c=>links.push({href:URLS.comparison(c),label:c.title,note:"Compare listed inclusions, duration, pickup and terms."}));
+  (guides || []).filter(g=>!ids.size || g.ids().some(id=>ids.has(id))).slice(0,1).forEach(g=>links.push({href:URLS.guide(g.slug),label:g.name,note:g.blurb}));
+  ACTIVITY_CATEGORIES.filter(c=>tours.some(t=>t.cat === c.name))
+    .sort((a,b)=>tours.filter(t=>t.cat === b.name).length-tours.filter(t=>t.cat === a.name).length).slice(0,1)
+    .forEach(c=>links.push({href:URLS.activityCategory(c),label:c.title,note:"Browse this experience category across UAE destinations."}));
+  if(destHasTours(dest)) links.push({href:URLS.activityDest(dest),label:`${name} activities`,note:"Individual experiences and attraction listings."});
+  if(destHasPackages(dest)) links.push({href:URLS.holidayDest(dest),label:`${name} holiday packages`,note:"Hotel stays and day-by-day itineraries."});
   const visa = visaBySlug("united-arab-emirates");
-  if(visa) links.push({href:URLS.visa(visa), label:"UAE visa assistance", note:"Requirements depend on your passport and trip."});
-  (guides || []).forEach(g => links.push({href:URLS.guide(g.slug), label:g.name, note:g.blurb}));
-  const context = routeKind(currentPath);
-  const categories = ACTIVITY_CATEGORIES.filter(c => categoryTours(c).some(t => t.dest === dest) &&
-    (context.kind === "activity" ? c.name === context.t.cat : context.kind === "guide" ? guideBySlug(context.key).categories.includes(c.name) : true));
-  categories.forEach(c => links.push({href:URLS.activityCategory(c), label:c.title, note:"Browse this category across the listed UAE destinations."}));
-  const comparisonIds = context.kind === "activity" ? [context.t.id] : context.kind === "guide" ? guideBySlug(context.key).ids() : context.kind === "holiday" ? itineraryActivities(context.p).map(x=>x.t.id) : context.kind === "activityDest" ? TOURS.filter(t=>t.dest===dest).map(t=>t.id) : [];
-  comparisonsForIds(comparisonIds).forEach(c=>links.push({href:URLS.comparison(c),label:c.title,note:"Compare listed inclusions, duration, pickup and terms."}));
+  if(visa) links.push({href:URLS.visa(visa),label:"UAE visa assistance",note:"Requirements depend on your passport and trip."});
   const seen = new Set([currentPath]);
-  const items = links.filter(x => !seen.has(x.href) && seen.add(x.href));
+  const items = links.filter(x=>!seen.has(x.href) && seen.add(x.href)).slice(0,5);
   if(!items.length) return "";
   return `<nav class="detail-section planning-links" aria-label="Plan your ${escapeHTML(name)} visit">
     <h2>Plan your ${escapeHTML(name)} visit</h2>
-    <ul class="link-list">${items.map(x => `<li><a href="${escapeHTML(x.href)}">${escapeHTML(x.label)}</a><span class="index-note planning-link-note">${escapeHTML(x.note)}</span></li>`).join("")}</ul>
+    <ul class="link-list">${items.map(x=>`<li><a href="${escapeHTML(x.href)}">${escapeHTML(x.label)}</a><span class="index-note planning-link-note">${escapeHTML(x.note)}</span></li>`).join("")}</ul>
     <p class="index-note">Activities, holiday packages and visa assistance are separate services. Inclusions and availability are confirmed on enquiry.</p>
   </nav>`;
 }
@@ -6286,7 +6309,7 @@ function renderPkgDetail(id, expectedDest){
   const related = relatedPackages(p);
   document.getElementById("pkgRelatedSection").style.display = related.length ? "" : "none";
   document.getElementById("pkgRelatedTitle").textContent = `More ${dn} holiday packages`;
-  document.getElementById("pkgRelatedNote").textContent = `Other ${dn} packages, closest in stay length, then shared itinerary stops.`;
+  document.getElementById("pkgRelatedNote").textContent = `Other ${dn} packages, sorted by shared itinerary stops and similar stay lengths.`;
   document.getElementById("pkgRelated").innerHTML = related.map(pkgCard).join("");
   document.getElementById("pkgRelatedCross").innerHTML = destHasTours(p.dest) ? `Adding day trips? Browse <a class="contact-link" href="${URLS.activityDest(p.dest)}">${dn} activities</a>.` : "";
   initSlideshows(document.getElementById("pkgRelated"));
@@ -6295,12 +6318,12 @@ function renderPkgDetail(id, expectedDest){
 function relatedActivities(t){
   const groups=comparisonsForIds([t.id]), peers=new Set(groups.flatMap(c=>c.ids())), duration=durationGroup(t.duration);
   return TOURS.map((x,i)=>({x,i,score:(peers.has(x.id)?100:0)+(x.cat===t.cat?30:0)+(duration&&durationGroup(x.duration)===duration?10:0)}))
-    .filter(r=>r.x.dest===t.dest && r.x.id!==t.id).sort((a,b)=>b.score-a.score||a.i-b.i).slice(0,3).map(r=>r.x);
+    .filter(r=>r.x.dest===t.dest && r.x.id!==t.id && (peers.has(r.x.id) || r.x.cat===t.cat)).sort((a,b)=>b.score-a.score||a.i-b.i).slice(0,3).map(r=>r.x);
 }
 function relatedPackages(p){
   const nights=nightsOf(p), stops=new Set(itineraryActivities(p).map(a=>a.t.id));
   return PACKAGES.map((x,i)=>({x,i,d:nights!=null&&nightsOf(x)!=null?Math.abs(nightsOf(x)-nights):99,shared:itineraryActivities(x).filter(a=>stops.has(a.t.id)).length}))
-    .filter(r=>r.x.dest===p.dest && r.x.id!==p.id).sort((a,b)=>a.d-b.d||b.shared-a.shared||a.i-b.i).slice(0,3).map(r=>r.x);
+    .filter(r=>r.x.dest===p.dest && r.x.id!==p.id).sort((a,b)=>b.shared-a.shared||a.d-b.d||a.i-b.i).slice(0,3).map(r=>r.x);
 }
 
 /* ============ v41: PAGE-SPECIFIC QUESTIONS ============ */
@@ -7156,7 +7179,7 @@ function destinationHeroHTML(o){
         <p class="lede dhv-lede">${o.lede}</p>
         ${o.count ? `<div class="dhv-cta">
           <button type="button" class="btn btn-gold" onclick="scrollToDestGrid('${o.gridId}')">Browse ${o.count} ${o.countLabel}</button>
-          <button type="button" class="btn btn-ghost-light" onclick="openCallback()">Request Callback</button>
+          <button type="button" class="btn btn-ghost-light" onclick="openCallback()">Prepare an enquiry</button>
         </div>` : ""}
       </div>
     </div>${mediaCreditHTML(imgs)}`;

@@ -40,6 +40,28 @@ try{
    const overflow=await p.evaluate(()=>({width:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth}));
    assert(overflow.scroll<=overflow.width+1,route+' overflow '+JSON.stringify(overflow));
    assert.equal(errors.length,0,route+' runtime errors '+errors.join('; '));
+   if(route==='/faq/'||route==='/activities/dubai/evening-desert-safari/'){
+    const faq=p.locator('.page.active .qa-list details').first();
+    assert.equal(await faq.getAttribute('open'),null);
+    await faq.locator('summary').click();
+    assert.equal(await faq.getAttribute('open'),'');
+    assert(await faq.locator('.qa-answer').isVisible());
+    await faq.locator('summary').press('Enter');
+    assert.equal(await faq.getAttribute('open'),null);
+   }
+   if(route.startsWith('/compare/')){
+    assert.equal(await p.locator('.comparison-table').evaluate(el=>getComputedStyle(el).display),width===390?'block':'table');
+    if(width===390)assert(await p.locator('.comparison-table tbody tr').evaluateAll(es=>es.every(el=>el.scrollWidth<=el.clientWidth+1)),'Comparison cards fit mobile width');
+   }
+   if(route==='/'){
+    assert.equal(await p.locator('footer a[href="/holidays/ras-al-khaimah/"]').count(),1);
+    assert(!(await p.locator('footer').innerText()).includes('Newsletter'));
+    const fab=p.locator('.fab-enquiry');assert.equal(await fab.innerText(),'Enquire');
+    await fab.click();assert(await p.locator('#contactModal').isVisible());
+    assert.equal(await p.locator('#callbackTitle').innerText(),'Prepare an enquiry');
+    await p.locator('#contactModal .modal-close').click();
+    assert(await fab.evaluate(el=>el===document.activeElement),'Enquiry trigger regains focus');
+   }
    assert(await p.locator('.page.active .product-card .slideshow[data-count], .page.active .pkg-card .slideshow[data-count], .page.active .visa-card .slideshow[data-count], .page.active .dest-card .slideshow[data-count]').evaluateAll(es=>es.every(e=>e.dataset.count==='1')),route+' static card covers');
    if(route==='/holidays/dubai/dubai-family-theme-park-week/'){
     assert(await p.evaluate(()=>PACKAGES.find(p=>p.id==='dubai-family-theme-park-week').images[0]===IMG.imgVelociraptor),'Theme-park cover represents a listed inclusion');
