@@ -23,6 +23,10 @@ try {
    related:all.every(t=>{const list=TOURS.includes(t)?relatedActivities(t):relatedPackages(t);return list.length<=3&&new Set(list.map(x=>x.id)).size===list.length&&list.every(x=>x.id!==t.id&&x.dest===t.dest);}),
    decks:relatedActivities(TOURS.find(t=>t.id==='burj-khalifa-top')).slice(0,2).every(t=>['sky-views-observatory','the-view-at-the-palm'].includes(t.id)),
    repeatable:JSON.stringify(relatedActivities(TOURS[0]))===JSON.stringify(relatedActivities(TOURS[0])),
+   statusHonesty:statusInfo({status:'unable-to-verify'}).label==='Confirm availability'&&statusInfo({status:'temporarily-closed'}).label==='Check reopening'&&statusOf({})==='unable-to-verify',
+   summaryConsistency:!activitySummaryText(TOURS.find(t=>t.id==='evening-desert-safari')).toLowerCase().includes('sandboarding')&&activitySummaryText(TOURS.find(t=>t.id==='evening-desert-safari')).toLowerCase().includes('barbecue'),
+   truthfulAvailability:all.every(t=>!availabilityAnswer(t).includes('is available')),
+
   };
  });
  for(const [name,ok] of Object.entries(checks))assert(ok,name);
