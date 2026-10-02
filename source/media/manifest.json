@@ -952,5 +952,245 @@
         "bytes": 84190
       }
     ]
+  },
+  "https://images.unsplash.com/photo-1696431284148-2b3b7863729d": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 427,
+        "file": "substitute-virtual-reality-640-2e8f3cd816bc.webp",
+        "bytes": 23178
+      },
+      {
+        "width": 1600,
+        "height": 1067,
+        "file": "substitute-virtual-reality-1600-c76fa6bcd492.webp",
+        "bytes": 102260
+      }
+    ]
+  },
+  "https://images.unsplash.com/photo-1751235641041-d5037f5ceb87": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 427,
+        "file": "substitute-trampoline-park-640-9f72f3c088c2.webp",
+        "bytes": 42144
+      },
+      {
+        "width": 1600,
+        "height": 1067,
+        "file": "substitute-trampoline-park-1600-846ee704a59d.webp",
+        "bytes": 136542
+      }
+    ]
+  },
+  "https://images.unsplash.com/photo-1743517894265-c86ab035adef": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 475,
+        "file": "substitute-south-indian-dining-640-630ee8df4d57.webp",
+        "bytes": 54352
+      },
+      {
+        "width": 1600,
+        "height": 1187,
+        "file": "substitute-south-indian-dining-1600-ea1caae38fdc.webp",
+        "bytes": 220988
+      }
+    ]
+  },
+  "https://images.unsplash.com/photo-1768463852068-ffe4ba657840": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 427,
+        "file": "substitute-dubai-yacht-ocean-640-b0a8933ac136.webp",
+        "bytes": 56440
+      },
+      {
+        "width": 1600,
+        "height": 1067,
+        "file": "substitute-dubai-yacht-ocean-1600-b29d11e4d8a1.webp",
+        "bytes": 295298
+      }
+    ]
+  },
+  "https://images.unsplash.com/photo-1778008452928-8da3c5b9b9cd": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 438,
+        "file": "substitute-dubai-dhow-640-1d72fd103edc.webp",
+        "bytes": 77812
+      },
+      {
+        "width": 1600,
+        "height": 1094,
+        "file": "substitute-dubai-dhow-1600-1960705a582e.webp",
+        "bytes": 375568
+      }
+    ]
+  },
+  "https://images.unsplash.com/photo-1587572581161-9232f5dcd287": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 969,
+        "file": "substitute-dubai-sedan-640-fe9fb0c4e9fd.webp",
+        "bytes": 84364
+      },
+      {
+        "width": 1600,
+        "height": 2421,
+        "file": "substitute-dubai-sedan-1600-6e6c38e463a2.webp",
+        "bytes": 399346
+      }
+    ]
+  },
+  "https://images.unsplash.com/photo-1695809980257-231463032ff9": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 853,
+        "file": "substitute-dubai-suv-640-ea08481ec15d.webp",
+        "bytes": 60338
+      },
+      {
+        "width": 1600,
+        "height": 2133,
+        "file": "substitute-dubai-suv-1600-178c0beb6143.webp",
+        "bytes": 239280
+      }
+    ]
+  },
+  "https://images.unsplash.com/photo-1676107773690-9d670f8b1afa": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 427,
+        "file": "substitute-limousine-640-455ad4463465.webp",
+        "bytes": 53142
+      },
+      {
+        "width": 1600,
+        "height": 1067,
+        "file": "substitute-limousine-1600-5245d94abe4e.webp",
+        "bytes": 279812
+      }
+    ]
+  },
+  "https://images.unsplash.com/photo-1775317826224-6d4bf239a537": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 427,
+        "file": "substitute-efoil-640-d9a757dc1014.webp",
+        "bytes": 19646
+      },
+      {
+        "width": 1600,
+        "height": 1067,
+        "file": "substitute-efoil-1600-14aa238bfcc9.webp",
+        "bytes": 76872
+      }
+    ]
+  },
+  "https://images.unsplash.com/photo-1624664929003-3da28050c0bf": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 932,
+        "file": "substitute-quad-biking-640-8b86c57a61eb.webp",
+        "bytes": 25248
+      },
+      {
+        "width": 1600,
+        "height": 2331,
+        "file": "substitute-quad-biking-1600-ed681361c8ad.webp",
+        "bytes": 99794
+      }
+    ]
+  },
+  "https://images.unsplash.com/photo-1771056511594-05e25e299812": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 960,
+        "file": "substitute-sea-fishing-640-1e15cd8115b8.webp",
+        "bytes": 90204
+      },
+      {
+        "width": 1600,
+        "height": 2400,
+        "file": "substitute-sea-fishing-1600-4a47596f484f.webp",
+        "bytes": 292896
+      }
+    ]
+  },
+  "https://images.unsplash.com/photo-1765531255133-6a50669983c2": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 960,
+        "file": "substitute-indoor-snow-640-3246213b6aaf.webp",
+        "bytes": 86346
+      },
+      {
+        "width": 1600,
+        "height": 2400,
+        "file": "substitute-indoor-snow-1600-b88787324b22.webp",
+        "bytes": 323968
+      }
+    ]
+  },
+  "https://images.unsplash.com/photo-1768655317930-23e7cd2d336e": {
+    "variants": [
+      {
+        "width": 639,
+        "height": 359,
+        "file": "substitute-immersive-art-639-ba8862e4c80a.webp",
+        "bytes": 15064
+      },
+      {
+        "width": 1600,
+        "height": 899,
+        "file": "substitute-immersive-art-1600-20f4054a6ff8.webp",
+        "bytes": 48586
+      }
+    ]
+  },
+  "https://upload.wikimedia.org/wikipedia/commons/7/7b/Immersive_Experience.jpg": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 421,
+        "file": "substitute-immersive-cc0-640-35b6bf1bfc6d.webp",
+        "bytes": 38160
+      },
+      {
+        "width": 1600,
+        "height": 1051,
+        "file": "substitute-immersive-cc0-1600-cd35857c2a44.webp",
+        "bytes": 144596
+      }
+    ]
+  },
+  "https://images.unsplash.com/photo-1771596704429-faff88a2f589": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 427,
+        "file": "substitute-ice-architecture-640-8326697f0952.webp",
+        "bytes": 18200
+      },
+      {
+        "width": 1600,
+        "height": 1067,
+        "file": "substitute-ice-architecture-1600-96a8941376b1.webp",
+        "bytes": 145252
+      }
+    ]
   }
 }

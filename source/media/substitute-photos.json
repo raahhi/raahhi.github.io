@@ -1,121 +1,5 @@
 [
   {
-    "url": "https://images.unsplash.com/photo-1708361089093-beef4c4584e7",
-    "name": "sky-views",
-    "products": [
-      "sky-views-observatory"
-    ],
-    "destination": "dubai",
-    "author": "Fabien BELLANGER",
-    "source": "Unsplash",
-    "sourcePage": "https://unsplash.com/photos/burj-khalifa-skyline-in-dubai-WyfXOHgI49s",
-    "license": "Unsplash License",
-    "licenseCode": "UL",
-    "licenseUrl": "https://unsplash.com/license",
-    "alt": "Burj Khalifa and Downtown Dubai at twilight, photographed from Sky Views Observatory",
-    "caption": "The skyline view from Sky Views Observatory. This photo does not show the Glass Slide or Edge Walk.",
-    "downloadedDimensions": [
-      1600,
-      1137
-    ],
-    "checkedOn": "2026-10-01",
-    "changes": "Resized and converted to WebP; no crop. Converted copies retain the original image licence."
-  },
-  {
-    "url": "https://upload.wikimedia.org/wikipedia/commons/4/47/Al_Ain_Adventure_Rafting.jpg",
-    "name": "al-ain-adventure",
-    "products": [
-      "al-ain-adventure"
-    ],
-    "destination": "abu-dhabi",
-    "author": "Anaskmohamed",
-    "source": "Wikimedia Commons",
-    "sourcePage": "https://commons.wikimedia.org/wiki/File:Al_Ain_Adventure_Rafting.jpg",
-    "license": "CC BY-SA 4.0",
-    "licenseCode": "CC-BY-SA-4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
-    "alt": "Guests rafting through a man-made whitewater channel at Al Ain Adventure",
-    "caption": "Rafting at Al Ain Adventure. Activities included in your entry ticket are confirmed for the selected option.",
-    "downloadedDimensions": [
-      1080,
-      1920
-    ],
-    "checkedOn": "2026-10-01",
-    "changes": "Resized and converted to WebP; no crop. Converted copies retain the original image licence."
-  },
-  {
-    "url": "https://images.pexels.com/photos/19960510/pexels-photo-19960510.jpeg",
-    "name": "lotus-mega-yacht",
-    "products": [
-      "lotus-mega-yacht-brunch-cruise",
-      "lotus-mega-yacht-dinner-cruise",
-      "lotus-mega-yacht-sunset-cruise",
-      "new-years-eve-cruises-dubai-marina"
-    ],
-    "destination": "dubai",
-    "author": "Dina",
-    "source": "Pexels",
-    "sourcePage": "https://www.pexels.com/photo/aerial-view-of-the-lotus-mega-yacht-in-the-harbor-in-dubai-uae-19960510/",
-    "license": "Pexels License",
-    "licenseCode": "PL",
-    "licenseUrl": "https://www.pexels.com/license/",
-    "alt": "Aerial photograph of the Lotus mega yacht moored in Dubai Marina",
-    "caption": "The Lotus mega yacht photographed while moored. Sailing time, onboard setup and ticket inclusions are confirmed before booking.",
-    "downloadedDimensions": [
-      1600,
-      1067
-    ],
-    "checkedOn": "2026-10-01",
-    "changes": "Resized and converted to WebP; no crop. Converted copies retain the original image licence.",
-    "productContexts": {
-      "new-years-eve-cruises-dubai-marina": "The photo shows the Lotus mega yacht, one of the vessel options described in this listing. Al Mansour and Ocean Empress are not pictured. Your vessel, sailing date and New Year programme must be confirmed before booking."
-    }
-  },
-  {
-    "url": "https://images.unsplash.com/photo-1744416328340-28d2b0fc0dc8",
-    "name": "dubai-balloon",
-    "products": [
-      "the-dubai-balloon-at-atlantis"
-    ],
-    "destination": "dubai",
-    "author": "Meg von Haartman",
-    "source": "Unsplash",
-    "sourcePage": "https://unsplash.com/photos/a-hot-air-balloon-floats-high-in-the-sky-2yf8gLD7J5E",
-    "license": "Unsplash License",
-    "licenseCode": "UL",
-    "licenseUrl": "https://unsplash.com/license",
-    "alt": "The Dubai Balloon above Atlantis, photographed from the ground",
-    "caption": "The Dubai Balloon photographed above Atlantis. The photo shows the tethered sightseeing balloon, not a desert balloon flight.",
-    "downloadedDimensions": [
-      1600,
-      1067
-    ],
-    "checkedOn": "2026-10-02",
-    "changes": "Resized and converted to WebP; no crop. Converted copies retain the original image licence."
-  },
-  {
-    "url": "https://images.unsplash.com/photo-1744352029595-28cba50e6fa0",
-    "name": "burj-al-arab-dining",
-    "products": [
-      "burj-al-arab-dining"
-    ],
-    "destination": "dubai",
-    "author": "Meg von Haartman",
-    "source": "Unsplash",
-    "sourcePage": "https://unsplash.com/photos/restaurant-tables-overlook-the-ocean-with-umbrellas-v5kwVxumiPE",
-    "license": "Unsplash License",
-    "licenseCode": "UL",
-    "licenseUrl": "https://unsplash.com/license",
-    "alt": "Outdoor dining tables overlooking the sea at Burj Al Arab",
-    "caption": "An outdoor dining terrace at Burj Al Arab. The restaurant, seating and menu for your selected dining option are confirmed before booking.",
-    "downloadedDimensions": [
-      1600,
-      1067
-    ],
-    "checkedOn": "2026-10-02",
-    "changes": "Resized and converted to WebP; no crop. Converted copies retain the original image licence."
-  },
-  {
     "url": "https://images.unsplash.com/photo-1696431284148-2b3b7863729d",
     "name": "virtual-reality",
     "products": [
@@ -176,6 +60,28 @@
     "downloadedDimensions": [
       1800,
       1335
+    ],
+    "checkedOn": "2026-10-03",
+    "changes": "Resized and converted to WebP without bitmap cropping. Full image preserved in galleries and cards, with a decorative blurred background fill.",
+    "representative": true
+  },
+  {
+    "url": "https://images.unsplash.com/photo-1708361089093-beef4c4584e7",
+    "name": "sky-views",
+    "products": [
+      "sky-views-edge-walk"
+    ],
+    "author": "Fabien BELLANGER",
+    "source": "Unsplash",
+    "sourcePage": "https://unsplash.com/photos/burj-khalifa-skyline-in-dubai-WyfXOHgI49s",
+    "license": "Unsplash License",
+    "licenseCode": "UL",
+    "licenseUrl": "https://unsplash.com/license",
+    "alt": "The skyline view from Sky Views Observatory. This photo does not show the Edge Walk, harnesses or walkway.",
+    "caption": "The skyline view from Sky Views Observatory. This photo does not show the Edge Walk, harnesses or walkway.",
+    "downloadedDimensions": [
+      1280,
+      910
     ],
     "checkedOn": "2026-10-03",
     "changes": "Resized and converted to WebP without bitmap cropping. Full image preserved in galleries and cards, with a decorative blurred background fill.",
