@@ -14,6 +14,7 @@ routes.push('/activities/dubai/museum-of-the-future/','/activities/dubai/dubai-a
 routes.push(...['desert-safaris','city-tours','landmarks','theme-parks','water-parks','cruises','adventure','nature-wildlife','water-activities','dining-events','transfers'].map(c=>'/activities/categories/'+c+'/'));
 routes.push(...['dubai-dinner-cruises','uae-water-parks','dubai-observation-decks','uae-balloon-helicopter-experiences'].map(c=>'/compare/'+c+'/'));
 routes.push('/activities/dubai/img-worlds-of-adventure/','/activities/dubai/aqua-fun-dubai/','/activities/dubai/luxury-yacht-rental-dubai/','/holidays/ras-al-khaimah/','/holidays/ras-al-khaimah/ras-al-khaimah-zipline-safari/','/holidays/dubai/dubai-marina-overnight/','/holidays/dubai/dubai-family-theme-park-week/');
+routes.push('/activities/dubai/3d-world-selfie-museum-dubai/');
 try{
  // Force an image to fail while app.js is held back, reproducing the parser-time race.
  const early=await browser.newPage();const earlyErrors=[];early.on('pageerror',e=>earlyErrors.push(e.message));
@@ -43,8 +44,9 @@ try{
    assert.equal(errors.length,0,route+' runtime errors '+errors.join('; '));
    assert(await p.locator('.page.active .detail-gallery:not(.is-fallback) .slideshow img:not(.img-fallback)').evaluateAll(es=>es.every(img=>{
     const frame=img.closest('.detail-gallery').getBoundingClientRect(), rect=img.getBoundingClientRect();
-    return getComputedStyle(img).objectFit==='cover' && Math.abs(rect.width-frame.width)<=1 && Math.abs(rect.height-frame.height)<=1;
-   })),route+' every detail photo fills the frame');
+    const expectedFit=img.closest('.has-substitute-photo')?'contain':'cover';
+    return getComputedStyle(img).objectFit===expectedFit && Math.abs(rect.width-frame.width)<=1 && Math.abs(rect.height-frame.height)<=1;
+   })),route+' detail photos retain their intended framing');
    if(route==='/faq/'||route==='/activities/dubai/evening-desert-safari/'){
     const faq=p.locator('.page.active .qa-list details').first();
     assert.equal(await faq.getAttribute('open'),null);
@@ -76,8 +78,12 @@ try{
     assert(await p.evaluate(()=>PACKAGES.find(p=>p.id==='dubai-family-theme-park-week').images[0]===IMG.imgVelociraptor),'Theme-park cover represents a listed inclusion');
    }
    if(route==='/activities/dubai/aqua-fun-dubai/'){
-    assert.equal(await p.locator('#tourDetailGallery img').count(),0,'No substitute JBR skyline on AquaFun');
-    assert.equal(await p.locator('#tourDetailGallery .ph-card').count(),1);
+    const image=p.locator('#tourDetailGallery img');
+    assert.equal(await image.count(),1,'Approved inflatable water park photograph on AquaFun');
+    await image.evaluate(el=>el.decode());
+    assert(await image.evaluate(el=>el.naturalWidth>0&&new URL(el.currentSrc).pathname.startsWith('/assets/media/')),'AquaFun photo loads from the same host');
+    assert((await image.getAttribute('alt')).includes('Maldives'),'Representative location is disclosed');
+    assert.equal(await p.locator('#tourDetailGallery .ph-card').count(),0);
     assert.equal(await p.locator('.page.active [onclick*="enquireAboutProduct"]').count(),0,'Official-only listing has no RAAHHI ticket enquiry');
     assert.equal(await p.locator('#tourBookingBox input').count(),0,'Official-only listing does not request dates or guests');
     assert.equal(await p.locator('#tourBookingBox a').getAttribute('href'),'https://aquafun.ae/');
@@ -87,6 +93,15 @@ try{
     assert(!graph.some(n=>n['@id']?.endsWith('/aqua-fun-dubai/#service')||n.offers),'No RAAHHI ticket service or offer claim');
     await p.evaluate(()=>enquireAboutProduct('activity','aqua-fun-dubai'));
     assert(!(await p.locator('#contactModal').isVisible()),'Official-only enquiry is guarded after hydration');
+   }
+   if(route==='/activities/dubai/3d-world-selfie-museum-dubai/'){
+    const gallery=p.locator('#tourDetailGallery .slideshow');
+    assert.equal(await gallery.locator('img').count(),2,'Both user-supplied trick-art photos are available');
+    await gallery.getByRole('button',{name:/^Next image/}).click();
+    const selected=gallery.locator('img.active');
+    await selected.evaluate(el=>el.decode());
+    assert.equal(await gallery.getAttribute('data-index'),'1');
+    assert(await selected.evaluate(el=>el.naturalWidth>0&&getComputedStyle(el).objectFit==='contain'),'Second uploaded photo loads with its complete frame');
    }
    if(route==='/activities/dubai/img-worlds-of-adventure/'||route==='/activities/dubai/luxury-yacht-rental-dubai/'){
     const image=p.locator('#tourDetailGallery img.active');
