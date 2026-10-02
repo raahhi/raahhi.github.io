@@ -725,5 +725,356 @@
     "changes": "Resized and converted to WebP without bitmap cropping. Full image preserved in galleries and cards, with a decorative blurred background fill. Converted copies retain the original image licence.",
     "representative": true,
     "suppliedFile": "candidates/sunseeker-superyacht.png"
+  },
+  {
+    "name": "inflatable-water-park",
+    "products": [
+      "aqua-fun-dubai"
+    ],
+    "url": "https://images.pexels.com/photos/28408479/pexels-photo-28408479.jpeg",
+    "author": "Asad Photo Maldives",
+    "source": "Pexels",
+    "sourcePage": "https://www.pexels.com/photo/colorful-inflatable-obstacle-course-on-clear-beach-28408479/",
+    "license": "Pexels License",
+    "licenseCode": "PL",
+    "licenseUrl": "https://www.pexels.com/license/",
+    "caption": "Representative inflatable water obstacle course photographed in the Maldives. This does not show AquaFun at JBR or its actual layout.",
+    "downloadedDimensions": [
+      1000,
+      667
+    ],
+    "alt": "Representative inflatable water obstacle course photographed in the Maldives. This does not show AquaFun at JBR or its actual layout.",
+    "checkedOn": "2026-10-03",
+    "representative": true,
+    "changes": "Resized and converted to WebP without cropping or upscaling. Full image retained with decorative blurred background fill. Converted copies retain the original licence.",
+    "approval": "User approved implementation of all shortlisted products except 3D World Selfie Museum on 2026-10-03."
+  },
+  {
+    "name": "wax-museum-figure",
+    "products": [
+      "madame-tussauds-dubai"
+    ],
+    "url": "https://images.pexels.com/photos/16035584/pexels-photo-16035584.jpeg",
+    "author": "Ayşenaz Bilgin",
+    "source": "Pexels",
+    "sourcePage": "https://www.pexels.com/photo/wax-sculpture-in-a-museum-16035584/",
+    "license": "Pexels License",
+    "licenseCode": "PL",
+    "licenseUrl": "https://www.pexels.com/license/",
+    "caption": "Representative Marilyn Monroe wax figure. The museum location is unverified; this does not confirm the exhibits at Madame Tussauds Dubai.",
+    "downloadedDimensions": [
+      1000,
+      1500
+    ],
+    "alt": "Representative Marilyn Monroe wax figure. The museum location is unverified; this does not confirm the exhibits at Madame Tussauds Dubai.",
+    "checkedOn": "2026-10-03",
+    "representative": true,
+    "changes": "Resized and converted to WebP without cropping or upscaling. Full image retained with decorative blurred background fill. Converted copies retain the original licence.",
+    "approval": "User approved implementation of all shortlisted products except 3D World Selfie Museum on 2026-10-03."
+  },
+  {
+    "name": "yacht-dining-deck",
+    "products": [
+      "xclusive-dinner-cruise"
+    ],
+    "url": "https://images.pexels.com/photos/271681/pexels-photo-271681.jpeg",
+    "author": "Pixabay",
+    "source": "Pexels",
+    "sourcePage": "https://www.pexels.com/photo/brown-dining-table-near-couch-271681/",
+    "license": "Pexels License",
+    "licenseCode": "PL",
+    "licenseUrl": "https://www.pexels.com/license/",
+    "caption": "Representative yacht dining area. This is not the confirmed Xclusive Dinner Cruise vessel, buffet or seating arrangement.",
+    "downloadedDimensions": [
+      1000,
+      665
+    ],
+    "alt": "Representative yacht dining area. This is not the confirmed Xclusive Dinner Cruise vessel, buffet or seating arrangement.",
+    "checkedOn": "2026-10-03",
+    "representative": true,
+    "changes": "Resized and converted to WebP without cropping or upscaling. Full image retained with decorative blurred background fill. Converted copies retain the original licence.",
+    "approval": "User approved implementation of all shortlisted products except 3D World Selfie Museum on 2026-10-03."
+  },
+  {
+    "name": "representative-superyacht",
+    "products": [
+      "xclusive-superyacht-experience"
+    ],
+    "url": "https://images.unsplash.com/photo-1699309207660-d6aa251d21ac",
+    "author": "Lidija Jakovljevic",
+    "source": "Unsplash",
+    "sourcePage": "https://unsplash.com/photos/a-large-white-boat-in-the-middle-of-the-ocean-QC9gI4_jfTY",
+    "license": "Unsplash License",
+    "licenseCode": "UL",
+    "licenseUrl": "https://unsplash.com/license",
+    "caption": "Representative photograph of the 95-metre Madsummer superyacht. This is a different, larger vessel than the Xclusive Superyacht; the booked vessel and facilities are confirmed before booking.",
+    "downloadedDimensions": [
+      1800,
+      1013
+    ],
+    "alt": "Representative photograph of the 95-metre Madsummer superyacht. This is a different, larger vessel than the Xclusive Superyacht; the booked vessel and facilities are confirmed before booking.",
+    "checkedOn": "2026-10-03",
+    "representative": true,
+    "changes": "Resized and converted to WebP without cropping or upscaling. Full image retained with decorative blurred background fill. Converted copies retain the original licence.",
+    "approval": "User approved implementation of all shortlisted products except 3D World Selfie Museum on 2026-10-03."
+  },
+  {
+    "name": "black-boats-representative",
+    "products": [
+      "black-boat-tour-dubai"
+    ],
+    "url": "https://images.pexels.com/photos/17132179/pexels-photo-17132179.jpeg",
+    "author": "Jan van der Wolf",
+    "source": "Pexels",
+    "sourcePage": "https://www.pexels.com/photo/group-of-people-riding-in-an-inflatable-boat-17132179/",
+    "license": "Pexels License",
+    "licenseCode": "PL",
+    "licenseUrl": "https://www.pexels.com/license/",
+    "caption": "Representative passenger speedboat ride with a different operator. This is not The Black Boats Dubai vessel; your boat and tour are confirmed before booking.",
+    "downloadedDimensions": [
+      2048,
+      1365
+    ],
+    "alt": "Representative passenger speedboat ride with a different operator. This is not The Black Boats Dubai vessel; your boat and tour are confirmed before booking.",
+    "checkedOn": "2026-10-03",
+    "representative": true,
+    "changes": "Resized and converted to WebP without cropping or upscaling. Full image retained with decorative blurred background fill. Converted copies retain the original licence.",
+    "approval": "User approved implementation of all shortlisted products except 3D World Selfie Museum on 2026-10-03."
+  },
+  {
+    "name": "seakart-representative-motorboat",
+    "products": [
+      "adventure-zone-seakart-ride"
+    ],
+    "url": "https://images.pexels.com/photos/8387353/pexels-photo-8387353.jpeg",
+    "author": "Pok Rie",
+    "source": "Pexels",
+    "sourcePage": "https://www.pexels.com/photo/people-riding-boat-on-body-of-water-8387353/",
+    "license": "Pexels License",
+    "licenseCode": "PL",
+    "licenseUrl": "https://www.pexels.com/license/",
+    "caption": "Representative powered boating photograph taken in Kijal, Malaysia. The boat shown is an ordinary motorboat, not a Seakart or the Adventure Zone Dubai equipment.",
+    "downloadedDimensions": [
+      1000,
+      667
+    ],
+    "alt": "Representative powered boating photograph taken in Kijal, Malaysia. The boat shown is an ordinary motorboat, not a Seakart or the Adventure Zone Dubai equipment.",
+    "checkedOn": "2026-10-03",
+    "representative": true,
+    "changes": "Resized and converted to WebP without cropping or upscaling. Full image retained with decorative blurred background fill. Converted copies retain the original licence.",
+    "approval": "User approved implementation of all shortlisted products except 3D World Selfie Museum on 2026-10-03."
+  },
+  {
+    "name": "water-jetpack-activity",
+    "products": [
+      "jetpack-dubai"
+    ],
+    "url": "https://upload.wikimedia.org/wikipedia/commons/6/6c/Water_Jet_Pack%2C_Manteo%2C_Roanoke_Island%2C_North_Carolina_%2814459227412%29.jpg",
+    "author": "Ken Lund",
+    "source": "Wikimedia Commons",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Water_Jet_Pack,_Manteo,_Roanoke_Island,_North_Carolina_(14459227412).jpg",
+    "license": "CC BY-SA 2.0",
+    "licenseCode": "CC-BY-SA-2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/",
+    "caption": "Representative water-powered jetpack activity photographed in North Carolina, USA. This does not show Palm Jumeirah or the booked Dubai operator.",
+    "downloadedDimensions": [
+      4000,
+      3000
+    ],
+    "alt": "Representative water-powered jetpack activity photographed in North Carolina, USA. This does not show Palm Jumeirah or the booked Dubai operator.",
+    "checkedOn": "2026-10-03",
+    "representative": true,
+    "changes": "Resized and converted to WebP without cropping or upscaling. Full image retained with decorative blurred background fill. Converted copies retain the original licence.",
+    "approval": "User approved implementation of all shortlisted products except 3D World Selfie Museum on 2026-10-03."
+  },
+  {
+    "name": "shared-passenger-coach",
+    "products": [
+      "shared-transfers-to-uae-attractions"
+    ],
+    "url": "https://images.pexels.com/photos/18029613/pexels-photo-18029613.jpeg",
+    "author": "Safi Erneste",
+    "source": "Pexels",
+    "sourcePage": "https://www.pexels.com/photo/side-and-rear-of-a-bus-18029613/",
+    "license": "Pexels License",
+    "licenseCode": "PL",
+    "licenseUrl": "https://www.pexels.com/license/",
+    "caption": "Representative white passenger coach. This is not a confirmed supplier vehicle; your transfer vehicle and collection arrangements are confirmed before booking.",
+    "downloadedDimensions": [
+      1000,
+      667
+    ],
+    "alt": "Representative white passenger coach. This is not a confirmed supplier vehicle; your transfer vehicle and collection arrangements are confirmed before booking.",
+    "checkedOn": "2026-10-03",
+    "representative": true,
+    "changes": "Resized and converted to WebP without cropping or upscaling. Full image retained with decorative blurred background fill. Converted copies retain the original licence.",
+    "approval": "User approved implementation of all shortlisted products except 3D World Selfie Museum on 2026-10-03."
+  },
+  {
+    "name": "suspended-dining-platform",
+    "products": [
+      "dinner-in-the-sky-dubai"
+    ],
+    "url": "https://upload.wikimedia.org/wikipedia/commons/f/f7/Dinner_in_the_sky.JPG",
+    "author": "Dmitry G",
+    "source": "Wikimedia Commons",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Dinner_in_the_sky.JPG",
+    "license": "Public domain",
+    "licenseCode": "PD",
+    "licenseUrl": "https://commons.wikimedia.org/wiki/File:Dinner_in_the_sky.JPG",
+    "caption": "Representative Dinner in the Sky suspended dining platform photographed in Tallinn, Estonia. This does not show the Dubai venue or its skyline.",
+    "downloadedDimensions": [
+      2056,
+      3648
+    ],
+    "alt": "Representative Dinner in the Sky suspended dining platform photographed in Tallinn, Estonia. This does not show the Dubai venue or its skyline.",
+    "checkedOn": "2026-10-03",
+    "representative": true,
+    "changes": "Resized and converted to WebP without cropping or upscaling. Full image retained with decorative blurred background fill. Converted copies retain the original licence.",
+    "approval": "User approved implementation of all shortlisted products except 3D World Selfie Museum on 2026-10-03."
+  },
+  {
+    "name": "desert-table-for-two",
+    "products": [
+      "private-bespoke-desert-dinner"
+    ],
+    "url": "https://images.unsplash.com/photo-1673968967638-75115c07bc2c",
+    "author": "Matthias",
+    "source": "Unsplash",
+    "sourcePage": "https://unsplash.com/photos/two-chairs-and-a-table-in-the-middle-of-a-desert-B7VwA53eRvI",
+    "license": "Unsplash License",
+    "licenseCode": "UL",
+    "licenseUrl": "https://unsplash.com/license",
+    "caption": "Representative table for two in the Merzouga desert, Morocco. This does not show the booked UAE dinner venue, menu or table decoration.",
+    "downloadedDimensions": [
+      1800,
+      1198
+    ],
+    "alt": "Representative table for two in the Merzouga desert, Morocco. This does not show the booked UAE dinner venue, menu or table decoration.",
+    "checkedOn": "2026-10-03",
+    "representative": true,
+    "changes": "Resized and converted to WebP without cropping or upscaling. Full image retained with decorative blurred background fill. Converted copies retain the original licence.",
+    "approval": "User approved implementation of all shortlisted products except 3D World Selfie Museum on 2026-10-03."
+  },
+  {
+    "name": "aerial-silk-performance",
+    "products": [
+      "la-perle-by-dragone"
+    ],
+    "url": "https://images.pexels.com/photos/37071001/pexels-photo-37071001.jpeg",
+    "author": "Olivia",
+    "source": "Pexels",
+    "sourcePage": "https://www.pexels.com/photo/aerial-acrobat-performing-on-silk-ribbons-37071001/",
+    "license": "Pexels License",
+    "licenseCode": "PL",
+    "licenseUrl": "https://www.pexels.com/license/",
+    "caption": "Representative aerial silk performance photographed in Barcelona. This is not La Perle, its performers or its water stage.",
+    "downloadedDimensions": [
+      1000,
+      1500
+    ],
+    "alt": "Representative aerial silk performance photographed in Barcelona. This is not La Perle, its performers or its water stage.",
+    "checkedOn": "2026-10-03",
+    "representative": true,
+    "changes": "Resized and converted to WebP without cropping or upscaling. Full image retained with decorative blurred background fill. Converted copies retain the original licence.",
+    "approval": "User approved implementation of all shortlisted products except 3D World Selfie Museum on 2026-10-03."
+  },
+  {
+    "name": "abu-dhabi-representative-dhow",
+    "products": [
+      "dhow-cruise-abu-dhabi"
+    ],
+    "url": "https://images.unsplash.com/photo-1778008452928-8da3c5b9b9cd",
+    "author": "Anubhav Sonker",
+    "source": "Unsplash",
+    "sourcePage": "https://unsplash.com/photos/a-traditional-dhow-boat-sails-past-illuminated-skyscrapers-at-night-MhnUXgtsiD0",
+    "license": "Unsplash License",
+    "licenseCode": "UL",
+    "licenseUrl": "https://unsplash.com/license",
+    "caption": "Representative illuminated dhow photographed in Dubai Marina. This does not show the Abu Dhabi Corniche or the confirmed dinner-cruise vessel.",
+    "downloadedDimensions": [
+      1800,
+      1231
+    ],
+    "alt": "Representative illuminated dhow photographed in Dubai Marina. This does not show the Abu Dhabi Corniche or the confirmed dinner-cruise vessel.",
+    "checkedOn": "2026-10-03",
+    "representative": true,
+    "changes": "Resized and converted to WebP without cropping or upscaling. Full image retained with decorative blurred background fill. Converted copies retain the original licence.",
+    "approval": "User approved implementation of all shortlisted products except 3D World Selfie Museum on 2026-10-03."
+  },
+  {
+    "name": "yellow-passenger-speedboat",
+    "products": [
+      "yellow-boats-abu-dhabi"
+    ],
+    "url": "https://images.pexels.com/photos/34015542/pexels-photo-34015542.jpeg",
+    "author": "天玑 不器",
+    "source": "Pexels",
+    "sourcePage": "https://www.pexels.com/photo/high-speed-yellow-boat-on-open-water-adventure-34015542/",
+    "license": "Pexels License",
+    "licenseCode": "PL",
+    "licenseUrl": "https://www.pexels.com/license/",
+    "caption": "Representative yellow passenger speedboat with a different operator and boat design. This does not show The Yellow Boats Abu Dhabi or its sightseeing route.",
+    "downloadedDimensions": [
+      1000,
+      1777
+    ],
+    "alt": "Representative yellow passenger speedboat with a different operator and boat design. This does not show The Yellow Boats Abu Dhabi or its sightseeing route.",
+    "checkedOn": "2026-10-03",
+    "representative": true,
+    "changes": "Resized and converted to WebP without cropping or upscaling. Full image retained with decorative blurred background fill. Converted copies retain the original licence.",
+    "approval": "User approved implementation of all shortlisted products except 3D World Selfie Museum on 2026-10-03."
+  },
+  {
+    "name": "3d-world-tiger-illusion",
+    "url": "/assets/media/supplied-3d-world-tiger-illusion-1600-e14c6d0e10ae.webp",
+    "products": [
+      "3d-world-selfie-museum-dubai"
+    ],
+    "author": "Not independently established",
+    "source": "User-supplied upload",
+    "sourcePage": "",
+    "license": "User-supplied; reuse licence not independently established",
+    "licenseCode": "USER-SUPPLIED",
+    "licenseUrl": "",
+    "alt": "User-supplied trick-art gallery photograph with visitors posing beside painted optical illusions, selected for 3D World Selfie Museum. Exhibits are confirmed before booking.",
+    "caption": "User-supplied trick-art gallery photograph with visitors posing beside painted optical illusions, selected for 3D World Selfie Museum. Exhibits are confirmed before booking.",
+    "downloadedDimensions": [
+      1796,
+      700
+    ],
+    "checkedOn": "2026-10-03",
+    "changes": "Full frame and all visible watermarks retained. Resized and converted to WebP without cropping or upscaling.",
+    "representative": true,
+    "suppliedFile": "candidates/3d-world-tiger-illusion.png",
+    "uploadedName": "image(4).png",
+    "approval": "User supplied these files and instructed their use for 3D World on 2026-10-03.",
+    "rightsEvidence": "No open licence or rights-holder permission supplied. User instruction recorded; not labelled free stock or public domain."
+  },
+  {
+    "name": "3d-world-egyptian-illusion",
+    "url": "/assets/media/supplied-3d-world-egyptian-illusion-1400-e937b090cbd8.webp",
+    "products": [
+      "3d-world-selfie-museum-dubai"
+    ],
+    "author": "Not independently established",
+    "source": "User-supplied upload",
+    "sourcePage": "",
+    "license": "User-supplied; reuse licence not independently established",
+    "licenseCode": "USER-SUPPLIED",
+    "licenseUrl": "",
+    "alt": "User-supplied trick-art gallery photograph with visitors posing beside painted optical illusions, selected for 3D World Selfie Museum. Exhibits are confirmed before booking.",
+    "caption": "User-supplied trick-art gallery photograph with visitors posing beside painted optical illusions, selected for 3D World Selfie Museum. Exhibits are confirmed before booking.",
+    "downloadedDimensions": [
+      1400,
+      800
+    ],
+    "checkedOn": "2026-10-03",
+    "changes": "Full frame and all visible watermarks retained. Resized and converted to WebP without cropping or upscaling.",
+    "representative": true,
+    "suppliedFile": "candidates/3d-world-egyptian-illusion.png",
+    "uploadedName": "image(5).png",
+    "approval": "User supplied these files and instructed their use for 3D World on 2026-10-03.",
+    "rightsEvidence": "No open licence or rights-holder permission supplied. User instruction recorded; not labelled free stock or public domain."
   }
 ]

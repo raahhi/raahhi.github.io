@@ -1384,5 +1384,213 @@
         "bytes": 458540
       }
     ]
+  },
+  "https://images.pexels.com/photos/28408479/pexels-photo-28408479.jpeg": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 427,
+        "file": "substitute-inflatable-water-park-640-7d5d0f53d83a.webp",
+        "bytes": 20950
+      },
+      {
+        "width": 1000,
+        "height": 667,
+        "file": "substitute-inflatable-water-park-1000-ce4f95a386ad.webp",
+        "bytes": 44344
+      }
+    ]
+  },
+  "https://images.pexels.com/photos/16035584/pexels-photo-16035584.jpeg": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 960,
+        "file": "substitute-wax-museum-figure-640-105b500ff607.webp",
+        "bytes": 28804
+      },
+      {
+        "width": 1000,
+        "height": 1500,
+        "file": "substitute-wax-museum-figure-1000-0bcfedf0dcc9.webp",
+        "bytes": 61448
+      }
+    ]
+  },
+  "https://images.pexels.com/photos/271681/pexels-photo-271681.jpeg": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 426,
+        "file": "substitute-yacht-dining-deck-640-b51fde845360.webp",
+        "bytes": 59482
+      },
+      {
+        "width": 1000,
+        "height": 665,
+        "file": "substitute-yacht-dining-deck-1000-3e840f119fae.webp",
+        "bytes": 123482
+      }
+    ]
+  },
+  "https://images.unsplash.com/photo-1699309207660-d6aa251d21ac": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 360,
+        "file": "substitute-representative-superyacht-640-e346626e2598.webp",
+        "bytes": 24974
+      },
+      {
+        "width": 1600,
+        "height": 900,
+        "file": "substitute-representative-superyacht-1600-018ee089d225.webp",
+        "bytes": 136924
+      }
+    ]
+  },
+  "https://images.pexels.com/photos/8387353/pexels-photo-8387353.jpeg": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 427,
+        "file": "substitute-seakart-representative-motorboat-640-d48b12776e43.webp",
+        "bytes": 61384
+      },
+      {
+        "width": 1000,
+        "height": 667,
+        "file": "substitute-seakart-representative-motorboat-1000-85509077c783.webp",
+        "bytes": 144824
+      }
+    ]
+  },
+  "https://upload.wikimedia.org/wikipedia/commons/6/6c/Water_Jet_Pack%2C_Manteo%2C_Roanoke_Island%2C_North_Carolina_%2814459227412%29.jpg": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 480,
+        "file": "substitute-water-jetpack-activity-640-de0d33b0e3f2.webp",
+        "bytes": 55512
+      },
+      {
+        "width": 1600,
+        "height": 1200,
+        "file": "substitute-water-jetpack-activity-1600-70f0a90b728b.webp",
+        "bytes": 279286
+      }
+    ]
+  },
+  "https://images.pexels.com/photos/18029613/pexels-photo-18029613.jpeg": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 427,
+        "file": "substitute-shared-passenger-coach-640-b77434cffb56.webp",
+        "bytes": 51888
+      },
+      {
+        "width": 1000,
+        "height": 667,
+        "file": "substitute-shared-passenger-coach-1000-4619d5e3766b.webp",
+        "bytes": 103038
+      }
+    ]
+  },
+  "https://upload.wikimedia.org/wikipedia/commons/f/f7/Dinner_in_the_sky.JPG": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 1136,
+        "file": "substitute-suspended-dining-platform-640-dc6e495a9b78.webp",
+        "bytes": 42110
+      },
+      {
+        "width": 1600,
+        "height": 2839,
+        "file": "substitute-suspended-dining-platform-1600-b984b78ed6fe.webp",
+        "bytes": 177210
+      }
+    ]
+  },
+  "https://images.unsplash.com/photo-1673968967638-75115c07bc2c": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 426,
+        "file": "substitute-desert-table-for-two-640-ff1df421d84c.webp",
+        "bytes": 14410
+      },
+      {
+        "width": 1600,
+        "height": 1065,
+        "file": "substitute-desert-table-for-two-1600-1a959af75f34.webp",
+        "bytes": 51406
+      }
+    ]
+  },
+  "https://images.pexels.com/photos/37071001/pexels-photo-37071001.jpeg": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 960,
+        "file": "substitute-aerial-silk-performance-640-719e27778328.webp",
+        "bytes": 11498
+      },
+      {
+        "width": 1000,
+        "height": 1500,
+        "file": "substitute-aerial-silk-performance-1000-56f234deab66.webp",
+        "bytes": 24818
+      }
+    ]
+  },
+  "https://images.pexels.com/photos/34015542/pexels-photo-34015542.jpeg": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 1137,
+        "file": "substitute-yellow-passenger-speedboat-640-07949a8be54d.webp",
+        "bytes": 109608
+      },
+      {
+        "width": 1000,
+        "height": 1777,
+        "file": "substitute-yellow-passenger-speedboat-1000-9bb4d2ba5c78.webp",
+        "bytes": 227328
+      }
+    ]
+  },
+  "/assets/media/supplied-3d-world-tiger-illusion-1600-e14c6d0e10ae.webp": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 249,
+        "file": "supplied-3d-world-tiger-illusion-640-7213ddc598e9.webp",
+        "bytes": 32884
+      },
+      {
+        "width": 1600,
+        "height": 624,
+        "file": "supplied-3d-world-tiger-illusion-1600-e14c6d0e10ae.webp",
+        "bytes": 111954
+      }
+    ]
+  },
+  "/assets/media/supplied-3d-world-egyptian-illusion-1400-e937b090cbd8.webp": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 366,
+        "file": "supplied-3d-world-egyptian-illusion-640-736c5aabffb4.webp",
+        "bytes": 49418
+      },
+      {
+        "width": 1400,
+        "height": 800,
+        "file": "supplied-3d-world-egyptian-illusion-1400-e937b090cbd8.webp",
+        "bytes": 216842
+      }
+    ]
   }
 }
