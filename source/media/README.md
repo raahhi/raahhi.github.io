@@ -26,3 +26,7 @@ The source catalogue retains the original media audit. Photos marked as represen
 The added files are resized without cropping. Source licences also apply to the converted copies, including CC BY-SA 4.0 for Al Ain Adventure. Visible attribution and context appear beneath the product gallery. approved-photos.json records exact source URLs, reuse terms, checking date and affected listings. The Lotus photograph is shared across four listings that explicitly name the same vessel. The New Year’s Eve gallery identifies Lotus as one option and states that other vessels are not pictured.
 
 photo-requests.csv tracks the 55 unresolved activity photos. It records reference sites, required subject matter and permission requirements without assuming that a public website grants reuse rights.
+
+## Image availability pass, 2 October 2026
+
+Two exact-location Unsplash photographs fill the Dubai Balloon and Burj Al Arab dining gaps. Their captions distinguish the photographed scene from the selected booking option. Seven existing Wikimedia photographs now have same-host WebP variants; `cached-photo-sources.json` records provenance and original licences. Original gallery URLs and order are preserved. The remaining 53 products are tracked in `photo-requests.csv`; no unrelated replacement or supplier image has been introduced.

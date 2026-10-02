@@ -70,5 +70,49 @@
     "productContexts": {
       "new-years-eve-cruises-dubai-marina": "The photo shows the Lotus mega yacht, one of the vessel options described in this listing. Al Mansour and Ocean Empress are not pictured. Your vessel, sailing date and New Year programme must be confirmed before booking."
     }
+  },
+  {
+    "url": "https://images.unsplash.com/photo-1744416328340-28d2b0fc0dc8",
+    "name": "dubai-balloon",
+    "products": [
+      "the-dubai-balloon-at-atlantis"
+    ],
+    "destination": "dubai",
+    "author": "Meg von Haartman",
+    "source": "Unsplash",
+    "sourcePage": "https://unsplash.com/photos/a-hot-air-balloon-floats-high-in-the-sky-2yf8gLD7J5E",
+    "license": "Unsplash License",
+    "licenseCode": "UL",
+    "licenseUrl": "https://unsplash.com/license",
+    "alt": "The Dubai Balloon above Atlantis, photographed from the ground",
+    "caption": "The Dubai Balloon photographed above Atlantis. The photo shows the tethered sightseeing balloon, not a desert balloon flight.",
+    "downloadedDimensions": [
+      1600,
+      1067
+    ],
+    "checkedOn": "2026-10-02",
+    "changes": "Resized and converted to WebP; no crop. Converted copies retain the original image licence."
+  },
+  {
+    "url": "https://images.unsplash.com/photo-1744352029595-28cba50e6fa0",
+    "name": "burj-al-arab-dining",
+    "products": [
+      "burj-al-arab-dining"
+    ],
+    "destination": "dubai",
+    "author": "Meg von Haartman",
+    "source": "Unsplash",
+    "sourcePage": "https://unsplash.com/photos/restaurant-tables-overlook-the-ocean-with-umbrellas-v5kwVxumiPE",
+    "license": "Unsplash License",
+    "licenseCode": "UL",
+    "licenseUrl": "https://unsplash.com/license",
+    "alt": "Outdoor dining tables overlooking the sea at Burj Al Arab",
+    "caption": "An outdoor dining terrace at Burj Al Arab. The restaurant, seating and menu for your selected dining option are confirmed before booking.",
+    "downloadedDimensions": [
+      1600,
+      1067
+    ],
+    "checkedOn": "2026-10-02",
+    "changes": "Resized and converted to WebP; no crop. Converted copies retain the original image licence."
   }
 ]

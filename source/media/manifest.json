@@ -110,5 +110,149 @@
         "bytes": 272408
       }
     ]
+  },
+  "https://upload.wikimedia.org/wikipedia/commons/f/f7/Sim_card.png": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 408,
+        "file": "cached-16bc25c1bd52-640-51a9d5df8abb.webp",
+        "bytes": 21996
+      },
+      {
+        "width": 1280,
+        "height": 817,
+        "file": "cached-16bc25c1bd52-1280-3c2d20ad5584.webp",
+        "bytes": 44302
+      }
+    ]
+  },
+  "https://upload.wikimedia.org/wikipedia/commons/7/78/Yas_Waterworld_Abu_Dhabi_2.jpg": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 640,
+        "file": "cached-bb86ba5a55a2-640-2e5e9b5ca60c.webp",
+        "bytes": 141582
+      },
+      {
+        "width": 1280,
+        "height": 1280,
+        "file": "cached-bb86ba5a55a2-1280-e0cdf8d872fd.webp",
+        "bytes": 545564
+      }
+    ]
+  },
+  "https://upload.wikimedia.org/wikipedia/commons/1/1b/Twin_Chameleon_National_Aquarium_Abu_Dhabi.jpg": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 982,
+        "file": "cached-f307fdfc7fba-640-758bedcacd1d.webp",
+        "bytes": 192358
+      },
+      {
+        "width": 1280,
+        "height": 1965,
+        "file": "cached-f307fdfc7fba-1280-cb590c376252.webp",
+        "bytes": 480810
+      }
+    ]
+  },
+  "https://upload.wikimedia.org/wikipedia/commons/7/77/Burj_al-arab_indoor.jpg": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 480,
+        "file": "cached-7eaf5548b146-640-48e6d75ae51b.webp",
+        "bytes": 89346
+      },
+      {
+        "width": 1280,
+        "height": 960,
+        "file": "cached-7eaf5548b146-1280-5beb74468c13.webp",
+        "bytes": 256602
+      }
+    ]
+  },
+  "https://upload.wikimedia.org/wikipedia/commons/3/39/Abu_Dhabi_airport.jpg": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 360,
+        "file": "cached-e2b47085c1f2-640-4579ca5d4bef.webp",
+        "bytes": 44466
+      },
+      {
+        "width": 1280,
+        "height": 720,
+        "file": "cached-e2b47085c1f2-1280-21d71c643970.webp",
+        "bytes": 183618
+      }
+    ]
+  },
+  "https://upload.wikimedia.org/wikipedia/commons/a/a5/Dubai_marina_from_yacht.jpg": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 436,
+        "file": "cached-3a1db307abc8-640-747ed312f5d2.webp",
+        "bytes": 49098
+      },
+      {
+        "width": 1280,
+        "height": 872,
+        "file": "cached-3a1db307abc8-1280-96119f207d27.webp",
+        "bytes": 226384
+      }
+    ]
+  },
+  "https://upload.wikimedia.org/wikipedia/commons/1/15/Yas_Waterworld_Abu_Dhabi_3.jpg": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 640,
+        "file": "cached-615b3301e621-640-37849ffd002c.webp",
+        "bytes": 122778
+      },
+      {
+        "width": 1280,
+        "height": 1280,
+        "file": "cached-615b3301e621-1280-d6180dc5268f.webp",
+        "bytes": 467906
+      }
+    ]
+  },
+  "https://images.unsplash.com/photo-1744416328340-28d2b0fc0dc8": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 427,
+        "file": "dubai-balloon-640-b9377d495c35.webp",
+        "bytes": 4084
+      },
+      {
+        "width": 1280,
+        "height": 854,
+        "file": "dubai-balloon-1280-0e4c840502d2.webp",
+        "bytes": 12842
+      }
+    ]
+  },
+  "https://images.unsplash.com/photo-1744352029595-28cba50e6fa0": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 427,
+        "file": "burj-al-arab-dining-640-f1154b2b7d43.webp",
+        "bytes": 31110
+      },
+      {
+        "width": 1280,
+        "height": 854,
+        "file": "burj-al-arab-dining-1280-990d2839c995.webp",
+        "bytes": 94344
+      }
+    ]
   }
 }

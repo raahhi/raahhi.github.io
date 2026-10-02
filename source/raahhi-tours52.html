@@ -3599,6 +3599,8 @@ TOURS.forEach(t => { if(PRODUCT_FACT_CHECKS[t.id]) Object.assign(t, PRODUCT_FACT
 // Exact venue photographs with recorded reuse licences, checked 1 October 2026.
 const APPROVED_PRODUCT_PHOTOS = {"sky-views-observatory": "https://images.unsplash.com/photo-1708361089093-beef4c4584e7", "al-ain-adventure": "https://upload.wikimedia.org/wikipedia/commons/4/47/Al_Ain_Adventure_Rafting.jpg", "lotus-mega-yacht-dinner-cruise": "https://images.pexels.com/photos/19960510/pexels-photo-19960510.jpeg", "lotus-mega-yacht-sunset-cruise": "https://images.pexels.com/photos/19960510/pexels-photo-19960510.jpeg", "new-years-eve-cruises-dubai-marina": "https://images.pexels.com/photos/19960510/pexels-photo-19960510.jpeg"};
 TOURS.forEach(t => { if(APPROVED_PRODUCT_PHOTOS[t.id]) t.images = [APPROVED_PRODUCT_PHOTOS[t.id]]; });
+TOURS.forEach(t => { if(t.id === "the-dubai-balloon-at-atlantis" && !t.images.length) t.images = ["https://images.unsplash.com/photo-1744416328340-28d2b0fc0dc8"]; });
+TOURS.forEach(t => { if(t.id === "burj-al-arab-dining" && !t.images.length) t.images = ["https://images.unsplash.com/photo-1744352029595-28cba50e6fa0"]; });
 const PHOTO_CONTEXT = {"https://images.unsplash.com/photo-1708361089093-beef4c4584e7": "The skyline view from Sky Views Observatory. This photo does not show the Glass Slide or Edge Walk.", "https://upload.wikimedia.org/wikipedia/commons/4/47/Al_Ain_Adventure_Rafting.jpg": "Rafting at Al Ain Adventure. Activities included in your entry ticket are confirmed for the selected option.", "https://images.pexels.com/photos/19960510/pexels-photo-19960510.jpeg": "The Lotus mega yacht photographed while moored. Sailing time, onboard setup and ticket inclusions are confirmed before booking."};
 
 const PRODUCT_PHOTO_CONTEXT = {"new-years-eve-cruises-dubai-marina": "The photo shows the Lotus mega yacht, one of the vessel options described in this listing. Al Mansour and Ocean Empress are not pictured. Your vessel, sailing date and New Year programme must be confirmed before booking."};
@@ -3608,6 +3610,8 @@ if(stayPlay) stayPlay.images = ["https://images.pexels.com/photos/36329344/pexel
 
 
 const MEDIA_SOURCES = {
+  "https://images.unsplash.com/photo-1744352029595-28cba50e6fa0": ["Unsplash", "https://unsplash.com/photos/restaurant-tables-overlook-the-ocean-with-umbrellas-v5kwVxumiPE", "Meg von Haartman", "1600x1067", "An outdoor dining terrace at Burj Al Arab. The restaurant, seating and menu for your selected dining option are confirmed before booking.", "UL"],
+  "https://images.unsplash.com/photo-1744416328340-28d2b0fc0dc8": ["Unsplash", "https://unsplash.com/photos/a-hot-air-balloon-floats-high-in-the-sky-2yf8gLD7J5E", "Meg von Haartman", "1600x1067", "The Dubai Balloon photographed above Atlantis. The photo shows the tethered sightseeing balloon, not a desert balloon flight.", "UL"],
   // Media completion (verified Wikimedia + original RAAHHI illustrations), 2026-09-29
   "https://upload.wikimedia.org/wikipedia/commons/1/19/Dubai_downtown.jpg": ["Wikimedia Commons","https://commons.wikimedia.org/wiki/File:Dubai_downtown.jpg","Murtblackberry","","Real Dubai Downtown photograph; does not depict Sky Views Observatory itself. [REPRESENTATIVE_LOCATION]","CC-BY-SA-4.0"],
   "https://upload.wikimedia.org/wikipedia/commons/5/5f/Kidzania_delhi_ncr_external.jpg": ["Wikimedia Commons","https://commons.wikimedia.org/wiki/File:Kidzania_delhi_ncr_external.jpg","KidZania Mumbai","","Exact KidZania brand, photographed in Delhi NCR, not Abu Dhabi. [REPRESENTATIVE_BRAND]","CC-BY-SA-4.0"],
@@ -4253,6 +4257,12 @@ const IMG_CREDIT = {
   "https://images.pexels.com/photos/19960510/pexels-photo-19960510.jpeg": {"name": "Dina", "source": "Pexels", "url": "https://www.pexels.com/photo/aerial-view-of-the-lotus-mega-yacht-in-the-harbor-in-dubai-uae-19960510/", "license": "Pexels License", "licenseUrl": "https://www.pexels.com/license/"},
 };
 
+IMG_ALT["https://images.unsplash.com/photo-1744416328340-28d2b0fc0dc8"] = "The Dubai Balloon above Atlantis, photographed from the ground";
+PHOTO_CONTEXT["https://images.unsplash.com/photo-1744416328340-28d2b0fc0dc8"] = "The Dubai Balloon photographed above Atlantis. The photo shows the tethered sightseeing balloon, not a desert balloon flight.";
+IMG_ALT["https://images.unsplash.com/photo-1744352029595-28cba50e6fa0"] = "Outdoor dining tables overlooking the sea at Burj Al Arab";
+PHOTO_CONTEXT["https://images.unsplash.com/photo-1744352029595-28cba50e6fa0"] = "An outdoor dining terrace at Burj Al Arab. The restaurant, seating and menu for your selected dining option are confirmed before booking.";
+IMG_CREDIT["https://images.unsplash.com/photo-1744416328340-28d2b0fc0dc8"] = {"name": "Meg von Haartman", "source": "Unsplash", "url": "https://unsplash.com/photos/a-hot-air-balloon-floats-high-in-the-sky-2yf8gLD7J5E", "license": "Unsplash License", "licenseUrl": "https://unsplash.com/license"};
+IMG_CREDIT["https://images.unsplash.com/photo-1744352029595-28cba50e6fa0"] = {"name": "Meg von Haartman", "source": "Unsplash", "url": "https://unsplash.com/photos/restaurant-tables-overlook-the-ocean-with-umbrellas-v5kwVxumiPE", "license": "Unsplash License", "licenseUrl": "https://unsplash.com/license"};
 function imgBase(u){ return String(u).split("?")[0]; }
 // Flickr photos: each size has its own URL (secret), keyed by width.
 const FLICKR_SIZES = {
