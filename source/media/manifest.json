@@ -254,5 +254,165 @@
         "bytes": 94344
       }
     ]
+  },
+  "https://commons.wikimedia.org/wiki/Special:Redirect/file/Dubai%20Miracle%20Garden.jpg": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 360,
+        "file": "cached-10104c253c62-640-bc4eac6f39f0.webp",
+        "bytes": 62210
+      },
+      {
+        "width": 1280,
+        "height": 721,
+        "file": "cached-10104c253c62-1280-5fcc76efcb1b.webp",
+        "bytes": 277728
+      }
+    ]
+  },
+  "https://commons.wikimedia.org/wiki/Special:Redirect/file/Wild%20Wadi%20Water%20Park.jpg": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 480,
+        "file": "cached-9f9bab88a7e8-640-1b45aa4fbd63.webp",
+        "bytes": 51350
+      },
+      {
+        "width": 1280,
+        "height": 960,
+        "file": "cached-9f9bab88a7e8-1280-c0f61c4e71b4.webp",
+        "bytes": 166374
+      }
+    ]
+  },
+  "https://commons.wikimedia.org/wiki/Special:Redirect/file/The%20Dubai%20Frame%20Observation%20Deck%20in%20Dubai%2C%20United%20Arab%20Emirates.jpg": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 480,
+        "file": "cached-bac9af1b8cbc-640-94efb469decd.webp",
+        "bytes": 62978
+      },
+      {
+        "width": 1280,
+        "height": 960,
+        "file": "cached-bac9af1b8cbc-1280-3204f3ff61b2.webp",
+        "bytes": 231502
+      }
+    ]
+  },
+  "https://commons.wikimedia.org/wiki/Special:Redirect/file/Legoland%20Dubai%201.jpg": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 426,
+        "file": "cached-7d41c1f9248f-640-bbdacd6e6877.webp",
+        "bytes": 47762
+      },
+      {
+        "width": 1280,
+        "height": 853,
+        "file": "cached-7d41c1f9248f-1280-c8745751e908.webp",
+        "bytes": 168888
+      }
+    ]
+  },
+  "https://commons.wikimedia.org/wiki/Special:Redirect/file/XLine%20Dubai-1.png": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 360,
+        "file": "cached-704444d28a63-640-dbdd9e1a35dc.webp",
+        "bytes": 64526
+      },
+      {
+        "width": 1280,
+        "height": 720,
+        "file": "cached-704444d28a63-1280-a14856b3b43d.webp",
+        "bytes": 190852
+      }
+    ]
+  },
+  "https://commons.wikimedia.org/wiki/Special:Redirect/file/Entrance%20of%20motiongate%20Dubai%20.jpg": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 400,
+        "file": "cached-a5a505837ec0-640-54b99d28316b.webp",
+        "bytes": 42432
+      },
+      {
+        "width": 1280,
+        "height": 800,
+        "file": "cached-a5a505837ec0-1280-090a46ef18fe.webp",
+        "bytes": 148996
+      }
+    ]
+  },
+  "https://commons.wikimedia.org/wiki/Special:Redirect/file/Full%20Day%20Dhow%20Cruise%20in%20Khasab%20Musandam.jpg": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 426,
+        "file": "cached-787c2a5fccbd-640-c7a0fe0771e8.webp",
+        "bytes": 35374
+      },
+      {
+        "width": 1280,
+        "height": 853,
+        "file": "cached-787c2a5fccbd-1280-ec42c983c32d.webp",
+        "bytes": 118910
+      }
+    ]
+  },
+  "https://commons.wikimedia.org/wiki/Special:Redirect/file/Global%20village%20dubai.jpg": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 360,
+        "file": "cached-efec2f1cbe7c-640-78cdff6cb6f8.webp",
+        "bytes": 61080
+      },
+      {
+        "width": 1280,
+        "height": 720,
+        "file": "cached-efec2f1cbe7c-1280-ae435db89fc9.webp",
+        "bytes": 248534
+      }
+    ]
+  },
+  "https://commons.wikimedia.org/wiki/Special:Redirect/file/Dolphin%20Bay%20Dubai.jpg": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 160,
+        "file": "cached-5eb072d601fa-640-0c9864031e32.webp",
+        "bytes": 27580
+      },
+      {
+        "width": 1280,
+        "height": 319,
+        "file": "cached-5eb072d601fa-1280-edc3fbd26ee2.webp",
+        "bytes": 95710
+      }
+    ]
+  },
+  "https://commons.wikimedia.org/wiki/Special:Redirect/file/Crocodile_portrait_in_the_pond,_Dubai_Crocodile_Park_,_UAE.jpg": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 359,
+        "file": "cached-510ed5d24ee0-640-12981491aaa4.webp",
+        "bytes": 63064
+      },
+      {
+        "width": 1280,
+        "height": 718,
+        "file": "cached-510ed5d24ee0-1280-f7f3bf31a514.webp",
+        "bytes": 246152
+      }
+    ]
   }
 }
