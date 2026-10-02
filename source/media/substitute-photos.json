@@ -342,17 +342,105 @@
     "products": [
       "chillout-ice-lounge-dubai"
     ],
-    "author": "Max Böttinger",
+    "author": "Max B\u00f6ttinger",
     "source": "Unsplash",
     "sourcePage": "https://unsplash.com/photos/intricate-ice-sculpture-with-arched-openings-1guEIP6jSDQ",
     "license": "Unsplash License",
     "licenseCode": "UL",
     "licenseUrl": "https://unsplash.com/license",
-    "alt": "Representative ice sculpture at ICEHOTEL in Jukkasjärvi, Sweden. This does not show Chillout Ice Lounge Dubai, its seating, food or drinks.",
-    "caption": "Representative ice sculpture at ICEHOTEL in Jukkasjärvi, Sweden. This does not show Chillout Ice Lounge Dubai, its seating, food or drinks.",
+    "alt": "Representative ice sculpture at ICEHOTEL in Jukkasj\u00e4rvi, Sweden. This does not show Chillout Ice Lounge Dubai, its seating, food or drinks.",
+    "caption": "Representative ice sculpture at ICEHOTEL in Jukkasj\u00e4rvi, Sweden. This does not show Chillout Ice Lounge Dubai, its seating, food or drinks.",
     "downloadedDimensions": [
       1800,
       1200
+    ],
+    "checkedOn": "2026-10-03",
+    "changes": "Resized and converted to WebP without bitmap cropping. Full image preserved in galleries and cards, with a decorative blurred background fill.",
+    "representative": true
+  },
+  {
+    "url": "https://images.unsplash.com/photo-1706843540966-1a1685971dc0",
+    "name": "family-waterpark",
+    "products": [
+      "legoland-water-park-dubai"
+    ],
+    "author": "April Walker",
+    "source": "Unsplash",
+    "sourcePage": "https://unsplash.com/photos/a-group-of-children-playing-in-a-water-park-VcguJVpVDWM",
+    "license": "Unsplash License",
+    "licenseCode": "UL",
+    "licenseUrl": "https://unsplash.com/license",
+    "alt": "Representative family waterslide photograph at Great Wolf Lodge. This is not LEGOLAND Water Park Dubai or its rides.",
+    "caption": "Representative family waterslide photograph at Great Wolf Lodge. This is not LEGOLAND Water Park Dubai or its rides.",
+    "downloadedDimensions": [
+      1800,
+      1200
+    ],
+    "checkedOn": "2026-10-03",
+    "changes": "Resized and converted to WebP without bitmap cropping. Full image preserved in galleries and cards, with a decorative blurred background fill.",
+    "representative": true
+  },
+  {
+    "url": "https://images.unsplash.com/photo-1562701193-2c694bd0fe15",
+    "name": "round-towable-tubes",
+    "products": [
+      "donut-ride-dubai"
+    ],
+    "author": "jesse orrico",
+    "source": "Unsplash",
+    "sourcePage": "https://unsplash.com/photos/four-children-riding-inflatable-rafts-pulled-by-motorized-boat-jPRgMyLmxj0",
+    "license": "Unsplash License",
+    "licenseCode": "UL",
+    "licenseUrl": "https://unsplash.com/license",
+    "alt": "Representative round-tube watersport photograph in black and white. The location is unverified; this is not the confirmed Palm Jumeirah operator or ride.",
+    "caption": "Representative round-tube watersport photograph in black and white. The location is unverified; this is not the confirmed Palm Jumeirah operator or ride.",
+    "downloadedDimensions": [
+      1800,
+      1200
+    ],
+    "checkedOn": "2026-10-03",
+    "changes": "Resized and converted to WebP without bitmap cropping. Full image preserved in galleries and cards, with a decorative blurred background fill.",
+    "representative": true
+  },
+  {
+    "url": "https://images.unsplash.com/photo-1656994865033-7523230269f8",
+    "name": "representative-tour-helicopter",
+    "products": [
+      "helicopter-ride-abu-dhabi"
+    ],
+    "author": "Winston Tjia",
+    "source": "Unsplash",
+    "sourcePage": "https://unsplash.com/photos/a-helicopter-on-a-runway-5VmZXWf29iQ",
+    "license": "Unsplash License",
+    "licenseCode": "UL",
+    "licenseUrl": "https://unsplash.com/license",
+    "alt": "Representative helicopter photograph taken in Dubai. This does not show the Abu Dhabi departure point or confirm the aircraft for your flight.",
+    "caption": "Representative helicopter photograph taken in Dubai. This does not show the Abu Dhabi departure point or confirm the aircraft for your flight.",
+    "downloadedDimensions": [
+      1800,
+      2700
+    ],
+    "checkedOn": "2026-10-03",
+    "changes": "Resized and converted to WebP without bitmap cropping. Full image preserved in galleries and cards, with a decorative blurred background fill.",
+    "representative": true
+  },
+  {
+    "url": "https://images.unsplash.com/photo-1711093236904-0dac6b277e1d",
+    "name": "abu-dhabi-yacht-deck",
+    "products": [
+      "deep-sea-cruising-abu-dhabi"
+    ],
+    "author": "Paul Yasskiy",
+    "source": "Unsplash",
+    "sourcePage": "https://unsplash.com/photos/a-table-and-chairs-on-the-deck-of-a-boat-1nEh-F_4gCs",
+    "license": "Unsplash License",
+    "licenseCode": "UL",
+    "licenseUrl": "https://unsplash.com/license",
+    "alt": "Representative yacht-deck photograph taken in Abu Dhabi. Your booked vessel, route and onboard facilities are confirmed before booking.",
+    "caption": "Representative yacht-deck photograph taken in Abu Dhabi. Your booked vessel, route and onboard facilities are confirmed before booking.",
+    "downloadedDimensions": [
+      1800,
+      2700
     ],
     "checkedOn": "2026-10-03",
     "changes": "Resized and converted to WebP without bitmap cropping. Full image preserved in galleries and cards, with a decorative blurred background fill.",

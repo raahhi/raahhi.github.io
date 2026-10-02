@@ -1192,5 +1192,69 @@
         "bytes": 145252
       }
     ]
+  },
+  "https://images.unsplash.com/photo-1706843540966-1a1685971dc0": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 427,
+        "file": "substitute-family-waterpark-640-71b05979c4e9.webp",
+        "bytes": 73416
+      },
+      {
+        "width": 1600,
+        "height": 1067,
+        "file": "substitute-family-waterpark-1600-554ef1403c4b.webp",
+        "bytes": 305070
+      }
+    ]
+  },
+  "https://images.unsplash.com/photo-1562701193-2c694bd0fe15": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 427,
+        "file": "substitute-round-towable-tubes-640-665bfcadc024.webp",
+        "bytes": 59618
+      },
+      {
+        "width": 1600,
+        "height": 1067,
+        "file": "substitute-round-towable-tubes-1600-edd1540c9948.webp",
+        "bytes": 251956
+      }
+    ]
+  },
+  "https://images.unsplash.com/photo-1656994865033-7523230269f8": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 960,
+        "file": "substitute-representative-tour-helicopter-640-e3e09203ffb7.webp",
+        "bytes": 33334
+      },
+      {
+        "width": 1600,
+        "height": 2400,
+        "file": "substitute-representative-tour-helicopter-1600-675ede975d58.webp",
+        "bytes": 109766
+      }
+    ]
+  },
+  "https://images.unsplash.com/photo-1711093236904-0dac6b277e1d": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 960,
+        "file": "substitute-abu-dhabi-yacht-deck-640-28f80cd3accf.webp",
+        "bytes": 59798
+      },
+      {
+        "width": 1600,
+        "height": 2400,
+        "file": "substitute-abu-dhabi-yacht-deck-1600-98e7d5cc57bf.webp",
+        "bytes": 180892
+      }
+    ]
   }
 }
