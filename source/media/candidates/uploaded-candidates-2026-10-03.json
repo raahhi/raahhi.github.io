@@ -64,5 +64,27 @@
     "sha256": "7ba7a1331cab38ef25a44f6428575523ba8153b27ca235ecf2442e2700740d9b",
     "status": "Stored user-supplied candidate only. Not implemented or added to the media manifest.",
     "reuseReview": "Source, licence and product/location suitability must be checked before implementation."
+  },
+  {
+    "file": "sunseeker-superyacht.png",
+    "candidateProduct": "sunseeker-superyacht-experience",
+    "dimensions": [
+      1920,
+      1317
+    ],
+    "sha256": "d566f0b1b4bc1a4c9c6b55c5057d0f560b19b24e0a62b972b0b0727d10837f0a",
+    "status": "Stored user-supplied candidate only. Not implemented or added to the media manifest.",
+    "reuseReview": "Source, licence and product/location suitability must be checked before implementation."
+  },
+  {
+    "file": "donut-ride-round-tubes.jpg",
+    "candidateProduct": "donut-ride-dubai",
+    "dimensions": [
+      2048,
+      1365
+    ],
+    "sha256": "464b9e1a9e32f21f04aa2df853c8ed5942ba103d1f6d54ae3c2c665b7ab926b9",
+    "status": "Stored user-supplied candidate only. Not implemented or added to the media manifest.",
+    "reuseReview": "Source, licence and product/location suitability must be checked before implementation."
   }
 ]
