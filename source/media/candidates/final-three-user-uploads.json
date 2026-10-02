@@ -1,0 +1,80 @@
+[
+  {
+    "name": "rak-tethered-balloon",
+    "url": "/assets/media/supplied-rak-tethered-balloon-1600-5875bb3c899b.webp",
+    "products": [
+      "hot-air-balloon-ras-al-khaimah"
+    ],
+    "author": "Jean Beaufort",
+    "source": "Public Domain Pictures",
+    "sourcePage": "https://www.publicdomainpictures.net/en/view-image.php?image=493409&picture=balloon",
+    "license": "Public domain",
+    "licenseCode": "PD",
+    "licenseUrl": "https://www.publicdomainpictures.net/en/terms-of-service.php",
+    "alt": "Representative tethered hot-air balloon photographed in Colorado. This does not show the booked Ras Al Khaimah sunrise session.",
+    "caption": "Representative tethered hot-air balloon photographed in Colorado. This does not show the booked Ras Al Khaimah sunrise session.",
+    "downloadedDimensions": [
+      1920,
+      1687
+    ],
+    "checkedOn": "2026-10-03",
+    "changes": "Full frame retained. Resized and converted to WebP without cropping or upscaling. Converted copies retain the original licence.",
+    "representative": true,
+    "suppliedFile": "candidates/rak-tethered-balloon.png",
+    "uploadedName": "image(6).png",
+    "approval": "User supplied the approved candidate files and instructed implementation on 2026-10-03.",
+    "rightsEvidence": "Previously checked candidate source and licence, now supplied as a local upload to resolve the download block."
+  },
+  {
+    "name": "jetovator-water-bike",
+    "url": "/assets/media/supplied-jetovator-water-bike-1600-db27bbb7ea2f.webp",
+    "products": [
+      "jetovator-dubai"
+    ],
+    "author": "Guy Percival",
+    "source": "Public Domain Pictures",
+    "sourcePage": "https://www.publicdomainpictures.net/cs/view-image.php?image=246656&picture=jetovator-vodni-sporty",
+    "license": "Public domain",
+    "licenseCode": "PD",
+    "licenseUrl": "https://www.publicdomainpictures.net/en/terms-of-service.php",
+    "alt": "Representative Jetovator water-bike activity photographed in Spain. This does not show the booked Dubai operator or confirm the equipment for your session.",
+    "caption": "Representative Jetovator water-bike activity photographed in Spain. This does not show the booked Dubai operator or confirm the equipment for your session.",
+    "downloadedDimensions": [
+      1920,
+      1079
+    ],
+    "checkedOn": "2026-10-03",
+    "changes": "Full frame retained. Resized and converted to WebP without cropping or upscaling. Converted copies retain the original licence.",
+    "representative": true,
+    "suppliedFile": "candidates/jetovator-water-bike.png",
+    "uploadedName": "image(7).png",
+    "approval": "User supplied the approved candidate files and instructed implementation on 2026-10-03.",
+    "rightsEvidence": "Previously checked candidate source and licence, now supplied as a local upload to resolve the download block."
+  },
+  {
+    "name": "jet-car-watercar-panther",
+    "url": "/assets/media/supplied-jet-car-watercar-panther-900-93ab0384e40e.webp",
+    "products": [
+      "jet-car-dubai"
+    ],
+    "author": "Kmr1985",
+    "source": "Wikimedia Commons",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:WaterCar_Panther_at_High_Speeds.jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseCode": "CC-BY-SA-4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "alt": "Representative WaterCar Panther amphibious vehicle photographed on Lake Havasu, USA. This is a different vehicle from the sports-car-shaped Dubai Jet Car; your booked model is confirmed before booking.",
+    "caption": "Representative WaterCar Panther amphibious vehicle photographed on Lake Havasu, USA. This is a different vehicle from the sports-car-shaped Dubai Jet Car; your booked model is confirmed before booking.",
+    "downloadedDimensions": [
+      900,
+      600
+    ],
+    "checkedOn": "2026-10-03",
+    "changes": "Full frame retained. Resized and converted to WebP without cropping or upscaling. Converted copies retain the original licence.",
+    "representative": true,
+    "suppliedFile": "candidates/jet-car-watercar-panther.png",
+    "uploadedName": "image(8).png",
+    "approval": "User supplied the approved candidate files and instructed implementation on 2026-10-03.",
+    "rightsEvidence": "Previously checked candidate source and licence, now supplied as a local upload to resolve the download block."
+  }
+]

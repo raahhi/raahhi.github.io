@@ -1592,5 +1592,53 @@
         "bytes": 216842
       }
     ]
+  },
+  "/assets/media/supplied-rak-tethered-balloon-1600-5875bb3c899b.webp": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 562,
+        "file": "supplied-rak-tethered-balloon-640-a043e57c77d4.webp",
+        "bytes": 58260
+      },
+      {
+        "width": 1600,
+        "height": 1406,
+        "file": "supplied-rak-tethered-balloon-1600-5875bb3c899b.webp",
+        "bytes": 293010
+      }
+    ]
+  },
+  "/assets/media/supplied-jetovator-water-bike-1600-db27bbb7ea2f.webp": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 360,
+        "file": "supplied-jetovator-water-bike-640-0b988942b6c3.webp",
+        "bytes": 28660
+      },
+      {
+        "width": 1600,
+        "height": 899,
+        "file": "supplied-jetovator-water-bike-1600-db27bbb7ea2f.webp",
+        "bytes": 116574
+      }
+    ]
+  },
+  "/assets/media/supplied-jet-car-watercar-panther-900-93ab0384e40e.webp": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 427,
+        "file": "supplied-jet-car-watercar-panther-640-150c20a06dd0.webp",
+        "bytes": 33348
+      },
+      {
+        "width": 900,
+        "height": 600,
+        "file": "supplied-jet-car-watercar-panther-900-93ab0384e40e.webp",
+        "bytes": 52524
+      }
+    ]
   }
 }
