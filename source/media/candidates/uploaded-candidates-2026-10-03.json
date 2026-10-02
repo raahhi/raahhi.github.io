@@ -7,8 +7,11 @@
       2048
     ],
     "sha256": "f33ba7361e6419054c0a13d69fb3f041f09b26de8d9fdd0b4ccb346362d526ce",
-    "status": "Stored user-supplied candidate only. Not implemented or added to the media manifest.",
-    "reuseReview": "Source, licence and product/location suitability must be checked before implementation."
+    "status": "Implemented from the preserved user-supplied original with local full-frame WebP variants.",
+    "reuseReview": "Representative high-ropes activity at Warren Wilson College in the United States. This does not show Aventura Parks Dubai or its courses.",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Warren_Wilson_Challenge_Ropes_Course.JPG",
+    "license": "CC0 1.0",
+    "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/"
   },
   {
     "file": "olioli-science-play.jpg",
@@ -18,8 +21,11 @@
       1365
     ],
     "sha256": "8431f75fcb4ea74f93c1659aeddccacf45a08b196e525f6f444619a5c68825d2",
-    "status": "Stored user-supplied candidate only. Not implemented or added to the media manifest.",
-    "reuseReview": "Source, licence and product/location suitability must be checked before implementation."
+    "status": "Implemented from the preserved user-supplied original with local full-frame WebP variants.",
+    "reuseReview": "Representative interactive science exhibit with children. The location is unverified; this does not show OliOli Dubai or its installations.",
+    "sourcePage": "https://www.pexels.com/photo/a-girl-looking-at-colored-liquids-in-a-container-8926847/",
+    "license": "Pexels License",
+    "licenseUrl": "https://www.pexels.com/license/"
   },
   {
     "file": "ifly-indoor-skydiving.png",
@@ -29,8 +35,11 @@
       718
     ],
     "sha256": "8863a81e1b61d9a7349bb7de3a4b5010ef4a1ba8751cbec4903530ae291308a1",
-    "status": "Stored user-supplied candidate only. Not implemented or added to the media manifest.",
-    "reuseReview": "Source, licence and product/location suitability must be checked before implementation."
+    "status": "Implemented from the preserved user-supplied original with local full-frame WebP variants.",
+    "reuseReview": "Representative indoor skydiving at iFLY Hollywood in California. This does not show iFly Dubai or its current facilities.",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:IFLY_Hollywood_3.JPG",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/"
   },
   {
     "file": "gyrocopter-flight.png",
@@ -40,8 +49,11 @@
       912
     ],
     "sha256": "3950a8948d055951d4e0b34c8d0dbc28a6e085da9648e71131f8888f6c43db3f",
-    "status": "Stored user-supplied candidate only. Not implemented or added to the media manifest.",
-    "reuseReview": "Source, licence and product/location suitability must be checked before implementation."
+    "status": "Implemented from the preserved user-supplied original with local full-frame WebP variants.",
+    "reuseReview": "Representative VPM M-16 gyrocopter on a grass airfield. This does not show the Dubai departure point or confirm the aircraft for your flight.",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:VPM_M-16.JPG",
+    "license": "Public domain",
+    "licenseUrl": "https://commons.wikimedia.org/wiki/File:VPM_M-16.JPG"
   },
   {
     "file": "wonder-bus-amphibious-bus.png",
@@ -51,8 +63,11 @@
       1280
     ],
     "sha256": "0d3e025fa1c26bfc42ea998869d061da0bca185dd9431a9c1bcb06e38c1ea82e",
-    "status": "Stored user-supplied candidate only. Not implemented or added to the media manifest.",
-    "reuseReview": "Source, licence and product/location suitability must be checked before implementation."
+    "status": "Implemented from the preserved user-supplied original with local full-frame WebP variants.",
+    "reuseReview": "Representative Kaba amphibious bus photographed in Odaiba, Japan. This is not the Dubai Wonder Bus or its tour route.",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Kaba_amphibious_bus_in_Odaiba.jpg",
+    "license": "CC0 1.0",
+    "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/"
   },
   {
     "file": "love-boat-speedboat.jpg",
@@ -62,8 +77,11 @@
       1365
     ],
     "sha256": "7ba7a1331cab38ef25a44f6428575523ba8153b27ca235ecf2442e2700740d9b",
-    "status": "Stored user-supplied candidate only. Not implemented or added to the media manifest.",
-    "reuseReview": "Source, licence and product/location suitability must be checked before implementation."
+    "status": "Implemented from the preserved user-supplied original with local full-frame WebP variants.",
+    "reuseReview": "Representative passenger speedboat ride. The location is unverified; this is not the confirmed Love Boat Dubai vessel or operator.",
+    "sourcePage": "https://www.pexels.com/photo/group-of-people-riding-in-an-inflatable-boat-17132179/",
+    "license": "Pexels License",
+    "licenseUrl": "https://www.pexels.com/license/"
   },
   {
     "file": "sunseeker-superyacht.png",
@@ -73,8 +91,11 @@
       1317
     ],
     "sha256": "d566f0b1b4bc1a4c9c6b55c5057d0f560b19b24e0a62b972b0b0727d10837f0a",
-    "status": "Stored user-supplied candidate only. Not implemented or added to the media manifest.",
-    "reuseReview": "Source, licence and product/location suitability must be checked before implementation."
+    "status": "Implemented from the preserved user-supplied original with local full-frame WebP variants.",
+    "reuseReview": "Representative Sunseeker Predator yacht photographed in Poole Harbour, England. This is not the confirmed Dubai superyacht; your vessel and model are confirmed before booking.",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Sunseeker.motoryacht.predator.arp.jpg",
+    "license": "Public domain",
+    "licenseUrl": "https://commons.wikimedia.org/wiki/File:Sunseeker.motoryacht.predator.arp.jpg"
   },
   {
     "file": "donut-ride-round-tubes.jpg",
@@ -84,7 +105,10 @@
       1365
     ],
     "sha256": "464b9e1a9e32f21f04aa2df853c8ed5942ba103d1f6d54ae3c2c665b7ab926b9",
-    "status": "Stored user-supplied candidate only. Not implemented or added to the media manifest.",
-    "reuseReview": "Source, licence and product/location suitability must be checked before implementation."
+    "status": "Implemented from the preserved user-supplied original with local full-frame WebP variants.",
+    "reuseReview": "Representative round-tube watersport photograph in black and white. The location is unverified; this is not the confirmed Palm Jumeirah operator or ride.",
+    "sourcePage": "https://unsplash.com/photos/four-children-riding-inflatable-rafts-pulled-by-motorized-boat-jPRgMyLmxj0",
+    "license": "Unsplash License",
+    "licenseUrl": "https://unsplash.com/license"
   }
 ]

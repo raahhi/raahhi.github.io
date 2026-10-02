@@ -436,14 +436,14 @@
     "products": [
       "chillout-ice-lounge-dubai"
     ],
-    "author": "Max B\u00f6ttinger",
+    "author": "Max Böttinger",
     "source": "Unsplash",
     "sourcePage": "https://unsplash.com/photos/intricate-ice-sculpture-with-arched-openings-1guEIP6jSDQ",
     "license": "Unsplash License",
     "licenseCode": "UL",
     "licenseUrl": "https://unsplash.com/license",
-    "alt": "Representative ice sculpture at ICEHOTEL in Jukkasj\u00e4rvi, Sweden. This does not show Chillout Ice Lounge Dubai, its seating, food or drinks.",
-    "caption": "Representative ice sculpture at ICEHOTEL in Jukkasj\u00e4rvi, Sweden. This does not show Chillout Ice Lounge Dubai, its seating, food or drinks.",
+    "alt": "Representative ice sculpture at ICEHOTEL in Jukkasjärvi, Sweden. This does not show Chillout Ice Lounge Dubai, its seating, food or drinks.",
+    "caption": "Representative ice sculpture at ICEHOTEL in Jukkasjärvi, Sweden. This does not show Chillout Ice Lounge Dubai, its seating, food or drinks.",
     "downloadedDimensions": [
       1800,
       1200
@@ -489,12 +489,13 @@
     "alt": "Representative round-tube watersport photograph in black and white. The location is unverified; this is not the confirmed Palm Jumeirah operator or ride.",
     "caption": "Representative round-tube watersport photograph in black and white. The location is unverified; this is not the confirmed Palm Jumeirah operator or ride.",
     "downloadedDimensions": [
-      1800,
-      1200
+      2048,
+      1365
     ],
     "checkedOn": "2026-10-03",
     "changes": "Resized and converted to WebP without bitmap cropping. Full image preserved in galleries and cards, with a decorative blurred background fill.",
-    "representative": true
+    "representative": true,
+    "suppliedFile": "candidates/donut-ride-round-tubes.jpg"
   },
   {
     "url": "https://images.unsplash.com/photo-1656994865033-7523230269f8",
@@ -539,5 +540,190 @@
     "checkedOn": "2026-10-03",
     "changes": "Resized and converted to WebP without bitmap cropping. Full image preserved in galleries and cards, with a decorative blurred background fill.",
     "representative": true
+  },
+  {
+    "url": "https://images.pexels.com/photos/8511854/pexels-photo-8511854.jpeg",
+    "name": "kidzania-cooking",
+    "products": [
+      "kidzania-dubai",
+      "kidzania-abu-dhabi"
+    ],
+    "author": "Kampus Production",
+    "source": "Pexels",
+    "sourcePage": "https://www.pexels.com/photo/kids-wearing-chef-s-uniform-while-stretching-the-dough-they-are-holding-8511854/",
+    "license": "Pexels License",
+    "licenseCode": "PL",
+    "licenseUrl": "https://www.pexels.com/license/",
+    "alt": "Representative children cooking activity photographed in Portugal. This does not show either UAE KidZania venue or confirm an included workshop.",
+    "caption": "Representative children cooking activity photographed in Portugal. This does not show either UAE KidZania venue or confirm an included workshop.",
+    "downloadedDimensions": [
+      2048,
+      1367
+    ],
+    "checkedOn": "2026-10-03",
+    "changes": "Resized and converted to WebP without bitmap cropping. Full image preserved in galleries and cards, with a decorative blurred background fill. Converted copies retain the original image licence.",
+    "representative": true,
+    "suppliedFile": "candidates/pexels-kampus-8511854.jpg"
+  },
+  {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/4/40/Warren_Wilson_Challenge_Ropes_Course.JPG",
+    "name": "aventura-ropes",
+    "products": [
+      "aventura-parks-dubai"
+    ],
+    "author": "Honinbou",
+    "source": "Wikimedia Commons",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Warren_Wilson_Challenge_Ropes_Course.JPG",
+    "license": "CC0 1.0",
+    "licenseCode": "CC0-1.0",
+    "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "alt": "Representative high-ropes activity at Warren Wilson College in the United States. This does not show Aventura Parks Dubai or its courses.",
+    "caption": "Representative high-ropes activity at Warren Wilson College in the United States. This does not show Aventura Parks Dubai or its courses.",
+    "downloadedDimensions": [
+      1536,
+      2048
+    ],
+    "checkedOn": "2026-10-03",
+    "changes": "Resized and converted to WebP without bitmap cropping. Full image preserved in galleries and cards, with a decorative blurred background fill. Converted copies retain the original image licence.",
+    "representative": true,
+    "suppliedFile": "candidates/aventura-ropes-course.jpeg"
+  },
+  {
+    "url": "https://images.pexels.com/photos/8926847/pexels-photo-8926847.jpeg",
+    "name": "olioli-science",
+    "products": [
+      "olioli-childrens-play-museum"
+    ],
+    "author": "Thirdman",
+    "source": "Pexels",
+    "sourcePage": "https://www.pexels.com/photo/a-girl-looking-at-colored-liquids-in-a-container-8926847/",
+    "license": "Pexels License",
+    "licenseCode": "PL",
+    "licenseUrl": "https://www.pexels.com/license/",
+    "alt": "Representative interactive science exhibit with children. The location is unverified; this does not show OliOli Dubai or its installations.",
+    "caption": "Representative interactive science exhibit with children. The location is unverified; this does not show OliOli Dubai or its installations.",
+    "downloadedDimensions": [
+      2048,
+      1365
+    ],
+    "checkedOn": "2026-10-03",
+    "changes": "Resized and converted to WebP without bitmap cropping. Full image preserved in galleries and cards, with a decorative blurred background fill. Converted copies retain the original image licence.",
+    "representative": true,
+    "suppliedFile": "candidates/olioli-science-play.jpg"
+  },
+  {
+    "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/IFLY_Hollywood_3.JPG",
+    "name": "ifly-wind-tunnel",
+    "products": [
+      "ifly-dubai"
+    ],
+    "author": "© BrokenSphere",
+    "source": "Wikimedia Commons",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:IFLY_Hollywood_3.JPG",
+    "license": "CC BY-SA 3.0",
+    "licenseCode": "CC-BY-SA-3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "alt": "Representative indoor skydiving at iFLY Hollywood in California. This does not show iFly Dubai or its current facilities.",
+    "caption": "Representative indoor skydiving at iFLY Hollywood in California. This does not show iFly Dubai or its current facilities.",
+    "downloadedDimensions": [
+      960,
+      718
+    ],
+    "checkedOn": "2026-10-03",
+    "changes": "Resized and converted to WebP without bitmap cropping. Full image preserved in galleries and cards, with a decorative blurred background fill. Converted copies retain the original image licence.",
+    "representative": true,
+    "suppliedFile": "candidates/ifly-indoor-skydiving.png"
+  },
+  {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/e/e9/VPM_M-16.JPG",
+    "name": "gyrocopter-m16",
+    "products": [
+      "gyrocopter-flight-dubai"
+    ],
+    "author": "Cheesy Mike",
+    "source": "Wikimedia Commons",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:VPM_M-16.JPG",
+    "license": "Public domain",
+    "licenseCode": "PD",
+    "licenseUrl": "https://commons.wikimedia.org/wiki/File:VPM_M-16.JPG",
+    "alt": "Representative VPM M-16 gyrocopter on a grass airfield. This does not show the Dubai departure point or confirm the aircraft for your flight.",
+    "caption": "Representative VPM M-16 gyrocopter on a grass airfield. This does not show the Dubai departure point or confirm the aircraft for your flight.",
+    "downloadedDimensions": [
+      1090,
+      912
+    ],
+    "checkedOn": "2026-10-03",
+    "changes": "Resized and converted to WebP without bitmap cropping. Full image preserved in galleries and cards, with a decorative blurred background fill. Converted copies retain the original image licence.",
+    "representative": true,
+    "suppliedFile": "candidates/gyrocopter-flight.png"
+  },
+  {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/8/82/Kaba_amphibious_bus_in_Odaiba.jpg",
+    "name": "wonder-amphibious-bus",
+    "products": [
+      "wonder-bus-dubai"
+    ],
+    "author": "Syced",
+    "source": "Wikimedia Commons",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Kaba_amphibious_bus_in_Odaiba.jpg",
+    "license": "CC0 1.0",
+    "licenseCode": "CC0-1.0",
+    "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "alt": "Representative Kaba amphibious bus photographed in Odaiba, Japan. This is not the Dubai Wonder Bus or its tour route.",
+    "caption": "Representative Kaba amphibious bus photographed in Odaiba, Japan. This is not the Dubai Wonder Bus or its tour route.",
+    "downloadedDimensions": [
+      960,
+      1280
+    ],
+    "checkedOn": "2026-10-03",
+    "changes": "Resized and converted to WebP without bitmap cropping. Full image preserved in galleries and cards, with a decorative blurred background fill. Converted copies retain the original image licence.",
+    "representative": true,
+    "suppliedFile": "candidates/wonder-bus-amphibious-bus.png"
+  },
+  {
+    "url": "https://images.pexels.com/photos/17132179/pexels-photo-17132179.jpeg",
+    "name": "love-speedboat",
+    "products": [
+      "love-boat-speedboat-ride-dubai"
+    ],
+    "author": "Jan van der Wolf",
+    "source": "Pexels",
+    "sourcePage": "https://www.pexels.com/photo/group-of-people-riding-in-an-inflatable-boat-17132179/",
+    "license": "Pexels License",
+    "licenseCode": "PL",
+    "licenseUrl": "https://www.pexels.com/license/",
+    "alt": "Representative passenger speedboat ride. The location is unverified; this is not the confirmed Love Boat Dubai vessel or operator.",
+    "caption": "Representative passenger speedboat ride. The location is unverified; this is not the confirmed Love Boat Dubai vessel or operator.",
+    "downloadedDimensions": [
+      2048,
+      1365
+    ],
+    "checkedOn": "2026-10-03",
+    "changes": "Resized and converted to WebP without bitmap cropping. Full image preserved in galleries and cards, with a decorative blurred background fill. Converted copies retain the original image licence.",
+    "representative": true,
+    "suppliedFile": "candidates/love-boat-speedboat.jpg"
+  },
+  {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/a/a0/Sunseeker.motoryacht.predator.arp.jpg",
+    "name": "sunseeker-predator",
+    "products": [
+      "sunseeker-superyacht-experience"
+    ],
+    "author": "Arpingstone (Adrian Pingstone)",
+    "source": "Wikimedia Commons",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Sunseeker.motoryacht.predator.arp.jpg",
+    "license": "Public domain",
+    "licenseCode": "PD",
+    "licenseUrl": "https://commons.wikimedia.org/wiki/File:Sunseeker.motoryacht.predator.arp.jpg",
+    "alt": "Representative Sunseeker Predator yacht photographed in Poole Harbour, England. This is not the confirmed Dubai superyacht; your vessel and model are confirmed before booking.",
+    "caption": "Representative Sunseeker Predator yacht photographed in Poole Harbour, England. This is not the confirmed Dubai superyacht; your vessel and model are confirmed before booking.",
+    "downloadedDimensions": [
+      1920,
+      1317
+    ],
+    "checkedOn": "2026-10-03",
+    "changes": "Resized and converted to WebP without bitmap cropping. Full image preserved in galleries and cards, with a decorative blurred background fill. Converted copies retain the original image licence.",
+    "representative": true,
+    "suppliedFile": "candidates/sunseeker-superyacht.png"
   }
 ]

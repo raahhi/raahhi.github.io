@@ -8,11 +8,12 @@
     "kidzania-dubai",
     "kidzania-abu-dhabi"
   ],
-  "status": "Stored candidate only; not implemented or included in the media manifest.",
+  "status": "Implemented from the preserved user-supplied original with local full-frame WebP variants.",
   "context": "Representative children cooking photograph taken in Portugal. Does not show either UAE KidZania venue.",
   "dimensions": [
     2048,
     1367
   ],
-  "sha256": "d93ee5d7bda97d550131abb098eedc81205be16f4dede30f105a11093d9a3172"
+  "sha256": "d93ee5d7bda97d550131abb098eedc81205be16f4dede30f105a11093d9a3172",
+  "reuseReview": "Representative children cooking activity photographed in Portugal. This does not show either UAE KidZania venue or confirm an included workshop."
 }
