@@ -1,0 +1,68 @@
+[
+  {
+    "file": "aventura-ropes-course.jpeg",
+    "candidateProduct": "aventura-parks-dubai",
+    "dimensions": [
+      1536,
+      2048
+    ],
+    "sha256": "f33ba7361e6419054c0a13d69fb3f041f09b26de8d9fdd0b4ccb346362d526ce",
+    "status": "Stored user-supplied candidate only. Not implemented or added to the media manifest.",
+    "reuseReview": "Source, licence and product/location suitability must be checked before implementation."
+  },
+  {
+    "file": "olioli-science-play.jpg",
+    "candidateProduct": "olioli-childrens-play-museum",
+    "dimensions": [
+      2048,
+      1365
+    ],
+    "sha256": "8431f75fcb4ea74f93c1659aeddccacf45a08b196e525f6f444619a5c68825d2",
+    "status": "Stored user-supplied candidate only. Not implemented or added to the media manifest.",
+    "reuseReview": "Source, licence and product/location suitability must be checked before implementation."
+  },
+  {
+    "file": "ifly-indoor-skydiving.png",
+    "candidateProduct": "ifly-dubai",
+    "dimensions": [
+      960,
+      718
+    ],
+    "sha256": "8863a81e1b61d9a7349bb7de3a4b5010ef4a1ba8751cbec4903530ae291308a1",
+    "status": "Stored user-supplied candidate only. Not implemented or added to the media manifest.",
+    "reuseReview": "Source, licence and product/location suitability must be checked before implementation."
+  },
+  {
+    "file": "gyrocopter-flight.png",
+    "candidateProduct": "gyrocopter-flight-dubai",
+    "dimensions": [
+      1090,
+      912
+    ],
+    "sha256": "3950a8948d055951d4e0b34c8d0dbc28a6e085da9648e71131f8888f6c43db3f",
+    "status": "Stored user-supplied candidate only. Not implemented or added to the media manifest.",
+    "reuseReview": "Source, licence and product/location suitability must be checked before implementation."
+  },
+  {
+    "file": "wonder-bus-amphibious-bus.png",
+    "candidateProduct": "wonder-bus-dubai",
+    "dimensions": [
+      960,
+      1280
+    ],
+    "sha256": "0d3e025fa1c26bfc42ea998869d061da0bca185dd9431a9c1bcb06e38c1ea82e",
+    "status": "Stored user-supplied candidate only. Not implemented or added to the media manifest.",
+    "reuseReview": "Source, licence and product/location suitability must be checked before implementation."
+  },
+  {
+    "file": "love-boat-speedboat.jpg",
+    "candidateProduct": "love-boat-speedboat-ride-dubai",
+    "dimensions": [
+      2048,
+      1365
+    ],
+    "sha256": "7ba7a1331cab38ef25a44f6428575523ba8153b27ca235ecf2442e2700740d9b",
+    "status": "Stored user-supplied candidate only. Not implemented or added to the media manifest.",
+    "reuseReview": "Source, licence and product/location suitability must be checked before implementation."
+  }
+]
