@@ -414,5 +414,543 @@
         "bytes": 246152
       }
     ]
+  },
+  "https://upload.wikimedia.org/wikipedia/commons/f/f8/Suwaidi_Pearl_Farm_Pontoon.jpg": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 911,
+        "file": "cached-0a4dbee0c14a-640-37f05ad7455a.webp",
+        "bytes": 40626
+      },
+      {
+        "width": 1280,
+        "height": 1822,
+        "file": "cached-0a4dbee0c14a-1280-6d174408a0f0.webp",
+        "bytes": 135144
+      }
+    ]
+  },
+  "https://upload.wikimedia.org/wikipedia/commons/8/86/Dubai_International_Airport.jpg": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 424,
+        "file": "cached-fc8a1996e5d9-640-efb2cc171734.webp",
+        "bytes": 24344
+      },
+      {
+        "width": 1280,
+        "height": 848,
+        "file": "cached-fc8a1996e5d9-1280-5be9833624fe.webp",
+        "bytes": 71210
+      }
+    ]
+  },
+  "https://upload.wikimedia.org/wikipedia/commons/5/54/Dubai_-_Atlantis,_The_Palm_%E2%80%93_indoors_-_%D9%81%D9%86%D8%AF%D9%82_%D8%A7%D8%AA%D9%84%D8%A7%D9%86%D8%AA%D8%B3_%D8%B0%D8%A7_%D8%A8%D8%A7%D9%84%D9%85_-_panoramio.jpg": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 853,
+        "file": "cached-9a505b53ad67-640-2047942f25ff.webp",
+        "bytes": 92546
+      },
+      {
+        "width": 1280,
+        "height": 1707,
+        "file": "cached-9a505b53ad67-1280-fd1b2d12657d.webp",
+        "bytes": 245512
+      }
+    ]
+  },
+  "https://upload.wikimedia.org/wikipedia/commons/a/ab/Bollywood_Parks%E2%84%A2_Dubai_Entrance.jpg": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 320,
+        "file": "cached-42f2d475c4e2-640-e41e30a4e4a6.webp",
+        "bytes": 53002
+      },
+      {
+        "width": 1280,
+        "height": 640,
+        "file": "cached-42f2d475c4e2-1280-4e2e2acaec5c.webp",
+        "bytes": 177788
+      }
+    ]
+  },
+  "https://upload.wikimedia.org/wikipedia/commons/0/0f/DUBAI_DESERT_SAFARI.jpg": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 393,
+        "file": "cached-410deae9e78a-640-faa6c8c9b2e4.webp",
+        "bytes": 6334
+      },
+      {
+        "width": 1280,
+        "height": 785,
+        "file": "cached-410deae9e78a-1280-ba0dd0faf4b5.webp",
+        "bytes": 18172
+      }
+    ]
+  },
+  "https://upload.wikimedia.org/wikipedia/commons/7/78/Dolphin_world.jpg": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 360,
+        "file": "cached-1cf7558c5f06-640-5017f23b21f6.webp",
+        "bytes": 28766
+      },
+      {
+        "width": 1280,
+        "height": 720,
+        "file": "cached-1cf7558c5f06-1280-abddf08869e7.webp",
+        "bytes": 68576
+      }
+    ]
+  },
+  "https://upload.wikimedia.org/wikipedia/commons/3/3f/Camel_herd.jpg": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 480,
+        "file": "cached-e55f84007365-640-71dc47561acb.webp",
+        "bytes": 22490
+      },
+      {
+        "width": 1280,
+        "height": 960,
+        "file": "cached-e55f84007365-1280-c45dbad2749b.webp",
+        "bytes": 57190
+      }
+    ]
+  },
+  "https://upload.wikimedia.org/wikipedia/commons/f/fc/HATTA_THE_BEAUTIFUL_MOUNTAIN_RANGE_IN_UAE.jpg": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 853,
+        "file": "cached-00a05d8e24e3-640-7370c6a672bf.webp",
+        "bytes": 161340
+      },
+      {
+        "width": 1280,
+        "height": 1707,
+        "file": "cached-00a05d8e24e3-1280-50860309a042.webp",
+        "bytes": 577256
+      }
+    ]
+  },
+  "https://upload.wikimedia.org/wikipedia/commons/3/34/Dubai_Parks_and_Resort.jpg": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 335,
+        "file": "cached-8c29196f8dfe-640-966b6d266d16.webp",
+        "bytes": 43938
+      },
+      {
+        "width": 1280,
+        "height": 670,
+        "file": "cached-8c29196f8dfe-1280-1d943dd10744.webp",
+        "bytes": 139672
+      }
+    ]
+  },
+  "https://upload.wikimedia.org/wikipedia/commons/e/ef/SkiDubai.JPG": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 426,
+        "file": "cached-0a178ccf0433-640-3a3c5f350b9e.webp",
+        "bytes": 31682
+      },
+      {
+        "width": 1280,
+        "height": 851,
+        "file": "cached-0a178ccf0433-1280-2aa1d4ac2d26.webp",
+        "bytes": 94164
+      }
+    ]
+  },
+  "https://upload.wikimedia.org/wikipedia/commons/1/1f/Yacht_through_Dubai_marina.jpg": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 480,
+        "file": "cached-ea95e7ede74e-640-40a6717e929e.webp",
+        "bytes": 54740
+      },
+      {
+        "width": 1280,
+        "height": 960,
+        "file": "cached-ea95e7ede74e-1280-071350c1aac4.webp",
+        "bytes": 174532
+      }
+    ]
+  },
+  "https://upload.wikimedia.org/wikipedia/commons/0/0b/Dubai_Garden_Glow.jpg": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 480,
+        "file": "cached-aa89ecfcd94b-640-5ef877e37123.webp",
+        "bytes": 45408
+      },
+      {
+        "width": 1280,
+        "height": 960,
+        "file": "cached-aa89ecfcd94b-1280-be0053bd14c8.webp",
+        "bytes": 142892
+      }
+    ]
+  },
+  "https://upload.wikimedia.org/wikipedia/commons/3/31/BananaBoat.JPG": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 443,
+        "file": "cached-559c48a9aefa-640-219cadcb4195.webp",
+        "bytes": 24020
+      },
+      {
+        "width": 1280,
+        "height": 886,
+        "file": "cached-559c48a9aefa-1280-97250ab184a6.webp",
+        "bytes": 75668
+      }
+    ]
+  },
+  "https://upload.wikimedia.org/wikipedia/commons/b/b2/Sea_Kayak.JPG": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 480,
+        "file": "cached-8b58353fe09b-640-00f31a2f1f16.webp",
+        "bytes": 64404
+      },
+      {
+        "width": 1280,
+        "height": 960,
+        "file": "cached-8b58353fe09b-1280-6e518c805ebf.webp",
+        "bytes": 173186
+      }
+    ]
+  },
+  "https://upload.wikimedia.org/wikipedia/commons/c/c7/Deep_dive_uae.jpg": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 443,
+        "file": "cached-c2b22654ce23-640-ade7c7b7a79a.webp",
+        "bytes": 53414
+      },
+      {
+        "width": 1280,
+        "height": 886,
+        "file": "cached-c2b22654ce23-1280-28ad3ca916d2.webp",
+        "bytes": 151970
+      }
+    ]
+  },
+  "https://upload.wikimedia.org/wikipedia/commons/3/36/Dubai_Ice_Rink.jpg": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 427,
+        "file": "cached-971328c71d9d-640-f711e1ace7f4.webp",
+        "bytes": 58606
+      },
+      {
+        "width": 1280,
+        "height": 853,
+        "file": "cached-971328c71d9d-1280-52038c16cbe6.webp",
+        "bytes": 227822
+      }
+    ]
+  },
+  "https://upload.wikimedia.org/wikipedia/commons/6/60/Jet_ski_%2811553259774%29.jpg": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 420,
+        "file": "cached-caf8f202d05a-640-dcaace4340d3.webp",
+        "bytes": 12596
+      },
+      {
+        "width": 1280,
+        "height": 840,
+        "file": "cached-caf8f202d05a-1280-e31c5299fb08.webp",
+        "bytes": 47748
+      }
+    ]
+  },
+  "https://upload.wikimedia.org/wikipedia/commons/2/22/Eastern_Mangroves,_Abu_Dhabi.jpg": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 480,
+        "file": "cached-f02ca706c21d-640-bc018886535b.webp",
+        "bytes": 42920
+      },
+      {
+        "width": 1280,
+        "height": 960,
+        "file": "cached-f02ca706c21d-1280-c1ca3e116a80.webp",
+        "bytes": 135390
+      }
+    ]
+  },
+  "https://upload.wikimedia.org/wikipedia/commons/1/19/Emirates_Park_Zoo_%2831%29.jpg": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 427,
+        "file": "cached-e340be17dbc8-640-70c3a5c51157.webp",
+        "bytes": 45036
+      },
+      {
+        "width": 1280,
+        "height": 853,
+        "file": "cached-e340be17dbc8-1280-c9fe252fc350.webp",
+        "bytes": 118662
+      }
+    ]
+  },
+  "https://upload.wikimedia.org/wikipedia/commons/a/ab/Giraffe_AbuDhabi.jpg": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 437,
+        "file": "cached-cb8ca59f500a-640-cd55362bf567.webp",
+        "bytes": 27864
+      },
+      {
+        "width": 1280,
+        "height": 874,
+        "file": "cached-cb8ca59f500a-1280-73b8f700e973.webp",
+        "bytes": 75844
+      }
+    ]
+  },
+  "https://upload.wikimedia.org/wikipedia/commons/2/23/Emirates_National_Auto_Museum.jpg": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 480,
+        "file": "cached-3fc960adf2aa-640-802a97a83fc7.webp",
+        "bytes": 28862
+      },
+      {
+        "width": 1280,
+        "height": 960,
+        "file": "cached-3fc960adf2aa-1280-ceee81eebebd.webp",
+        "bytes": 89006
+      }
+    ]
+  },
+  "https://upload.wikimedia.org/wikipedia/commons/4/4f/Big_Bus%2C_Abu_Dhabi_%28IMG_20230812_134210%29.jpg": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 479,
+        "file": "cached-62881165a692-640-6ccd0738aa27.webp",
+        "bytes": 45346
+      },
+      {
+        "width": 1280,
+        "height": 959,
+        "file": "cached-62881165a692-1280-b1fa92def9fc.webp",
+        "bytes": 157402
+      }
+    ]
+  },
+  "https://upload.wikimedia.org/wikipedia/commons/8/88/Emirates_Palace_-_interior_01.jpg": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 480,
+        "file": "cached-44959f65b479-640-ef2d3e0ed085.webp",
+        "bytes": 48772
+      },
+      {
+        "width": 1280,
+        "height": 960,
+        "file": "cached-44959f65b479-1280-daec5211b621.webp",
+        "bytes": 131480
+      }
+    ]
+  },
+  "https://upload.wikimedia.org/wikipedia/commons/8/8c/Penguin_portrait_in_the_Sea_world_aquarium%2C_Abu_Dhabi_city%2C_UAE.jpg": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 359,
+        "file": "cached-b2f6bdd296cd-640-6bbe4b5fe66a.webp",
+        "bytes": 49122
+      },
+      {
+        "width": 1280,
+        "height": 719,
+        "file": "cached-b2f6bdd296cd-1280-2eaa53dbb8f1.webp",
+        "bytes": 131210
+      }
+    ]
+  },
+  "https://upload.wikimedia.org/wikipedia/commons/f/f2/Penguin_portrait_in_the_antarctida_area%2C_Sea_world_aquarium%2C_Abu_Dhabi_city%2C_UAE.jpg": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 359,
+        "file": "cached-7d334b07aa2e-640-f509629c7228.webp",
+        "bytes": 37914
+      },
+      {
+        "width": 1280,
+        "height": 719,
+        "file": "cached-7d334b07aa2e-1280-1e87b3447b26.webp",
+        "bytes": 94794
+      }
+    ]
+  },
+  "https://upload.wikimedia.org/wikipedia/commons/4/46/Bird_portrait_in_the_tropic_area%2C_Sea_world_aquarium%2C_Abu_Dhabi_city%2C_UAE.jpg": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 427,
+        "file": "cached-8284b3fa14d4-640-81e2598b1ede.webp",
+        "bytes": 36144
+      },
+      {
+        "width": 1280,
+        "height": 853,
+        "file": "cached-8284b3fa14d4-1280-66cde42096be.webp",
+        "bytes": 91130
+      }
+    ]
+  },
+  "https://upload.wikimedia.org/wikipedia/commons/b/b9/Suwaidi_Pearl_Farm_-_Pearls.jpg": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 1028,
+        "file": "cached-895887a0ab10-640-0a9c9b6a7e8a.webp",
+        "bytes": 45892
+      },
+      {
+        "width": 1280,
+        "height": 2055,
+        "file": "cached-895887a0ab10-1280-22799da8da08.webp",
+        "bytes": 116020
+      }
+    ]
+  },
+  "https://upload.wikimedia.org/wikipedia/commons/2/24/Ras_Al_Khaimah_desert.jpg": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 427,
+        "file": "cached-264f0572b244-640-cbf290f92fed.webp",
+        "bytes": 46268
+      },
+      {
+        "width": 1280,
+        "height": 853,
+        "file": "cached-264f0572b244-1280-2906806f4d08.webp",
+        "bytes": 172342
+      }
+    ]
+  },
+  "https://upload.wikimedia.org/wikipedia/commons/7/77/Dubai-World_Central_-_Al_Maktoum_International_Airport.jpg": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 425,
+        "file": "cached-1bfc1f4fa39e-640-95db08c7b5d0.webp",
+        "bytes": 36398
+      },
+      {
+        "width": 1280,
+        "height": 850,
+        "file": "cached-1bfc1f4fa39e-1280-7e02a1bc952f.webp",
+        "bytes": 110442
+      }
+    ]
+  },
+  "https://upload.wikimedia.org/wikipedia/commons/4/4f/Flyboard.JPG": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 424,
+        "file": "cached-a1c5d9f0a4cc-640-bce1855ef88c.webp",
+        "bytes": 30240
+      },
+      {
+        "width": 1280,
+        "height": 848,
+        "file": "cached-a1c5d9f0a4cc-1280-faf8c219e825.webp",
+        "bytes": 99242
+      }
+    ]
+  },
+  "https://commons.wikimedia.org/wiki/Special:Redirect/file/Butterfly%20Garden%20at%20Dubai.jpg": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 480,
+        "file": "cached-ae4ac11725f1-640-84d1c3ae929d.webp",
+        "bytes": 89544
+      },
+      {
+        "width": 1280,
+        "height": 960,
+        "file": "cached-ae4ac11725f1-1280-96d20da9f3c2.webp",
+        "bytes": 248242
+      }
+    ]
+  },
+  "https://upload.wikimedia.org/wikipedia/commons/2/2a/Warner_Bros._World_Abu_Dhabi_03.jpg": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 480,
+        "file": "cached-c78ee230c712-640-d4dc8cbeb6d1.webp",
+        "bytes": 60144
+      },
+      {
+        "width": 1280,
+        "height": 960,
+        "file": "cached-c78ee230c712-1280-1c7b885a4c20.webp",
+        "bytes": 171988
+      }
+    ]
+  },
+  "https://upload.wikimedia.org/wikipedia/commons/9/9c/Wakeboarding.jpg": {
+    "variants": [
+      {
+        "width": 467,
+        "height": 700,
+        "file": "cached-19c518b081fa-467-fd7895708782.webp",
+        "bytes": 59696
+      }
+    ]
+  },
+  "https://commons.wikimedia.org/wiki/Special:Redirect/file/Dune%20buggy%20dubai.jpg": {
+    "variants": [
+      {
+        "width": 640,
+        "height": 360,
+        "file": "cached-d5c06074c9a2-640-1d8d066192fa.webp",
+        "bytes": 30924
+      },
+      {
+        "width": 1280,
+        "height": 720,
+        "file": "cached-d5c06074c9a2-1280-edc7cc0492bc.webp",
+        "bytes": 84190
+      }
+    ]
   }
 }

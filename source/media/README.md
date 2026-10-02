@@ -32,3 +32,7 @@ photo-requests.csv tracks the 55 unresolved activity photos. It records referenc
 Two exact-location Unsplash photographs fill the Dubai Balloon and Burj Al Arab dining gaps. Their captions distinguish the photographed scene from the selected booking option. Seven existing Wikimedia photographs now have same-host WebP variants; `cached-photo-sources.json` records provenance and original licences. Original gallery URLs and order are preserved. The remaining 53 products are tracked in `photo-requests.csv`; no unrelated replacement or supplier image has been introduced.
 
 The next sequential batch caches ten additional existing Wikimedia photos previously loaded through Special:Redirect links. Catalogue keys, gallery order, alt text, focal points and attribution remain intact. Downloaded copies retain transparency where present and are converted without bitmap cropping.
+
+The final technical batch downloads 28 original photographs plus four CC0 photographs. All 63 previously rate-limited URL variants are mapped to local copies of their 49 existing source photographs. The 53 unassigned products remain separate and their targeted licensed-photo search outcomes are recorded in `photo-requests.csv`. A licensed Abu Dhabi quad-biking candidate could not be downloaded (HTTP 403), so no unverified replacement is published.
+
+The last two remaining Wikimedia gallery photographs (wakeboarding and dune buggy) are also served locally. The wakeboarding copy is kept at its native 467px width; no upscaling, subject replacement or bitmap crop is introduced.
