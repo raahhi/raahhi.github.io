@@ -305,14 +305,15 @@
   .breadcrumb a{ color:var(--ink-400); font-weight:600; }
   .breadcrumb a:hover{ color:var(--navy-950); }
   .breadcrumb .bc-current{ color:var(--ink-600); font-weight:600; }
-  .detail-gallery{ border-radius:var(--radius-l); overflow:hidden; height:420px; }
-  @media (max-width:760px){ .detail-gallery{ height:280px; } }
+  .detail-gallery{ border-radius:var(--radius-l); overflow:hidden; height:auto; aspect-ratio:var(--detail-ratio,12 / 5); }
+  @media (max-width:760px){ .detail-gallery{ aspect-ratio:4 / 3; } }
   .slideshow.detail-gallery-slideshow{ height:100%; }
   .detail-gallery .g-main{ height:100%; }
   .detail-gallery .g-side{ display:grid; grid-template-rows:1fr 1fr; gap:12px; height:100%; }
   @media (max-width:760px){ .detail-gallery .g-side{ grid-template-columns:1fr 1fr; grid-template-rows:none; height:160px; } }
   .detail-gallery .slideshow{ background:var(--sand-100); }
-  .detail-gallery .slideshow img{ width:100%; height:100%; object-fit:contain; object-position:center !important; }
+  .detail-gallery .slideshow img{ width:100%; height:100%; object-fit:cover; object-position:var(--photo-position,center) !important; }
+  .detail-gallery .slideshow img.img-fallback{ object-fit:contain; object-position:center !important; }
   .detail-gallery.is-yacht-gallery .slideshow img{ object-fit:cover; object-position:var(--photo-position,center 65%) !important; }
   .detail-layout{ display:grid; grid-template-columns:1.6fr 1fr; gap:52px; margin-top:48px; align-items:flex-start; }
   @media (max-width:900px){ .detail-layout{ grid-template-columns:1fr; } }
@@ -714,7 +715,7 @@
   .detail-gallery .ph-emblem{ width:44px; height:44px; }
   .detail-gallery .ph-title{ font-size:clamp(26px,3.6vw,42px); }
   .detail-gallery .ph-meta{ font-size:12.5px; }
-  .detail-gallery.is-fallback{ height:300px; }
+  .detail-gallery.is-fallback{ height:300px; aspect-ratio:auto; }
   @media (max-width:760px){ .detail-gallery.is-fallback{ height:210px; } .detail-gallery .ph-emblem{ width:36px; height:36px; } }
   /* Category tile whose activities have no verified photo yet */
   .cat-tile-media:empty{ display:flex; align-items:center; justify-content:center;
@@ -4281,7 +4282,12 @@ function imgSrcset(u){
   if(b.includes("upload.wikimedia.org")) return WIKI_WIDTHS.map(w => imgAt(u, w) + " " + w + "w").join(", ");
   return /images\.(unsplash|pexels)\.com/.test(b) ? IMG_WIDTHS.map(w => imgAt(u, w) + " " + w + "w").join(", ") : "";
 }
-function imgPosStyle(u){ const p = IMG_POS[imgBase(u)]; return p ? ' style="object-position:' + p + ';--photo-position:' + p + '"' : ""; }
+const DETAIL_IMG_POS = {
+  "https://images.unsplash.com/photo-1667592441284-b590021411e3": "center 70%",
+  "https://images.unsplash.com/photo-1603520781806-dbedf904bf32": "75% 65%",
+  "https://images.unsplash.com/photo-1708361089093-beef4c4584e7": "center top",
+};
+function imgPosStyle(u, detail = false){ const p = (detail && DETAIL_IMG_POS[imgBase(u)]) || IMG_POS[imgBase(u)]; return p ? ' style="object-position:' + p + ';--photo-position:' + p + '"' : ""; }
 // Branded panel for listings without a verified photo: an intentional RAAHHI TOURS title card, not an error state.
 // Decorative (aria-hidden) -- the listing's name is in the heading beside it. Never used where a real photo exists.
 const PH_EMBLEM = `<svg class="ph-emblem" viewBox="0 0 40 40" aria-hidden="true" focusable="false"><g fill="none" stroke="#C9A15A" stroke-width="1.3"><rect x="10" y="10" width="20" height="20"/><rect x="10" y="10" width="20" height="20" transform="rotate(45 20 20)"/><circle cx="20" cy="20" r="3.6"/></g></svg>`;
@@ -6583,7 +6589,6 @@ function slideshowHTML(images, alt, extraClass, opts){
   if(!imgs.length) return `<div class="slideshow slideshow-empty ${cls}">${placeholderHTML(alt, opts.meta)}${link}</div>`;
   const id = opts.id || ("sl" + (++_slideSeq).toString(36) + Math.random().toString(36).slice(2,6));
   const detail = cls.includes("detail-gallery"), hero = cls.includes("hero-slideshow");
-  const yacht = detail && alt === "Luxury Yacht Rental Dubai";
   const sizes = hero ? "100vw" : detail ? "(max-width: 760px) 100vw, 1200px" : "(max-width: 640px) 100vw, (max-width: 980px) 50vw, 400px";
   const decorative = alt === ""; // e.g. the homepage hero, which sits behind the headline
   const label = opts.label ? escapeHTML(opts.label) : "";
@@ -6591,15 +6596,12 @@ function slideshowHTML(images, alt, extraClass, opts){
   const imgTags = imgs.map((src,i)=>{
     const altText = decorative ? "" : (IMG_ALT[imgBase(src)] || alt);
     const srcset = imgSrcset(src);
-    const localPhoto = (window.RAAHHI_MEDIA || {})[imgBase(src)];
-    const dimensions = localPhoto && localPhoto.variants[localPhoto.variants.length - 1];
-    const ratio = dimensions ? dimensions.width / dimensions.height : null;
-    const photoSizes = detail && !yacht && ratio ? `(max-width: 760px) ${Math.ceil(280 * ratio)}px, ${Math.ceil(420 * ratio)}px` : sizes;
+    const photoSizes = sizes;
     const url = imgAt(src, detail || hero ? 1600 : 800);
     const load = i===0 && (hero || detail) ? ' fetchpriority="high"' : (hero || detail) ? ' loading="lazy" fetchpriority="low"' : ' loading="lazy"';
     if(opts.deferSlides && i > 0)
-      return `<img data-src="${url}"${srcset ? ` data-srcset="${srcset}" sizes="${photoSizes}"` : ""} alt="${altText}" class=""${imgPosStyle(src)} loading="lazy" decoding="async" onerror="imgFallback(this)">`;
-    return `<img src="${url}"${srcset ? ` srcset="${srcset}" sizes="${photoSizes}"` : ""} alt="${altText}" class="${i===0?'active':''}"${imgPosStyle(src)}${load} decoding="async" onerror="imgFallback(this)">`;
+      return `<img data-src="${url}"${srcset ? ` data-srcset="${srcset}" sizes="${photoSizes}"` : ""} alt="${altText}" class=""${imgPosStyle(src, detail)} loading="lazy" decoding="async" onerror="imgFallback(this)">`;
+    return `<img src="${url}"${srcset ? ` srcset="${srcset}" sizes="${photoSizes}"` : ""} alt="${altText}" class="${i===0?'active':''}"${imgPosStyle(src, detail)}${load} decoding="async" onerror="imgFallback(this)">`;
   }).join("");
   const of = label ? `: ${label}` : "";
   const dots = controls ? `<div class="slideshow-dots">${imgs.map((_,i)=>`<button type="button" aria-label="Show image ${i+1} of ${imgs.length}${of}"${i===0 ? ' aria-current="true"' : ""} class="${i===0?'active':''}" onclick="event.preventDefault();event.stopPropagation();slideGoTo('${id}',${i})"></button>`).join("")}</div>` : "";
@@ -8135,6 +8137,9 @@ function setDetailGallery(galleryId, creditId, images, title, meta, photoContext
   const g = document.getElementById(galleryId), c = document.getElementById(creditId), has = (images || []).length > 0;
   g.style.display = "";
   g.classList.toggle("is-fallback", !has);
+  // The tall skyline keeps its landmark intact without letterboxing.
+  if(title === "Sky Views Observatory") g.style.setProperty("--detail-ratio", "8 / 5");
+  else g.style.removeProperty("--detail-ratio");
   g.classList.toggle("is-yacht-gallery", title === "Luxury Yacht Rental Dubai");
   g.innerHTML = slideshowHTML(images, title, "detail-gallery-slideshow", {meta, label:title, deferSlides:true});
   if(c){

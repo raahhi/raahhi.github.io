@@ -1,6 +1,6 @@
 # Optimized catalogue photos
 
-The manifest maps existing, rights-recorded catalogue URLs to same-host WebP files. Original source URLs remain the keys for alt text, image positioning and visible licence credits. Files are resized and converted; the bitmap is not cropped. Product galleries contain the full image, except the yacht gallery, which uses photo-specific focal points to show the vessel clearly in its wide frame.
+The manifest maps existing, rights-recorded catalogue URLs to same-host WebP files. Original source URLs remain the keys for alt text, image positioning and visible licence credits. Files are resized and converted; the bitmap is not cropped. Product galleries fill responsive frames with CSS cover cropping. Existing focal points are preserved, with detail-only adjustments for the Museum of the Future and a taller desktop frame for Sky Views Observatory. Original image files and catalogue photo order are unchanged; CSS framing does not crop the stored bitmap.
 
 | Product | Photographer | Licence | Source |
 | --- | --- | --- | --- |

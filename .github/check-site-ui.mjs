@@ -10,6 +10,7 @@ const server=createServer(async(req,res)=>{
 await new Promise(r=>server.listen(0,'127.0.0.1',r));const base='http://127.0.0.1:'+server.address().port;
 const browser=await chromium.launch();
 const routes=['/','/visas/','/visas/united-arab-emirates/','/activities/','/activities/dubai/','/activities/dubai/evening-desert-safari/','/holidays/','/holidays/dubai/dubai-grand-stopover/','/guides/dubai-landmarks/','/contact/','/faq/','/terms/','/privacy/'];
+routes.push('/activities/dubai/museum-of-the-future/','/activities/dubai/dubai-aquarium/','/activities/dubai/sky-views-observatory/');
 routes.push(...['desert-safaris','city-tours','landmarks','theme-parks','water-parks','cruises','adventure','nature-wildlife','water-activities','dining-events','transfers'].map(c=>'/activities/categories/'+c+'/'));
 routes.push(...['dubai-dinner-cruises','uae-water-parks','dubai-observation-decks','uae-balloon-helicopter-experiences'].map(c=>'/compare/'+c+'/'));
 routes.push('/activities/dubai/img-worlds-of-adventure/','/activities/dubai/aqua-fun-dubai/','/activities/dubai/luxury-yacht-rental-dubai/','/holidays/ras-al-khaimah/','/holidays/ras-al-khaimah/ras-al-khaimah-zipline-safari/','/holidays/dubai/dubai-marina-overnight/','/holidays/dubai/dubai-family-theme-park-week/');
@@ -40,6 +41,10 @@ try{
    const overflow=await p.evaluate(()=>({width:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth}));
    assert(overflow.scroll<=overflow.width+1,route+' overflow '+JSON.stringify(overflow));
    assert.equal(errors.length,0,route+' runtime errors '+errors.join('; '));
+   assert(await p.locator('.page.active .detail-gallery:not(.is-fallback) .slideshow img:not(.img-fallback)').evaluateAll(es=>es.every(img=>{
+    const frame=img.closest('.detail-gallery').getBoundingClientRect(), rect=img.getBoundingClientRect();
+    return getComputedStyle(img).objectFit==='cover' && Math.abs(rect.width-frame.width)<=1 && Math.abs(rect.height-frame.height)<=1;
+   })),route+' every detail photo fills the frame');
    if(route==='/faq/'||route==='/activities/dubai/evening-desert-safari/'){
     const faq=p.locator('.page.active .qa-list details').first();
     assert.equal(await faq.getAttribute('open'),null);
@@ -85,7 +90,7 @@ try{
    }
    if(route==='/activities/dubai/img-worlds-of-adventure/'||route==='/activities/dubai/luxury-yacht-rental-dubai/'){
     const image=p.locator('#tourDetailGallery img.active');
-    assert.equal(await image.evaluate(el=>getComputedStyle(el).objectFit),route.includes('luxury-yacht')?'cover':'contain','Product-specific framing');
+    assert.equal(await image.evaluate(el=>getComputedStyle(el).objectFit),'cover','Full-width detail framing');
     assert(await image.evaluate(el=>el.complete&&el.naturalWidth>0&&new URL(el.currentSrc).pathname.startsWith('/assets/media/')),'Optimized same-host image loads');
     const gallery=p.locator('#tourDetailGallery .slideshow');
     await gallery.getByRole('button',{name:/^Next image/}).click();
