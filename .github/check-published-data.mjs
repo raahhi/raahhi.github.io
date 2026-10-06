@@ -6,7 +6,7 @@ import assert from 'node:assert/strict';
 const server = createServer(async (req, res) => {
   const path = new URL(req.url, 'http://localhost').pathname;
   try {
-    res.setHeader('Content-Type', path.endsWith('.js') ? 'text/javascript' : path.endsWith('.css') ? 'text/css' : 'text/html');
+    res.setHeader('Content-Type', path.endsWith('.js') ? 'text/javascript' : path.endsWith('.css') ? 'text/css' : path.endsWith('.svg') ? 'image/svg+xml' : 'text/html');
     res.end(await readFile('dist' + (path.endsWith('/') ? path + 'index.html' : path)));
   } catch { res.statusCode = 404; res.end(); }
 });

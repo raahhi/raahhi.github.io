@@ -4,7 +4,7 @@ import {readFile} from 'node:fs/promises';
 import assert from 'node:assert/strict';
 const server=createServer(async(req,res)=>{
  const p=new URL(req.url,'http://localhost').pathname;
- try{res.setHeader('Content-Type',p.endsWith('.js')?'text/javascript':p.endsWith('.css')?'text/css':p.endsWith('.png')?'image/png':p.endsWith('.jpg')?'image/jpeg':p.endsWith('.webp')?'image/webp':'text/html');res.end(await readFile('dist'+(p.endsWith('/')?p+'index.html':p)));}
+ try{res.setHeader('Content-Type',p.endsWith('.js')?'text/javascript':p.endsWith('.css')?'text/css':p.endsWith('.svg')?'image/svg+xml':p.endsWith('.png')?'image/png':p.endsWith('.jpg')?'image/jpeg':p.endsWith('.webp')?'image/webp':'text/html');res.end(await readFile('dist'+(p.endsWith('/')?p+'index.html':p)));}
  catch{res.statusCode=404;res.end();}
 });
 await new Promise(r=>server.listen(0,'127.0.0.1',r));const base='http://127.0.0.1:'+server.address().port;
@@ -42,6 +42,10 @@ try{
    const overflow=await p.evaluate(()=>({width:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth}));
    assert(overflow.scroll<=overflow.width+1,route+' overflow '+JSON.stringify(overflow));
    assert.equal(errors.length,0,route+' runtime errors '+errors.join('; '));
+   const brandImages=p.locator('.logo img, .footer-logo img, #mobile-nav .mobile-brand img');
+   assert.equal(await brandImages.count(),6,'Shared header, footer and mobile branding');
+   await brandImages.evaluateAll(es=>Promise.all(es.map(img=>img.decode())));
+   assert(await brandImages.evaluateAll(es=>es.every(img=>img.naturalWidth>0&&new URL(img.currentSrc).pathname.startsWith('/assets/brand/'))),'Approved vector brand assets load');
    assert(await p.locator('.page.active .detail-gallery:not(.is-fallback) .slideshow img:not(.img-fallback)').evaluateAll(es=>es.every(img=>{
     const frame=img.closest('.detail-gallery').getBoundingClientRect(), rect=img.getBoundingClientRect();
     const expectedFit=img.closest('.has-substitute-photo')?'contain':'cover';

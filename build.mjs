@@ -1,5 +1,5 @@
 import { createServer } from 'node:http';
-import { readFile, mkdir, writeFile, rm } from 'node:fs/promises';
+import { readFile, readdir, mkdir, writeFile, rm } from 'node:fs/promises';
 import { join, dirname } from 'node:path';
 import { chromium } from 'playwright';
 import { compileSiteAssets } from './scripts/site-assets.mjs';
@@ -24,12 +24,6 @@ function extractAppScript(source) {
   return { tag: m[0], js: m[1] };
 }
 
-function extractEmbeddedBrandPng(source) {
-  const m = source.match(/class="logo-mark"><img src="data:image\/png;base64,([^"]+)"/);
-  if (!m) throw new Error('Could not locate embedded RAAHHI brand PNG.');
-  return Buffer.from(m[1].replace(/\s+/g, ''), 'base64');
-}
-
 function routeToFile(route) {
   if (route === '/') return join(DIST, 'index.html');
   const clean = route.replace(/^\/+|\/+$/g, '');
@@ -44,13 +38,19 @@ const localMedia = await loadLocalMedia(ROOT);
 const authorSource = await readFile(SOURCE_FILE, 'utf8');
 const source = authorSource.replace('</head>', localMedia.bootstrap + '</head>');
 const appScript = extractAppScript(source);
-const logoPng = extractEmbeddedBrandPng(source);
+const brandFiles = new Map();
+for (const filename of await readdir(join(ROOT, 'source', 'brand'))) {
+  if (filename.endsWith('.svg')) brandFiles.set('/assets/brand/' + filename, await readFile(join(ROOT, 'source', 'brand', filename)));
+}
+if (!brandFiles.has('/assets/brand/raahhi-monogram-navy.svg') || !brandFiles.has('/assets/brand/raahhi-lockup-navy.svg')) throw new Error('Approved RAAHHI brand assets missing');
 let assets;
 
 await rm(DIST, { recursive: true, force: true });
 await mkdir(DIST, { recursive: true });
 
 const server = createServer((req, res) => {
+  const brand = brandFiles.get(new URL(req.url, 'http://localhost').pathname);
+  if (brand) { res.writeHead(200, {'Content-Type':'image/svg+xml'}); res.end(brand); return; }
   const media = localMedia.files.get(new URL(req.url, 'http://localhost').pathname);
   if(media){ res.writeHead(200, {'Content-Type':'image/webp'}); res.end(media); return; }
   res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' });
@@ -128,13 +128,23 @@ async function snapshot(route) {
 
 async function writeBrandAssets() {
   await mkdir(join(DIST, 'assets'), { recursive: true });
-  await writeFile(join(DIST, 'assets', 'raahhi-tours-logo.png'), logoPng);
-
-  const dataUri = 'data:image/png;base64,' + logoPng.toString('base64');
-  const page = await browser.newPage({ viewport: { width: 512, height: 512 } });
+  await mkdir(join(DIST, 'assets', 'brand'), { recursive: true });
+  for (const [url, content] of brandFiles) await writeFile(join(DIST, url.slice(1)), content);
+  const monogram = brandFiles.get('/assets/brand/raahhi-monogram-navy.svg').toString('utf8');
+  const lockup = brandFiles.get('/assets/brand/raahhi-lockup-navy.svg').toString('utf8');
+  const faviconSvg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" rx="72" fill="#FBF9F4"/><svg x="64" y="64" width="384" height="384" viewBox="0 0 280 280">' + monogram.replace(/^<svg[^>]*>/, '').replace(/<\/svg>\s*$/, '') + '</svg></svg>';
+  await writeFile(join(DIST, 'assets', 'raahhi-tours-favicon-v2.svg'), faviconSvg);
+  const page = await browser.newPage();
   try {
-    await page.setContent('<!doctype html><html><head><style>html,body{margin:0;width:512px;height:512px;overflow:hidden;background:#0F1E36}body{display:flex;align-items:center;justify-content:center}img{width:390px;height:auto;display:block}</style></head><body><img src="' + dataUri + '" alt=""></body></html>', { waitUntil: 'load' });
-    await page.screenshot({ path: join(DIST, 'assets', 'raahhi-tours-favicon.png'), type: 'png' });
+    await page.setViewportSize({width:1320,height:640});
+    await page.setContent('<html><style>html,body{margin:0;background:transparent}svg{display:block;width:1320px;height:640px}</style><body>' + lockup + '</body></html>');
+    await page.screenshot({path:join(DIST,'assets','raahhi-tours-logo-v2.png'),omitBackground:true});
+    await page.setViewportSize({width:512,height:512});
+    await page.setContent('<html><style>html,body{margin:0}svg{display:block;width:512px;height:512px}</style><body>' + faviconSvg + '</body></html>');
+    await page.screenshot({path:join(DIST,'assets','raahhi-tours-favicon-v2.png')});
+    await page.setViewportSize({width:180,height:180});
+    await page.setContent('<html><style>html,body{margin:0}svg{display:block;width:180px;height:180px}</style><body>' + faviconSvg + '</body></html>');
+    await page.screenshot({path:join(DIST,'assets','raahhi-tours-apple-touch-v2.png')});
   } finally {
     await page.close();
   }
