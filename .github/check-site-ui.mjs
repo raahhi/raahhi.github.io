@@ -48,7 +48,7 @@ try{
    assert(await brandImages.evaluateAll(es=>es.every(img=>img.naturalWidth>0&&new URL(img.currentSrc).pathname.startsWith('/assets/brand/'))),'Approved vector brand assets load');
    assert(await p.locator('.page.active .detail-gallery:not(.is-fallback) .slideshow img:not(.img-fallback)').evaluateAll(es=>es.every(img=>{
     const frame=img.closest('.detail-gallery').getBoundingClientRect(), rect=img.getBoundingClientRect();
-    const expectedFit=img.closest('.has-substitute-photo')?'contain':'cover';
+    const expectedFit='cover';
     return getComputedStyle(img).objectFit===expectedFit && Math.abs(rect.width-frame.width)<=1 && Math.abs(rect.height-frame.height)<=1;
    })),route+' detail photos retain their intended framing');
    if(route==='/faq/'||route==='/activities/dubai/evening-desert-safari/'){
@@ -105,7 +105,10 @@ try{
     const selected=gallery.locator('img.active');
     await selected.evaluate(el=>el.decode());
     assert.equal(await gallery.getAttribute('data-index'),'1');
-    assert(await selected.evaluate(el=>el.naturalWidth>0&&getComputedStyle(el).objectFit==='contain'),'Second uploaded photo loads with its complete frame');
+    assert(await selected.evaluate(el=>{
+     const frame=el.closest('.detail-gallery').getBoundingClientRect();
+     return el.naturalWidth>0&&getComputedStyle(el).objectFit==='cover'&&Math.abs(frame.width/frame.height-el.naturalWidth/el.naturalHeight)<0.01;
+    }),'Second uploaded photo fills its proportional frame without cropping');
    }
    if(route==='/activities/dubai/img-worlds-of-adventure/'||route==='/activities/dubai/luxury-yacht-rental-dubai/'){
     const image=p.locator('#tourDetailGallery img.active');
