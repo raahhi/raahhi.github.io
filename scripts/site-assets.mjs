@@ -25,6 +25,13 @@ export async function compileSiteAssets(source, appScript, catalogue) {
   let runtime = originalRuntime.slice(0, dataStart) +
     'const TOURS = window.RAAHHI_CATALOGUE.tours.map(t=>Object.assign({},t,window.RAAHHI_CATALOGUE.detail?.[t.id]||{}));\n' +
     addon + '\n' + originalRuntime.slice(dataEnd);
+  // Activity prices already travel in the shared catalogue. Do not ship a second
+  // copy of their source/rate metadata in the runtime price registry.
+  const priceDeclaration = runtime.match(/^const PRICE_CATALOGUE = (.*);$/m);
+  if(!priceDeclaration) throw new Error('Missing central price registry');
+  const activityIds = new Set(catalogue.tours.map(t=>t.id));
+  const otherPrices = Object.fromEntries(Object.entries(JSON.parse(priceDeclaration[1])).filter(([id])=>!activityIds.has(id)));
+  runtime = runtime.replace(priceDeclaration[0], 'const PRICE_CATALOGUE = '+JSON.stringify(otherPrices)+';');
   const summaryStart = 'function activitySummaryText(record){';
   const searchOther = 'other:[t.desc,t.description,t.duration,t.timing,t.location,t.pickup,...(t.inclusions||[])].filter(hasRealValue).map(normalizeSearch)';
   if (!runtime.includes(summaryStart) || !runtime.includes(searchOther)) throw new Error('Catalogue summary/search integration changed');

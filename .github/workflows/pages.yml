@@ -4,9 +4,11 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  schedule:
+    - cron: '23 2 * * *'
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -26,6 +28,19 @@ jobs:
         with:
           node-version: 22
 
+      - name: Refresh cached exchange rates
+        run: node scripts/update-exchange-rates.mjs
+
+      - name: Save latest exchange-rate cache
+        run: |
+          if ! git diff --quiet -- source/raahhi-tours52.html; then
+            git config user.name "RAAHHI exchange-rate updater"
+            git config user.email "rates-bot@users.noreply.github.com"
+            git add source/raahhi-tours52.html
+            git commit -m "Refresh cached USD exchange rates"
+            git push origin HEAD:main
+          fi
+
       - name: Install build dependencies
         run: npm ci --no-audit --no-fund
 
@@ -43,6 +58,9 @@ jobs:
 
       - name: Check published catalogue chunks and search
         run: node .github/check-published-data.mjs
+
+      - name: Check prices and currency selection
+        run: node .github/check-pricing.mjs
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
