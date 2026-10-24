@@ -69,6 +69,6 @@ try{
  await p.addInitScript(()=>{Storage.prototype.getItem=()=>{throw Error('Blocked storage')};Storage.prototype.setItem=()=>{throw Error('Blocked storage')};});
  await p.reload();await p.waitForFunction(()=>!document.querySelector('[data-currency-select]').disabled);await select.selectOption('USD');assert.equal(await select.inputValue(),'USD');
  assert.deepEqual(errors,[]);
- await p.setViewportSize({width:390,height:900});await p.goto(base+'/activities/dubai/evening-desert-safari/');await p.screenshot({path:'/workspace/scratch/edb79709da16/inventory-check/pricing-mobile.png'});
+ await p.setViewportSize({width:390,height:900});await p.goto(base+'/activities/dubai/evening-desert-safari/');if(process.env.RAAHHI_QA_SCREENSHOT)await p.screenshot({path:process.env.RAAHHI_QA_SCREENSHOT});
  console.log('PASS 235-product coverage; exact USD discounts; 18 currencies; persistence, precision, reference/unknown prices, enquiries, search, responsive controls, offline rate fallback and blocked storage');
 }finally{await browser.close();server.close();}
