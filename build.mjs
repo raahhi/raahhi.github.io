@@ -9,7 +9,7 @@ const ROOT = process.cwd();
 const DIST = join(ROOT, 'dist');
 const SOURCE_FILE = join(ROOT, 'source', 'raahhi-tours52.html');
 const EXPECTED_ORIGIN = 'https://raahhi.com';
-const EXPECTED_SITEMAP_URLS = 275;
+const EXPECTED_SITEMAP_URLS = 268;
 // Image errors can fire while the parser is still reading the page, before app.js loads.
 // hydrate() drains this queue using the real fallback handler once the app is ready.
 const EARLY_IMAGE_FALLBACK = '<script data-image-fallback-bootstrap>window.__imgFallbackQueue=[];window.imgFallback=function(el){window.__imgFallbackQueue.push(el);};</script>';
@@ -209,8 +209,8 @@ try {
       const visaRoutes = home.routes.filter(r => /^\/visas\/[^/]+\/$/.test(r));
       const index = data.html.match(/<nav\b[^>]*id="visaDestinationIndex"[^>]*>([\s\S]*?)<\/nav>/)?.[1];
       const links = new Set([...((index || '').matchAll(/<a\b[^>]*href="([^"]+)"/g))].map(m => m[1]));
-      if (visaRoutes.length !== 41 || links.size !== visaRoutes.length || visaRoutes.some(r => !links.has(r))) {
-        throw new Error('Visa destination index must contain all 41 visa routes as anchor links.');
+      if (visaRoutes.length !== 40 || links.size !== visaRoutes.length || visaRoutes.some(r => !links.has(r))) {
+        throw new Error('Visa destination index must contain all 40 visa routes as anchor links.');
       }
     }
     const html = attachHydrationScripts(data.html, data);

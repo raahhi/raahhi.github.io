@@ -4,7 +4,7 @@ Checked on 1 October 2026. This is a selected-field verification pass, not a cer
 
 `checked-fields.json` records the evidence inspected for nine priority activities. The authoritative HTML's `PRODUCT_FACT_CHECKS` applies the corrections after the original catalogue data is assembled. Selected-field dates do not replace whole-listing verification dates. Sources on each page explain exactly which statements they support.
 
-`review-queue.csv` covers all 174 activity and 26 holiday records. All 199 enquiry listings still require written supplier allocation/quote evidence before commercial facts can be certified. AquaFun is an official-purchase-only visitor listing, with no RAAHHI ticket enquiry or RAAHHI Service/Offer schema.
+`review-queue.csv` covers all 169 activity and 25 holiday records. All 193 enquiry listings still require written supplier allocation/quote evidence before commercial facts can be certified. AquaFun is an official-purchase-only visitor listing, with no RAAHHI ticket enquiry or RAAHHI Service/Offer schema.
 
 ## Findings applied
 
