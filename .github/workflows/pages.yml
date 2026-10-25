@@ -65,6 +65,9 @@ jobs:
       - name: Check product presentation and enquiry layouts
         run: node .github/check-presentation.mjs
 
+      - name: Check supplier options, cancellation terms and detailed enquiries
+        run: node .github/check-options.mjs
+
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
 

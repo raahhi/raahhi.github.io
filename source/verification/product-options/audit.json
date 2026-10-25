@@ -1,0 +1,3449 @@
+{
+  "checkedOn": "2026-10-25",
+  "referenceDates": [
+    "2026-10-26",
+    "2026-10-27",
+    "2026-10-28",
+    "2026-10-29",
+    "2026-10-30"
+  ],
+  "referencePax": "Recorded per option; never inferred as a universal group price",
+  "products": [
+    {
+      "id": "evening-desert-safari",
+      "title": "Evening Desert Safari",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/desert-safari-tours/dubai-desert-safari-with-dune-bashing-e-5962",
+      "supplierProductId": "5962",
+      "checkedOn": "2026-10-25",
+      "options": 4,
+      "pricedOptions": 4,
+      "verifiedOptionPolicies": 4,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "premium-desert-safari",
+      "title": "Premium Desert Safari",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/premium-tours/premium-desert-safari-e-2197",
+      "supplierProductId": "2197",
+      "checkedOn": "2026-10-25",
+      "options": 2,
+      "pricedOptions": 2,
+      "verifiedOptionPolicies": 2,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "overnight-desert-safari",
+      "title": "Overnight Desert Safari",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/desert-safari-tours/overnight-safari-e-90",
+      "supplierProductId": "90",
+      "checkedOn": "2026-10-25",
+      "options": 9,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 9,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "morning-desert-safari",
+      "title": "Morning Desert Safari",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/desert-safari-tours/morning-safari-e-62",
+      "supplierProductId": "62",
+      "checkedOn": "2026-10-25",
+      "options": 2,
+      "pricedOptions": 2,
+      "verifiedOptionPolicies": 2,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "dune-buggy-dubai",
+      "title": "Dune Buggy Dubai",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/desert-safari-tours/dune-buggy-dubai-e-508239",
+      "supplierProductId": "508239",
+      "checkedOn": "2026-10-25",
+      "options": 1,
+      "pricedOptions": 1,
+      "verifiedOptionPolicies": 1,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "desert-safari-abu-dhabi",
+      "title": "Desert Safari Abu Dhabi",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/abu-dhabi/desert-safari-tours/desert-safari-abu-dhabi-e-174",
+      "supplierProductId": "174",
+      "checkedOn": "2026-10-25",
+      "options": 2,
+      "pricedOptions": 2,
+      "verifiedOptionPolicies": 2,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "dubai-city-tour",
+      "title": "Dubai City Tour",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/city-tours/dubai-city-tour-e-33",
+      "supplierProductId": "33",
+      "checkedOn": "2026-10-25",
+      "options": 3,
+      "pricedOptions": 3,
+      "verifiedOptionPolicies": 3,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "abu-dhabi-city-tour-from-dubai",
+      "title": "Abu Dhabi City Tour from Dubai",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/city-tours/abu-dhabi-city-tour-e-49",
+      "supplierProductId": "49",
+      "checkedOn": "2026-10-25",
+      "options": 8,
+      "pricedOptions": 8,
+      "verifiedOptionPolicies": 8,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "full-day-abu-dhabi-city-tour",
+      "title": "Full-Day Abu Dhabi City Tour",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/abu-dhabi/city-tours/full-day-abu-dhabi-city-tour-e-4826",
+      "supplierProductId": "4826",
+      "checkedOn": "2026-10-25",
+      "options": 4,
+      "pricedOptions": 4,
+      "verifiedOptionPolicies": 4,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "dhow-cruise-marina",
+      "title": "Dhow Cruise Dinner — Marina",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/dhow-cruise/dhow-cruise-dinner-marina-e-87",
+      "supplierProductId": "87",
+      "checkedOn": "2026-10-25",
+      "options": 6,
+      "pricedOptions": 6,
+      "verifiedOptionPolicies": 6,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "dhow-cruise-creek",
+      "title": "Dhow Cruise Dinner — Creek",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/dhow-cruise/dhow-cruise-dinner-creek-e-86",
+      "supplierProductId": "86",
+      "checkedOn": "2026-10-25",
+      "options": 7,
+      "pricedOptions": 7,
+      "verifiedOptionPolicies": 7,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "musandam-dibba-tour",
+      "title": "Musandam Dibba Tour",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/dhow-cruise/musandam-dibba-tour-e-63",
+      "supplierProductId": "63",
+      "checkedOn": "2026-10-25",
+      "options": 2,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 2,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "burj-khalifa-top",
+      "title": "Burj Khalifa: At the Top",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/burj-khalifa-tickets/burj-khalifa-at-the-top-tickets-e-18",
+      "supplierProductId": "18",
+      "checkedOn": "2026-10-25",
+      "options": 15,
+      "pricedOptions": 6,
+      "verifiedOptionPolicies": 15,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "dubai-frame",
+      "title": "Dubai Frame",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/culture-and-attractions/dubai-frame-e-5066",
+      "supplierProductId": "5066",
+      "checkedOn": "2026-10-25",
+      "options": 3,
+      "pricedOptions": 3,
+      "verifiedOptionPolicies": 3,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "museum-of-the-future",
+      "title": "Museum of the Future",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/culture-and-attractions/museum-of-the-future-e-5116",
+      "supplierProductId": "5116",
+      "checkedOn": "2026-10-25",
+      "options": 3,
+      "pricedOptions": 2,
+      "verifiedOptionPolicies": 3,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "sky-views-observatory",
+      "title": "Sky Views Observatory",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/burj-khalifa-tickets/sky-views-dubai-e-508481",
+      "supplierProductId": "508481",
+      "checkedOn": "2026-10-25",
+      "options": 1,
+      "pricedOptions": 1,
+      "verifiedOptionPolicies": 1,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "the-view-at-the-palm",
+      "title": "The View at the Palm",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/culture-and-attractions/the-view-at-the-palm-dubai-e-509305",
+      "supplierProductId": "509305",
+      "checkedOn": "2026-10-25",
+      "options": 6,
+      "pricedOptions": 6,
+      "verifiedOptionPolicies": 6,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "dubai-aquarium",
+      "title": "Dubai Aquarium & Underwater Zoo",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/theme-parks/dubai-aquarium-and-underwater-zoo-e-3636",
+      "supplierProductId": "3636",
+      "checkedOn": "2026-10-25",
+      "options": 3,
+      "pricedOptions": 3,
+      "verifiedOptionPolicies": 3,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "aya-universe-dubai",
+      "title": "AYA Universe Dubai",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/theme-parks/aya-universe-dubai-e-508739",
+      "supplierProductId": "508739",
+      "checkedOn": "2026-10-25",
+      "options": 3,
+      "pricedOptions": 3,
+      "verifiedOptionPolicies": 3,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "dubai-miracle-garden",
+      "title": "Dubai Miracle Garden",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/culture-and-attractions/miracle-garden-dubai-e-4832",
+      "supplierProductId": "4832",
+      "checkedOn": "2026-10-25",
+      "options": 3,
+      "pricedOptions": 3,
+      "verifiedOptionPolicies": 3,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "global-village-dubai",
+      "title": "Global Village Dubai",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/culture-and-attractions/global-village-dubai-e-4833",
+      "supplierProductId": "4833",
+      "checkedOn": "2026-10-25",
+      "options": 3,
+      "pricedOptions": 3,
+      "verifiedOptionPolicies": 3,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "img-worlds-of-adventure",
+      "title": "IMG Worlds of Adventure",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/theme-parks/img-worlds-of-adventure-e-4753",
+      "supplierProductId": "4753",
+      "checkedOn": "2026-10-25",
+      "options": 4,
+      "pricedOptions": 4,
+      "verifiedOptionPolicies": 4,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "ferrari-world-abu-dhabi",
+      "title": "Ferrari World Abu Dhabi",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/abu-dhabi/theme-parks/ferrari-theme-park-abu-dhabi-e-4827",
+      "supplierProductId": "4827",
+      "checkedOn": "2026-10-25",
+      "options": 11,
+      "pricedOptions": 11,
+      "verifiedOptionPolicies": 11,
+      "defaultPolicy": "option-dependent",
+      "gaps": []
+    },
+    {
+      "id": "warner-bros-world",
+      "title": "Warner Bros. World Abu Dhabi",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/abu-dhabi/theme-parks/warner-bros-world-abu-dhabi-e-5184",
+      "supplierProductId": "5184",
+      "checkedOn": "2026-10-25",
+      "options": 5,
+      "pricedOptions": 5,
+      "verifiedOptionPolicies": 5,
+      "defaultPolicy": "option-dependent",
+      "gaps": []
+    },
+    {
+      "id": "seaworld-abu-dhabi",
+      "title": "SeaWorld Abu Dhabi",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/abu-dhabi/theme-parks/seaworld-abu-dhabi-e-508806",
+      "supplierProductId": "508806",
+      "checkedOn": "2026-10-25",
+      "options": 6,
+      "pricedOptions": 3,
+      "verifiedOptionPolicies": 6,
+      "defaultPolicy": "option-dependent",
+      "gaps": []
+    },
+    {
+      "id": "kidzania-abu-dhabi",
+      "title": "KidZania Abu Dhabi",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/abu-dhabi/theme-parks/kidzania-abu-dhabi-e-423029",
+      "supplierProductId": "423029",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "options",
+          "reason": "No selectable options returned by the public selector for the checked date"
+        }
+      ]
+    },
+    {
+      "id": "atlantis-aquaventure",
+      "title": "Atlantis Aquaventure Waterpark",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/water-parks/atlantis-aquaventure-waterpark-e-3625",
+      "supplierProductId": "3625",
+      "checkedOn": "2026-10-25",
+      "options": 3,
+      "pricedOptions": 3,
+      "verifiedOptionPolicies": 3,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "yas-waterworld",
+      "title": "Yas Waterworld",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/abu-dhabi/water-parks/yas-waterworld-e-111",
+      "supplierProductId": "111",
+      "checkedOn": "2026-10-25",
+      "options": 6,
+      "pricedOptions": 3,
+      "verifiedOptionPolicies": 6,
+      "defaultPolicy": "option-dependent",
+      "gaps": []
+    },
+    {
+      "id": "louvre-abu-dhabi",
+      "title": "Louvre Abu Dhabi",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/culture-and-attractions/louvre-abu-dhabi-e-6335",
+      "supplierProductId": "6335",
+      "checkedOn": "2026-10-25",
+      "options": 1,
+      "pricedOptions": 1,
+      "verifiedOptionPolicies": 1,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "qasr-al-watan",
+      "title": "Qasr Al Watan",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/culture-and-attractions/qasr-al-watan-abu-dhabi-e-41502",
+      "supplierProductId": "41502",
+      "checkedOn": "2026-10-25",
+      "options": 2,
+      "pricedOptions": 2,
+      "verifiedOptionPolicies": 2,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "national-aquarium-abu-dhabi",
+      "title": "The National Aquarium Abu Dhabi",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/abu-dhabi/theme-parks/the-national-aquarium-abu-dhabi-e-5901",
+      "supplierProductId": "5901",
+      "checkedOn": "2026-10-25",
+      "options": 4,
+      "pricedOptions": 4,
+      "verifiedOptionPolicies": 4,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "hot-air-balloon-dubai",
+      "title": "Hot Air Balloon Dubai",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/hot-air-balloon/hot-air-balloon-dubai-e-19390",
+      "supplierProductId": "19390",
+      "checkedOn": "2026-10-25",
+      "options": 3,
+      "pricedOptions": 3,
+      "verifiedOptionPolicies": 3,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "skydive-dubai-palm",
+      "title": "Skydive Dubai — Palm Dropzone",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/adventure-tours/skydive-dubai-experience-e-511101",
+      "supplierProductId": "511101",
+      "checkedOn": "2026-10-25",
+      "options": 2,
+      "pricedOptions": 2,
+      "verifiedOptionPolicies": 2,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "helicopter-tour-dubai",
+      "title": "Helicopter Tour Dubai",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/helicopter-tours/dubai-helicopter-tours-e-4817",
+      "supplierProductId": "4817",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "options",
+          "reason": "No selectable options returned by the public selector for the checked date"
+        }
+      ]
+    },
+    {
+      "id": "luxury-yacht-rental-dubai",
+      "title": "Luxury Yacht Rental Dubai",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/yacht-charter/luxury-yacht-rental-dubai-e-72",
+      "supplierProductId": "72",
+      "checkedOn": "2026-10-25",
+      "options": 18,
+      "pricedOptions": 1,
+      "verifiedOptionPolicies": 18,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "jebel-jais-zipline",
+      "title": "Jebel Jais Zipline",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/ras-al-khaimah/adventure-tours/jebel-jais-zipline-e-8937",
+      "supplierProductId": "8937",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "options",
+          "reason": "No selectable options returned by the public selector for the checked date"
+        }
+      ]
+    },
+    {
+      "id": "legoland-dubai",
+      "title": "LEGOLAND Dubai",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/theme-parks/legoland-dubai-e-4996",
+      "supplierProductId": "4996",
+      "checkedOn": "2026-10-25",
+      "options": 2,
+      "pricedOptions": 2,
+      "verifiedOptionPolicies": 2,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "legoland-water-park-dubai",
+      "title": "LEGOLAND Water Park Dubai",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/water-parks/legoland-water-park-e-5091",
+      "supplierProductId": "5091",
+      "checkedOn": "2026-10-25",
+      "options": 2,
+      "pricedOptions": 2,
+      "verifiedOptionPolicies": 2,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "motiongate-dubai",
+      "title": "MOTIONGATE Dubai",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/theme-parks/motiongate-dubai-e-4998",
+      "supplierProductId": "4998",
+      "checkedOn": "2026-10-25",
+      "options": 2,
+      "pricedOptions": 2,
+      "verifiedOptionPolicies": 2,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "real-madrid-world-dubai",
+      "title": "Real Madrid World Dubai",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/theme-parks/real-madrid-world-dubai-e-509134",
+      "supplierProductId": "509134",
+      "checkedOn": "2026-10-25",
+      "options": 2,
+      "pricedOptions": 2,
+      "verifiedOptionPolicies": 2,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "dubai-parks-and-resorts-multi-park-pass",
+      "title": "Dubai Parks and Resorts 1 or 2 Park Pass",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/theme-parks/dubai-parks-and-resorts-e-4837",
+      "supplierProductId": "4837",
+      "checkedOn": "2026-10-25",
+      "options": 6,
+      "pricedOptions": 6,
+      "verifiedOptionPolicies": 6,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "wild-wadi-water-park",
+      "title": "Wild Wadi Water Park",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/water-parks/wild-wadi-water-park-e-50",
+      "supplierProductId": "50",
+      "checkedOn": "2026-10-25",
+      "options": 6,
+      "pricedOptions": 4,
+      "verifiedOptionPolicies": 6,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "aqua-fun-dubai",
+      "title": "AquaFun Inflatable Water Park, JBR",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/water-parks/aqua-fun-dubai-e-508224",
+      "supplierProductId": "508224",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "aventura-parks-dubai",
+      "title": "Aventura Parks High Ropes, Mushrif Park",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/culture-and-attractions/aventura-parks-dubai-e-6290",
+      "supplierProductId": "6290",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "options",
+          "reason": "No selectable options returned by the public selector for the checked date"
+        }
+      ]
+    },
+    {
+      "id": "kidzania-dubai",
+      "title": "KidZania Dubai at The Dubai Mall",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/theme-parks/dubai-mall-kidzania-e-3637",
+      "supplierProductId": "3637",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "options",
+          "reason": "No selectable options returned by the public selector for the checked date"
+        }
+      ]
+    },
+    {
+      "id": "olioli-childrens-play-museum",
+      "title": "OliOli Children's Play Museum, Al Quoz",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/fun-and-games/olioli-children-play-museum-e-509140",
+      "supplierProductId": "509140",
+      "checkedOn": "2026-10-25",
+      "options": 2,
+      "pricedOptions": 2,
+      "verifiedOptionPolicies": 2,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "play-dxb",
+      "title": "Play DXB VR Park, The Dubai Mall",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/theme-parks/play-dxb-dubai-e-9206",
+      "supplierProductId": "9206",
+      "checkedOn": "2026-10-25",
+      "options": 3,
+      "pricedOptions": 3,
+      "verifiedOptionPolicies": 3,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "loco-bear-entertainment-hub",
+      "title": "Loco Bear Entertainment Hub, Al Quoz",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/theme-parks/loco-bear-entertainment-hub-e-509287",
+      "supplierProductId": "509287",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "options",
+          "reason": "No selectable options returned by the public selector for the checked date"
+        }
+      ]
+    },
+    {
+      "id": "house-of-hype-dubai",
+      "title": "House of Hype, The Dubai Mall",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/theme-parks/house-of-hype-e-509318",
+      "supplierProductId": "509318",
+      "checkedOn": "2026-10-25",
+      "options": 3,
+      "pricedOptions": 3,
+      "verifiedOptionPolicies": 3,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "3d-world-selfie-museum-dubai",
+      "title": "3D World Selfie Museum, Al Quoz",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/culture-and-attractions/3d-world-selfie-museum-e-508256",
+      "supplierProductId": "508256",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "options",
+          "reason": "No selectable options returned by the public selector for the checked date"
+        }
+      ]
+    },
+    {
+      "id": "madame-tussauds-dubai",
+      "title": "Madame Tussauds Dubai, Bluewaters",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/culture-and-attractions/madame-tussauds-dubai-e-446855",
+      "supplierProductId": "446855",
+      "checkedOn": "2026-10-25",
+      "options": 2,
+      "pricedOptions": 2,
+      "verifiedOptionPolicies": 2,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "sky-views-edge-walk",
+      "title": "Sky Views Edge Walk, Downtown Dubai",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/burj-khalifa-tickets/sky-views-edge-walk-e-508489",
+      "supplierProductId": "508489",
+      "checkedOn": "2026-10-25",
+      "options": 1,
+      "pricedOptions": 1,
+      "verifiedOptionPolicies": 1,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "ain-dubai",
+      "title": "Ain Dubai Observation Wheel, Bluewaters",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/theme-parks/ain-dubai-observation-wheel-e-5124",
+      "supplierProductId": "5124",
+      "checkedOn": "2026-10-25",
+      "options": 8,
+      "pricedOptions": 8,
+      "verifiedOptionPolicies": 8,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "the-lost-chambers-aquarium",
+      "title": "The Lost World Aquarium at Atlantis, The Palm",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/atlantis-hotel-tours/the-lost-chambers-aquarium-tickets-e-5963",
+      "supplierProductId": "5963",
+      "checkedOn": "2026-10-25",
+      "options": 3,
+      "pricedOptions": 3,
+      "verifiedOptionPolicies": 3,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "dolphin-bay-atlantis",
+      "title": "Dolphin Bay Encounters at Atlantis, The Palm",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/atlantis-hotel-tours/dolphin-bay-atlantis-e-5966",
+      "supplierProductId": "5966",
+      "checkedOn": "2026-10-25",
+      "options": 26,
+      "pricedOptions": 24,
+      "verifiedOptionPolicies": 26,
+      "defaultPolicy": "option-dependent",
+      "gaps": []
+    },
+    {
+      "id": "dubai-dolphinarium",
+      "title": "Dubai Dolphinarium Dolphin and Seal Show",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/theme-parks/dubai-dolphinarium-e-65",
+      "supplierProductId": "65",
+      "checkedOn": "2026-10-25",
+      "options": 6,
+      "pricedOptions": 5,
+      "verifiedOptionPolicies": 6,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "dubai-crocodile-park",
+      "title": "Dubai Crocodile Park, Mushrif",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/nature-and-wildlife/dubai-crocodile-park-e-508833",
+      "supplierProductId": "508833",
+      "checkedOn": "2026-10-25",
+      "options": 2,
+      "pricedOptions": 2,
+      "verifiedOptionPolicies": 2,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "the-green-planet-dubai",
+      "title": "The Green Planet Rainforest Bio-Dome, City Walk",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/nature-and-wildlife/the-green-planet-dubai-e-5120",
+      "supplierProductId": "5120",
+      "checkedOn": "2026-10-25",
+      "options": 4,
+      "pricedOptions": 4,
+      "verifiedOptionPolicies": 4,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "dubai-butterfly-garden",
+      "title": "Dubai Butterfly Garden, Al Barsha South",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/theme-parks/butterfly-garden-dubai-e-173054",
+      "supplierProductId": "173054",
+      "checkedOn": "2026-10-25",
+      "options": 2,
+      "pricedOptions": 2,
+      "verifiedOptionPolicies": 2,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "dubai-garden-glow",
+      "title": "Dubai Garden Glow, Zabeel Park",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/theme-parks/glow-garden-e-3377",
+      "supplierProductId": "3377",
+      "checkedOn": "2026-10-25",
+      "options": 2,
+      "pricedOptions": 2,
+      "verifiedOptionPolicies": 2,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "arte-museum-dubai",
+      "title": "ARTE Museum Dubai Immersive Digital Art",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/culture-and-attractions/arte-museum-dubai-e-509281",
+      "supplierProductId": "509281",
+      "checkedOn": "2026-10-25",
+      "options": 1,
+      "pricedOptions": 1,
+      "verifiedOptionPolicies": 1,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "expo-city-dubai",
+      "title": "Expo City Dubai Pavilions Pass",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/culture-and-attractions/expo-city-dubai-e-508827",
+      "supplierProductId": "508827",
+      "checkedOn": "2026-10-25",
+      "options": 6,
+      "pricedOptions": 6,
+      "verifiedOptionPolicies": 6,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "al-shindagha-museum",
+      "title": "Al Shindagha Museum, Dubai Creek",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/culture-and-attractions/al-shindagha-museum-e-508660",
+      "supplierProductId": "508660",
+      "checkedOn": "2026-10-25",
+      "options": 2,
+      "pricedOptions": 2,
+      "verifiedOptionPolicies": 2,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "mysore-palace-restaurant-dubai",
+      "title": "Mysore Palace South Indian Dining, Al Karama",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/food-and-beverages/mysore-palace-dubai-e-509888",
+      "supplierProductId": "509888",
+      "checkedOn": "2026-10-25",
+      "options": 2,
+      "pricedOptions": 2,
+      "verifiedOptionPolicies": 2,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "chillout-ice-lounge-dubai",
+      "title": "Chillout Ice Lounge Dubai",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/theme-parks/chillout-ice-lounge-dubai-e-507957",
+      "supplierProductId": "507957",
+      "checkedOn": "2026-10-25",
+      "options": 2,
+      "pricedOptions": 2,
+      "verifiedOptionPolicies": 2,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "dubai-ice-rink",
+      "title": "Dubai Ice Rink Skating Session",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/theme-parks/dubai-ice-rink-e-44410",
+      "supplierProductId": "44410",
+      "checkedOn": "2026-10-25",
+      "options": 4,
+      "pricedOptions": 1,
+      "verifiedOptionPolicies": 4,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "ifly-dubai",
+      "title": "iFly Dubai Indoor Skydiving",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/theme-parks/ifly-dubai-e-9209",
+      "supplierProductId": "9209",
+      "checkedOn": "2026-10-25",
+      "options": 1,
+      "pricedOptions": 1,
+      "verifiedOptionPolicies": 1,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "ski-dubai",
+      "title": "Ski Dubai Tickets",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/theme-parks/ski-dubai-tickets-e-172",
+      "supplierProductId": "172",
+      "checkedOn": "2026-10-25",
+      "options": 13,
+      "pricedOptions": 12,
+      "verifiedOptionPolicies": 13,
+      "defaultPolicy": "option-dependent",
+      "gaps": []
+    },
+    {
+      "id": "overnight-desert-safari-with-hot-air-balloon",
+      "title": "Overnight Desert Camp and Sunrise Balloon Flight",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/hot-air-balloon/overnight-desert-safari-with-hot-air-balloon-e-509764",
+      "supplierProductId": "509764",
+      "checkedOn": "2026-10-25",
+      "options": 1,
+      "pricedOptions": 1,
+      "verifiedOptionPolicies": 1,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "camel-riding-dubai",
+      "title": "Camel Riding in the Dubai Desert",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/camel-and-horse-riding/camel-riding-e-37",
+      "supplierProductId": "37",
+      "checkedOn": "2026-10-25",
+      "options": 1,
+      "pricedOptions": 1,
+      "verifiedOptionPolicies": 1,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "guided-camel-farm-trip",
+      "title": "Guided Camel Farm Visit at Camelicious",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/adventure-tours/guided-trip-to-camel-farm-e-509089",
+      "supplierProductId": "509089",
+      "checkedOn": "2026-10-25",
+      "options": 1,
+      "pricedOptions": 1,
+      "verifiedOptionPolicies": 1,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "horse-riding-dubai",
+      "title": "Horse Riding on Dubai's Desert Trails",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/adventure-tours/horse-riding-e-59",
+      "supplierProductId": "59",
+      "checkedOn": "2026-10-25",
+      "options": 2,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 2,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "hatta-mountain-safari",
+      "title": "Hatta Mountain Safari from Dubai",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/desert-safari-tours/hatta-mountain-safari-e-58",
+      "supplierProductId": "58",
+      "checkedOn": "2026-10-25",
+      "options": 6,
+      "pricedOptions": 6,
+      "verifiedOptionPolicies": 6,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "hatta-wadi-hub-activities",
+      "title": "Hatta Wadi Hub Activities and Packages",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/adventure-tours/hatta-wadi-activities-e-508771",
+      "supplierProductId": "508771",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "options",
+          "reason": "No selectable options returned by the public selector for the checked date"
+        }
+      ]
+    },
+    {
+      "id": "the-dubai-balloon-at-atlantis",
+      "title": "The Dubai Balloon at Atlantis",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/adventure-tours/the-dubai-balloon-at-atlantis-e-508878",
+      "supplierProductId": "508878",
+      "checkedOn": "2026-10-25",
+      "options": 1,
+      "pricedOptions": 1,
+      "verifiedOptionPolicies": 1,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "gyrocopter-flight-dubai",
+      "title": "Gyrocopter Flight over Dubai Marina and the Palm",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/adventure-tours/gyrocopter-flight-in-dubai-e-508562",
+      "supplierProductId": "508562",
+      "checkedOn": "2026-10-25",
+      "options": 2,
+      "pricedOptions": 2,
+      "verifiedOptionPolicies": 2,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "xline-dubai-marina",
+      "title": "XLine Dubai Marina Zipline",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/adventure-tours/dubai-xline-marina-e-509144",
+      "supplierProductId": "509144",
+      "checkedOn": "2026-10-25",
+      "options": 3,
+      "pricedOptions": 1,
+      "verifiedOptionPolicies": 3,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "full-day-dubai-city-tour",
+      "title": "Full-Day Dubai City Tour with Monorail and Abra",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/city-tours/full-day-explore-dubai-city-tour-e-1621",
+      "supplierProductId": "1621",
+      "checkedOn": "2026-10-25",
+      "options": 2,
+      "pricedOptions": 1,
+      "verifiedOptionPolicies": 2,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "big-bus-tour-dubai",
+      "title": "Big Bus Dubai Hop-On Hop-Off Tour",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/hop-on-hop-off-bus-dubai/big-bus-tour-dubai-e-3621",
+      "supplierProductId": "3621",
+      "checkedOn": "2026-10-25",
+      "options": 3,
+      "pricedOptions": 3,
+      "verifiedOptionPolicies": 3,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "6-emirates-in-a-day-tour",
+      "title": "6 Emirates in a Day Tour from Dubai",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/city-tours/6-emirates-in-a-day-tour-e-40",
+      "supplierProductId": "40",
+      "checkedOn": "2026-10-25",
+      "options": 1,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 1,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "sharjah-city-tour-from-dubai",
+      "title": "Sharjah City Tour from Dubai",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/city-tours/sharjah-city-tour-from-dubai-e-44",
+      "supplierProductId": "44",
+      "checkedOn": "2026-10-25",
+      "options": 1,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 1,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "al-ain-city-tour",
+      "title": "Al Ain City Tour from Dubai",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/city-tours/al-ain-city-tour-e-51",
+      "supplierProductId": "51",
+      "checkedOn": "2026-10-25",
+      "options": 1,
+      "pricedOptions": 1,
+      "verifiedOptionPolicies": 1,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "fujairah-east-coast-tour",
+      "title": "Fujairah and East Coast Tour from Dubai",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/city-tours/fujairah-east-coast-tour-e-64",
+      "supplierProductId": "64",
+      "checkedOn": "2026-10-25",
+      "options": 2,
+      "pricedOptions": 2,
+      "verifiedOptionPolicies": 2,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "khasab-musandam-tour",
+      "title": "Khasab (Musandam) Dhow Tour from Dubai",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/dhow-cruise/oman-khasab-tour-e-35",
+      "supplierProductId": "35",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "options",
+          "reason": "No selectable options returned by the public selector for the checked date"
+        }
+      ]
+    },
+    {
+      "id": "abu-dhabi-cultural-heritage-tour",
+      "title": "Abu Dhabi Cultural Heritage Tour from Dubai",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/city-tours/abu-dhabi-cultural-heritage-tour-e-509094",
+      "supplierProductId": "509094",
+      "checkedOn": "2026-10-25",
+      "options": 2,
+      "pricedOptions": 1,
+      "verifiedOptionPolicies": 2,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "heritage-street-food-tour-dubai",
+      "title": "Heritage Street Food Walk, Al Seef",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/culture-and-attractions/heritage-street-food-tour-dubai-e-509884",
+      "supplierProductId": "509884",
+      "checkedOn": "2026-10-25",
+      "options": 1,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 1,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "inside-burj-al-arab-guided-tour",
+      "title": "Inside Burj Al Arab Guided Tour",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/burj-al-arab-tours/guided-inside-burj-al-arab-open-dated-tickets-e-509872",
+      "supplierProductId": "509872",
+      "checkedOn": "2026-10-25",
+      "options": 1,
+      "pricedOptions": 1,
+      "verifiedOptionPolicies": 1,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "the-palm-monorail",
+      "title": "The Palm Monorail Ticket",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/sightseeing-tours/the-palm-monorail-e-508134",
+      "supplierProductId": "508134",
+      "checkedOn": "2026-10-25",
+      "options": 4,
+      "pricedOptions": 4,
+      "verifiedOptionPolicies": 4,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "lotus-mega-yacht-brunch-cruise",
+      "title": "Lotus Mega Yacht Brunch Cruise, Dubai Marina",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/cruise-and-boat-tours/lotus-mega-yacht-brunch-cruise-e-507959",
+      "supplierProductId": "507959",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "options",
+          "reason": "No selectable options returned by the public selector for the checked date"
+        }
+      ]
+    },
+    {
+      "id": "lotus-mega-yacht-dinner-cruise",
+      "title": "Lotus Mega Yacht Dinner Cruise, Dubai Marina",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/cruise-and-boat-tours/lotus-mega-yacht-dinner-cruise-e-507783",
+      "supplierProductId": "507783",
+      "checkedOn": "2026-10-25",
+      "options": 5,
+      "pricedOptions": 5,
+      "verifiedOptionPolicies": 5,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "lotus-mega-yacht-sunset-cruise",
+      "title": "Lotus Mega Yacht Sunset Cruise, Dubai Marina",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/cruise-and-boat-tours/lotus-mega-yacht-sunset-cruise-e-508240",
+      "supplierProductId": "508240",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "options",
+          "reason": "No selectable options returned by the public selector for the checked date"
+        }
+      ]
+    },
+    {
+      "id": "ocean-empress-dinner-cruise",
+      "title": "Ocean Empress Dinner Cruise, Dubai Marina",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/cruise-and-boat-tours/ocean-empress-dinner-cruise-e-508490",
+      "supplierProductId": "508490",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "options",
+          "reason": "No selectable options returned by the public selector for the checked date"
+        }
+      ]
+    },
+    {
+      "id": "palm-dinner-cruise",
+      "title": "Palm Dinner Cruise from Palm Views East Marina",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/dhow-cruise/palm-dinner-cruise-e-5957",
+      "supplierProductId": "5957",
+      "checkedOn": "2026-10-25",
+      "options": 1,
+      "pricedOptions": 1,
+      "verifiedOptionPolicies": 1,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "dubai-canal-cruise",
+      "title": "Dubai Canal Dinner Cruise from Festival City",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/cruise-and-boat-tours/luxury-dubai-canal-cruise-e-5269",
+      "supplierProductId": "5269",
+      "checkedOn": "2026-10-25",
+      "options": 2,
+      "pricedOptions": 2,
+      "verifiedOptionPolicies": 2,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "xclusive-dinner-cruise",
+      "title": "Xclusive Dinner Cruise, Dubai Marina",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/cruise-and-boat-tours/xclusive-dinner-cruise-e-508815",
+      "supplierProductId": "508815",
+      "checkedOn": "2026-10-25",
+      "options": 2,
+      "pricedOptions": 2,
+      "verifiedOptionPolicies": 2,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "xclusive-shared-yacht-tour",
+      "title": "Xclusive Shared Yacht Tour, Dubai Marina",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/cruise-and-boat-tours/xclusive-shared-yacht-tour-e-508817",
+      "supplierProductId": "508817",
+      "checkedOn": "2026-10-25",
+      "options": 8,
+      "pricedOptions": 8,
+      "verifiedOptionPolicies": 8,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "xclusive-sunset-cruise",
+      "title": "Xclusive Sunset Cruise, Dubai Marina",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/cruise-and-boat-tours/xclusive-sunset-cruise-dubai-e-509184",
+      "supplierProductId": "509184",
+      "checkedOn": "2026-10-25",
+      "options": 1,
+      "pricedOptions": 1,
+      "verifiedOptionPolicies": 1,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "xclusive-superyacht-experience",
+      "title": "Xclusive Superyacht Experience, Dubai Harbour",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/cruise-and-boat-tours/xclusive-superyacht-experience-e-508820",
+      "supplierProductId": "508820",
+      "checkedOn": "2026-10-25",
+      "options": 3,
+      "pricedOptions": 1,
+      "verifiedOptionPolicies": 3,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "sky-walker-shared-yacht-tour",
+      "title": "Sky Walker Shared Yacht Tour, Dubai Harbour",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/cruise-and-boat-tours/sky-walker-sharing-yacht-tours-e-508697",
+      "supplierProductId": "508697",
+      "checkedOn": "2026-10-25",
+      "options": 2,
+      "pricedOptions": 2,
+      "verifiedOptionPolicies": 2,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "bristol-private-yacht-charter",
+      "title": "Bristol Private Yacht Charter, Dubai Marina",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/water-activities/bristol-private-charter-dubai-e-509324",
+      "supplierProductId": "509324",
+      "checkedOn": "2026-10-25",
+      "options": 6,
+      "pricedOptions": 6,
+      "verifiedOptionPolicies": 6,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "bristol-shared-yacht-charter",
+      "title": "Bristol Shared Yacht Cruise, Dubai Marina",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/water-activities/bristol-sharing-charter-dubai-e-509325",
+      "supplierProductId": "509325",
+      "checkedOn": "2026-10-25",
+      "options": 6,
+      "pricedOptions": 5,
+      "verifiedOptionPolicies": 6,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "love-boat-speedboat-ride-dubai",
+      "title": "Love Boat Speedboat Ride, Dubai Marina",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/water-activities/love-boat-dubai-e-5071",
+      "supplierProductId": "5071",
+      "checkedOn": "2026-10-25",
+      "options": 1,
+      "pricedOptions": 1,
+      "verifiedOptionPolicies": 1,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "sunseeker-superyacht-experience",
+      "title": "Sunseeker Superyacht Cruise, Dubai",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/cruise-and-boat-tours/sunseeker-superyacht-experience-e-509317",
+      "supplierProductId": "509317",
+      "checkedOn": "2026-10-25",
+      "options": 1,
+      "pricedOptions": 1,
+      "verifiedOptionPolicies": 1,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "dubai-marina-yacht-party",
+      "title": "Dubai Marina Yacht Party Cruise",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/cruise-and-boat-tours/yacht-party-at-dubai-marina-e-509164",
+      "supplierProductId": "509164",
+      "checkedOn": "2026-10-25",
+      "options": 2,
+      "pricedOptions": 2,
+      "verifiedOptionPolicies": 2,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "new-years-eve-cruises-dubai-marina",
+      "title": "New Year's Eve Cruises, Dubai Marina",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/new-year-party/new-year-party-in-dubai-marina-e-1883",
+      "supplierProductId": "1883",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "options",
+          "reason": "No selectable options returned by the public selector for the checked date"
+        }
+      ]
+    },
+    {
+      "id": "deep-sea-cruising-dubai",
+      "title": "Deep Sea Cruising from Dubai Marina",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/water-activities/deep-sea-cruising-e-67",
+      "supplierProductId": "67",
+      "checkedOn": "2026-10-25",
+      "options": 1,
+      "pricedOptions": 1,
+      "verifiedOptionPolicies": 1,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "deep-sea-fishing-dubai",
+      "title": "Deep Sea Fishing Trip from Dubai Marina",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/water-activities/deep-sea-fishing-e-47",
+      "supplierProductId": "47",
+      "checkedOn": "2026-10-25",
+      "options": 1,
+      "pricedOptions": 1,
+      "verifiedOptionPolicies": 1,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "black-boat-tour-dubai",
+      "title": "The Black Boats Speedboat Tour, Dubai Marina",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/cruise-and-boat-tours/black-boat-tours-e-508698",
+      "supplierProductId": "508698",
+      "checkedOn": "2026-10-25",
+      "options": 2,
+      "pricedOptions": 2,
+      "verifiedOptionPolicies": 2,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "yellow-boats-dubai",
+      "title": "The Yellow Boats Sightseeing Ride, Dubai Marina",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/water-activities/yellow-boats-dubai-e-5005",
+      "supplierProductId": "5005",
+      "checkedOn": "2026-10-25",
+      "options": 4,
+      "pricedOptions": 4,
+      "verifiedOptionPolicies": 4,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "splash-boat-tour-dubai",
+      "title": "Splash Boat RIB Tour, Dubai Marina",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/water-activities/splash-boat-tour-dubai-e-508924",
+      "supplierProductId": "508924",
+      "checkedOn": "2026-10-25",
+      "options": 1,
+      "pricedOptions": 1,
+      "verifiedOptionPolicies": 1,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "dubai-fountain-lake-ride",
+      "title": "Dubai Fountain Lake Ride, Burj Lake",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/burj-khalifa-tickets/dubai-fountain-show-and-lake-ride-e-5176",
+      "supplierProductId": "5176",
+      "checkedOn": "2026-10-25",
+      "options": 2,
+      "pricedOptions": 2,
+      "verifiedOptionPolicies": 2,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "adventure-zone-seakart-ride",
+      "title": "Adventure Zone Seakart Ride, Dubai Marina",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/water-activities/adventure-zone-watersports-e-508684",
+      "supplierProductId": "508684",
+      "checkedOn": "2026-10-25",
+      "options": 1,
+      "pricedOptions": 1,
+      "verifiedOptionPolicies": 1,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "banana-boat-ride-dubai",
+      "title": "Banana Boat Ride, Palm Jumeirah",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/water-activities/banana-boat-ride-in-dubai-15-min-e-509457",
+      "supplierProductId": "509457",
+      "checkedOn": "2026-10-25",
+      "options": 2,
+      "pricedOptions": 2,
+      "verifiedOptionPolicies": 2,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "jet-ski-dubai",
+      "title": "Jet Ski Morning Ride from JBR, Dubai",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/water-activities/jet-ski-dubai-morning-experience-e-509923",
+      "supplierProductId": "509923",
+      "checkedOn": "2026-10-25",
+      "options": 4,
+      "pricedOptions": 4,
+      "verifiedOptionPolicies": 4,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "jet-car-dubai",
+      "title": "Jet Car Ride, Dubai Marina",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/water-activities/jet-car-activities-dubai-e-509455",
+      "supplierProductId": "509455",
+      "checkedOn": "2026-10-25",
+      "options": 6,
+      "pricedOptions": 6,
+      "verifiedOptionPolicies": 6,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "jetovator-dubai",
+      "title": "Jetovator Water Bike Ride, Dubai",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/water-activities/jetovator-tour-dubai-e-4766",
+      "supplierProductId": "4766",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "options",
+          "reason": "No selectable options returned by the public selector for the checked date"
+        }
+      ]
+    },
+    {
+      "id": "jetpack-dubai",
+      "title": "Water Jetpack Session, Palm Jumeirah",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/water-activities/jetpack-dubai-e-4830",
+      "supplierProductId": "4830",
+      "checkedOn": "2026-10-25",
+      "options": 1,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 1,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "flyboarding-dubai",
+      "title": "Flyboarding Session, Palm Jumeirah",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/water-activities/fly-boarding-dubai-e-4765",
+      "supplierProductId": "4765",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "options",
+          "reason": "No selectable options returned by the public selector for the checked date"
+        }
+      ]
+    },
+    {
+      "id": "e-foil-dubai",
+      "title": "E-Foil Session at FIVE Palm Jumeirah",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/water-activities/e-foil-dubai-30min-e-510192",
+      "supplierProductId": "510192",
+      "checkedOn": "2026-10-25",
+      "options": 1,
+      "pricedOptions": 1,
+      "verifiedOptionPolicies": 1,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "kayaking-dubai",
+      "title": "Sea Kayaking off Palm Jumeirah",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/water-activities/kayaking-experience-in-dubai-e-509456",
+      "supplierProductId": "509456",
+      "checkedOn": "2026-10-25",
+      "options": 4,
+      "pricedOptions": 4,
+      "verifiedOptionPolicies": 4,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "wakeboarding-dubai",
+      "title": "Wakeboarding Session at FIVE LUXE JBR",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/water-activities/wake-boarding-experience-30-min-e-509656",
+      "supplierProductId": "509656",
+      "checkedOn": "2026-10-25",
+      "options": 2,
+      "pricedOptions": 1,
+      "verifiedOptionPolicies": 2,
+      "defaultPolicy": "option-dependent",
+      "gaps": []
+    },
+    {
+      "id": "surf-high-experience-dubai",
+      "title": "Surf High: Wakeboard, Wake Surf or E-Foil",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/water-activities/surf-high-experience-in-dubai-e-508812",
+      "supplierProductId": "508812",
+      "checkedOn": "2026-10-25",
+      "options": 8,
+      "pricedOptions": 8,
+      "verifiedOptionPolicies": 8,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "parasailing-dubai",
+      "title": "Parasailing over the Dubai Coast",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/water-activities/dubai-parasailing-e-4779",
+      "supplierProductId": "4779",
+      "checkedOn": "2026-10-25",
+      "options": 3,
+      "pricedOptions": 3,
+      "verifiedOptionPolicies": 3,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "deep-dive-dubai",
+      "title": "Deep Dive Dubai: Scuba or Snorkel the Sunken City",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/adventure-tours/deep-dive-dubai-e-508379",
+      "supplierProductId": "508379",
+      "checkedOn": "2026-10-25",
+      "options": 4,
+      "pricedOptions": 4,
+      "verifiedOptionPolicies": 4,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "dubai-airport-transfer",
+      "title": "Dubai Airport (DXB) Pick-up or Drop-off",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/transfers/air-port-pick-up-e-152",
+      "supplierProductId": "152",
+      "checkedOn": "2026-10-25",
+      "options": 7,
+      "pricedOptions": 6,
+      "verifiedOptionPolicies": 7,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "dubai-abu-dhabi-airport-transfer",
+      "title": "Dubai Airport to Abu Dhabi Transfer",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/transfers/airport-transfers-from-dubai-to-abu-dhabi-e-4871",
+      "supplierProductId": "4871",
+      "checkedOn": "2026-10-25",
+      "options": 4,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 4,
+      "defaultPolicy": "option-dependent",
+      "gaps": []
+    },
+    {
+      "id": "al-maktoum-dwc-airport-transfer",
+      "title": "Al Maktoum Airport (DWC) Private Transfer",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/transfers/al-maktoum-international-airport-transfers-e-42336",
+      "supplierProductId": "42336",
+      "checkedOn": "2026-10-25",
+      "options": 2,
+      "pricedOptions": 2,
+      "verifiedOptionPolicies": 2,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "dubai-airport-to-ras-al-khaimah-transfer",
+      "title": "Dubai Airport to Ras Al Khaimah Transfer",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/transfers/dubai-airport-to-ras-al-khaimah-e-4874",
+      "supplierProductId": "4874",
+      "checkedOn": "2026-10-25",
+      "options": 4,
+      "pricedOptions": 2,
+      "verifiedOptionPolicies": 4,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "intercity-private-transfer-uae",
+      "title": "Private Intercity Transfer Between Emirates",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/transfers/dubai-intercity-transfers-e-5087",
+      "supplierProductId": "5087",
+      "checkedOn": "2026-10-25",
+      "options": 8,
+      "pricedOptions": 8,
+      "verifiedOptionPolicies": 8,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "dubai-intracity-transfer",
+      "title": "Dubai In-City Transfer, One-Way or Return",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/transfers/two-way-private-transfers-in-dubai-e-508480",
+      "supplierProductId": "508480",
+      "checkedOn": "2026-10-25",
+      "options": 12,
+      "pricedOptions": 12,
+      "verifiedOptionPolicies": 12,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "shared-transfers-to-uae-attractions",
+      "title": "Shared Coach Transfers to UAE Attractions",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/transfers/sic-transfers-to-emirate-attractions-e-5165",
+      "supplierProductId": "5165",
+      "checkedOn": "2026-10-25",
+      "options": 12,
+      "pricedOptions": 12,
+      "verifiedOptionPolicies": 12,
+      "defaultPolicy": "option-dependent",
+      "gaps": []
+    },
+    {
+      "id": "private-vehicle-with-driver",
+      "title": "Private Car with Driver in Dubai, Half or Full Day",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/transfers/private-vehicle-half-day-with-driver-e-160",
+      "supplierProductId": "160",
+      "checkedOn": "2026-10-25",
+      "options": 4,
+      "pricedOptions": 4,
+      "verifiedOptionPolicies": 4,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "private-limousine-rental-dubai",
+      "title": "Private Limousine Hire in Dubai",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/limousine-tours/private-limousine-rental-dubai-e-140",
+      "supplierProductId": "140",
+      "checkedOn": "2026-10-25",
+      "options": 4,
+      "pricedOptions": 4,
+      "verifiedOptionPolicies": 4,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "atlantis-lunch-or-dinner",
+      "title": "Lunch or Dinner at Atlantis, The Palm",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/atlantis-hotel-tours/atlantis-lunch-or-dinner-e-88",
+      "supplierProductId": "88",
+      "checkedOn": "2026-10-25",
+      "options": 2,
+      "pricedOptions": 2,
+      "verifiedOptionPolicies": 2,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "dinner-in-the-sky-dubai",
+      "title": "Dinner in the Sky Dubai",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/adventure-tours/dinner-in-the-sky-e-508283",
+      "supplierProductId": "508283",
+      "checkedOn": "2026-10-25",
+      "options": 1,
+      "pricedOptions": 1,
+      "verifiedOptionPolicies": 1,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "private-bespoke-desert-dinner",
+      "title": "Private Bespoke Desert Dinner for Two",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/premium-tours/private-bespoke-dinner-e-509191",
+      "supplierProductId": "509191",
+      "checkedOn": "2026-10-25",
+      "options": 3,
+      "pricedOptions": 3,
+      "verifiedOptionPolicies": 3,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "la-perle-by-dragone",
+      "title": "La Perle by Dragone Show Tickets",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/theme-parks/la-perle-by-dragone-dubai-e-5270",
+      "supplierProductId": "5270",
+      "checkedOn": "2026-10-25",
+      "options": 13,
+      "pricedOptions": 13,
+      "verifiedOptionPolicies": 13,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "yas-island-theme-parks-pass",
+      "title": "Yas Island Theme Parks Pass",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/dubai/theme-parks/yas-island-theme-park-tickets-e-508810",
+      "supplierProductId": "508810",
+      "checkedOn": "2026-10-25",
+      "options": 18,
+      "pricedOptions": 18,
+      "verifiedOptionPolicies": 18,
+      "defaultPolicy": "option-dependent",
+      "gaps": []
+    },
+    {
+      "id": "teamlab-phenomena-abu-dhabi",
+      "title": "teamLab Phenomena Abu Dhabi",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/abu-dhabi/culture-and-attractions/teamlab-phenomena-e-509346",
+      "supplierProductId": "509346",
+      "checkedOn": "2026-10-25",
+      "options": 1,
+      "pricedOptions": 1,
+      "verifiedOptionPolicies": 1,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "snow-abu-dhabi",
+      "title": "Snow Abu Dhabi at Reem Mall",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/abu-dhabi/theme-parks/snow-abu-dhabi-e-508865",
+      "supplierProductId": "508865",
+      "checkedOn": "2026-10-25",
+      "options": 2,
+      "pricedOptions": 2,
+      "verifiedOptionPolicies": 2,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "emirates-park-zoo",
+      "title": "Emirates Park Zoo Abu Dhabi",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/abu-dhabi/wildlife-zoo-and-aquarium/emirates-park-zoo-e-4710",
+      "supplierProductId": "4710",
+      "checkedOn": "2026-10-25",
+      "options": 4,
+      "pricedOptions": 2,
+      "verifiedOptionPolicies": 4,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "al-ain-zoo",
+      "title": "Al Ain Zoo and Al Ain Safari",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/abu-dhabi/culture-and-attractions/al-ain-zoo-abu-dhabi-e-511108",
+      "supplierProductId": "511108",
+      "checkedOn": "2026-10-25",
+      "options": 1,
+      "pricedOptions": 1,
+      "verifiedOptionPolicies": 1,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "natural-history-museum-abu-dhabi",
+      "title": "Natural History Museum Abu Dhabi",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/abu-dhabi/culture-and-attractions/natural-history-museum-abu-dhabi-e-509922",
+      "supplierProductId": "509922",
+      "checkedOn": "2026-10-25",
+      "options": 1,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 1,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "zayed-national-museum",
+      "title": "Zayed National Museum",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/abu-dhabi/culture-and-attractions/zayed-national-museum-e-509897",
+      "supplierProductId": "509897",
+      "checkedOn": "2026-10-25",
+      "options": 1,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 1,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "emirates-national-auto-museum",
+      "title": "Emirates National Auto Museum with Transfer",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/abu-dhabi/city-tours/emirates-national-auto-museum-e-4712",
+      "supplierProductId": "4712",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "options",
+          "reason": "No selectable options returned by the public selector for the checked date"
+        }
+      ]
+    },
+    {
+      "id": "sunrise-desert-safari-abu-dhabi",
+      "title": "Sunrise Desert Safari, Al Khatim (Abu Dhabi)",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/abu-dhabi/desert-safari-tours/sunrise-desert-safari-abu-dhabi-e-4876",
+      "supplierProductId": "4876",
+      "checkedOn": "2026-10-25",
+      "options": 1,
+      "pricedOptions": 1,
+      "verifiedOptionPolicies": 1,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "camel-trekking-abu-dhabi",
+      "title": "Camel Trekking in the Abu Dhabi Desert",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/abu-dhabi/desert-safari-tours/camel-trekking-in-abu-dhabi-e-183",
+      "supplierProductId": "183",
+      "checkedOn": "2026-10-25",
+      "options": 1,
+      "pricedOptions": 1,
+      "verifiedOptionPolicies": 1,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "quad-biking-abu-dhabi",
+      "title": "Quad Biking in the Abu Dhabi Desert",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/abu-dhabi/desert-safari-tours/quad-biking-abu-dhabi-e-239",
+      "supplierProductId": "239",
+      "checkedOn": "2026-10-25",
+      "options": 1,
+      "pricedOptions": 1,
+      "verifiedOptionPolicies": 1,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "morning-dune-buggy-and-quad-bike-abu-dhabi",
+      "title": "Abu Dhabi Morning Desert Ride: Dune Buggy or Quad",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/abu-dhabi/desert-safari-tours/morning-dune-buggy-and-quad-bikes-experience-e-509882",
+      "supplierProductId": "509882",
+      "checkedOn": "2026-10-25",
+      "options": 12,
+      "pricedOptions": 12,
+      "verifiedOptionPolicies": 12,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "al-ain-adventure",
+      "title": "Al Ain Adventure Water Park Entry",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/abu-dhabi/water-activities/al-ain-adventure-abu-dhabi-e-510971",
+      "supplierProductId": "510971",
+      "checkedOn": "2026-10-25",
+      "options": 1,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 1,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "jet-ski-abu-dhabi",
+      "title": "Guided Jet Ski Ride on the Abu Dhabi Corniche",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/abu-dhabi/water-activities/jet-ski-experience-in-abu-dhabi-e-510043",
+      "supplierProductId": "510043",
+      "checkedOn": "2026-10-25",
+      "options": 2,
+      "pricedOptions": 2,
+      "verifiedOptionPolicies": 2,
+      "defaultPolicy": "option-dependent",
+      "gaps": []
+    },
+    {
+      "id": "kayaking-abu-dhabi",
+      "title": "Kayaking Session in Abu Dhabi",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/abu-dhabi/water-activities/kayaking-experience-in-abu-dhabi-e-510046",
+      "supplierProductId": "510046",
+      "checkedOn": "2026-10-25",
+      "options": 4,
+      "pricedOptions": 4,
+      "verifiedOptionPolicies": 4,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "helicopter-ride-abu-dhabi",
+      "title": "Helicopter Sightseeing Flight over Abu Dhabi",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/abu-dhabi/adventure-tours/helicopter-ride-in-abu-dhabi-e-508786",
+      "supplierProductId": "508786",
+      "checkedOn": "2026-10-25",
+      "options": 2,
+      "pricedOptions": 2,
+      "verifiedOptionPolicies": 2,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "half-day-abu-dhabi-city-tour",
+      "title": "Half-Day Abu Dhabi City Tour",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/abu-dhabi/city-tours/half-day-abu-dhabi-city-tour-e-19392",
+      "supplierProductId": "19392",
+      "checkedOn": "2026-10-25",
+      "options": 2,
+      "pricedOptions": 2,
+      "verifiedOptionPolicies": 2,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "big-bus-tour-abu-dhabi",
+      "title": "Big Bus Hop-On Hop-Off Tour, Abu Dhabi",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/abu-dhabi/hop-on-hop-off-bus/big-bus-sightseeing-tour-e-5064",
+      "supplierProductId": "5064",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "options",
+          "reason": "No selectable options returned by the public selector for the checked date"
+        }
+      ]
+    },
+    {
+      "id": "yas-marina-circuit-tour",
+      "title": "Yas Marina Circuit Venue Tour",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/abu-dhabi/adventure-tours/yas-marina-circuit-tour-e-4701",
+      "supplierProductId": "4701",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "options",
+          "reason": "No selectable options returned by the public selector for the checked date"
+        }
+      ]
+    },
+    {
+      "id": "dubai-city-tour-from-abu-dhabi",
+      "title": "Dubai City Tour from Abu Dhabi",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/abu-dhabi/city-tours/dubai-city-tour-from-abu-dhabi-e-4859",
+      "supplierProductId": "4859",
+      "checkedOn": "2026-10-25",
+      "options": 1,
+      "pricedOptions": 1,
+      "verifiedOptionPolicies": 1,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "qasr-al-hosn",
+      "title": "Qasr Al Hosn Entry Ticket",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/abu-dhabi/culture-and-attractions/qasr-al-hosn-abu-dhabi-e-486473",
+      "supplierProductId": "486473",
+      "checkedOn": "2026-10-25",
+      "options": 1,
+      "pricedOptions": 1,
+      "verifiedOptionPolicies": 1,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "martabaan-by-hemant-oberoi-emirates-palace",
+      "title": "Martabaan by Hemant Oberoi Set Menu, Emirates Palace",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/abu-dhabi/restaurants-and-meals/emirates-palace-abu-dhabi-e-509080",
+      "supplierProductId": "509080",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "options",
+          "reason": "No selectable options returned by the public selector for the checked date"
+        }
+      ]
+    },
+    {
+      "id": "dhow-cruise-abu-dhabi",
+      "title": "Dhow Dinner Cruise on the Abu Dhabi Corniche",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/abu-dhabi/dhow-cruise/dhow-cruise-abu-dhabi-e-241",
+      "supplierProductId": "241",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "options",
+          "reason": "No selectable options returned by the public selector for the checked date"
+        }
+      ]
+    },
+    {
+      "id": "deep-sea-cruising-abu-dhabi",
+      "title": "Deep Sea Cruising, Abu Dhabi",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/abu-dhabi/water-activities/deep-sea-cruising-abu-dhabi-e-19770",
+      "supplierProductId": "19770",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "options",
+          "reason": "No selectable options returned by the public selector for the checked date"
+        }
+      ]
+    },
+    {
+      "id": "yellow-boats-abu-dhabi",
+      "title": "Yellow Boats Sightseeing Ride, Abu Dhabi",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/abu-dhabi/water-activities/yellow-boats-abu-dhabi-e-5006",
+      "supplierProductId": "5006",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "options",
+          "reason": "No selectable options returned by the public selector for the checked date"
+        }
+      ]
+    },
+    {
+      "id": "abu-dhabi-airport-transfer",
+      "title": "Abu Dhabi Airport Private Transfer",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/abu-dhabi/transfers/abu-dhabi-airport-pick-up-e-4865",
+      "supplierProductId": "4865",
+      "checkedOn": "2026-10-25",
+      "options": 2,
+      "pricedOptions": 2,
+      "verifiedOptionPolicies": 2,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "camel-riding-ras-al-khaimah",
+      "title": "Camel Riding, Ras Al Khaimah Desert",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/ras-al-khaimah/desert-safari-tours/camel-ride-in-ras-al-khaimah-e-509595",
+      "supplierProductId": "509595",
+      "checkedOn": "2026-10-25",
+      "options": 2,
+      "pricedOptions": 2,
+      "verifiedOptionPolicies": 2,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "overnight-desert-camping-ras-al-khaimah",
+      "title": "Overnight Desert Camp, Ras Al Khaimah",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/ras-al-khaimah/desert-safari-tours/overnight-desert-camping-e-5035",
+      "supplierProductId": "5035",
+      "checkedOn": "2026-10-25",
+      "options": 16,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 16,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "desert-safari-with-dinner-ras-al-khaimah",
+      "title": "Desert Safari with BBQ Dinner, Ras Al Khaimah",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/ras-al-khaimah/desert-safari-tours/desert-safari-with-dinner-in-ras-al-khaimah-e-509588",
+      "supplierProductId": "509588",
+      "checkedOn": "2026-10-25",
+      "options": 2,
+      "pricedOptions": 2,
+      "verifiedOptionPolicies": 2,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "quad-biking-ras-al-khaimah",
+      "title": "Quad Biking, Ras Al Khaimah Desert",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/ras-al-khaimah/adventure-tours/quad-bike-in-ras-al-khaimah-e-509591",
+      "supplierProductId": "509591",
+      "checkedOn": "2026-10-25",
+      "options": 4,
+      "pricedOptions": 4,
+      "verifiedOptionPolicies": 4,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "hot-air-balloon-ras-al-khaimah",
+      "title": "Sunrise Tethered Hot Air Balloon, Ras Al Khaimah",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/ras-al-khaimah/adventure-tours/sunrise-hot-air-balloon-ras-al-khaimah-e-508699",
+      "supplierProductId": "508699",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "options",
+          "reason": "No selectable options returned by the public selector for the checked date"
+        }
+      ]
+    },
+    {
+      "id": "house-of-pearls-suwaidi-pearl-farm",
+      "title": "House of Pearls by Suwaidi Pearls, Al Rams",
+      "kind": "activity",
+      "source": "https://www.raynatours.com/ras-al-khaimah/culture-and-attractions/house-of-pearls-e-509518",
+      "supplierProductId": "509518",
+      "checkedOn": "2026-10-25",
+      "options": 1,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 1,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "dubai-grand-stopover",
+      "title": "Dubai Grand Stopover Experience",
+      "kind": "holiday",
+      "source": "https://www.raynatours.com/dubai-packages/dubai-grand-stopover-experience-547",
+      "supplierProductId": "547",
+      "checkedOn": "2026-10-25",
+      "options": 3,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 3,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "ultimate-dubai-explorer",
+      "title": "Ultimate Dubai Explorer",
+      "kind": "holiday",
+      "source": "https://www.raynatours.com/dubai-packages/ultimate-dubai-explorer-549",
+      "supplierProductId": "549",
+      "checkedOn": "2026-10-25",
+      "options": 2,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 2,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "dubai-premium-kosher",
+      "title": "Dubai Premium Explorer — Kosher Journey",
+      "kind": "holiday",
+      "source": "https://www.raynatours.com/dubai-packages/dubai-premium-explorer-kosher-journey-556",
+      "supplierProductId": "556",
+      "checkedOn": "2026-10-25",
+      "options": 2,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 2,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "hotel-option",
+          "name": "Hilton Garden Inn Dubai Jumeirah",
+          "reason": "Existing hotel example not matched on the freshly checked supplier package page"
+        }
+      ]
+    },
+    {
+      "id": "dubai-sky-sea-adventure",
+      "title": "Dubai Sky Sea Adventure Escape",
+      "kind": "holiday",
+      "source": "https://www.raynatours.com/dubai-packages/dubai-sky-sea-adventure-escape-560",
+      "supplierProductId": "560",
+      "checkedOn": "2026-10-25",
+      "options": 2,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 2,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "dubai-jain-comfort",
+      "title": "Dubai Jain Comfort Getaway",
+      "kind": "holiday",
+      "source": "https://www.raynatours.com/dubai-packages/dubai-jain-comfort-getaway-572",
+      "supplierProductId": "572",
+      "checkedOn": "2026-10-25",
+      "options": 2,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 2,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "hotel-option",
+          "name": "Sea View Hotel Dubai",
+          "reason": "Existing hotel example not matched on the freshly checked supplier package page"
+        }
+      ]
+    },
+    {
+      "id": "dubai-group-indian-meals",
+      "title": "Dubai Group Departures with Indian Meals",
+      "kind": "holiday",
+      "source": "https://www.raynatours.com/dubai-packages/dubai-group-departures-with-indian-meals-614",
+      "supplierProductId": "614",
+      "checkedOn": "2026-10-25",
+      "options": 1,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 1,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "dubai-easter-short-break",
+      "title": "Dubai Easter Short Break",
+      "kind": "holiday",
+      "source": "https://www.raynatours.com/dubai-packages/dubai-easter-short-break-569",
+      "supplierProductId": "569",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "unconfirmed",
+      "gaps": [
+        {
+          "field": "hotel-option",
+          "reason": "Hotel preference and any upgrade price require a manual quote"
+        },
+        {
+          "field": "product-cancellation-policy",
+          "reason": "No unambiguous product-level cancellation section found"
+        }
+      ]
+    },
+    {
+      "id": "abu-dhabi-stay-play",
+      "title": "Abu Dhabi Stay and Play Luxury",
+      "kind": "holiday",
+      "source": "https://www.raynatours.com/abu-dhabi-packages/abu-dhabi-stay-and-play-luxury-package-628",
+      "supplierProductId": "628",
+      "checkedOn": "2026-10-25",
+      "options": 1,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 1,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "abu-dhabi-grand-with-dubai-day",
+      "title": "Abu Dhabi Grand Experiences with Dubai Day Tour",
+      "kind": "holiday",
+      "source": "https://www.raynatours.com/abu-dhabi-packages/abu-dhabi-grand-experiences-with-dubai-day-tour-670",
+      "supplierProductId": "670",
+      "checkedOn": "2026-10-25",
+      "options": 2,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 2,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "abu-dhabi-express-getaway",
+      "title": "Abu Dhabi Express Getaway",
+      "kind": "holiday",
+      "source": "https://www.raynatours.com/abu-dhabi-packages/abu-dhabi-express-getaway-629",
+      "supplierProductId": "629",
+      "checkedOn": "2026-10-25",
+      "options": 2,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 2,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "abu-dhabi-explorer-dubai-iconic",
+      "title": "Abu Dhabi Explorer and Dubai Iconic Tour",
+      "kind": "holiday",
+      "source": "https://www.raynatours.com/abu-dhabi-packages/abu-dhabi-explorer-and-dubai-iconic-tour-632",
+      "supplierProductId": "632",
+      "checkedOn": "2026-10-25",
+      "options": 2,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 2,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "dubai-marina-overnight",
+      "title": "Dubai Marina Overnight Escape",
+      "kind": "holiday",
+      "source": "https://www.raynatours.com/dubai-packages/dubai-stopover-delight-545",
+      "supplierProductId": "545",
+      "checkedOn": "2026-10-25",
+      "options": 3,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 3,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "dubai-skyline-overnight",
+      "title": "Dubai Skyline Overnight Escape",
+      "kind": "holiday",
+      "source": "https://www.raynatours.com/dubai-packages/dubai-stopover-express-544",
+      "supplierProductId": "544",
+      "checkedOn": "2026-10-25",
+      "options": 3,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 3,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "dubai-gardens-seasonal-escape",
+      "title": "Dubai Gardens and Seasonal Escape",
+      "kind": "holiday",
+      "source": "https://www.raynatours.com/dubai-packages/dubai-seasonal-stopover-546",
+      "supplierProductId": "546",
+      "checkedOn": "2026-10-25",
+      "options": 3,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 3,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "dubai-city-safari-value",
+      "title": "Dubai City and Safari Value Holiday",
+      "kind": "holiday",
+      "source": "https://www.raynatours.com/dubai-packages/super-saver-dubai-holiday-541",
+      "supplierProductId": "541",
+      "checkedOn": "2026-10-25",
+      "options": 2,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 2,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "dubai-downtown-discovery",
+      "title": "Dubai Downtown Discovery",
+      "kind": "holiday",
+      "source": "https://www.raynatours.com/dubai-packages/dubai-budget-explorer-with-dubai-mall-attractions-543",
+      "supplierProductId": "543",
+      "checkedOn": "2026-10-25",
+      "options": 2,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 2,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "dubai-waterpark-city-explorer",
+      "title": "Dubai Waterpark and City Explorer",
+      "kind": "holiday",
+      "source": "https://www.raynatours.com/dubai-packages/dubai-complete-experience-551",
+      "supplierProductId": "551",
+      "checkedOn": "2026-10-25",
+      "options": 3,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 3,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "dubai-family-discovery-waterpark",
+      "title": "Dubai Family Discovery with Waterpark",
+      "kind": "holiday",
+      "source": "https://www.raynatours.com/dubai-packages/dubai-little-explorers-kids-holiday-package-552",
+      "supplierProductId": "552",
+      "checkedOn": "2026-10-25",
+      "options": 3,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 3,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "dubai-family-theme-park-week",
+      "title": "Dubai Family Theme-Park Week",
+      "kind": "holiday",
+      "source": "https://www.raynatours.com/dubai-packages/dubai-kids-adventure-and-theme-park-holiday-package-553",
+      "supplierProductId": "553",
+      "checkedOn": "2026-10-25",
+      "options": 3,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 3,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "ras-al-khaimah-coast-heritage",
+      "title": "Ras Al Khaimah Coast and Heritage",
+      "kind": "holiday",
+      "source": "https://www.raynatours.com/ras-al-khaimah-packages/ras-al-khaimah-wonders-with-all-inclusive-city-tour-219",
+      "supplierProductId": "219",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "hotel-option",
+          "name": "Hampton by Hilton Marjan Island",
+          "reason": "Existing hotel example not matched on the freshly checked supplier package page"
+        },
+        {
+          "field": "hotel-option",
+          "reason": "Hotel preference and any upgrade price require a manual quote"
+        }
+      ]
+    },
+    {
+      "id": "ras-al-khaimah-safari-short-break",
+      "title": "Ras Al Khaimah Safari Short Break",
+      "kind": "holiday",
+      "source": "https://www.raynatours.com/ras-al-khaimah-packages/ras-al-khaimah-central-stay-with-desert-safari-220",
+      "supplierProductId": "220",
+      "checkedOn": "2026-10-25",
+      "options": 1,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 1,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "ras-al-khaimah-mountain-coast",
+      "title": "Ras Al Khaimah Mountain and Coast",
+      "kind": "holiday",
+      "source": "https://www.raynatours.com/ras-al-khaimah-packages/epic-ras-al-khaimah-adventure-with-the-worlds-longest-zipline-218",
+      "supplierProductId": "218",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "hotel-option",
+          "name": "Hampton by Hilton Marjan Island",
+          "reason": "Existing hotel example not matched on the freshly checked supplier package page"
+        },
+        {
+          "field": "hotel-option",
+          "reason": "Hotel preference and any upgrade price require a manual quote"
+        }
+      ]
+    },
+    {
+      "id": "ras-al-khaimah-coastal-safari",
+      "title": "Ras Al Khaimah Coastal Safari Escape",
+      "kind": "holiday",
+      "source": "https://www.raynatours.com/ras-al-khaimah-packages/sensational-ras-al-khaimah-getaway-with-desert-safari-217",
+      "supplierProductId": "217",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "hotel-option",
+          "name": "Hampton by Hilton Marjan Island",
+          "reason": "Existing hotel example not matched on the freshly checked supplier package page"
+        },
+        {
+          "field": "hotel-option",
+          "reason": "Hotel preference and any upgrade price require a manual quote"
+        }
+      ]
+    },
+    {
+      "id": "ras-al-khaimah-heritage-desert",
+      "title": "Ras Al Khaimah Heritage and Desert",
+      "kind": "holiday",
+      "source": "https://www.raynatours.com/ras-al-khaimah-packages/ras-al-khaimah-heritage-escape-with-city-tour-and-desert-safari-222",
+      "supplierProductId": "222",
+      "checkedOn": "2026-10-25",
+      "options": 1,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 1,
+      "defaultPolicy": "verified",
+      "gaps": []
+    },
+    {
+      "id": "ras-al-khaimah-zipline-safari",
+      "title": "Ras Al Khaimah Zipline and Safari",
+      "kind": "holiday",
+      "source": "https://www.raynatours.com/ras-al-khaimah-packages/sleek-ras-al-khaimah-stay-with-jais-zipline-and-desert-safari-221",
+      "supplierProductId": "221",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "hotel-option",
+          "name": "Pullman Resort Al Marjan Island",
+          "reason": "Existing hotel example not matched on the freshly checked supplier package page"
+        },
+        {
+          "field": "hotel-option",
+          "reason": "Hotel preference and any upgrade price require a manual quote"
+        }
+      ]
+    },
+    {
+      "id": "tourist-sim-card-eand",
+      "title": "e& Visitor Line (Tourist SIM)",
+      "kind": "addon",
+      "source": "https://www.raynatours.com/dubai/sim-card-and-wifi-router/etisalat-sim-card-for-tourists-e-508960",
+      "supplierProductId": "508960",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "options",
+          "reason": "No selectable options returned by the public selector for the checked date"
+        }
+      ]
+    },
+    {
+      "id": "united-arab-emirates",
+      "title": "United Arab Emirates visa assistance",
+      "kind": "visa",
+      "source": "https://www.raynatours.com/visas/dubai-visa",
+      "supplierProductId": "294",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "visa-options",
+          "reason": "Options depend on nationality, residence, travel date and applicant details; collected by the enquiry form"
+        }
+      ]
+    },
+    {
+      "id": "schengen-area",
+      "title": "Schengen Area visa assistance",
+      "kind": "visa",
+      "source": "https://www.raynatours.com/visas/schengen-visa",
+      "supplierProductId": "337",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "visa-options",
+          "reason": "Options depend on nationality, residence, travel date and applicant details; collected by the enquiry form"
+        }
+      ]
+    },
+    {
+      "id": "united-kingdom",
+      "title": "United Kingdom visa assistance",
+      "kind": "visa",
+      "source": "https://www.raynatours.com/visas/uk-visa",
+      "supplierProductId": "311",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "visa-options",
+          "reason": "Options depend on nationality, residence, travel date and applicant details; collected by the enquiry form"
+        }
+      ]
+    },
+    {
+      "id": "united-states",
+      "title": "United States visa assistance",
+      "kind": "visa",
+      "source": "https://www.raynatours.com/visas/usa-visa",
+      "supplierProductId": "296",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "visa-options",
+          "reason": "Options depend on nationality, residence, travel date and applicant details; collected by the enquiry form"
+        }
+      ]
+    },
+    {
+      "id": "saudi-arabia",
+      "title": "Saudi Arabia visa assistance",
+      "kind": "visa",
+      "source": "https://www.raynatours.com/visas/saudi-arabia-visa",
+      "supplierProductId": "309",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "visa-options",
+          "reason": "Options depend on nationality, residence, travel date and applicant details; collected by the enquiry form"
+        }
+      ]
+    },
+    {
+      "id": "egypt",
+      "title": "Egypt visa assistance",
+      "kind": "visa",
+      "source": "https://www.raynatours.com/visas/egypt-visa",
+      "supplierProductId": "328",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "visa-options",
+          "reason": "Options depend on nationality, residence, travel date and applicant details; collected by the enquiry form"
+        }
+      ]
+    },
+    {
+      "id": "turkey",
+      "title": "Turkey visa assistance",
+      "kind": "visa",
+      "source": "https://www.raynatours.com/visas/turkey-sticker-visa",
+      "supplierProductId": "379",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "visa-options",
+          "reason": "Options depend on nationality, residence, travel date and applicant details; collected by the enquiry form"
+        }
+      ]
+    },
+    {
+      "id": "singapore",
+      "title": "Singapore visa assistance",
+      "kind": "visa",
+      "source": "https://www.raynatours.com/visas/singapore-visa",
+      "supplierProductId": "321",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "visa-options",
+          "reason": "Options depend on nationality, residence, travel date and applicant details; collected by the enquiry form"
+        }
+      ]
+    },
+    {
+      "id": "thailand",
+      "title": "Thailand visa assistance",
+      "kind": "visa",
+      "source": "https://www.raynatours.com/visas/thailand-visa",
+      "supplierProductId": "333",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "visa-options",
+          "reason": "Options depend on nationality, residence, travel date and applicant details; collected by the enquiry form"
+        }
+      ]
+    },
+    {
+      "id": "indonesia",
+      "title": "Indonesia visa assistance",
+      "kind": "visa",
+      "source": "https://www.raynatours.com/visas/indonesia-visa",
+      "supplierProductId": "307",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "visa-options",
+          "reason": "Options depend on nationality, residence, travel date and applicant details; collected by the enquiry form"
+        }
+      ]
+    },
+    {
+      "id": "india",
+      "title": "India visa assistance",
+      "kind": "visa",
+      "source": "https://www.raynatours.com/visas/india-visa",
+      "supplierProductId": "316",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "visa-options",
+          "reason": "Options depend on nationality, residence, travel date and applicant details; collected by the enquiry form"
+        }
+      ]
+    },
+    {
+      "id": "malaysia",
+      "title": "Malaysia visa assistance",
+      "kind": "visa",
+      "source": "https://www.raynatours.com/visas/malaysia-visa",
+      "supplierProductId": "335",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "visa-options",
+          "reason": "Options depend on nationality, residence, travel date and applicant details; collected by the enquiry form"
+        }
+      ]
+    },
+    {
+      "id": "georgia",
+      "title": "Georgia visa assistance",
+      "kind": "visa",
+      "source": "https://www.raynatours.com/visas/georgia-visa",
+      "supplierProductId": "320",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "visa-options",
+          "reason": "Options depend on nationality, residence, travel date and applicant details; collected by the enquiry form"
+        }
+      ]
+    },
+    {
+      "id": "sri-lanka",
+      "title": "Sri Lanka visa assistance",
+      "kind": "visa",
+      "source": "https://www.raynatours.com/visas/sri-lanka-visa",
+      "supplierProductId": "344",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "visa-options",
+          "reason": "Options depend on nationality, residence, travel date and applicant details; collected by the enquiry form"
+        }
+      ]
+    },
+    {
+      "id": "vietnam",
+      "title": "Vietnam visa assistance",
+      "kind": "visa",
+      "source": "https://www.raynatours.com/visas/vietnam-visa",
+      "supplierProductId": "313",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "visa-options",
+          "reason": "Options depend on nationality, residence, travel date and applicant details; collected by the enquiry form"
+        }
+      ]
+    },
+    {
+      "id": "philippines",
+      "title": "Philippines visa assistance",
+      "kind": "visa",
+      "source": "https://www.raynatours.com/visas/philippines-visa",
+      "supplierProductId": "301",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "visa-options",
+          "reason": "Options depend on nationality, residence, travel date and applicant details; collected by the enquiry form"
+        }
+      ]
+    },
+    {
+      "id": "japan",
+      "title": "Japan visa assistance",
+      "kind": "visa",
+      "source": "https://www.raynatours.com/visas/japan-visa",
+      "supplierProductId": "330",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "visa-options",
+          "reason": "Options depend on nationality, residence, travel date and applicant details; collected by the enquiry form"
+        }
+      ]
+    },
+    {
+      "id": "canada",
+      "title": "Canada visa assistance",
+      "kind": "visa",
+      "source": "https://www.raynatours.com/visas/canada-visa",
+      "supplierProductId": "305",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "visa-options",
+          "reason": "Options depend on nationality, residence, travel date and applicant details; collected by the enquiry form"
+        }
+      ]
+    },
+    {
+      "id": "australia",
+      "title": "Australia visa assistance",
+      "kind": "visa",
+      "source": "https://www.raynatours.com/visas/australia-visa",
+      "supplierProductId": "295",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "visa-options",
+          "reason": "Options depend on nationality, residence, travel date and applicant details; collected by the enquiry form"
+        }
+      ]
+    },
+    {
+      "id": "china",
+      "title": "China visa assistance",
+      "kind": "visa",
+      "source": "https://www.raynatours.com/visas/china-visa",
+      "supplierProductId": "332",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "visa-options",
+          "reason": "Options depend on nationality, residence, travel date and applicant details; collected by the enquiry form"
+        }
+      ]
+    },
+    {
+      "id": "russia",
+      "title": "Russia visa assistance",
+      "kind": "visa",
+      "source": "https://www.raynatours.com/visas/russia-visa",
+      "supplierProductId": "308",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "visa-options",
+          "reason": "Options depend on nationality, residence, travel date and applicant details; collected by the enquiry form"
+        }
+      ]
+    },
+    {
+      "id": "south-korea",
+      "title": "South Korea visa assistance",
+      "kind": "visa",
+      "source": "https://www.raynatours.com/visas/south-korea-visa",
+      "supplierProductId": "325",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "visa-options",
+          "reason": "Options depend on nationality, residence, travel date and applicant details; collected by the enquiry form"
+        }
+      ]
+    },
+    {
+      "id": "south-africa",
+      "title": "South Africa visa assistance",
+      "kind": "visa",
+      "source": "https://www.raynatours.com/visas/south-africa-visa",
+      "supplierProductId": "329",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "visa-options",
+          "reason": "Options depend on nationality, residence, travel date and applicant details; collected by the enquiry form"
+        }
+      ]
+    },
+    {
+      "id": "kenya",
+      "title": "Kenya visa assistance",
+      "kind": "visa",
+      "source": "https://www.raynatours.com/visas/kenya-visa",
+      "supplierProductId": "338",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "visa-options",
+          "reason": "Options depend on nationality, residence, travel date and applicant details; collected by the enquiry form"
+        }
+      ]
+    },
+    {
+      "id": "tanzania",
+      "title": "Tanzania visa assistance",
+      "kind": "visa",
+      "source": "https://www.raynatours.com/visas/tanzania-visa",
+      "supplierProductId": "324",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "visa-options",
+          "reason": "Options depend on nationality, residence, travel date and applicant details; collected by the enquiry form"
+        }
+      ]
+    },
+    {
+      "id": "uganda",
+      "title": "Uganda visa assistance",
+      "kind": "visa",
+      "source": "https://www.raynatours.com/visas/uganda-visa",
+      "supplierProductId": "331",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "visa-options",
+          "reason": "Options depend on nationality, residence, travel date and applicant details; collected by the enquiry form"
+        }
+      ]
+    },
+    {
+      "id": "ghana",
+      "title": "Ghana visa assistance",
+      "kind": "visa",
+      "source": "https://www.raynatours.com/visas/ghana-visa",
+      "supplierProductId": "342",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "visa-options",
+          "reason": "Options depend on nationality, residence, travel date and applicant details; collected by the enquiry form"
+        }
+      ]
+    },
+    {
+      "id": "morocco",
+      "title": "Morocco visa assistance",
+      "kind": "visa",
+      "source": "https://www.raynatours.com/visas/morocco-visa",
+      "supplierProductId": "323",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "visa-options",
+          "reason": "Options depend on nationality, residence, travel date and applicant details; collected by the enquiry form"
+        }
+      ]
+    },
+    {
+      "id": "hong-kong",
+      "title": "Hong Kong visa assistance",
+      "kind": "visa",
+      "source": "https://www.raynatours.com/visas/hong-kong-visa",
+      "supplierProductId": "343",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "visa-options",
+          "reason": "Options depend on nationality, residence, travel date and applicant details; collected by the enquiry form"
+        }
+      ]
+    },
+    {
+      "id": "bahrain",
+      "title": "Bahrain visa assistance",
+      "kind": "visa",
+      "source": "https://www.raynatours.com/visas/bahrain-visa",
+      "supplierProductId": "315",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "visa-options",
+          "reason": "Options depend on nationality, residence, travel date and applicant details; collected by the enquiry form"
+        }
+      ]
+    },
+    {
+      "id": "oman",
+      "title": "Oman visa assistance",
+      "kind": "visa",
+      "source": "https://www.raynatours.com/visas/oman-visa",
+      "supplierProductId": "312",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "visa-options",
+          "reason": "Options depend on nationality, residence, travel date and applicant details; collected by the enquiry form"
+        }
+      ]
+    },
+    {
+      "id": "kuwait",
+      "title": "Kuwait visa assistance",
+      "kind": "visa",
+      "source": "https://www.raynatours.com/visas/kuwait-visa",
+      "supplierProductId": "326",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "visa-options",
+          "reason": "Options depend on nationality, residence, travel date and applicant details; collected by the enquiry form"
+        }
+      ]
+    },
+    {
+      "id": "lebanon",
+      "title": "Lebanon visa assistance",
+      "kind": "visa",
+      "source": "https://www.raynatours.com/visas/lebanon-visa",
+      "supplierProductId": "334",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "visa-options",
+          "reason": "Options depend on nationality, residence, travel date and applicant details; collected by the enquiry form"
+        }
+      ]
+    },
+    {
+      "id": "azerbaijan",
+      "title": "Azerbaijan visa assistance",
+      "kind": "visa",
+      "source": "https://www.raynatours.com/visas/azerbaijan-visa",
+      "supplierProductId": "304",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "visa-options",
+          "reason": "Options depend on nationality, residence, travel date and applicant details; collected by the enquiry form"
+        }
+      ]
+    },
+    {
+      "id": "armenia",
+      "title": "Armenia visa assistance",
+      "kind": "visa",
+      "source": "https://www.raynatours.com/visas/armenia-visa",
+      "supplierProductId": "352",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "visa-options",
+          "reason": "Options depend on nationality, residence, travel date and applicant details; collected by the enquiry form"
+        }
+      ]
+    },
+    {
+      "id": "uzbekistan",
+      "title": "Uzbekistan visa assistance",
+      "kind": "visa",
+      "source": "https://www.raynatours.com/visas/uzbekistan-visa",
+      "supplierProductId": "356",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "visa-options",
+          "reason": "Options depend on nationality, residence, travel date and applicant details; collected by the enquiry form"
+        }
+      ]
+    },
+    {
+      "id": "new-zealand",
+      "title": "New Zealand visa assistance",
+      "kind": "visa",
+      "source": "https://www.raynatours.com/visas/new-zealand-visa",
+      "supplierProductId": "339",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "visa-options",
+          "reason": "Options depend on nationality, residence, travel date and applicant details; collected by the enquiry form"
+        }
+      ]
+    },
+    {
+      "id": "ireland",
+      "title": "Ireland visa assistance",
+      "kind": "visa",
+      "source": "https://www.raynatours.com/visas/ireland-visa",
+      "supplierProductId": "306",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "visa-options",
+          "reason": "Options depend on nationality, residence, travel date and applicant details; collected by the enquiry form"
+        }
+      ]
+    },
+    {
+      "id": "brazil",
+      "title": "Brazil visa assistance",
+      "kind": "visa",
+      "source": "https://www.raynatours.com/visas/brazil-visa",
+      "supplierProductId": "319",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "visa-options",
+          "reason": "Options depend on nationality, residence, travel date and applicant details; collected by the enquiry form"
+        }
+      ]
+    },
+    {
+      "id": "ethiopia",
+      "title": "Ethiopia visa assistance",
+      "kind": "visa",
+      "source": "https://www.raynatours.com/visas/ethiopia-visa",
+      "supplierProductId": "318",
+      "checkedOn": "2026-10-25",
+      "options": 0,
+      "pricedOptions": 0,
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "verified",
+      "gaps": [
+        {
+          "field": "visa-options",
+          "reason": "Options depend on nationality, residence, travel date and applicant details; collected by the enquiry form"
+        }
+      ]
+    }
+  ]
+}

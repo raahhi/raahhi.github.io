@@ -32,6 +32,11 @@ export async function compileSiteAssets(source, appScript, catalogue) {
   const activityIds = new Set(catalogue.tours.map(t=>t.id));
   const otherPrices = Object.fromEntries(Object.entries(JSON.parse(priceDeclaration[1])).filter(([id])=>!activityIds.has(id)));
   runtime = runtime.replace(priceDeclaration[0], 'const PRICE_CATALOGUE = '+JSON.stringify(otherPrices)+';');
+  // Option evidence belongs to its activity detail chunk, not every catalogue visit.
+  const optionDeclaration = runtime.match(/^const PRODUCT_OPTION_CATALOGUE = (.*);$/m);
+  if(!optionDeclaration) throw new Error('Missing checked product option register');
+  const otherOptions = Object.fromEntries(Object.entries(JSON.parse(optionDeclaration[1])).filter(([id])=>!activityIds.has(id)));
+  runtime = runtime.replace(optionDeclaration[0], ()=>'const PRODUCT_OPTION_CATALOGUE = '+JSON.stringify(otherOptions)+';');
   const summaryStart = 'function activitySummaryText(record){';
   const searchOther = 'other:[t.desc,t.description,t.duration,t.timing,t.location,t.pickup,...(t.inclusions||[])].filter(hasRealValue).map(normalizeSearch)';
   if (!runtime.includes(summaryStart) || !runtime.includes(searchOther)) throw new Error('Catalogue summary/search integration changed');
@@ -80,7 +85,7 @@ export async function compileSiteAssets(source, appScript, catalogue) {
   const scriptUrl = asset('app', 'js', js.code);
   const styleUrl = asset('site', 'css', css.code);
   const detailKeys = ['description', 'faqs', 'importantInformation', 'exclusions', 'cancellationPolicy', 'sources',
-    'highlights', 'restrictions', 'itinerary', 'pickup', 'meetingPoint', 'inclusions', 'location', 'timing'];
+    'highlights', 'restrictions', 'itinerary', 'pickup', 'meetingPoint', 'inclusions', 'location', 'timing', 'optionConfig'];
   const detailUrls = new Map();
   const detailSizes = [];
   const tours = catalogue.tours.map(t => {

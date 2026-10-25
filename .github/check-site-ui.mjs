@@ -166,6 +166,9 @@ try{
      await p.locator('#visaEnqName').fill('Test Traveller');
      await p.locator('#visaEnqEmail').fill('test@example.com');
      await p.locator('#visaEnqPhone').fill('+971501234567');
+     await p.locator('#visaEnqNationality').selectOption('IN');
+     await p.locator('#visaEnqResidence').selectOption('IN');
+     await p.locator('#visaEnqPurpose').selectOption('tourism');
      await p.locator('#visaOptional summary').click();
      await p.locator('#visaEnqDate').fill('2020-01-01');
      await p.locator('#visaOptional summary').click();
