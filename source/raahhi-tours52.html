@@ -299,7 +299,7 @@
   .pc-meta{ display:flex; justify-content:space-between; align-items:center; font-size:13px; color:var(--ink-400); margin-top:6px; }
   .pc-foot{ display:flex; justify-content:space-between; align-items:center; margin-top:12px; padding-top:14px; border-top:1px solid var(--line); }
   .pc-price{ font-family:'Fraunces',serif; font-size:19px; }
-  .pc-price span{ display:block; font-size:11px; color:var(--ink-400); font-family:'Inter',sans-serif; font-weight:600; }
+
 
   /* product detail */
   .detail-back{ display:inline-flex; align-items:center; gap:8px; color:var(--ink-600); font-weight:600; font-size:14.5px; margin-bottom:26px; }
@@ -336,7 +336,7 @@
 
   .booking-box{ position:sticky; top:110px; background:var(--white); border:1px solid var(--line); border-radius:var(--radius-l); padding:26px; box-shadow:var(--shadow-2); }
   .booking-box .bb-price{ font-family:'Fraunces',serif; font-size:30px; }
-  .booking-box .bb-price span{ font-size:13px; color:var(--ink-400); font-family:'Inter',sans-serif; font-weight:500; }
+
   .booking-box .field{ margin-top:14px; }
 
   .detail-heading h1{ font-size:clamp(28px,3.6vw,38px); line-height:1.2; }
@@ -878,11 +878,99 @@
   .currency-note{font:400 12px/1.6 Inter,system-ui,sans-serif;color:var(--sand-50);margin:16px 0;}
   .currency-note a{color:inherit;text-decoration:underline;}
   .mobile-enquiry-summary [data-usd-cents]{display:inline;}
-  .pc-price [data-usd-cents],.bb-price [data-usd-cents]{display:inline;font:inherit;color:inherit;}
+
   .pc-price,.bb-price{overflow-wrap:anywhere;}
   @media(max-width:1100px){.header-actions>.btn-sm{display:none;}}
   @media(max-width:360px){.logo .brand-wordmark{width:80px;}.logo .logo-mark{width:36px;height:36px;}.logo .brand-divider{margin:0 6px;height:30px;}}
   @media(max-width:640px){.currency-control select{width:72px;min-height:40px;}.header-actions{gap:6px;}.header-actions .search-trigger{display:none;}}
+
+  /* Shared catalogue presentation: prices, hierarchy, browsing and product enquiries. */
+  .product-card,.pkg-card{border-radius:var(--radius-m);box-shadow:var(--shadow-1);}
+  .product-card:hover,.pkg-card:hover{box-shadow:var(--shadow-2);transform:translateY(-2px);}
+  .pc-content,.pkg-body{padding:20px;gap:10px;container-type:inline-size;min-width:0;}
+  .product-card h3,.pkg-card h3{font-size:20px;line-height:1.35;min-height:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+  .pc-meta{margin-top:0;font-size:14px;gap:6px 12px;}
+  .pc-summary{font-size:15px;line-height:1.6;min-height:0;-webkit-line-clamp:2;margin-bottom:8px;}
+  .pc-foot,.pkg-price-row{padding-top:18px;border-top:1px solid var(--line);gap:16px;}
+  .pc-foot .pc-price,.pkg-price-row .pc-price{font:500 15px/1.5 Inter,system-ui,sans-serif;width:100%;color:var(--navy-950);}
+  .price-label{font:500 13px/1.5 Inter,system-ui,sans-serif;color:var(--ink-600);}
+  .price-amount{font-weight:700;font-family:Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums;color:var(--navy-950);}
+  .pc-price .price-label,.booking-box .bb-price .price-label,.vc-price .price-label{display:block;margin-bottom:4px;}
+  .pc-price .price-amount{display:block;font-size:clamp(22px,8cqi,28px);line-height:1.2;white-space:nowrap;}
+  .price-basis{display:block;font:400 14px/1.5 Inter,system-ui,sans-serif;color:var(--ink-600);margin-top:8px;}
+  .pc-price .price-basis{font-size:14px;}
+  .pc-foot .btn,.pkg-price-row .btn{border-radius:8px;min-height:46px;}
+  .pkg-incl{margin:0;gap:8px;}
+  .pkg-stay{margin-bottom:8px;}
+  .detail-heading h1{max-width:24ch;font-size:clamp(30px,3.5vw,44px);line-height:1.2;}
+  .detail-tags{gap:8px;margin:16px 0;}
+  .detail-enquiry-actions{margin-bottom:0;}
+  .detail-enquiry-actions .btn{background:var(--navy-950);color:var(--white);border-radius:8px;box-shadow:var(--shadow-1);}
+  .detail-layout{grid-template-columns:minmax(0,1.65fr) minmax(300px,1fr);gap:32px;margin-top:28px;align-items:start;}
+  .detail-content,.detail-main,.detail-sidebar{min-width:0;}
+  .detail-sidebar{position:sticky;top:108px;}
+  .detail-sidebar .booking-box{position:static;padding:24px;border-radius:var(--radius-m);box-shadow:var(--shadow-1);container-type:inline-size;}
+  .booking-box .bb-price{font:500 20px/1.5 Inter,system-ui,sans-serif;color:var(--navy-950);}
+  .booking-box .bb-price .price-amount{display:block;font:700 clamp(25px,10cqi,36px)/1.2 Inter,system-ui,sans-serif;color:var(--navy-950);white-space:nowrap;letter-spacing:-.03em;}
+  .booking-box .bb-price .price-basis{font:400 14px/1.6 Inter,system-ui,sans-serif;color:var(--ink-600);}
+  .booking-box .field{margin-top:20px;}
+  .booking-box input,.booking-box select{font-size:16px;min-height:46px;border-radius:8px;}
+  .booking-box>.btn{background:var(--navy-950);color:var(--white);border-radius:8px;box-shadow:var(--shadow-1);white-space:normal;}
+  .booking-box .form-note{font-size:13px;line-height:1.6;text-align:left!important;}
+  .detail-section-nav{display:flex;flex-wrap:wrap;gap:4px 20px;padding:14px 0;margin:12px 0 24px;border-bottom:1px solid var(--line);}
+  .detail-section-nav a{display:inline-flex;align-items:center;min-height:44px;font:600 14px/1.4 Inter,system-ui,sans-serif;color:var(--ink-600);text-underline-offset:6px;}
+  .detail-section-nav a:hover,.detail-section-nav a:focus-visible{color:var(--gold-text);text-decoration:underline;}
+  .detail-main .detail-section>h2{font-size:25px;line-height:1.35;}
+  .detail-main .detail-section>p,.detail-main .detail-section>ul,.detail-main .detail-section>ol{font-size:16px!important;line-height:1.7;}
+  .detail-main .detail-section{margin-top:30px;}
+  .detail-main h2,.detail-section-nav{scroll-margin-top:110px;}
+  .enquiry-journey{margin-top:24px;padding-top:20px;border-top:1px solid var(--line);}
+  .enquiry-journey h3{font:600 15px/1.4 Inter,system-ui,sans-serif;}
+  .enquiry-journey ol{margin:14px 0 0;padding-left:20px;}
+  .enquiry-journey li{padding:0 0 12px 4px;font-size:13px;color:var(--ink-600);}
+  .enquiry-journey li:last-child{padding-bottom:0;}
+  .enquiry-journey li::marker{color:var(--gold-text);font-weight:600;}
+  .enquiry-journey strong{display:block;color:var(--navy-950);font-weight:600;margin-bottom:3px;}
+  .vc-price .price-label,.vc-price .price-basis{color:var(--sand-50);}
+  .vc-price .price-amount{font:700 26px/1.3 Inter,system-ui,sans-serif;color:var(--white);}
+  .browse-controls{background:var(--white);border:1px solid var(--line);border-radius:var(--radius-m);padding:20px;margin-bottom:28px;}
+  .browse-controls .category-picker{margin-bottom:12px;flex-wrap:wrap;}
+  .browse-controls .toolbar{margin:16px 0;}
+  .browse-category-links{display:flex;gap:8px;flex-wrap:wrap;}
+  .browse-category-links a{display:inline-flex;align-items:center;min-height:44px;padding:8px 14px;border:1px solid var(--line);border-radius:24px;font-size:13px;background:var(--sand-50);}
+  .browse-category-links a:hover{border-color:var(--gold-text);}
+  .browse-results{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+  .browse-results .tour-results-count{margin:0;font-size:14px;}
+  .browse-reset{min-height:44px;border:0;padding:8px 0;background:none;color:var(--navy-950);font:600 14px/1.5 Inter,system-ui,sans-serif;text-decoration:underline;text-underline-offset:4px;}
+  .currency-control select{min-height:44px;}
+  .category-products .price-amount,.comparison-table .price-amount{font-size:18px;}
+  @media(max-width:1100px){.detail-layout{gap:24px;grid-template-columns:minmax(0,1.4fr) minmax(290px,1fr);}}
+  @media(min-width:901px) and (max-height:850px){.detail-sidebar{position:static;}}
+  @media(max-width:900px){
+    .detail-layout{grid-template-columns:minmax(0,1fr);}
+    .detail-sidebar{position:static;}
+    .detail-heading h1{max-width:none;}
+    .page.active .mobile-enquiry-bar{padding:12px 18px calc(12px + env(safe-area-inset-bottom,0px));gap:12px;}
+    .mobile-enquiry-summary{container-type:inline-size;}
+    .mobile-enquiry-summary>.sr-only{position:absolute;}
+    .mobile-enquiry-summary .price-label{display:block;font:500 12px/1.4 Inter,system-ui,sans-serif;color:var(--ink-600);}
+    .mobile-enquiry-summary .price-amount{display:block;font:700 clamp(17px,9cqi,24px)/1.25 Inter,system-ui,sans-serif;color:var(--navy-950);white-space:nowrap;}
+    .mobile-enquiry-bar .btn{min-height:46px;border-radius:8px;background:var(--navy-950);color:var(--white);padding-inline:18px;}
+    .page.active:has(.mobile-enquiry-bar){padding-bottom:calc(110px + env(safe-area-inset-bottom,0px));}
+  }
+  @media(max-width:640px){
+    .pc-content,.pkg-body{padding:18px;}
+    .detail-layout{margin-top:24px;}
+    .detail-sidebar .booking-box{padding:20px;}
+    .detail-main h2,.detail-section-nav{scroll-margin-top:86px;}
+    .detail-section-nav{gap:0 16px;}
+    .browse-controls{padding:16px;}
+    .browse-controls .search-inline{min-width:0;}
+    .browse-controls .tour-select{font-size:16px;}
+    .currency-control select{min-height:44px;}
+  }
+  @media(prefers-reduced-motion:reduce){.product-card:hover,.pkg-card:hover{transform:none;}}
+
 </style>
 </head>
 <body>
@@ -1113,11 +1201,14 @@
       <nav class="breadcrumb" id="visaBreadcrumb" aria-label="Breadcrumb"></nav>
       <a href="/visas/" class="detail-back" id="visaDetailBack">← Back to all visas</a>
       <div class="detail-heading" id="visaDetailHeading"></div>
-      <div class="detail-gallery" id="visaDetailGallery"></div>
-      <div class="media-credit" id="visaDetailCredit"></div>
       <div class="detail-layout">
-        <div class="detail-main" id="visaDetailMain"></div>
-        <div><div class="booking-box" id="visaBookingBox"></div></div>
+        <div class="detail-content">
+          <div class="detail-gallery" id="visaDetailGallery"></div>
+          <div class="media-credit" id="visaDetailCredit"></div>
+          <nav class="detail-section-nav" id="visaDetailNav" aria-label="Product information" hidden></nav>
+          <div class="detail-main" id="visaDetailMain"></div>
+        </div>
+        <aside class="detail-sidebar" aria-label="Price and enquiry"><div class="booking-box" id="visaBookingBox"></div></aside>
       </div>
     </div>
   </section>
@@ -1149,13 +1240,15 @@
   <section id="toursBrowse" style="display:none;">
     <div class="wrap">
       <h2 class="grid-title" id="tourGridTitle"></h2>
+      <div class="browse-controls">
       <div class="category-picker" id="tourFilters"></div>
       <div class="toolbar">
         <div class="search-inline">⌕ <input type="text" id="tourSearch" placeholder="Search activities" aria-label="Search activities in this destination" oninput="resetTourPagination(); renderTours()"></div>
         <select id="tourAvailFilter" class="tour-select" aria-label="Filter by listing status" onchange="resetTourPagination(); renderTours()" hidden></select>
         <select id="tourDurFilter" class="tour-select" aria-label="Filter by duration" onchange="resetTourPagination(); renderTours()" hidden></select>
       </div>
-      <p class="tour-results-count" id="tourResultsCount" role="status" aria-live="polite"></p>
+      <div class="browse-results"><p class="tour-results-count" id="tourResultsCount" role="status" aria-live="polite"></p><button type="button" class="browse-reset" onclick="clearTourSearch()">Clear filters</button></div>
+      </div>
       <div class="product-grid" id="tourGrid"></div>
       <div class="load-more-wrap" id="tourLoadMore" hidden>
         <p class="load-more-count" id="tourLoadMoreCount"></p>
@@ -1175,13 +1268,14 @@
       <nav class="breadcrumb" id="tourBreadcrumb" aria-label="Breadcrumb"></nav>
       <a href="/activities/" class="detail-back" id="tourDetailBack">← Back to all activities</a>
       <div class="detail-heading" id="tourDetailHeading"></div>
-      <div class="detail-gallery" id="tourDetailGallery"></div>
-      <div class="media-credit" id="tourDetailCredit"></div>
       <div class="detail-layout">
-        <div class="detail-main" id="tourDetailMain"></div>
-        <div>
-          <div class="booking-box" id="tourBookingBox"></div>
+        <div class="detail-content">
+          <div class="detail-gallery" id="tourDetailGallery"></div>
+          <div class="media-credit" id="tourDetailCredit"></div>
+          <nav class="detail-section-nav" id="tourDetailNav" aria-label="Product information" hidden></nav>
+          <div class="detail-main" id="tourDetailMain"></div>
         </div>
+        <aside class="detail-sidebar" aria-label="Price and enquiry"><div class="booking-box" id="tourBookingBox"></div></aside>
       </div>
     </div>
   </section>
@@ -1236,11 +1330,14 @@
       <nav class="breadcrumb" id="pkgBreadcrumb" aria-label="Breadcrumb"></nav>
       <a href="/holidays/" class="detail-back" id="pkgDetailBack">← Back to all holidays</a>
       <div class="detail-heading" id="pkgDetailHeading"></div>
-      <div class="detail-gallery" id="pkgDetailGallery"></div>
-      <div class="media-credit" id="pkgDetailCredit"></div>
       <div class="detail-layout">
-        <div class="detail-main" id="pkgDetailMain"></div>
-        <div><div class="booking-box" id="pkgBookingBox"></div></div>
+        <div class="detail-content">
+          <div class="detail-gallery" id="pkgDetailGallery"></div>
+          <div class="media-credit" id="pkgDetailCredit"></div>
+          <nav class="detail-section-nav" id="pkgDetailNav" aria-label="Product information" hidden></nav>
+          <div class="detail-main" id="pkgDetailMain"></div>
+        </div>
+        <aside class="detail-sidebar" aria-label="Price and enquiry"><div class="booking-box" id="pkgBookingBox"></div></aside>
       </div>
     </div>
   </section>
@@ -4543,6 +4640,15 @@ function renderTourFilters(){
   }
   select.innerHTML = catsPresent.map(c=>`<option value="${escapeHTML(c)}">${c === "All" ? "All categories" : escapeHTML(c)} (${c === "All" ? inScope.length : inScope.filter(t=>t.cat===c).length})</option>`).join("");
   select.value = activeTourCat;
+  let links = document.getElementById("tourCategoryLinks");
+  if(!links){
+    links = document.createElement("nav");
+    links.id = "tourCategoryLinks";
+    links.className = "browse-category-links";
+    links.setAttribute("aria-label", "Explore activity categories");
+    picker.after(links);
+  }
+  links.innerHTML = ACTIVITY_CATEGORIES.filter(c=>inScope.some(t=>t.cat===c.name)).slice(0,5).map(c=>`<a href="${URLS.activityCategory(c)}">${escapeHTML(c.name)}</a>`).join("");
 }
 function setTourCat(c){ activeTourCat = c; resetTourPagination(); renderTourFilters(); renderTours(); }
 function clearTourSearch(){
@@ -5401,7 +5507,21 @@ function convertedPrice(cents, currency = displayCurrency){
 function priceHTML(price){
   if(!price.raw) return escapeHTML(price.text);
   const cents=Math.round(price.raw.amount*100);
-  return `${price.raw.reference ? "Reference from " : "From "}<span data-usd-cents="${cents}">${convertedPrice(cents)}</span>`;
+  return `<span class="price-label">${price.raw.reference ? "Reference from " : "From "}</span><span class="price-amount" data-usd-cents="${cents}">${convertedPrice(cents)}</span>`;
+}
+// Compact cards omit only the generic quote reminder; option qualifications stay visible.
+function priceBlockHTML(record, compact = false){
+  const price = priceInfo(record);
+  const basis = compact ? price.basis.replace(/; final quote confirmed on enquiry$/, "") : price.basis;
+  return priceHTML(price) + (basis ? `<span class="price-basis">${escapeHTML(basis)}</span>` : "");
+}
+function enquiryJourneyHTML(kind){
+  const first = kind === "visa" ? "Share your passport and travel details" : "Choose your dates and guests";
+  return `<div class="enquiry-journey" aria-label="Enquiry steps"><h3>How your enquiry works</h3><ol>
+    <li><strong>${first}</strong><span>Prepare and copy your enquiry summary to share with our team.</span></li>
+    <li><strong>Receive a confirmed quote</strong><span>Our team checks availability${kind === "visa" ? ", requirements and fees" : ", inclusions and the final price"}.</span></li>
+    <li><strong>Review before proceeding</strong><span>Check the confirmed details and terms before payment.</span></li>
+  </ol></div>`;
 }
 function updateCurrencyDisplays(){
   document.querySelectorAll("[data-usd-cents]").forEach(el=>{el.textContent=convertedPrice(Number(el.dataset.usdCents));});
@@ -6077,7 +6197,7 @@ function tourCard(t){
       <div class="pc-meta">${statusTagHTML(t)}<span>${t.cat}</span>${hasRealValue(t.duration) ? `<span>${t.duration}</span>` : ""}</div>
       <p class="pc-summary">${escapeHTML(activitySummaryText(t))}</p>
       <div class="pc-foot" style="margin-top:auto;">
-        ${t.bookingMode === "official-only" ? `<div class="pc-price" style="font-family:'Inter',sans-serif; font-size:14px;">Tickets from the operator</div>` : price.known ? `<div class="pc-price">${priceHTML(price)}${price.basis ? `<span>${escapeHTML(price.basis)}</span>` : ""}</div>`
+        ${t.bookingMode === "official-only" ? `<div class="pc-price" style="font-family:'Inter',sans-serif; font-size:14px;">Tickets from the operator</div>` : price.known ? `<div class="pc-price">${priceBlockHTML(t, true)}</div>`
           : `<div class="pc-price" style="font-family:'Inter',sans-serif; font-size:14px; font-weight:600; color:var(--ink-600);">${ACTIVITY_PRICE_MISSING}</div>`}
         <a href="${href}" class="btn btn-navy btn-sm">View details<span class="sr-only"> for ${t.title}</span></a>
       </div>
@@ -6106,9 +6226,9 @@ function pkgCard(p){
       <h3><a href="${href}">${p.title}</a></h3>
       <div class="pkg-incl">${statusTagHTML(p)}${highlights.map(i=>`<span>${escapeHTML(i)}</span>`).join("")}</div>
       ${accommodationCardHTML(p)}
-      <div class="pkg-price-row">${price.known ? `<div class="pc-price">${priceHTML(price)}${price.basis ? `<span style="display:block; font-size:11px; color:var(--ink-400);">${escapeHTML(price.basis)}</span>` : ""}</div>`
+      <div class="pkg-price-row">${price.known ? `<div class="pc-price">${priceBlockHTML(p, true)}</div>`
         : `<div class="pc-price" style="font-family:'Inter',sans-serif; font-size:14px; font-weight:600; color:var(--ink-600);">${PACKAGE_PRICE_MISSING}</div>`}
-      <a href="${href}" class="btn btn-navy btn-sm">View package<span class="sr-only">: ${p.title}</span></a></div>
+      <a href="${href}" class="btn btn-navy btn-sm">View details<span class="sr-only">: ${p.title}</span></a></div>
       ${mediaCreditHTML(images, {compact:true})}
     </div>
   </article>`;
@@ -6193,7 +6313,7 @@ function renderVisaGrid(){
         <div class="vc-top"><span class="vc-flag" aria-hidden="true">${v.flag}</span><div><h3><a class="vc-link" href="${href}">${v.country}<span class="sr-only"> visa assistance</span></a></h3><span class="vc-type">${v.type}</span></div></div>
         <div class="vc-body">
           ${priceInfo(v).known
-            ? `<div class="vc-price">${priceHTML(priceInfo(v))} <span style="font-family:'Inter',sans-serif; font-size:12.5px; font-weight:500; color:rgba(245,241,231,.72);">fee</span></div>`
+            ? `<div class="vc-price">${priceHTML(priceInfo(v))}<span class="price-basis">Per applicant</span></div>`
             : `<div class="vc-price" style="font-size:17px;">Fee confirmed on enquiry</div>`}
           <div class="vc-guarantee">${hasRealValue(v.date) ? "Typical processing: "+v.date : "Processing time confirmed on enquiry"}</div>
           <span class="vc-more" aria-hidden="true">View visa details →</span>
@@ -6312,11 +6432,11 @@ function renderVisaDetail(slug){
   moveDetailHeading("visa");
   document.getElementById("visaBookingBox").style.display = "";
   document.getElementById("visaBookingBox").innerHTML = `
-    ${vm.fee ? `<div class="bb-price">${vm.fee} <span>fee</span></div>` : `<div class="bb-price" style="font-size:22px;">Fee confirmed on enquiry</div>`}
+    ${vm.fee ? `<div class="bb-price">${priceInfo(v).known ? priceBlockHTML(v) : vm.fee}</div>` : `<div class="bb-price" style="font-size:22px;">Fee confirmed on enquiry</div>`}
     <div class="field"><label>Visa type</label><p style="margin-top:6px; font-size:14.5px; color:var(--ink-600);">${typeText}</p></div>
     <div class="field"><label>Typical processing time</label><p style="margin-top:6px; font-size:14.5px; color:var(--ink-600);">${dateText}</p></div>
     <button type="button" class="btn btn-gold btn-block" style="margin-top:16px;" onclick="openVisaEnquiry('${slugV}')">Start Visa Enquiry</button>
-    <p class="form-note" style="text-align:center;">Confirm requirements and current fees with our team. No payment required to enquire.</p>`;
+    <p class="form-note" style="text-align:center;">Confirm requirements and current fees with our team. This prepares a summary to share; it is not sent automatically. No payment required to enquire.</p>${enquiryJourneyHTML("visa")}`;
   document.getElementById("visaDetailFaqTitle").textContent = `${n} visa questions`;
   document.getElementById("visaDetailFaq").innerHTML = qaHTML(visaFaqItems(v));
 }
@@ -6421,10 +6541,10 @@ function renderTourDetail(id, expectedDest, opts){
   document.getElementById("tourBookingBox").style.display = "";
   // Date and guests are passed into the enquiry by enquireAboutProduct(); nothing here books or reserves.
   document.getElementById("tourBookingBox").innerHTML = `
-    ${price.known ? `<div class="bb-price">${priceHTML(price)} <span>${escapeHTML(price.basis)}</span></div>` : `<div class="bb-price" style="font-size:22px;">${ACTIVITY_PRICE_MISSING}</div>`}
+    ${price.known ? `<div class="bb-price">${priceBlockHTML(t)}</div>` : `<div class="bb-price" style="font-size:22px;">${ACTIVITY_PRICE_MISSING}</div>`}
     <div class="field"><label for="tourEnqDate">Preferred date (optional)</label><input type="date" id="tourEnqDate" min="${todayISO()}" aria-describedby="tourEnqDateErr" oninput="clearFieldError(this)"><p class="field-error" id="tourEnqDateErr" hidden></p></div>
     <div class="field"><label for="tourEnqGuests">Guests</label><input type="number" id="tourEnqGuests" min="1" value="2"></div>
-    ${statusCTAs(t, isAddon ? "addon" : "activity")}`;
+    ${statusCTAs(t, isAddon ? "addon" : "activity")}${enquiryJourneyHTML(isAddon ? "addon" : "activity")}`;
   if(t.bookingMode === "official-only") document.getElementById("tourBookingBox").innerHTML = `<h2 style="font-size:22px;">Official tickets only</h2>${officialTicketsHTML(t)}`;
   const related = isAddon ? [] : relatedActivities(t);
   if(relatedSection) relatedSection.style.display = related.length ? "" : "none";
@@ -6510,10 +6630,10 @@ function renderPkgDetail(id, expectedDest){
   moveDetailHeading("pkg");
   document.getElementById("pkgBookingBox").style.display = "";
   document.getElementById("pkgBookingBox").innerHTML = `
-    ${price.known ? `<div class="bb-price">${priceHTML(price)} <span>${escapeHTML(price.basis)}</span></div>` : `<div class="bb-price" style="font-size:22px;">${PACKAGE_PRICE_MISSING}</div>`}
+    ${price.known ? `<div class="bb-price">${priceBlockHTML(p)}</div>` : `<div class="bb-price" style="font-size:22px;">${PACKAGE_PRICE_MISSING}</div>`}
     <div class="field"><label for="pkgEnqMonth">Travel month (optional)</label><input type="month" id="pkgEnqMonth" min="${todayISO().slice(0,7)}" aria-describedby="pkgEnqMonthErr" oninput="clearFieldError(this)"><p class="field-error" id="pkgEnqMonthErr" hidden></p></div>
     <div class="field"><label for="pkgEnqTravellers">Travellers</label><input type="number" id="pkgEnqTravellers" min="1" value="2"></div>
-    ${statusCTAs(p, "holiday")}`;
+    ${statusCTAs(p, "holiday")}${enquiryJourneyHTML("holiday")}`;
   const related = relatedPackages(p);
   document.getElementById("pkgRelatedSection").style.display = related.length ? "" : "none";
   document.getElementById("pkgRelatedTitle").textContent = `More ${dn} holiday packages`;
@@ -6540,6 +6660,34 @@ function moveDetailHeading(prefix){
   const main = document.getElementById(prefix + "DetailMain"), heading = document.getElementById(prefix + "DetailHeading");
   heading.replaceChildren();
   [...main.children].filter(el => el.matches("h1, .status-banner, .detail-tags, .detail-enquiry-actions, .mobile-enquiry-bar")).forEach(el => heading.append(el));
+  const nav = document.getElementById(prefix + "DetailNav");
+  const sections = [...main.querySelectorAll("h2")];
+  const choices = [
+    {label:"Overview", test:/^At a glance$/i},
+    {label:"Inclusions", test:/inclusions|what.s included/i},
+    {label:prefix === "visa" ? "Requirements" : "Options", test:prefix === "visa" ? /requirements depend|documents/i : /^(Options|Hotel options|Accommodation)/i},
+    {label:"Itinerary", test:/itinerary|day.by.day|what to expect/i},
+    {label:"Important information", test:/important information|good to know|cancellation policy/i},
+    {label:"FAQs", test:/common questions/i}
+  ];
+  const links = choices.flatMap((choice,index)=>{
+    const target = sections.find(el=>choice.test.test(el.textContent));
+    if(!target) return [];
+    if(!target.id) target.id = `${prefix}-information-${index}`;
+    return [`<a href="#${target.id}" onclick="jumpToProductSection(event, '${target.id}')">${choice.label}</a>`];
+  });
+  if(prefix === "visa") links.push(`<a href="#visaDetailFaqSection" onclick="jumpToProductSection(event, 'visaDetailFaqSection')">FAQs</a>`);
+  nav.innerHTML = links.join("");
+  nav.hidden = !links.length;
+}
+function jumpToProductSection(event, id){
+  const target = document.getElementById(id);
+  if(!target) return;
+  event.preventDefault();
+  target.scrollIntoView({behavior:window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth", block:"start"});
+  // Move keyboard focus to the destination without changing the legacy route hash.
+  target.setAttribute("tabindex", "-1");
+  target.focus({preventScroll:true});
 }
 function activitySummaryText(record){
   if(record.id === "evening-desert-safari" && record.inclusions?.length){
@@ -6572,7 +6720,7 @@ function detailEnquiryHTML(record, kind, visaSlug){
       <p>Prepares a summary to share with our team.</p>
     </div>
     <div class="mobile-enquiry-bar" role="region" aria-label="Enquire about ${escapeHTML(title)}">
-      <div class="mobile-enquiry-summary"><strong>${escapeHTML(title)}</strong><span>${priceInfo(record).known ? priceHTML(priceInfo(record)) : (kind === "visa" ? "Fee" : "Price")+" confirmed on enquiry"}</span></div>
+      <div class="mobile-enquiry-summary"><strong class="sr-only">${escapeHTML(title)}</strong><span>${priceInfo(record).known ? priceHTML(priceInfo(record)) : (kind === "visa" ? "Fee" : "Price")+" confirmed on enquiry"}</span></div>
       <button type="button" class="btn btn-gold" aria-label="Enquire about ${escapeHTML(title)}" onclick="${action}">Enquire</button>
     </div>`;
 }

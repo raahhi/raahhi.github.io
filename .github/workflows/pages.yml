@@ -62,6 +62,9 @@ jobs:
       - name: Check prices and currency selection
         run: node .github/check-pricing.mjs
 
+      - name: Check product presentation and enquiry layouts
+        run: node .github/check-presentation.mjs
+
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
 
