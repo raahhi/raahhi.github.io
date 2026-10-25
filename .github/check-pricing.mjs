@@ -66,6 +66,35 @@ try{
   assert(await select.isVisible(),'Currency control visible at '+width);
   assert(await p.evaluate(()=>document.documentElement.scrollWidth<=document.documentElement.clientWidth+1),'No horizontal overflow at '+width);
  }
+ // Holiday summaries must agree with the records used by cards and detail pages.
+ for(const slug of ['dubai','abu-dhabi','ras-al-khaimah']){
+  await p.goto(base+'/holidays/'+slug+'/');
+  const summary=await p.evaluate(slug=>{
+   const list=PACKAGES.filter(record=>record.dest===slug);
+   const named=list.filter(record=>{const a=packageAccommodation(record);return a&&(hasRealValue(a.name)||(a.options||[]).some(o=>hasRealValue(o.name)));}).length;
+   return {total:list.length,priced:list.filter(record=>priceInfo(record).known).length,named,
+    guide:document.getElementById('pkgDestGuide').textContent,faq:document.getElementById('pkgDestFaq').textContent};
+  },slug);
+  const coverage=n=>n===summary.total?'all '+summary.total:n+' of '+summary.total;
+  for(const text of [summary.guide,summary.faq]){
+   assert(!text.includes('are not published on this website')&&!text.includes('No package names a specific hotel'));
+   assert(text.includes(summary.priced ? 'Prices are shown for '+coverage(summary.priced)+' packages.' : 'Package prices are confirmed on enquiry.'),'Published-price summary matches the catalogue in '+slug);
+   assert(text.includes(summary.named ? 'Hotel names or examples are shown for '+coverage(summary.named)+' packages.' : 'Hotel names not listed are confirmed on enquiry.'),'Hotel summary matches the catalogue in '+slug);
+   assert(text.includes('final hotel and room type are confirmed in your quote before booking'));
+  }
+ }
+ for(const slug of ['dubai','abu-dhabi','ras-al-khaimah']){
+  await p.goto(base+'/activities/'+slug+'/');
+  const faq=await p.locator('#toursDestFaq').textContent();
+  assert(!faq.includes('Not on this website yet'),'Activity price FAQ is current in '+slug);
+  assert(faq.includes('Starting prices are shown on activity cards and product pages where available.'));
+ }
+ for(const slug of ['dubai-desert-safari','dubai-landmarks','abu-dhabi-theme-parks']){
+  await p.goto(base+'/guides/'+slug+'/');
+  const text=await p.locator('.page.active').textContent();
+  assert(!text.includes('Not on this website yet'),'Guide price FAQ is current in '+slug);
+  assert(text.includes('Starting prices are shown on activity cards and product pages where available.'));
+ }
  await context.clearCookies();await p.evaluate(()=>localStorage.setItem('raahhi.currency','BAD'));await p.reload();await p.waitForFunction(()=>!document.querySelector('[data-currency-select]').disabled);assert.equal(await select.inputValue(),'AED','Invalid saved preference falls back safely');
  await p.addInitScript(()=>{Storage.prototype.getItem=()=>{throw Error('Blocked storage')};Storage.prototype.setItem=()=>{throw Error('Blocked storage')};});
  await p.reload();await p.waitForFunction(()=>!document.querySelector('[data-currency-select]').disabled);await select.selectOption('USD');assert.equal(await select.inputValue(),'USD');

@@ -1046,7 +1046,7 @@
 <section class="section-sand home-selection" aria-labelledby="homePackagesTitle">
   <div class="wrap">
     <div class="section-head"><div><p class="eyebrow">Stay a little longer</p><h2 id="homePackagesTitle">Plan a UAE holiday</h2></div><a class="contact-link" href="/holidays/">Browse all holiday packages →</a></div>
-    <p class="selection-intro">Compare multi-day trips by itinerary, listed accommodation and inclusions. Prices, hotel details and availability are confirmed on enquiry.</p>
+    <p class="selection-intro">Compare multi-day trips by itinerary, listed accommodation and inclusions. Open a package for its starting price and hotel details where available. Final quotes and availability are confirmed on enquiry.</p>
     <div class="pkg-grid" id="homePackageSelection"></div>
   </div>
 </section>
@@ -4556,7 +4556,7 @@ function pkgIndexHTML(){
       <thead><tr><th scope="col">Package</th><th scope="col">Based in</th><th scope="col">Duration</th><th scope="col">Listed inclusions</th></tr></thead>
       <tbody>${PACKAGES.map(p => `<tr><th scope="row"><a class="contact-link" href="${URLS.holiday(p)}">${p.title}</a></th><td>${destName(p.dest)}</td><td>${hasRealValue(p.dur) ? durText(p.dur) : "Confirmed on enquiry"}</td><td>${(p.incl || []).join(", ")}</td></tr>`).join("")}</tbody>
     </table></div>
-    <p class="index-note" style="margin-top:14px;">Prices, hotel names and availability are confirmed when you enquire from the package page.</p>`;
+    <p class="index-note" style="margin-top:14px;">${holidayPriceNote(PACKAGES)} ${holidayAccommodationNote(PACKAGES)}</p>`;
 }
 function setActiveTourDest(slug){
   const browse = document.getElementById("toursBrowse");
@@ -4723,7 +4723,7 @@ function setActivePkgDest(slug){
   ${destinationHeroHTML({type:"holidays", slug, eyebrow:`UAE holidays in ${name}`, title:`${name} holiday packages`, gridId:"pkgGridTitle",
     count:list.length, countLabel:list.length === 1 ? "package" : "packages",
     lede: list.length
-      ? `RAAHHI TOURS lists ${list.length} holiday ${list.length === 1 ? "package" : "packages"} based in ${name}, from ${nightRange(list)}. Each one lists a day-by-day itinerary and what's included; prices, hotels and availability are confirmed when you enquire.`
+      ? `RAAHHI TOURS lists ${list.length} holiday ${list.length === 1 ? "package" : "packages"} based in ${name}, from ${nightRange(list)}. Compare day-by-day itineraries, inclusions, and starting prices and hotel details where available. Final quotes and availability are confirmed on enquiry.`
       : `No holiday packages are listed for ${name} yet.`})}`;
     tiles.style.display = "none";
     document.getElementById("pkgGridTitle").textContent = list.length ? `All ${name} holiday packages` : "";
@@ -5328,7 +5328,7 @@ function activityDestFaqItems(slug){
   items.push({q:`What activities does RAAHHI TOURS list for ${d}?`, a:`${list.length} ${d} activities: ${catSummary(list)}. ${examples.length === list.length ? `They are ${joinList(examples)}` : `Examples include ${joinList(examples)}`}.`});
   const safaris = list.filter(t => t.cat === "Desert Safari");
   if(safaris.length) items.push({q:`Which desert safaris are listed for ${d}?`, a:`${joinList(safaris.map(t => link(t) + (hasRealValue(t.duration) ? ` (${t.duration})` : "")))}.${slug === "dubai" ? ` The <a class="contact-link" href="${URLS.safariGuide}">Dubai desert safari guide</a> compares them side by side.` : ""}`});
-  items.push({q:`Are prices shown for ${d} activities?`, a:`Not on this website yet. Prices, availability and cancellation terms are confirmed by our team when you enquire.`});
+  items.push({q:`Are prices shown for ${d} activities?`, a:activityPriceNote(list)});
   items.push({q:`How do I enquire about a ${d} activity?`, a:`Open the activity, choose a preferred date and the number of guests, and select Enquire. The website prepares a summary of your enquiry to share with our team by phone, WhatsApp or email.`});
   if(destHasPackages(slug)) items.push({q:`Are there holiday packages in ${d}?`, a:`Yes. See <a class="contact-link" href="${URLS.holidayDest(slug)}">${d} holiday packages</a> for multi-day itineraries.`});
   return items;
@@ -5844,6 +5844,11 @@ function uaePlanningLinksHTML(){
   </section>`;
 }
 
+function activityPriceNote(list){
+  return list.some(t => t.bookingMode !== "official-only" && priceInfo(t).known)
+    ? "Yes. Starting prices are shown on activity cards and product pages where available. Reference prices are labelled. Final prices, availability and applicable cancellation terms are confirmed on enquiry."
+    : "Prices, availability and applicable cancellation terms are confirmed on enquiry. Official-only listings direct you to the operator for tickets.";
+}
 function activityDestGuideHTML(slug){
   const d = destName(slug), list = TOURS.filter(t => t.dest === slug);
   if(!list.length) return "";
@@ -5860,9 +5865,8 @@ function activityDestGuideHTML(slug){
   const unknown = list.filter(t => !durationGroup(t.duration));
   const timeItems = groups.map(x => `<li><strong>${x.gr}</strong>${joinList(x.items.map(t => `${link(t)} (${t.duration})`))}</li>`).join("")
     + (unknown.length ? `<li><strong>Duration confirmed on enquiry</strong>${joinList(unknown.map(link))}</li>` : "");
-  const anyPrice = list.some(t => priceInfo(t).known);
   const notes = [
-    anyPrice ? "Where a price is shown it is the listed price; availability is confirmed when you enquire." : `Prices for ${d} activities are not published on this website. Our team confirms the price and availability for your date and group size when you enquire.`,
+    activityPriceNote(list),
     "Durations are as listed on each activity page. Exact start times, and whether hotel pickup is available, are confirmed with your enquiry.",
     ...list.flatMap(t => (t.importantInformation || []).map(i => `${link(t)}: ${i}`)),
     destHasPackages(slug) ? `Staying several days? The <a href="${URLS.holidayDest(slug)}">${d} holiday packages</a> combine a hotel stay with a day-by-day itinerary. They are separate products from these activities.` : "",
@@ -5905,6 +5909,29 @@ function collapseActivityDestGuide(slug){
   }
 }
 
+// Hub copy and FAQs use the same price/accommodation facts as product pages.
+function holidayPriceNote(list){
+  const priced = list.filter(p => priceInfo(p).known), total = list.length;
+  if(!total) return "No holiday packages are listed for this destination yet.";
+  const coverage = priced.length === total ? `all ${total}` : `${priced.length} of ${total}`;
+  return [
+    priced.length ? `Prices are shown for ${coverage} ${total === 1 ? "package" : "packages"}.` : "Package prices are confirmed on enquiry.",
+    priced.some(p => priceInfo(p).raw?.reference) ? "Reference prices are labelled where applicable." : "",
+    priced.length && priced.length < total ? "Packages without a published price show a price-on-enquiry message." : "",
+    "Final quotes depend on travel dates, group size, hotel and room configuration. Availability is confirmed on enquiry."
+  ].filter(Boolean).join(" ");
+}
+function holidayAccommodationNote(list){
+  const named = list.filter(p => {
+    const a = packageAccommodation(p);
+    return a && (hasRealValue(a.name) || (a.options || []).some(o => hasRealValue(o.name)));
+  });
+  const coverage = named.length === list.length ? `all ${list.length}` : `${named.length} of ${list.length}`;
+  return [
+    named.length ? `Hotel names or examples are shown for ${coverage} ${list.length === 1 ? "package" : "packages"}.` : "Hotel names not listed are confirmed on enquiry.",
+    "Hotel examples and any stated alternatives are subject to availability. The final hotel and room type are confirmed in your quote before booking."
+  ].join(" ");
+}
 function holidayDestGuideHTML(slug){
   const d = destName(slug), list = PACKAGES.filter(p => p.dest === slug);
   if(!list.length) return planningLinksHTML(slug, URLS.holidayDest(slug), GUIDES.filter(g => g.dest === slug));
@@ -5922,10 +5949,10 @@ function holidayDestGuideHTML(slug){
     `${withHotel.length === list.length ? `All ${list.length}` : `${withHotel.length} of ${list.length}`} ${d} packages list a hotel stay.`,
     starred.length ? `${joinList(starred.map(x => link(x.p)))} ${starred.length === 1 ? "states" : "state"} a ${joinList([...new Set(starred.map(x => x.a.category))])} category.` : "",
     located.length ? `${joinList(located.map(x => link(x.p)))} ${located.length === 1 ? "states" : "state"} the hotel location (${joinList([...new Set(located.map(x => x.a.location))])}).` : "",
-    "No package names a specific hotel: the hotel and room type for your dates are confirmed when you enquire.",
+    holidayAccommodationNote(list),
   ].filter(Boolean).join(" ");
   const notes = [
-    `Prices for ${d} holiday packages are not published on this website. Our team confirms the price for your dates, group size and room configuration when you enquire.`,
+    holidayPriceNote(list),
     transfers.length ? `${transfers.length === list.length ? "Every" : `${transfers.length} of ${list.length}`} ${d} ${transfers.length === 1 && transfers.length !== list.length ? "package lists" : "packages list"} transfers among the inclusions.` : "",
     "No package lists a visa among its inclusions. <a href=\"/visas/united-arab-emirates/\">UAE visa assistance</a> is a separate RAAHHI TOURS service.",
     destHasTours(slug) ? `Want to add day trips? The <a href="${URLS.activityDest(slug)}">${d} activities</a> are listed separately and can be enquired about on their own.` : "",
@@ -5997,7 +6024,7 @@ function renderSafariGuideBody(g){
   if(ev && hasRealValue(ev.duration)) faq.push({q:`How long is the ${ev.title} in Dubai?`, a:`RAAHHI TOURS lists the ${ev.title} as ${ev.duration}. Exact timings are confirmed when you enquire.`});
   if(ev && mo) faq.push({q:"What is the difference between the morning and evening desert safari in Dubai?", a:`${mo.title}: ${activitySummaryText(mo)} ${activitySummaryText(ev)} Check each listing for its departure time and inclusions.`});
   if(ov) faq.push({q:"Which Dubai desert safari includes an overnight stay?", a:`The ${tourLink(ov)} (${durOf(ov)}): ${lowerFirst(activitySummaryText(ov))}`});
-  faq.push({q:"Are desert safari prices listed?", a:"Not on this website yet. Our team confirms the price and availability for your date and group size when you enquire from the activity page."});
+  faq.push({q:"Are desert safari prices listed?", a:activityPriceNote(safaris)});
   const feat = packagesFeaturing("evening-desert-safari").concat(packagesFeaturing("overnight-desert-safari"));
   const html = `${guideHead(g)}
     <p class="answer-lede">RAAHHI TOURS lists ${safaris.length} desert safaris in Dubai: ${joinList(safaris.map(t => t.title))}. It also lists ${related.length} related desert activities: ${joinList(related.map(t => t.title))}. They differ mainly in timing and in what each listing includes. This guide compares them using the details on each activity page; prices and availability are confirmed when you enquire.</p>
@@ -6046,7 +6073,7 @@ function renderLandmarksGuideBody(g){
     {q:"How long does a visit to a Dubai landmark take?", a:`The listed durations are: ${list.map(t => `${t.title}, ${durOf(t)}`).join("; ")}. Exact entry times are confirmed when you enquire.`},
   ];
   if(burj) faq.push({q:"Is Burj Khalifa the tallest building in the world?", a:`Guinness World Records lists Burj Khalifa as the tallest building, at 828 m (record page checked ${formatDate(CLAIM_SOURCES.tallestBuilding.lastVerified)}). RAAHHI TOURS lists ${tourLink(burj)} as ${lowerFirst(durOf(burj))}.`});
-  faq.push({q:"Are prices listed for Dubai landmarks?", a:"Not on this website yet. Our team confirms the price and availability for your date and group size when you enquire from the activity page."});
+  faq.push({q:"Are prices listed for Dubai landmarks?", a:activityPriceNote(list)});
   const html = `${guideHead(g)}
     <p class="answer-lede">RAAHHI TOURS lists ${list.length} landmark attractions in Dubai. ${views.length} of them are viewpoints over the city: ${joinList(views.map(t => t.title))}. The remaining ${indoor.length} are indoor attractions: ${joinList(indoor.map(t => t.title))}. This guide compares them using the details on each activity page; prices and entry times are confirmed when you enquire.</p>
     <div class="detail-section">
@@ -6090,7 +6117,7 @@ function renderThemeParksGuideBody(g){
   ];
   if(pk.length) faq.push({q:"Which Abu Dhabi holiday packages include a theme park day?", a:`${joinList(pk.map(x => `<a class="contact-link" href="${URLS.holiday(x.p)}">${x.p.title}</a> (${x.days.map(d => d.day).join(", ")})`))}. Which park, and what is included, is confirmed when you enquire.`});
   if(ferrari) faq.push({q:"Where is the Formula Rossa roller coaster?", a:`At Ferrari World Abu Dhabi. Guinness World Records lists Formula Rossa as the fastest rollercoaster, at 240 km/h (record page checked ${formatDate(CLAIM_SOURCES.fastestRollercoaster.lastVerified)}). See ${tourLink(ferrari)}.`});
-  faq.push({q:"Are theme park prices listed?", a:"Not on this website yet. Our team confirms the price and availability for your date and group size when you enquire from the activity page."});
+  faq.push({q:"Are theme park prices listed?", a:activityPriceNote(list)});
   const html = `${guideHead(g)}
     <p class="answer-lede">RAAHHI TOURS lists ${list.length} theme parks and water parks in Abu Dhabi: ${joinList(list.map(t => t.title))}. Of these, ${full.length} ${full.length === 1 ? "is" : "are"} listed as a full-day visit${shorter.length ? ` and ${joinList(shorter.map(t => `${t.title} as ${durOf(t)}`))}` : ""}. This guide compares them using the details on each activity page and shows which Abu Dhabi holiday packages include a theme park day.</p>
     <div class="detail-section">
@@ -6819,16 +6846,17 @@ function packageFaqItems(p){
   items.push({q:`How do I enquire about ${p.title}?`, a:`Choose a travel month (optional) and the number of travellers, then select Enquire and add your name and phone number. The website prepares a summary to share with our team by phone, WhatsApp or email. It is not sent automatically.`});
   const accommodation = packageAccommodation(p);
   if(accommodation && accommodation.options) items.push({q:"Which hotels can I request?", a:`The hotel examples for this itinerary are ${escapeHTML(accommodation.options.map(o=>o.name + (o.orSimilar ? " or similar" : "")).join("; "))}. Your selected hotel, category and room type are confirmed in your quote before booking.`, catalogueDerived:true});
-  if(accommodation) items.push({q:`What accommodation is listed for ${escapeHTML(p.title)}?`, a:`${escapeHTML(accommodationSummary(accommodation))}. ${accommodation.name ? "Confirm the hotel and room details for your dates when enquiring." : "The hotel name and room details are confirmed on enquiry."}`, catalogueDerived:true});
+  if(accommodation) items.push({q:`What accommodation is listed for ${escapeHTML(p.title)}?`, a:`${escapeHTML(accommodationSummary(accommodation))}. ${accommodation.name || (accommodation.options || []).some(o => hasRealValue(o.name)) ? "Listed hotels or hotel examples are subject to availability. The final hotel and room type are confirmed in your quote before booking." : "The hotel name and room details are confirmed on enquiry."}`, catalogueDerived:true});
   items.push(...catalogueFactFaqs(p, "holiday"));
   return items;
 }
 function holidayDestFaqItems(slug){
   const d = destName(slug), list = PACKAGES.filter(p => p.dest === slug), items = [];
-  const withHotel = list.filter(p => (p.incl || []).some(i => /hotel/i.test(i))).length;
+  const withHotel = list.filter(p => packageAccommodation(p)).length;
   const withVisa = list.filter(p => (p.incl || []).some(i => /visa/i.test(i)));
   items.push({q:`Which ${d} holiday packages are listed?`, a:`${joinList(list.map(p => `<a class="contact-link" href="${URLS.holiday(p)}">${p.title}</a> (${durText(p.dur)})`))}.`});
-  if(withHotel) items.push({q:`Do ${d} holiday packages include a hotel?`, a:`${withHotel === list.length ? `All ${list.length}` : `${withHotel} of ${list.length}`} ${d} packages list a hotel among their inclusions. Hotel names and room types are confirmed when you enquire.`});
+  if(withHotel) items.push({q:`Do ${d} holiday packages include a hotel?`, a:`${withHotel === list.length ? `All ${list.length}` : `${withHotel} of ${list.length}`} ${d} packages list a hotel among their inclusions. ${holidayAccommodationNote(list)}`});
+  items.push({q:`Are prices shown for ${d} holiday packages?`, a:holidayPriceNote(list)});
   items.push({q:`Is a UAE visa included in ${d} holiday packages?`, a: withVisa.length
     ? `${joinList(withVisa.map(p => p.title))} ${withVisa.length === 1 ? "lists" : "list"} a visa among the inclusions; the others don't.`
     : `No ${d} package lists a visa among its inclusions. RAAHHI TOURS offers <a class="contact-link" href="/visas/united-arab-emirates/">UAE visa assistance</a> as a separate service.`});
@@ -7047,7 +7075,7 @@ function pageMeta(c){
     }
     case "holidays":
       m.path = URLS.holidays; m.title = `UAE Holiday Packages in Dubai & Abu Dhabi | ${S}`;
-      m.description = `${PACKAGES.length} UAE holiday packages from ${nightRange(PACKAGES)}, each with a day-by-day itinerary and listed inclusions. Prices and hotel details are confirmed on enquiry.`;
+      m.description = `${PACKAGES.length} UAE holiday packages from ${nightRange(PACKAGES)}. Compare itineraries, inclusions, starting prices and hotel details where available. Final quotes confirmed on enquiry.`;
       m.pageType = "CollectionPage"; m.bc = [home, {name:"Holidays", path:URLS.holidays}];
       m.nodes = [serviceNode("holidays"), ...pkgDests.map(d => destNode(d.slug)),
         itemListNode(absUrl(URLS.holidays) + "#list", "UAE holiday packages", PACKAGES.map(p => ({path:URLS.holiday(p), name:p.title})))];
@@ -7061,7 +7089,7 @@ function pageMeta(c){
         m.robots = NOINDEX; m.description = `No holiday packages are listed for ${d.name} yet. Browse ${d.name} activities or contact RAAHHI TOURS about planning a trip.`;
         m.nodes = []; break;
       }
-      m.description = `${list.length} ${d.name} holiday packages from ${nightRange(list)}, compared by length, stay and listed inclusions. Prices and hotels confirmed on enquiry.`;
+      m.description = `${list.length} ${d.name} holiday packages from ${nightRange(list)}. Compare itineraries, stays and starting prices where available. Final quotes confirmed on enquiry.`;
       m.nodes = [serviceNode("holidays"), destNode(d.slug), itemListNode(absUrl(m.path) + "#list", `${d.name} holiday packages`, list.map(p => ({path:URLS.holiday(p), name:p.title})))];
       m.about = [{"@id":absUrl("/#destination-" + d.slug)}]; m.mainEntity = {"@id":absUrl(m.path) + "#list"}; break;
     }
