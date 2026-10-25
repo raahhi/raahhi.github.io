@@ -1099,7 +1099,7 @@
 <!-- ================= HEADER ================= -->
 <header id="site-header">
   <div class="wrap header-inner">
-    <a href="/" class="logo" aria-label="RAAHHI TOURS home"><span class="logo-mark"><img src="/assets/brand/raahhi-monogram-navy.svg" alt="" width="280" height="280" decoding="async"></span><span class="brand-divider" aria-hidden="true"></span><img class="brand-wordmark" src="/assets/brand/raahhi-wordmark-header-navy.svg" alt="" width="520" height="310" decoding="async"></a>
+    <a href="/" class="logo" aria-label="RAAHHI TOURS home"><span class="logo-mark"><img src="/assets/brand/raahhi-monogram-navy.svg" alt="" role="presentation" aria-hidden="true" width="280" height="280" decoding="async"></span><span class="brand-divider" aria-hidden="true"></span><img class="brand-wordmark" src="/assets/brand/raahhi-wordmark-header-navy.svg" alt="RAAHHI TOURS" width="520" height="310" decoding="async"></a>
     <nav class="main-nav" id="mainNav">
       <a href="/visas/" data-route="visas">Visas</a>
       <a href="/activities/" data-route="activities">Activities</a>
@@ -1117,7 +1117,7 @@
 
 <div id="mobile-nav" inert aria-hidden="true">
   <button type="button" class="close-x" aria-label="Close menu" onclick="toggleMobileNav(false)">✕</button>
-  <a href="/" class="mobile-brand" aria-label="RAAHHI TOURS home" onclick="toggleMobileNav(false)"><span class="logo-mark"><img src="/assets/brand/raahhi-monogram-light.svg" alt="" width="280" height="280" decoding="async"></span><span class="brand-divider" aria-hidden="true"></span><img class="brand-wordmark" src="/assets/brand/raahhi-wordmark-header-light.svg" alt="" width="520" height="310" decoding="async"></a>
+  <a href="/" class="mobile-brand" aria-label="RAAHHI TOURS home" onclick="toggleMobileNav(false)"><span class="logo-mark"><img src="/assets/brand/raahhi-monogram-light.svg" alt="" role="presentation" aria-hidden="true" width="280" height="280" decoding="async"></span><span class="brand-divider" aria-hidden="true"></span><img class="brand-wordmark" src="/assets/brand/raahhi-wordmark-header-light.svg" alt="RAAHHI TOURS" width="520" height="310" decoding="async"></a>
   <a href="/" onclick="toggleMobileNav(false)">Home</a>
   <a href="/visas/" onclick="toggleMobileNav(false)">Visas</a>
   <a href="/activities/" onclick="toggleMobileNav(false)">Activities</a>
@@ -1641,7 +1641,7 @@
   <div class="wrap">
     <div class="footer-grid">
       <div>
-        <a href="/" class="footer-logo" aria-label="RAAHHI TOURS home"><span class="logo-mark"><img src="/assets/brand/raahhi-monogram-light.svg" alt="" width="280" height="280" decoding="async"></span><img class="brand-wordmark" src="/assets/brand/raahhi-wordmark-light.svg" alt="" width="520" height="400" decoding="async"></a><div class="footer-tagline">Visa assistance · UAE activities · UAE holidays</div><p class="footer-identity">RAAHHI TOURS · Raahi Tourism PVT LTD<br>Pune, Maharashtra, India<br><a href="https://wa.me/917678572029" target="_blank" rel="noopener noreferrer">WhatsApp our human sales team</a><br><a href="mailto:inquire@raahhi.com">inquire@raahhi.com</a><br>8:00 am–9:00 pm IST</p>
+        <a href="/" class="footer-logo" aria-label="RAAHHI TOURS home"><span class="logo-mark"><img src="/assets/brand/raahhi-monogram-light.svg" alt="" role="presentation" aria-hidden="true" width="280" height="280" decoding="async"></span><img class="brand-wordmark" src="/assets/brand/raahhi-wordmark-light.svg" alt="RAAHHI TOURS" width="520" height="400" decoding="async"></a><div class="footer-tagline">Visa assistance · UAE activities · UAE holidays</div><p class="footer-identity">RAAHHI TOURS · Raahi Tourism PVT LTD<br>Pune, Maharashtra, India<br><a href="https://wa.me/917678572029" target="_blank" rel="noopener noreferrer">WhatsApp our human sales team</a><br><a href="mailto:inquire@raahhi.com">inquire@raahhi.com</a><br>8:00 am–9:00 pm IST</p>
         <p style="margin-top:14px; max-width:300px; font-size:14.5px;">RAAHHI TOURS offers visa assistance for <span data-catalogue-count="visas">40</span> destinations, activities in Dubai, Abu Dhabi and Ras Al Khaimah, and holiday packages in Dubai, Abu Dhabi and Ras Al Khaimah. Prices, availability and requirements are confirmed on enquiry.</p>
       </div>
       <div>
@@ -7234,6 +7234,13 @@ function serviceItemNode(url, name, desc, images, serviceType, extra){
   if(images && images.length) n.image = images.slice(0, 3).map(s => imgAt(s, 1200));
   return Object.assign(n, extra || {});
 }
+// Prefer the existing detailed description when concise; otherwise use a complete,
+// route-specific alternative. Never cut a product name or a policy sentence mid-word.
+function searchDescription(...options){
+  const match = options.map(stripTags).find(text => text.length >= 50 && text.length <= 160);
+  if(!match) throw new Error("No concise search description: " + options[0]);
+  return match;
+}
 function pageMeta(c){
   // Without a verified production origin, every otherwise-indexable route fails closed to noindex.
   const S = SEO_CONFIG.siteName, NOINDEX = "noindex,follow", INDEX = siteBase() ? "index,follow,max-image-preview:large" : NOINDEX;
@@ -7401,6 +7408,35 @@ function pageMeta(c){
       m.path = null; m.robots = NOINDEX; m.title = `Page not found | ${S}`;
       m.description = "The page you were looking for doesn't exist, or the link may be out of date."; m.bc = null;
   }
+  const subject = stripTags(m.title.replace(/\s*\|\s*RAAHHI TOURS$/, ""));
+  let concise;
+  switch(c.kind){
+    case "visa":
+      concise = `${c.v.country} visa assistance with RAAHHI TOURS. Discuss your nationality, travel plans, documents and applicable fees with our team.`; break;
+    case "activity": case "addon":
+      concise = `${titleWithPlace(c.t.title, c.t.dest, c.t.id)}. Check visit details, inclusions and options. Confirm prices and availability with RAAHHI TOURS.`; break;
+    case "holiday":
+      concise = `${c.p.title}. Explore the ${durText(c.p.dur)} itinerary, hotel options and inclusions. Request a holiday quote from RAAHHI TOURS.`; break;
+    case "visas":
+      concise = `Explore visa assistance for ${VISAS.length} destinations. Review visa guidance and official sources, then confirm documents and fees with RAAHHI TOURS.`; break;
+    case "activities":
+      concise = `Explore ${TOURS.length} UAE activities in Dubai, Abu Dhabi and Ras Al Khaimah. Compare safaris, landmarks, cruises and more; confirm prices with RAAHHI TOURS.`; break;
+    case "activityDest":
+      concise = `Explore ${destName(c.dest)} activities with RAAHHI TOURS. Compare experiences, visit details and inclusions; enquire for prices and availability.`; break;
+    case "holidays":
+      concise = `Compare ${PACKAGES.length} UAE holiday packages, itineraries, hotel options and inclusions. Confirm travel dates and request a tailored quote from RAAHHI TOURS.`; break;
+    case "holidayDest":
+      concise = `Explore ${destName(c.dest)} holiday packages with RAAHHI TOURS. Compare itineraries, stays and inclusions, then enquire for a tailored quote.`; break;
+    case "category":
+      concise = `Explore ${c.category.name.toLowerCase()} with RAAHHI TOURS. Compare UAE experiences, visit details and inclusions; confirm prices and availability on enquiry.`; break;
+    case "guide": case "comparison":
+      concise = `${subject}. Compare experiences and practical details to plan your UAE trip with RAAHHI TOURS.`; break;
+    case "contact":
+      concise = "Contact RAAHHI TOURS for visas, UAE activities and holidays. Prepare your enquiry and share it with our human sales team on WhatsApp or email."; break;
+    default:
+      concise = `${subject}. Explore details and guidance from RAAHHI TOURS. Contact our team with your questions.`;
+  }
+  m.description = searchDescription(m.description, concise, `${subject}. Details and options from RAAHHI TOURS; contact our team with your enquiry.`);
   return m;
 }
 function seoGraph(m){
@@ -8829,7 +8865,7 @@ if(PRERENDERED){
   const to = HASH_MODE ? null : legacyHashTarget(); // e.g. this file deployed with an SPA-style rewrite
   if(to) location.replace(to);
   else {
-    document.getElementById("homeHeroMedia").innerHTML = slideshowHTML([IMG.dubaiDuskPanorama, IMG.desertSunsetHero, IMG.mosqueTwilight, IMG.rakSunriseMountains, IMG.wingSunset], "", "hero-slideshow", {label:"UAE travel inspiration", deferSlides:true});
+    document.getElementById("homeHeroMedia").innerHTML = slideshowHTML([IMG.dubaiDuskPanorama, IMG.desertSunsetHero, IMG.mosqueTwilight, IMG.rakSunriseMountains, IMG.wingSunset], "UAE travel inspiration", "hero-slideshow", {label:"UAE travel inspiration", deferSlides:true});
     initSlideshows(document.getElementById("homeHeroMedia"));
     renderHomeSelections();
     renderVisaGrid();
