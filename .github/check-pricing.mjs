@@ -52,7 +52,8 @@ try{
  }
  await p.goto(base+'/activities/dubai/overnight-desert-safari/');
  assert((await p.locator('.page.active .bb-price').textContent()).includes('Reference from'));
- assert((await p.locator('.page.active .bb-price').textContent()).includes('Supplier currently unavailable'));
+ assert(!(await p.locator('body').textContent()).includes('Supplier currently unavailable'));
+ assert((await p.locator('.page.active .bb-price').textContent()).includes('final quote confirmed on enquiry'));
  const offers=await p.evaluate(()=>JSON.stringify(JSON.parse(document.querySelector('script[type="application/ld+json"]').textContent)));
  assert(!offers.includes('"price":132.78'),'Unavailable reference has no bookable Offer');
  await p.goto(base+'/holidays/dubai/dubai-easter-short-break/');assert((await p.locator('.page.active .bb-price').textContent()).includes('confirmed on enquiry'));
