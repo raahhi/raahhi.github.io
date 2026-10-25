@@ -37,3 +37,7 @@ Holiday enquiries collect dates or flexibility, adults, children and child ages,
 The public brand is RAAHHI TOURS, operated by Raahi Tourism PVT LTD. Verified customer channels, support hours and office details are recorded in the authoring source. Enquiry forms prepare a summary and expose explicit WhatsApp/email handoffs; customers review and press Send in the chosen app. There is no automated delivery claim or backend. Cancellation policies share the same product-option records across detail pages, FAQs and comparisons. Eight priority visa pages include scoped official-source guidance. Two additional planning guides bring the sitemap to 270 routes. Fonts are served from `source/fonts` with their licences.
 
 Implementation evidence and owner-verification steps: `source/verification/search-readiness/`. Run `node .github/check-readiness.mjs` after building. Existing starting prices and photographs are preserved. External profiles, actual indexing, real customer receipt and field performance require separate evidence.
+
+## Bing ownership verification
+
+`source/BingSiteAuth.xml` is the public verification file supplied by Bing Webmaster Tools. The build copies it unchanged to `/BingSiteAuth.xml` so later deployments retain ownership verification. It is not a password or API credential and must remain published while the property uses file verification.

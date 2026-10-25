@@ -241,6 +241,8 @@ try {
   for(const [url,content] of fontFiles) await writeFile(join(DIST,url.slice(1)),content);
   await mkdir(join(DIST, 'assets', 'media'), {recursive:true});
   for (const [url, content] of [...assets.files, ...localMedia.files]) await writeFile(join(DIST, url.slice(1)), content);
+  // Preserve Bing's public ownership-verification file on every Pages deployment.
+  await writeFile(join(DIST, 'BingSiteAuth.xml'), await readFile(join(ROOT, 'source', 'BingSiteAuth.xml')));
   await writeFile(join(DIST, 'robots.txt'), home.robotsTxt, 'utf8');
   await writeFile(join(DIST, 'sitemap.xml'), home.sitemapXml, 'utf8');
   await writeFile(join(DIST, 'llms.txt'), home.llmsTxt || '', 'utf8');
