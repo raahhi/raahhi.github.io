@@ -1,0 +1,1 @@
+Fonts downloaded from the Google Fonts CSS API on 25 October 2026. Unmodified WOFF2 subsets of Inter and Fraunces, weights 400–700; all supplied script subsets retained. Each family is distributed under its included SIL Open Font License. Files are served from the same origin; browsers load only the subsets needed by the page. No external font request is required.

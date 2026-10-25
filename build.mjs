@@ -9,7 +9,7 @@ const ROOT = process.cwd();
 const DIST = join(ROOT, 'dist');
 const SOURCE_FILE = join(ROOT, 'source', 'raahhi-tours52.html');
 const EXPECTED_ORIGIN = 'https://raahhi.com';
-const EXPECTED_SITEMAP_URLS = 268;
+const EXPECTED_SITEMAP_URLS = 270;
 // Image errors can fire while the parser is still reading the page, before app.js loads.
 // hydrate() drains this queue using the real fallback handler once the app is ready.
 const EARLY_IMAGE_FALLBACK = '<script data-image-fallback-bootstrap>window.__imgFallbackQueue=[];window.imgFallback=function(el){window.__imgFallbackQueue.push(el);};</script>';
@@ -43,12 +43,18 @@ for (const filename of await readdir(join(ROOT, 'source', 'brand'))) {
   if (filename.endsWith('.svg')) brandFiles.set('/assets/brand/' + filename, await readFile(join(ROOT, 'source', 'brand', filename)));
 }
 if (!brandFiles.has('/assets/brand/raahhi-monogram-navy.svg') || !brandFiles.has('/assets/brand/raahhi-lockup-navy.svg')) throw new Error('Approved RAAHHI brand assets missing');
+const fontFiles = new Map();
+for (const filename of await readdir(join(ROOT, 'source', 'fonts'))) {
+  if (filename.endsWith('.woff2') || filename.endsWith('-OFL.txt')) fontFiles.set('/assets/fonts/' + filename, await readFile(join(ROOT, 'source', 'fonts', filename)));
+}
 let assets;
 
 await rm(DIST, { recursive: true, force: true });
 await mkdir(DIST, { recursive: true });
 
 const server = createServer((req, res) => {
+  const font = fontFiles.get(new URL(req.url, 'http://localhost').pathname);
+  if(font){ res.writeHead(200, {'Content-Type':req.url.endsWith('.woff2')?'font/woff2':'text/plain; charset=utf-8'});res.end(font);return; }
   const brand = brandFiles.get(new URL(req.url, 'http://localhost').pathname);
   if (brand) { res.writeHead(200, {'Content-Type':'image/svg+xml'}); res.end(brand); return; }
   const media = localMedia.files.get(new URL(req.url, 'http://localhost').pathname);
@@ -231,6 +237,8 @@ try {
   await writeFile(join(DIST, '404.html'), notFoundHtml, 'utf8');
 
   await writeBrandAssets();
+  await mkdir(join(DIST, 'assets', 'fonts'), {recursive:true});
+  for(const [url,content] of fontFiles) await writeFile(join(DIST,url.slice(1)),content);
   await mkdir(join(DIST, 'assets', 'media'), {recursive:true});
   for (const [url, content] of [...assets.files, ...localMedia.files]) await writeFile(join(DIST, url.slice(1)), content);
   await writeFile(join(DIST, 'robots.txt'), home.robotsTxt, 'utf8');

@@ -68,6 +68,9 @@ jobs:
       - name: Check supplier options, cancellation terms and detailed enquiries
         run: node .github/check-options.mjs
 
+      - name: Check business identity, human enquiry delivery and answer consistency
+        run: node .github/check-readiness.mjs
+
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
 

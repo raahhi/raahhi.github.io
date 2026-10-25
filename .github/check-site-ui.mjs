@@ -129,12 +129,12 @@ try{
     assert.equal(await gallery.getAttribute('data-index'),'0');
    }
    if(route==='/'){
-    assert.equal(await p.locator('#homeActivitySelection .product-card').count(),3);
+    assert.equal(await p.locator('#homeActivitySelection .product-card').count(),6);
     assert.equal(await p.locator('#homePackageSelection .pkg-card').count(),3);
     assert.equal(await p.locator('.home-shortcuts a').count(),3);
-    assert.equal(await p.locator('.home-selection .slideshow[data-count="1"]').count(),6,'Static covers on selected products');
+    assert.equal(await p.locator('.home-selection .slideshow[data-count="1"]').count(),9,'Static covers on selected products');
     const selectedLinks=await p.locator('.home-selection h3 a').evaluateAll(es=>es.map(e=>e.getAttribute('href')));
-    assert.equal(new Set(selectedLinks).size,6,'Six distinct published product links');
+    assert.equal(new Set(selectedLinks).size,9,'Nine distinct published product links');
     assert(await p.evaluate(urls=>urls.every(url=>seoRoutes().includes(url)),selectedLinks));
    }
    if(route==='/activities/dubai/'){

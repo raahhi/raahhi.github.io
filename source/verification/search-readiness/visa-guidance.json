@@ -1,0 +1,231 @@
+{
+  "united-arab-emirates": {
+    "scope": "Tourist travel; passport and residence determine the available entry route.",
+    "summary": "A tourist visa is a route for travellers who are not eligible for visa-free entry or visa on arrival. Check your passport-specific route before paying for an application.",
+    "type": "Tourist visa; route depends on eligibility",
+    "validity": "As stated on the issued visa",
+    "processing": "Confirmed for your application route",
+    "checklist": [
+      "For Dubai single-entry tourist applications, GDRFA lists a personal photograph and passport copy.",
+      "Some nationalities require an additional national identity document.",
+      "GCC residents use a separate route: check passport and residence-permit requirements."
+    ],
+    "steps": [
+      "Check entry eligibility through the UAE government portal.",
+      "Confirm the relevant tourism or GCC-resident application route before preparing documents."
+    ],
+    "sources": [
+      {
+        "name": "UAE government: tourist visas",
+        "url": "https://u.ae/en/information-and-services/visa-and-emirates-id/Types-of-visas/tourist-visa"
+      },
+      {
+        "name": "GDRFA: single-entry tourist visa",
+        "url": "https://gdrfad.gov.ae/en/services/f9e586fe-0642-11ec-0320-0050569629e8"
+      },
+      {
+        "name": "GDRFA: GCC-resident entry visa",
+        "url": "https://gdrfad.gov.ae/en/services/ee043e4a-5c61-11ea-0320-0050569629e8"
+      }
+    ],
+    "reviewedOn": "2026-10-25"
+  },
+  "schengen-area": {
+    "scope": "General short-stay applications; local consulates may require additional evidence.",
+    "summary": "For a short Schengen visit, apply through the competent consulate and check the permitted stay on your visa. A short stay is normally limited to 90 days in any 180-day period; visa validity is not an automatic right to spend that entire period in the area.",
+    "type": "Short-stay Schengen visa",
+    "validity": "Permitted stay on issued visa; 90/180 rule applies",
+    "processing": "Normally 15 days; may extend to 45 days",
+    "checklist": [
+      "Passport valid at least three months after planned departure from the Schengen area.",
+      "Application form, compliant photograph and medical travel insurance.",
+      "Evidence of travel purpose, accommodation, financial means and intention to return.",
+      "Fingerprints are normally collected; exemptions exist."
+    ],
+    "steps": [
+      "Submit no earlier than six months before travel and at least 15 days before the journey.",
+      "Check the consulate’s appointment procedure and additional requirements."
+    ],
+    "fees": "Standard official fees are EUR 90 for adults and EUR 45 for children aged 6–12; exceptions and waivers apply. Application-centre and RAAHHI service charges are separate.",
+    "sources": [
+      {
+        "name": "European Commission: applying for a Schengen visa",
+        "url": "https://home-affairs.ec.europa.eu/policies/schengen/visa-policy/applying-schengen-visa_en"
+      },
+      {
+        "name": "European Commission: short-stay calculator",
+        "url": "https://home-affairs.ec.europa.eu/policies/schengen/border-crossing/short-stay-calculator_en"
+      }
+    ],
+    "reviewedOn": "2026-10-25"
+  },
+  "united-states": {
+    "scope": "Temporary B-1 business/B-2 tourism visits; follow the embassy handling your application.",
+    "summary": "A B-1/B-2 visitor application is different from permission to work or immigrate. The consular officer decides whether you qualify; a visa does not guarantee admission.",
+    "type": "B-1/B-2 visitor visa",
+    "validity": "Visa validity and permitted stay are separate decisions",
+    "processing": "Appointment and case dependent; no fixed deadline",
+    "checklist": [
+      "Passport valid for US travel, subject to the applicable validity rules.",
+      "DS-160 confirmation, compliant photograph and fee receipt where required.",
+      "Additional evidence may be requested about the purpose of travel, your intention to leave and ability to pay."
+    ],
+    "steps": [
+      "Complete the DS-160 and retain the confirmation/barcode page.",
+      "Follow the relevant embassy’s fee and interview instructions; interview-waiver eligibility is case specific."
+    ],
+    "sources": [
+      {
+        "name": "US Department of State: visitor visa",
+        "url": "https://travel.state.gov/content/travel/en/us-visas/tourism-visit/visitor.html"
+      },
+      {
+        "name": "US Department of State: DS-160",
+        "url": "https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/forms/ds-160-online-nonimmigrant-visa-application.html"
+      }
+    ],
+    "reviewedOn": "2026-10-25"
+  },
+  "singapore": {
+    "scope": "The checklist below is for Indian travel-document holders applying for business or social visits. Other nationalities must use their own ICA guidance.",
+    "summary": "Indian passport holders should follow ICA’s India-specific entry-visa instructions. The visa and permission to enter are separate; each application is considered on its merits.",
+    "type": "Entry visa, where required for your travel document",
+    "validity": "As granted; check the authorised stay separately",
+    "processing": "Usually three working days, excluding submission day; some take longer",
+    "checklist": [
+      "Completed, signed Form 14A.",
+      "Recent colour photograph taken within the last three months.",
+      "Passport biodata copy; passport valid for at least six months from entry.",
+      "A letter of introduction or other supporting documents may be requested."
+    ],
+    "steps": [
+      "Applications can use a local contact or strategic partner in Singapore, or an overseas mission/its authorised agent.",
+      "ICA advises applying within 30 days before arrival. Check the mission’s procedure."
+    ],
+    "fees": "ICA lists a non-refundable SGD 30 processing fee. Service charges are additional and confirmed in your quotation.",
+    "sources": [
+      {
+        "name": "Singapore ICA: India-specific visa requirements",
+        "url": "https://www.ica.gov.sg/enter-transit-depart/entering-singapore/visa_requirements/visa-detail-page/india"
+      },
+      {
+        "name": "Singapore ICA: check your travel document",
+        "url": "https://www.ica.gov.sg/enter-transit-depart/entering-singapore/visa_requirements"
+      }
+    ],
+    "reviewedOn": "2026-10-25"
+  },
+  "united-kingdom": {
+    "scope": "Standard Visitor applications from outside the UK; passport-specific visa or ETA requirements must be checked first.",
+    "summary": "Depending on your nationality, a UK visit may require a visa or an electronic travel authorisation. Check the official route before starting a Standard Visitor application. A longer-validity visa does not permit a continuous stay for that entire period.",
+    "type": "Standard Visitor visa, where required",
+    "validity": "Usually up to six months per visit; follow visa conditions",
+    "processing": "Usually three weeks after identity and document requirements; may take longer",
+    "checklist": [
+      "Valid passport or travel document.",
+      "Details of the trip, its cost, your accommodation and how it will be funded.",
+      "Supporting evidence appropriate to your visit and personal circumstances."
+    ],
+    "steps": [
+      "Where a visa is required, apply online before travel and attend the required application-centre appointment.",
+      "The earliest application is three months before travel. Follow the official document checklist."
+    ],
+    "sources": [
+      {
+        "name": "GOV.UK: apply for a Standard Visitor visa",
+        "url": "https://www.gov.uk/standard-visitor/apply-standard-visitor-visa"
+      },
+      {
+        "name": "GOV.UK: supporting documents",
+        "url": "https://www.gov.uk/government/publications/visitor-visa-guide-to-supporting-documents/guide-to-supporting-documents-visiting-the-uk"
+      },
+      {
+        "name": "GOV.UK: check if you need a visa",
+        "url": "https://www.gov.uk/check-uk-visa"
+      }
+    ],
+    "reviewedOn": "2026-10-25"
+  },
+  "saudi-arabia": {
+    "scope": "Tourism entry routes; eligibility depends on your passport and other qualifying circumstances.",
+    "summary": "The official Saudi tourist eVisa is available to eligible travellers. Do not assume that residence in another country automatically makes a passport eligible. Use the official eligibility route for your circumstances.",
+    "type": "Tourist visa; eligible route confirmed per traveller",
+    "validity": "Eligible tourist eVisa: one-year multiple entry, up to 90 days",
+    "processing": "Confirmed for the eligible application route",
+    "checklist": [
+      "Passport meeting the applicable route’s validity requirement; the eVisa terms specify at least six months from entry.",
+      "Photograph meeting the official specifications.",
+      "Confirm eligibility before application or fee payment."
+    ],
+    "steps": [
+      "Check the official tourism portal’s eligibility guidance.",
+      "If you cannot use the eVisa route, check the appropriate consular route. Tourist permissions do not cover work or Hajj."
+    ],
+    "sources": [
+      {
+        "name": "Saudi tourist eVisa: official portal",
+        "url": "https://visa.visitsaudi.com/"
+      },
+      {
+        "name": "Saudi eVisa: conditions and passport rules",
+        "url": "https://visa.visitsaudi.com/Home/TermsConditions"
+      }
+    ],
+    "reviewedOn": "2026-10-25"
+  },
+  "canada": {
+    "scope": "Temporary visitor applications; the required route and evidence depend on the reason for travel.",
+    "summary": "IRCC’s visitor application route and document checklist depend on why you are travelling. Use the personalised checklist in the application portal rather than assume one list covers every traveller.",
+    "type": "Visitor visa, where required",
+    "validity": "As issued; permitted admission is decided separately",
+    "processing": "Check IRCC’s current country-specific estimate",
+    "checklist": [
+      "Travel document and identity information required by the portal.",
+      "Documents supporting your reason for visiting and circumstances, as listed in your personalised checklist.",
+      "Biometrics if required; follow the instruction letter and official collection procedure."
+    ],
+    "steps": [
+      "Choose the correct visitor purpose on the official IRCC application page.",
+      "Apply using the applicable online portal and follow any additional document or biometric requests."
+    ],
+    "sources": [
+      {
+        "name": "IRCC: apply for a visitor visa",
+        "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/apply-visitor-visa.html"
+      },
+      {
+        "name": "IRCC: after you apply",
+        "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/after-apply-next-steps.html"
+      }
+    ],
+    "reviewedOn": "2026-10-25"
+  },
+  "thailand": {
+    "scope": "Tourist eVisa preparation; visa exemption and application eligibility depend on your travel document and circumstances.",
+    "summary": "Check whether you need a tourist visa before applying. The Thai Ministry of Foreign Affairs operates the official eVisa portal; an application is not a guarantee of approval.",
+    "type": "Tourist visa or other eligible entry route",
+    "validity": "As granted for the selected visa route",
+    "processing": "Depends on the responsible mission and application",
+    "checklist": [
+      "Passport or travel-document biodata page.",
+      "Photograph taken within the last six months.",
+      "Evidence of current location, such as a valid visa or residence document, as applicable.",
+      "Any additional evidence requested for your selected tourist route."
+    ],
+    "steps": [
+      "Use the official Thai eVisa portal and choose the route relevant to your circumstances.",
+      "Follow the responsible mission’s instructions and retain the approval confirmation if issued."
+    ],
+    "sources": [
+      {
+        "name": "Thai Ministry of Foreign Affairs: tourist eVisa",
+        "url": "https://www.thaievisa.go.th/visa/tourist-visa"
+      },
+      {
+        "name": "Thai eVisa: official portal",
+        "url": "https://www.thaievisa.go.th/"
+      }
+    ],
+    "reviewedOn": "2026-10-25"
+  }
+}
