@@ -1,0 +1,10 @@
+{
+  "$schema": "https://unpkg.com/wrangler@4.153.0/config-schema.json",
+  "name": "raahhi-leads",
+  "main": "index.mjs",
+  "compatibility_date": "2026-10-27",
+  "keep_vars": true,
+  "preview_urls": false,
+  "rules": [{"type":"Text","globs":["**/*.html","**/dashboard.js"],"fallthrough":true}],
+  "d1_databases": [{"binding":"DB","database_name":"raahhi-enquiries","database_id":"cfe504d7-065f-48bb-bd03-933f3cbdb495","migrations_dir":"../migrations"}]
+}
