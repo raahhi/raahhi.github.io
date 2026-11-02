@@ -1090,6 +1090,8 @@
   .business-identity a,.footer-identity{overflow-wrap:anywhere;}
   .footer-identity{font-size:13px;line-height:1.8;margin-top:16px;}
   body:has(#page-contact.active) .fab-stack{display:none;}
+  .enquiry-storage-note,.enquiry-save-state{margin-top:14px;line-height:1.6;}
+  .enquiry-verification{margin-top:16px;max-width:100%;}
 </style>
 </head>
 <body>
@@ -1176,7 +1178,7 @@
     <div class="steps-row home-steps">
       <div class="step-card"><div class="step-num">1</div><h3>Browse</h3><p>Choose a visa destination, a UAE activity or a holiday package.</p></div>
       <div class="step-card"><div class="step-num">2</div><h3>Review the details</h3><p>Each page lists the facts on file: visa type and processing time, activity duration, or a package's itinerary and inclusions.</p></div>
-      <div class="step-card"><div class="step-num">3</div><h3>Enquire</h3><p>Select Start Visa Enquiry or Enquire. The website prepares a summary of your enquiry for you to share with our team by phone, WhatsApp or email. It is not sent automatically.</p></div>
+      <div class="step-card"><div class="step-num">3</div><h3>Enquire</h3><p>Select Start Visa Enquiry or Enquire. Submit your details to save an enquiry reference, then continue on WhatsApp and press Send to speak with our team.</p></div>
       <div class="step-card"><div class="step-num">4</div><h3>Our team confirms</h3><p>The team confirms current prices, availability, visa requirements and hotel details with you.</p></div>
     </div>
     <p class="home-note">Nothing is booked, reserved or paid for on this website.</p>
@@ -1505,7 +1507,7 @@
         <h2>How enquiries work</h2>
         <ol class="about-list">
           <li>Choose a visa destination, activity or holiday package and select Start Visa Enquiry or Enquire.</li>
-          <li>Enter your details. The website prepares a summary of your enquiry. It is not sent automatically.</li>
+          <li>Enter your details and submit to save your enquiry. Continue on WhatsApp and press Send to start the conversation.</li>
           <li>Use the WhatsApp or email button to open your message and press Send. A human sales executive helps you plan the trip. The team confirms prices, availability and requirements.</li>
         </ol>
   <p>Nothing is booked or paid for on this website.</p>
@@ -1555,22 +1557,23 @@
           <li>How many people are travelling</li>
           <li>For visas: your nationality and country of residence</li>
         </ul>
-        <p class="body-copy" style="margin-top:12px;">Submitting the form below prepares your message on this page. It is not sent automatically. Choose WhatsApp or email after reviewing the summary, then press Send in the opened app.</p>
+        <p class="body-copy" style="margin-top:12px;">Submitting the form below saves your enquiry with our team. You will receive an enquiry reference on this page. Then choose Continue on WhatsApp, review the message and press Send to speak with a real sales executive.</p>
       </div>
       <div class="notice-box" id="contactPageDone" style="margin-top:34px;" hidden>
-        <div class="success-head"><span class="success-icon" aria-hidden="true">✓</span><div><p class="success-eyebrow">Message</p><h2 style="font-size:22px;" tabindex="-1" id="contactDoneTitle">Choose how to send your enquiry</h2></div></div>
-        <div class="visa-enq-box" id="contactMessagePreview"></div><p class="form-note">Your message remains on this page until you choose a channel and press Send in the opened app.</p>
-        <div class="next-steps"><h3>What happens next</h3><ol><li>Open WhatsApp or email using the buttons above.</li><li>Share it with our team on <a class="contact-link" data-contact="phone"></a>, <a class="contact-link" data-contact="whatsapp"></a> or <a class="contact-link" data-contact="email"></a>. Review the prefilled message and press Send in your chosen app. Opening an app does not itself send the enquiry.</li></ol></div>
+        <div class="success-head"><span class="success-icon" aria-hidden="true">✓</span><div><p class="success-eyebrow">Message</p><h2 style="font-size:22px;" tabindex="-1" id="contactDoneTitle">Enquiry saved. Continue on WhatsApp</h2></div></div>
+        <div class="visa-enq-box" id="contactMessagePreview"></div><p class="form-note">Your enquiry has been saved. A WhatsApp message is sent only when you press Send in WhatsApp.</p>
+        <div class="next-steps"><h3>What happens next</h3><ol><li>Continue on WhatsApp using the button above.</li><li>Share it with our team on <a class="contact-link" data-contact="phone"></a>, <a class="contact-link" data-contact="whatsapp"></a> or <a class="contact-link" data-contact="email"></a>. Review the prefilled message and press Send in your chosen app. Opening an app does not itself send the enquiry.</li></ol></div>
         <div style="display:flex; gap:10px; flex-wrap:wrap;"><button type="button" class="btn btn-line btn-sm" onclick="copyContactMessage(this)">Copy message</button><button type="button" class="btn btn-navy btn-sm" onclick="resetContactPage()">Write another message</button></div>
       </div>
       <form id="contactPageForm" style="margin-top:34px;" novalidate onsubmit="submitContactPage(event)">
         <div class="form-grid">
-          <div class="field"><label for="contactName">Full name</label><input type="text" id="contactName" autocomplete="name" required aria-describedby="contactNameErr" oninput="clearFieldError(this)"><p class="field-error" id="contactNameErr" hidden></p></div>
-          <div class="field"><label for="contactEmail">Email</label><input type="email" id="contactEmail" autocomplete="email" required aria-describedby="contactEmailErr" oninput="clearFieldError(this)"><p class="field-error" id="contactEmailErr" hidden></p></div>
+          <div class="field"><label for="contactName">Full name</label><input type="text" id="contactName" maxlength="120" autocomplete="name" required aria-describedby="contactNameErr" oninput="clearFieldError(this)"><p class="field-error" id="contactNameErr" hidden></p></div>
+          <div class="field"><label for="contactEmail">Email</label><input type="email" id="contactEmail" maxlength="254" autocomplete="email" required aria-describedby="contactEmailErr" oninput="clearFieldError(this)"><p class="field-error" id="contactEmailErr" hidden></p></div>
         </div>
-        <div class="field" style="margin-top:16px;"><label for="contactPhone">Phone / WhatsApp</label><input type="tel" id="contactPhone" autocomplete="tel" placeholder="e.g. +971 50 123 4567" required aria-describedby="contactPhoneErr" oninput="clearFieldError(this)"><p class="field-error" id="contactPhoneErr" hidden></p></div>
-        <div class="field" style="margin-top:16px;"><label for="contactMessage">Message</label><textarea id="contactMessage" placeholder="Tell us what you need help with..." required aria-describedby="contactMessageErr" oninput="clearFieldError(this)"></textarea><p class="field-error" id="contactMessageErr" hidden></p></div>
-        <button class="btn btn-gold btn-block" style="margin-top:20px;">Prepare message</button>
+        <div class="field" style="margin-top:16px;"><label for="contactPhone">Phone / WhatsApp</label><input type="tel" id="contactPhone" maxlength="60" autocomplete="tel" placeholder="e.g. +971 50 123 4567" required aria-describedby="contactPhoneErr" oninput="clearFieldError(this)"><p class="field-error" id="contactPhoneErr" hidden></p></div>
+        <div class="field" style="margin-top:16px;"><label for="contactMessage">Message</label><textarea id="contactMessage" maxlength="3000" placeholder="Tell us what you need help with..." required aria-describedby="contactMessageErr" oninput="clearFieldError(this)"></textarea><p class="field-error" id="contactMessageErr" hidden></p></div>
+        <button class="btn btn-gold btn-block" style="margin-top:20px;">Save enquiry</button>
+      <p class="form-note enquiry-storage-note">Submitting saves your contact and travel details with RAAHHI TOURS. Then continue on WhatsApp to speak with our team. <a href="/privacy/">Privacy policy</a>. No payment is taken.</p>
       </form>
     </div>
   </section>
@@ -1597,7 +1600,7 @@
 <p class="eyebrow">RAAHHI TOURS policies</p><h1>Terms of service</h1>
 <p class="lede">Personal travel support, clear quotations and written confirmation before you commit.</p>
 <div class="about-block"><h2>Who you are dealing with</h2><p class="body-copy">RAAHHI TOURS is the trading name of Raahi Tourism PVT LTD, a company registered in India. Our office is at Sr No 33/2, Ashtavinayak Rd, MITCON Lane, Balewadi, Pune, Maharashtra 411045, India. Contact inquire@raahhi.com or +91 7678572029 during 8:00 am–9:00 pm IST.</p></div>
-<div class="about-block"><h2>From enquiry to booking</h2><p class="body-copy">This website helps you explore activities, holidays and visa assistance. Forms prepare your details locally. Choose WhatsApp or email, review the prefilled message and press Send in that app to reach a real sales executive. Preparing a summary or opening an app does not send it, reserve inventory, submit a visa application or take payment.</p><p class="body-copy">Our team checks your dates, party and preferences, explains the available options, and provides a quotation. Review the named service, total amount, currency, inclusions, exclusions, cancellation conditions and payment instructions before accepting. A booking exists only when we issue written confirmation; an enquiry or payment request alone is not a ticket or confirmation.</p></div>
+<div class="about-block"><h2>From enquiry to booking</h2><p class="body-copy">This website helps you explore activities, holidays and visa assistance. Submitting a form saves your enquiry with RAAHHI TOURS and displays a reference. Continue on WhatsApp, review the prefilled message and press Send to speak with a real sales executive. Saving an enquiry does not send a WhatsApp message, reserve inventory, submit a visa application or take payment.</p><p class="body-copy">Our team checks your dates, party and preferences, explains the available options, and provides a quotation. Review the named service, total amount, currency, inclusions, exclusions, cancellation conditions and payment instructions before accepting. A booking exists only when we issue written confirmation; an enquiry or payment request alone is not a ticket or confirmation.</p></div>
 <div class="about-block"><h2>Prices, currencies and payment</h2><p class="body-copy">Starting prices apply to the stated option and pricing basis. Dated option references apply only to the recorded date and traveller basis. They do not establish a group total or live availability. Hotel upgrades, private transfers and extra services require their own quote.</p><p class="body-copy">Currency conversions help you compare prices and may differ from your payment provider’s rate. Your written quotation specifies the payable currency, taxes, government charges and service charges that apply. No payment processor operates on this website. Use only payment instructions confirmed by our sales team.</p></div>
 <div class="about-block" id="cancellations" tabindex="-1"><h2>Cancellation, refunds and no-shows</h2>
 <p class="body-copy">Cancellation conditions belong to the specific product, option and travel date. Review the conditions on its page and in your written quotation. Some bookings are non-refundable; others have a stated cancellation deadline and charge. A general policy does not override an option-specific condition.</p>
@@ -1613,11 +1616,11 @@
 <div id="page-privacy" class="page"><section><div class="wrap" style="max-width:780px;">
 <p class="eyebrow">Your information</p><h1>Privacy policy</h1><p class="lede">This explains how Raahi Tourism PVT LTD, trading as RAAHHI TOURS, handles information on raahhi.com and in your travel enquiries.</p>
 <div class="about-block"><h2>Information you choose to provide</h2><p class="body-copy">Enquiry forms may ask for your name, email, phone number, destination, dates, nationality, residence, travel purpose and applicant count. Activity and holiday enquiries can include guests, children’s ages, rooms, hotel preferences, transfers, meals and optional assistance needs. Share only information needed for your enquiry. There is no passport or document upload facility on this website.</p></div>
-<div class="about-block"><h2>Preparing and sending an enquiry</h2><p class="body-copy">Our forms validate your entries and build a summary in your browser. They do not send a message to our server or automatically submit an application. The WhatsApp and email buttons prepare your contact details, preferences and page link for the chosen communication service. Review and press Send in that app to deliver the enquiry. Opening the app alone is not a delivery confirmation.</p><p class="body-copy">The handoff passes message information to the app or service you choose. WhatsApp, your email provider and your browser handle that information under their own policies; prefilled links can also be present in browser history. Detailed inclusions and cancellation paragraphs remain in your on-page summary and can be copied if needed. The website does not intentionally persist enquiry fields in cookies or browser storage. Browser autofill and draft handling follow your device settings.</p></div>
+<div class="about-block"><h2>Preparing and sending an enquiry</h2><p class="body-copy">When you submit an enquiry, we validate your entries and send your contact details, travel preferences and product page to our Cloudflare-hosted enquiry service. The information is stored in a private database for our authorised team to respond and follow up. Successful saving displays an enquiry reference; if saving cannot be confirmed, the form retains your details and offers a direct WhatsApp option. Saving an enquiry does not submit a visa application, send a WhatsApp message or take payment. The WhatsApp and email buttons prepare a message; review and press Send in the chosen app to start that conversation.</p><p class="body-copy">The handoff passes message information to the app or service you choose. WhatsApp, your email provider and your browser handle that information under their own policies; prefilled links can also be present in browser history. Detailed inclusions and cancellation paragraphs remain in your on-page summary and can be copied if needed. The website does not intentionally persist enquiry fields in cookies or browser storage. Browser autofill and draft handling follow your device settings.</p></div>
 <div class="about-block"><h2>How our team uses received information</h2><p class="body-copy">Once you send an enquiry, our human team uses the information to respond, understand your trip, check options and eligibility, prepare a quotation, and handle the services you choose. If you proceed, we may share necessary traveller and booking information with the operators, hotels, transport providers, application centres or authorities involved in arranging your service. Information relevant to a service abroad may be handled outside India.</p><p class="body-copy">We request additional information only when needed for your chosen service. We do not offer newsletter signup or sell enquiry details through this website. For booking records, corrections, refunds or application updates, contact the team using your enquiry or booking reference.</p></div>
-<div class="about-block"><h2>External services and browser storage</h2><p class="body-copy">Fonts are served from this website. Some photographs load from external image hosts. Loading those images sends normal network information such as your IP address and browser details to their providers. Enquiry fields are not deliberately included in image requests.</p><p class="body-copy">The website stores your selected display currency and a cached exchange-rate record in browser storage where available. These help preserve your currency choice; they are separate from enquiry fields. Copy buttons place the chosen summary on your device clipboard, which is controlled by your device and browser. No advertising or site-owned visitor analytics is enabled by this implementation, and no payment processor is connected.</p></div>
-<div class="about-block"><h2>Retention and information requests</h2><p class="body-copy">Unsent form entries remain in your browser until cleared or the page is closed, subject to browser behaviour. For messages and booking information received by our team, we keep information for the period needed to handle your enquiry or service, resolve issues and meet applicable record-keeping requirements. We do not promise a fixed deletion period that may conflict with an active booking or required records.</p><p class="body-copy">To ask about information held by us, request a correction or deletion, or raise a privacy concern, email <a class="contact-link" href="mailto:inquire@raahhi.com?subject=Privacy%20request">inquire@raahhi.com</a>. We may need to verify that the request concerns your information. We explain any limits that apply to the request.</p></div>
-<div class="about-block"><h2>Our business and contact</h2><p class="body-copy">Raahi Tourism PVT LTD, trading as RAAHHI TOURS. Office: Sr No 33/2, Ashtavinayak Rd, MITCON Lane, Balewadi, Pune, Maharashtra 411045, India. Customer and privacy contact: inquire@raahhi.com; +91 7678572029. Support hours: 8:00 am–9:00 pm IST.</p><p class="body-copy">We update this policy when the website’s handling of information changes. Last updated: <time datetime="2026-10-25">25 October 2026</time>.</p></div>
+<div class="about-block"><h2>External services and browser storage</h2><p class="body-copy">Cloudflare provides our enquiry processing, database hosting, dashboard authentication and Turnstile spam protection. Turnstile loads when you submit a valid enquiry and processes technical browser and network information for security. We do not deliberately send your enquiry fields to Turnstile. Fonts are served from this website. Some photographs load from external image hosts. Loading those images sends normal network information such as your IP address and browser details to their providers. Enquiry fields are not deliberately included in image requests.</p><p class="body-copy">The website stores your selected display currency and a cached exchange-rate record in browser storage where available. These help preserve your currency choice; they are separate from enquiry fields. Copy buttons place the chosen summary on your device clipboard, which is controlled by your device and browser. No advertising or site-owned visitor analytics is enabled by this implementation, and no payment processor is connected.</p></div>
+<div class="about-block"><h2>Retention and information requests</h2><p class="body-copy">Draft form entries remain in your browser until cleared or the page is closed, subject to browser behaviour. Submitted enquiries are stored in our private database, including contact details, travel preferences, receipt time, reference and our follow-up notes/status. We do not store raw visitor IP addresses in enquiry records; temporary security rate-limit fingerprints use a secret-keyed hash. For enquiries, messages and booking information received by our team, we keep information for the period needed to handle your enquiry or service, resolve issues and meet applicable record-keeping requirements. We do not promise a fixed deletion period that may conflict with an active booking or required records.</p><p class="body-copy">To ask about information held by us, request a correction or deletion, or raise a privacy concern, email <a class="contact-link" href="mailto:inquire@raahhi.com?subject=Privacy%20request">inquire@raahhi.com</a>. We may need to verify that the request concerns your information. We explain any limits that apply to the request.</p></div>
+<div class="about-block"><h2>Our business and contact</h2><p class="body-copy">Raahi Tourism PVT LTD, trading as RAAHHI TOURS. Office: Sr No 33/2, Ashtavinayak Rd, MITCON Lane, Balewadi, Pune, Maharashtra 411045, India. Customer and privacy contact: inquire@raahhi.com; +91 7678572029. Support hours: 8:00 am–9:00 pm IST.</p><p class="body-copy">We update this policy when the website’s handling of information changes. Last updated: <time datetime="2026-11-02">2 November 2026</time>.</p></div>
 </div></section></div>
 
 <div id="page-notfound" class="page">
@@ -1691,7 +1694,7 @@
     <button type="button" class="modal-close" aria-label="Close" onclick="closeModal('contactModal')">✕</button>
     <div id="callbackFormView">
       <h3 style="font-size:24px;" id="callbackTitle">Prepare an enquiry</h3>
-      <p style="color:var(--ink-600); font-size:14.5px; margin-top:8px;" id="callbackIntro">Add your name and number, then describe your travel question under Optional details.</p>
+      <p style="color:var(--ink-600); font-size:14.5px; margin-top:8px;" id="callbackIntro">Add your name and number to save your enquiry. You can add a preferred call time or notes.</p>
       <!-- Filled by openCallback(context) when opened from an activity or holiday page -->
       <div class="visa-enq-box" id="callbackContext" hidden>
         <div class="field"><label id="callbackContextKind"></label><p class="visa-enq-value" id="callbackContextTitle"></p></div>
@@ -1699,26 +1702,27 @@
       </div>
       <form id="callbackForm" novalidate onsubmit="submitCallback(event)">
         <div id="holidayEnquiryFields" hidden></div>
-        <div class="field" style="margin-top:18px;"><label for="callbackName">Full name</label><input type="text" id="callbackName" autocomplete="name" required aria-describedby="callbackNameErr" oninput="clearFieldError(this)"><p class="field-error" id="callbackNameErr" hidden></p></div>
-        <div class="field" style="margin-top:14px;"><label for="callbackPhone">Phone / WhatsApp</label><input type="tel" id="callbackPhone" autocomplete="tel" placeholder="e.g. +971 50 123 4567" required aria-describedby="callbackPhoneErr" oninput="clearFieldError(this)"><p class="field-error" id="callbackPhoneErr" hidden></p></div>
+        <div class="field" style="margin-top:18px;"><label for="callbackName">Full name</label><input type="text" id="callbackName" maxlength="120" autocomplete="name" required aria-describedby="callbackNameErr" oninput="clearFieldError(this)"><p class="field-error" id="callbackNameErr" hidden></p></div>
+        <div class="field" style="margin-top:14px;"><label for="callbackPhone">Phone / WhatsApp</label><input type="tel" id="callbackPhone" maxlength="60" autocomplete="tel" placeholder="e.g. +971 50 123 4567" required aria-describedby="callbackPhoneErr" oninput="clearFieldError(this)"><p class="field-error" id="callbackPhoneErr" hidden></p></div>
         <details class="enquiry-optional" id="callbackOptional"><summary>Add a preferred call time or notes</summary>
-        <div class="field" style="margin-top:14px;"><label for="callbackTime">Best time to call (optional)</label><input type="text" id="callbackTime" placeholder="e.g. Today, 6–8 PM"></div>
-        <div class="field" style="margin-top:14px;"><label for="callbackNotes">Notes / requirements (optional)</label><textarea id="callbackNotes" rows="3" placeholder="Anything else we should know?"></textarea></div>
+        <div class="field" style="margin-top:14px;"><label for="callbackTime">Best time to call (optional)</label><input type="text" id="callbackTime" maxlength="120" placeholder="e.g. Today, 6–8 PM"></div>
+        <div class="field" style="margin-top:14px;"><label for="callbackNotes">Notes / requirements (optional)</label><textarea id="callbackNotes" maxlength="3000" rows="3" placeholder="Anything else we should know?"></textarea></div>
         </details>
-        <button class="btn btn-gold btn-block" style="margin-top:20px;" id="callbackSubmit">Prepare Enquiry</button>
+        <button class="btn btn-gold btn-block" style="margin-top:20px;" id="callbackSubmit">Save enquiry</button>
+      <p class="form-note enquiry-storage-note">Submitting saves your contact and travel details with RAAHHI TOURS. Then continue on WhatsApp to speak with our team. <a href="/privacy/">Privacy policy</a>. No payment is taken.</p>
       </form>
     </div>
     <div id="callbackDone" hidden>
-      <div class="success-head"><span class="success-icon" aria-hidden="true">✓</span><div><p class="success-eyebrow" id="callbackDoneEyebrow">General enquiry</p><h3 style="font-size:22px;" tabindex="-1" id="callbackDoneTitle">Choose how to send your enquiry</h3></div></div>
+      <div class="success-head"><span class="success-icon" aria-hidden="true">✓</span><div><p class="success-eyebrow" id="callbackDoneEyebrow">General enquiry</p><h3 style="font-size:22px;" tabindex="-1" id="callbackDoneTitle">Enquiry saved. Continue on WhatsApp</h3></div></div>
       <div class="notice-box" id="callbackSummary"></div>
-      <div class="next-steps"><h4>What happens next</h4><ol><li>Copy your details with the button below.</li><li>Share them with our team on <a class="contact-link" data-contact="phone"></a>, <a class="contact-link" data-contact="whatsapp"></a> or <a class="contact-link" data-contact="email"></a>. Review the prefilled message and press Send in your chosen app. Opening an app does not itself send the enquiry.</li></ol></div>
+      <div class="next-steps"><h4>What happens next</h4><ol><li>Your enquiry is saved. Continue on WhatsApp using the button above.</li><li>Share them with our team on <a class="contact-link" data-contact="phone"></a>, <a class="contact-link" data-contact="whatsapp"></a> or <a class="contact-link" data-contact="email"></a>. Review the prefilled message and press Send in your chosen app. Opening an app does not itself send the enquiry.</li></ol></div>
       <div class="success-actions"><button type="button" class="btn btn-line" onclick="copySummary('callbackSummary', this)">Copy details</button><button type="button" class="btn btn-navy" onclick="closeModal('contactModal')">Done</button></div>
     </div>
   </div>
 </div>
 
 <!-- Visa enquiry: opened only via openVisaEnquiry(slug), which fills in the destination
-     and visa type from VISAS. Front-end only -- nothing is sent anywhere on submit. -->
+     and visa type from VISAS. Validated enquiries are saved before the customer continues on WhatsApp. -->
 <div class="modal-backdrop" id="visaEnquiryModal">
   <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="visaEnquiryTitle">
     <button type="button" class="modal-close" aria-label="Close" onclick="closeModal('visaEnquiryModal')">✕</button>
@@ -1732,22 +1736,23 @@
         <input type="hidden" id="visaEnqSlug" name="visa">
         <div id="visaIntakeFields"></div>
         <p class="field-error" id="visaEnqSlugErr" hidden></p>
-        <div class="field" style="margin-top:18px;"><label for="visaEnqName">Full name</label><input type="text" id="visaEnqName" name="name" autocomplete="name" required aria-describedby="visaEnqNameErr" oninput="clearVisaEnqError(this)"><p class="field-error" id="visaEnqNameErr" hidden></p></div>
-        <div class="field" style="margin-top:14px;"><label for="visaEnqEmail">Email</label><input type="email" id="visaEnqEmail" name="email" autocomplete="email" required aria-describedby="visaEnqEmailErr" oninput="clearVisaEnqError(this)"><p class="field-error" id="visaEnqEmailErr" hidden></p></div>
-        <div class="field" style="margin-top:14px;"><label for="visaEnqPhone">Phone / WhatsApp</label><input type="tel" id="visaEnqPhone" name="phone" autocomplete="tel" placeholder="e.g. +971 50 123 4567" required aria-describedby="visaEnqPhoneErr" oninput="clearVisaEnqError(this)"><p class="field-error" id="visaEnqPhoneErr" hidden></p></div>
+        <div class="field" style="margin-top:18px;"><label for="visaEnqName">Full name</label><input type="text" id="visaEnqName" maxlength="120" name="name" autocomplete="name" required aria-describedby="visaEnqNameErr" oninput="clearVisaEnqError(this)"><p class="field-error" id="visaEnqNameErr" hidden></p></div>
+        <div class="field" style="margin-top:14px;"><label for="visaEnqEmail">Email</label><input type="email" id="visaEnqEmail" maxlength="254" name="email" autocomplete="email" required aria-describedby="visaEnqEmailErr" oninput="clearVisaEnqError(this)"><p class="field-error" id="visaEnqEmailErr" hidden></p></div>
+        <div class="field" style="margin-top:14px;"><label for="visaEnqPhone">Phone / WhatsApp</label><input type="tel" id="visaEnqPhone" maxlength="60" name="phone" autocomplete="tel" placeholder="e.g. +971 50 123 4567" required aria-describedby="visaEnqPhoneErr" oninput="clearVisaEnqError(this)"><p class="field-error" id="visaEnqPhoneErr" hidden></p></div>
         <details class="enquiry-optional" id="visaOptional"><summary>Add travel dates or trip details</summary>
         <div class="field" style="margin-top:14px;"><label for="visaEnqDate">Preferred travel date (or choose flexible dates)</label><input type="date" id="visaEnqDate" name="travelDate" aria-describedby="visaEnqDateErr" oninput="clearVisaEnqError(this);if(this.value)document.getElementById('visaEnqFlexible').checked=false"><p class="field-error" id="visaEnqDateErr" hidden></p></div>
-        <div class="field" style="margin-top:14px;"><label for="visaEnqMessage">Message (optional)</label><textarea id="visaEnqMessage" name="message" placeholder="Anything else we should know about your trip..."></textarea></div>
+        <div class="field" style="margin-top:14px;"><label for="visaEnqMessage">Message (optional)</label><textarea id="visaEnqMessage" maxlength="3000" name="message" placeholder="Anything else we should know about your trip..."></textarea></div>
         </details>
-        <button type="submit" class="btn btn-gold btn-block" style="margin-top:20px;">Prepare Enquiry</button>
+        <button type="submit" class="btn btn-gold btn-block" style="margin-top:20px;">Save enquiry</button>
         <p class="form-note" style="text-align:center;">No payment required to enquire</p>
+      <p class="form-note enquiry-storage-note">Submitting saves your contact and travel details with RAAHHI TOURS. Then continue on WhatsApp to speak with our team. <a href="/privacy/">Privacy policy</a>. No payment is taken.</p>
       </form>
     </div>
     <div id="visaEnqDone" hidden>
-      <div class="success-head"><span class="success-icon" aria-hidden="true">✓</span><div><p class="success-eyebrow">Visa enquiry</p><h3 style="font-size:22px;" tabindex="-1" id="visaEnqDoneTitle">Choose how to send your enquiry</h3></div></div>
+      <div class="success-head"><span class="success-icon" aria-hidden="true">✓</span><div><p class="success-eyebrow">Visa enquiry</p><h3 style="font-size:22px;" tabindex="-1" id="visaEnqDoneTitle">Enquiry saved. Continue on WhatsApp</h3></div></div>
       <p style="color:var(--ink-600); font-size:14.5px; margin-top:12px;">Thank you, <span id="visaEnqDoneName"></span>. Here is a summary of your visa enquiry.</p>
       <div class="visa-enq-box" id="visaEnqSummary"></div>
-      <div class="next-steps"><h4>What happens next</h4><ol><li>Copy your details with the button below.</li><li>Share them with our visa team on <a class="contact-link" data-contact="phone"></a>, <a class="contact-link" data-contact="whatsapp"></a> or <a class="contact-link" data-contact="email"></a>. Review the prefilled message and press Send in your chosen app. Opening an app does not itself send the enquiry.</li></ol></div>
+      <div class="next-steps"><h4>What happens next</h4><ol><li>Your enquiry is saved. Continue on WhatsApp using the button above.</li><li>Share them with our visa team on <a class="contact-link" data-contact="phone"></a>, <a class="contact-link" data-contact="whatsapp"></a> or <a class="contact-link" data-contact="email"></a>. Review the prefilled message and press Send in your chosen app. Opening an app does not itself send the enquiry.</li></ol></div>
       <div class="success-actions"><button type="button" class="btn btn-line" onclick="copySummary('visaEnqSummary', this)">Copy details</button><button type="button" class="btn btn-navy" onclick="closeModal('visaEnquiryModal')">Done</button></div>
     </div>
   </div>
@@ -4751,6 +4756,7 @@ function openModal(id){
 }
 function closeModal(id){
   const m = document.getElementById(id);
+  if(m.querySelector('form[data-saving="true"]'))return;
   const wasOpen = m.classList.contains("open");
   m.classList.remove("open");
   if(!anyOverlayOpen()) setBackgroundInert(false);
@@ -4813,19 +4819,97 @@ function applyFieldErrors(ids, errors){
 const fieldValue = id => document.getElementById(id).value.trim();
 
 /* ============ CALLBACK + CONTACT FORMS ============
-   Front-end only, like the visa enquiry: nothing is transmitted or stored,
-   so each confirmation says so and points to the direct contact details instead of
-   promising a reply. User input is only ever displayed as text. */
+   Server-backed enquiry saving precedes the human WhatsApp handoff.
+   User input is displayed as text and drafts survive failed saves. */
+/* Enquiries are saved only after validation and a server-verified Turnstile check.
+   Draft fields and retry IDs stay in memory; no customer data goes to browser storage. */
+const ENQUIRY_API = "https://raahhi-enquiries.asif-772.workers.dev/api/enquiries";
+const ENQUIRY_SITE_KEY = "0x4AAAAAAFn57XPr9uHfgf7C";
+const enquiryAttempts = new WeakMap();
+let turnstileLoader = null;
+function loadEnquiryVerification(){
+  if(window.turnstile?.render) return Promise.resolve(window.turnstile);
+  if(turnstileLoader) return turnstileLoader;
+  turnstileLoader=new Promise((resolve,reject)=>{
+    const script=document.createElement("script");
+    let timer=setTimeout(()=>{script.remove();turnstileLoader=null;reject(Error("verification"));},15000);
+    script.src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
+    script.async=true;
+    script.onload=()=>{clearTimeout(timer);if(window.turnstile?.render)resolve(window.turnstile);else{turnstileLoader=null;reject(Error("verification"));}};
+    script.onerror=()=>{clearTimeout(timer);script.remove();turnstileLoader=null;reject(Error("verification"));};
+    document.head.append(script);
+  });
+  return turnstileLoader;
+}
+async function enquiryVerification(form){
+  const turnstile=await loadEnquiryVerification();
+  const mount=document.createElement("div");mount.className="enquiry-verification";
+  form.querySelector(".enquiry-save-state").before(mount);
+  let widget;
+  try{
+    return await new Promise((resolve,reject)=>{
+      const timer=setTimeout(()=>reject(Error("verification")),90000);
+      const finish=(value,error)=>{clearTimeout(timer);error?reject(Error("verification")):resolve(value);};
+      widget=turnstile.render(mount,{sitekey:ENQUIRY_SITE_KEY,action:"enquiry",size:innerWidth<400?"compact":"flexible",callback:value=>finish(value),"error-callback":()=>{finish(null,true);return true;},"expired-callback":()=>finish(null,true),"timeout-callback":()=>finish(null,true)});
+    });
+  }finally{if(widget!==undefined)try{turnstile.remove(widget);}catch{}mount.remove();}
+}
+function enquirySaveState(form){
+  let state=form.querySelector(".enquiry-save-state");
+  if(!state){state=document.createElement("div");state.className="enquiry-save-state form-note";state.setAttribute("role","status");state.setAttribute("aria-live","polite");form.append(state);}
+  return state;
+}
+function resetEnquiryDelivery(form){
+  if(!form)return;
+  enquiryAttempts.delete(form);
+  form.querySelector(".enquiry-save-state")?.replaceChildren();
+}
+function enquiryDirectMessage(rows,page){
+  return "Hello RAAHHI TOURS, I would like to speak with a sales executive.\n\n"+rows.filter(([label,value])=>value&&!/^(Selected option inclusions|Cancellation terms|Page)$/.test(label)).map(([label,value])=>label+": "+value).join("\n")+"\n\nProduct page: "+page;
+}
+async function saveWebsiteEnquiry(formId,kind,identity,product,rows,pagePath){
+  const form=document.getElementById(formId);
+  if(form.dataset.saving==="true")return null;
+  const state=enquirySaveState(form);state.replaceChildren();
+  const page=new URL(pagePath||location.pathname,"https://raahhi.com");page.search="";page.hash="";
+  const details=rows.filter(([label,value])=>value!==undefined&&value!==null&&String(value).trim()&&!/^(Selected option inclusions|Cancellation terms|Page)$/.test(label)).map(([label,value])=>[label,String(value)]);
+  const payload={kind,...identity,product:product||"",page:page.href,details};
+  if(details.some(([label,value])=>value.length>3000)||JSON.stringify(payload).length>15000){state.textContent="Please shorten your message or notes to 3,000 characters or fewer, then try again.";return null;}
+  const fingerprint=JSON.stringify(payload);
+  let attempt=enquiryAttempts.get(form);
+  if(!attempt||attempt.fingerprint!==fingerprint){attempt={fingerprint,requestId:crypto.randomUUID()};enquiryAttempts.set(form,attempt);}
+  const controls=[...form.querySelectorAll("input,select,textarea,button")].filter(el=>!el.disabled);
+  controls.forEach(el=>el.disabled=true);form.dataset.saving="true";form.setAttribute("aria-busy","true");
+  state.textContent="Checking your enquiry. Complete the security check if shown…";
+  try{
+    const token=await enquiryVerification(form);
+    state.textContent="Saving your enquiry…";
+    const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),18000);
+    let response;
+    try{response=await fetch(ENQUIRY_API,{method:"POST",mode:"cors",credentials:"omit",referrerPolicy:"no-referrer",headers:{"Content-Type":"application/json"},body:JSON.stringify({...payload,requestId:attempt.requestId,turnstileToken:token,website:""}),signal:controller.signal});}
+    finally{clearTimeout(timeout);}
+    const result=await response.json();
+    if(!response.ok||result.saved!==true||!/^RH-\d{8}-[0-9A-F]{12}$/.test(result.reference||""))throw Error(response.status===429?"rate":"save");
+    state.textContent="Enquiry saved. Continue on WhatsApp to speak with our team.";
+    return result.reference;
+  }catch(error){
+    const p=document.createElement("p");
+    p.textContent=error.message==="rate"?"Too many enquiries were submitted just now. Please wait a minute and retry, or contact us on WhatsApp.":"We couldn’t confirm your enquiry was saved. Your details are still here. Retry, or continue directly on WhatsApp and press Send there.";
+    const a=document.createElement("a");a.className="btn btn-line btn-sm";a.textContent="Continue directly on WhatsApp";a.target="_blank";a.rel="noopener noreferrer";a.href=whatsappHref(BUSINESS.contact.whatsapp)+"?text="+encodeURIComponent(enquiryDirectMessage(rows,page.href));
+    state.replaceChildren(p,a);return null;
+  }finally{controls.forEach(el=>el.disabled=false);delete form.dataset.saving;form.removeAttribute("aria-busy");}
+}
+
 const CALLBACK_FIELDS = ["callbackName","callbackPhone"];
 let callbackContext = null; // {kind, noun, title, details:[[label, value]]} when opened from a product page
-const CALLBACK_INTRO = "Add your name and number, then describe your travel question under Optional details.";
+const CALLBACK_INTRO = "Add your name and number to save your enquiry. You can add a preferred call time or notes.";
 // The shared form prepares a product enquiry or a general enquiry summary.
 function setCallbackWording(context){
   const set = (id, text) => { document.getElementById(id).textContent = text; };
   set("callbackTitle", context ? `Enquire about this ${context.noun}` : "Prepare an enquiry");
-  set("callbackIntro", context ? "Add your contact details to prepare an enquiry summary." : CALLBACK_INTRO);
-  set("callbackSubmit", context ? "Prepare Enquiry" : "Prepare Enquiry");
-  set("callbackDoneTitle", context ? "Choose how to send your enquiry" : "Choose how to send your enquiry");
+  set("callbackIntro", context ? "Add your contact details to save your enquiry, then continue on WhatsApp." : CALLBACK_INTRO);
+  set("callbackSubmit", context ? "Save enquiry" : "Save enquiry");
+  set("callbackDoneTitle", context ? "Enquiry saved. Continue on WhatsApp" : "Enquiry saved. Continue on WhatsApp");
   set("callbackDoneEyebrow", context ? (context.noun === "activity" ? "Activity enquiry" : "Holiday enquiry") : "General enquiry");
 }
 function openCallback(context){
@@ -4873,8 +4957,9 @@ function enquireAboutProduct(kind, id, mode){
     ], productKey:productKey(p)});
   }
 }
-function submitCallback(e){
+async function submitCallback(e){
   e.preventDefault();
+  if(document.getElementById("callbackForm").dataset.saving==="true")return;
   const name = fieldValue("callbackName"), phone = fieldValue("callbackPhone"), time = fieldValue("callbackTime"), notes = fieldValue("callbackNotes");
   if(!applyFieldErrors(CALLBACK_FIELDS, { callbackName: name ? "" : "Please enter your full name.", callbackPhone: phoneError(phone) })) return;
   const holidayRows=holidayEnquiryRows();
@@ -4889,11 +4974,16 @@ function submitCallback(e){
     }
     callbackContext.details.push(...enquiryPriceRows(record));
   }
-  renderSummaryRows(document.getElementById("callbackSummary"), [
+  const rows = [
     ...(callbackContext ? [[callbackContext.kind, callbackContext.title], ...(callbackContext.details || [])] : []),
     ...holidayRows, ["Name", name], ["Phone / WhatsApp", phone], ["Best time to call", time], ["Notes / requirements", notes],
-  ]);
+  ];
+  const context=callbackContext, record=context?.productKey?findProduct(context.productKey):null;
+  const reference=await saveWebsiteEnquiry("callbackForm",context?(context.noun==="package"?"holiday":"activity"):"general",{name,phone,email:""},context?.title||"",rows,record?productPath(record):location.pathname);
+  if(!reference)return;
+  renderSummaryRows(document.getElementById("callbackSummary"),[["Enquiry reference",reference],...rows]);
   document.getElementById("callbackForm").reset();
+  resetEnquiryDelivery(document.getElementById("callbackForm"));
   document.getElementById("callbackFormView").hidden = true;
   document.getElementById("callbackDone").hidden = false;
   document.getElementById("callbackDoneTitle").focus();
@@ -4905,6 +4995,7 @@ function resetCallback(){
   document.getElementById("holidayEnquiryFields").replaceChildren();
   document.getElementById("holidayEnquiryFields").hidden=true;
   document.getElementById("callbackForm").reset();
+  resetEnquiryDelivery(document.getElementById("callbackForm"));
   CALLBACK_FIELDS.forEach(id => setFieldError(id, ""));
   document.getElementById("callbackContext").hidden = true;
   document.getElementById("callbackContextKind").textContent = "";
@@ -4919,8 +5010,9 @@ function resetCallback(){
 
 const CONTACT_FIELDS = ["contactName","contactEmail","contactPhone","contactMessage"];
 const CONTACT_MESSAGE_MIN = 10;
-function submitContactPage(e){
+async function submitContactPage(e){
   e.preventDefault();
+  if(document.getElementById("contactPageForm").dataset.saving==="true")return;
   const message = fieldValue("contactMessage");
   const valid = applyFieldErrors(CONTACT_FIELDS, {
     contactName: fieldValue("contactName") ? "" : "Please enter your full name.",
@@ -4929,15 +5021,21 @@ function submitContactPage(e){
     contactMessage: !message ? "Please enter your message."
       : message.length < CONTACT_MESSAGE_MIN ? `Please add a little more detail (at least ${CONTACT_MESSAGE_MIN} characters).` : "",
   });
-  document.getElementById("contactPageDone").hidden = !valid;
+  document.getElementById("contactPageDone").hidden = true;
   if(valid){
-    renderSummaryRows(document.getElementById("contactMessagePreview"),[["Name",fieldValue("contactName")],["Email",fieldValue("contactEmail")],["Phone / WhatsApp",fieldValue("contactPhone")],["Message",message]]);
+    const name=fieldValue("contactName"),email=fieldValue("contactEmail"),phone=fieldValue("contactPhone");
+    const rows=[["Name",name],["Email",email],["Phone / WhatsApp",phone],["Message",message]];
+    const reference=await saveWebsiteEnquiry("contactPageForm","contact",{name,email,phone},"",rows);
+    if(!reference)return;
+    renderSummaryRows(document.getElementById("contactMessagePreview"),[["Enquiry reference",reference],...rows]);
+    document.getElementById("contactPageDone").hidden=false;
     document.getElementById("contactDoneTitle").focus();
   }
   // On success the form stays visible and filled in, so the visitor can copy their message.
 }
 function resetContactPage(){
   document.getElementById("contactPageForm").reset();
+  resetEnquiryDelivery(document.getElementById("contactPageForm"));
   CONTACT_FIELDS.forEach(id => setFieldError(id, ""));
   document.getElementById("contactPageDone").hidden = true;
 }
@@ -5002,7 +5100,7 @@ function refreshEnquiryActions(boxId){
 function copySummary(boxId, btn){
   copyText(document.getElementById(boxId).innerText.trim(), btn);
 }
-// Copies the contact-page form's own fields as plain text; nothing is sent or stored.
+// Copies the contact-page fields without creating another submission.
 function copyContactMessage(btn){
   const rows = [["Name", fieldValue("contactName")], ["Email", fieldValue("contactEmail")], ["Phone / WhatsApp", fieldValue("contactPhone")], ["Message", fieldValue("contactMessage")]];
   const text = rows.filter(([,v])=>v).map(([label, value])=>`${label}: ${value}`).join("\n");
@@ -5027,8 +5125,8 @@ document.addEventListener("keydown", e=>{
 });
 
 /* ============ VISA ENQUIRY ============
-   Front-end only. There is no backend, CRM or email integration, so a valid
-   submission shows a summary and says plainly that nothing has been sent.
+   A valid submission is saved in the enquiry backend before confirmation.
+   WhatsApp messages still require the customer to press Send.
    The destination/type always come from the VISAS entry passed in -- never typed. */
 let visaEnquiryVisa = null; // the VISAS entry the open enquiry is for
 const VISA_ENQ_FIELDS = ["visaEnqSlug","visaEnqName","visaEnqEmail","visaEnqPhone","visaEnqNationality","visaEnqResidence","visaEnqPurpose","visaEnqApplicants","visaEnqDate"];
@@ -5050,6 +5148,7 @@ function resetVisaEnquiry(){
   document.getElementById("visaOptional").open = false;
   visaEnquiryVisa = null;
   document.getElementById("visaEnqForm").reset();
+  resetEnquiryDelivery(document.getElementById("visaEnqForm"));
   // Hidden inputs aren't cleared by form.reset() once .value has been set.
   document.getElementById("visaEnqSlug").value = "";
   document.getElementById("visaEnqCountry").textContent = "";
@@ -5062,8 +5161,9 @@ function resetVisaEnquiry(){
 }
 function setVisaEnqError(id, msg){ setFieldError(id, msg); }
 function clearVisaEnqError(input){ setFieldError(input.id, ""); }
-function submitVisaEnquiry(e){
+async function submitVisaEnquiry(e){
   e.preventDefault();
+  if(document.getElementById("visaEnqForm").dataset.saving==="true")return;
   const val = id => document.getElementById(id).value.trim();
   const v = visaBySlug(val("visaEnqSlug"));
   const name = val("visaEnqName"), email = val("visaEnqEmail"), phone = val("visaEnqPhone");
@@ -5082,12 +5182,16 @@ function submitVisaEnquiry(e){
   if(VISA_ENQ_FIELDS.some(id => errors[id])) return;
 
   // Show what was entered -- as text, never as HTML.
-  renderSummaryRows(document.getElementById("visaEnqSummary"), [
+  const rows = [
     ["Destination", v.flag+" "+v.country], ["Visa type", v.type], ["Name", name], ["Email", email], ["Phone / WhatsApp", phone],
     ["Travel date", date && new Date(date+"T00:00").toLocaleDateString(undefined,{day:"numeric", month:"long", year:"numeric"})],
-    ...visaIntakeRows(), ["Message", message], ...enquiryPriceRows(v), ["Page", location.href]]);
+    ...visaIntakeRows(), ["Message", message], ...enquiryPriceRows(v), ["Page", location.href]];
+  const reference=await saveWebsiteEnquiry("visaEnqForm","visa",{name,email,phone},v.country+" visa",rows,productPath(v));
+  if(!reference)return;
+  renderSummaryRows(document.getElementById("visaEnqSummary"),[["Enquiry reference",reference],...rows]);
   document.getElementById("visaEnqDoneName").textContent = name;
   document.getElementById("visaEnqForm").reset();
+  resetEnquiryDelivery(document.getElementById("visaEnqForm"));
   document.getElementById("visaEnqFormView").hidden = true;
   document.getElementById("visaEnqDone").hidden = false;
   document.getElementById("visaEnqDoneTitle").focus();
@@ -5309,7 +5413,7 @@ function visaFaqItems(v){
     ? `The listed starting fee is ${priceHTML(priceInfo(v))}. Final fees, including any government charges, are confirmed during your enquiry.`
     : `Fees depend on the visa type and your circumstances. Our team confirms the current fees, including any government charges, during your enquiry. No payment is needed to enquire.`});
   items.push({q:`Does RAAHHI TOURS decide whether my ${n} visa is approved?`, a:`No. Visa decisions are made by the relevant government authority. RAAHHI TOURS cannot guarantee approval or processing times.`});
-  items.push({q:`How do I start a ${n} visa enquiry?`, a:`Select “Start Visa Enquiry” on this page and enter your name, email, phone number and, if you know it, your travel date. The website prepares a summary for you to share with our visa team by phone, WhatsApp or email. Enquiries are not sent automatically.`});
+  items.push({q:`How do I start a ${n} visa enquiry?`, a:`Select “Start Visa Enquiry” on this page and enter your name, email, phone number and, if you know it, your travel date. Submit to save your enquiry and receive a reference. Continue on WhatsApp and press Send to speak with our visa team.`});
   if(src) items.push({q:`Where can I check the official ${n} visa rules?`, a:`On the official source, ${sourceLinkHTML(src)}. Government rules can change at short notice, so check there before you travel.`});
   return items;
 }
@@ -5328,7 +5432,7 @@ function activityDestFaqItems(slug){
 // Questions about how this website itself works -- shown on the FAQ page.
 const SITE_FAQ = [
   {q:"Can I book or pay on this website?", a:"No. RAAHHI TOURS products are enquiry-based: prices, availability and visa requirements are confirmed directly with our team, and nothing is booked or charged on this website."},
-  {q:"Is my enquiry sent when I submit a form?", a:`The form prepares your details locally. It does not send them automatically. Choose Continue on WhatsApp or Open email enquiry, review the message and press Send in that app.`},
+  {q:"Is my enquiry sent when I submit a form?", a:`Submitting saves your enquiry with RAAHHI TOURS and displays a reference. Continue on WhatsApp, review the message and press Send to start the conversation. Saving an enquiry does not send a WhatsApp message or confirm a booking.`},
   {q:"Which destinations do RAAHHI TOURS activities and holidays cover?", a:"__COVERAGE__"},
 ];
 function siteFaqItems(){
@@ -5714,9 +5818,9 @@ function priceBlockHTML(record, compact = false){
   return priceHTML(price) + (basis ? `<span class="price-basis">${escapeHTML(basis)}</span>` : "");
 }
 function enquiryJourneyHTML(kind){
-  const first = kind === "visa" ? "Share your passport and travel details" : "Choose your dates and guests";
+  const first = kind === "visa" ? "Share your nationality and travel plans" : "Choose your dates and guests";
   return `<div class="enquiry-journey" aria-label="Enquiry steps"><h3>How your enquiry works</h3><ol>
-    <li><strong>${first}</strong><span>Prepare your summary, then open WhatsApp or email. You can also copy it.</span></li>
+    <li><strong>${first}</strong><span>Save your enquiry and reference, then continue on WhatsApp and press Send. You can also copy your details.</span></li>
     <li><strong>Receive a confirmed quote</strong><span>Our team checks availability${kind === "visa" ? ", requirements and fees" : ", inclusions and the final price"}.</span></li>
     <li><strong>Review before proceeding</strong><span>Check the confirmed details and terms before payment.</span></li>
   </ol></div>`;
@@ -6715,7 +6819,7 @@ function renderVisaDetail(slug){
     <div class="field"><label>Visa type</label><p style="margin-top:6px; font-size:14.5px; color:var(--ink-600);">${typeText}</p></div>
     <div class="field"><label>Typical processing time</label><p style="margin-top:6px; font-size:14.5px; color:var(--ink-600);">${dateText}</p></div>
     <button type="button" class="btn btn-gold btn-block" style="margin-top:16px;" onclick="openVisaEnquiry('${slugV}')">Start Visa Enquiry</button>
-    <p class="form-note" style="text-align:center;">Confirm requirements and current fees with our team. This prepares a summary to share; it is not sent automatically. No payment required to enquire.</p>${enquiryJourneyHTML("visa")}`;
+    <p class="form-note" style="text-align:center;">Confirm requirements and current fees with our team. Submitting saves an enquiry; continue on WhatsApp and press Send to speak with our team. No payment required to enquire.</p>${enquiryJourneyHTML("visa")}`;
   document.getElementById("visaDetailFaqTitle").textContent = `${n} visa questions`;
   document.getElementById("visaDetailFaq").innerHTML = qaHTML(productFaqItems(v,visaFaqItems(v)));
 }
@@ -7014,7 +7118,7 @@ function statusCTAs(t, kind){
   if(t.bookingMode === "official-only") return officialTicketsHTML(t);
   const seasonal = publicStatusOf(t) === "seasonal", closed = publicStatusOf(t) === "temporarily-closed";
   return `<button type="button" class="btn btn-gold btn-block" style="margin-top:16px;" onclick="${enquiryAction(t, kind)}">${enquiryLabel(t, kind)}</button>
-    <p class="form-note" style="text-align:center;">${closed ? "Ask us to check reopening before making travel plans. " : seasonal ? "Seasonal dates, price and availability are confirmed on enquiry. " : ""}Prepares a summary to share with our team. Nothing is reserved, charged or sent automatically.</p>`;
+    <p class="form-note" style="text-align:center;">${closed ? "Ask us to check reopening before making travel plans. " : seasonal ? "Seasonal dates, price and availability are confirmed on enquiry. " : ""}Save your enquiry, then continue on WhatsApp and press Send to speak with our team. No reservation or payment is made.</p>`;
 }
 // Keep authored questions; avoid repeating the same intent in generated questions.
 const FAQ_INTENTS = [
@@ -7087,7 +7191,7 @@ function activityFaqItems(t){
   items.push({q:`How much does ${t.title} cost?`, a: price.known
     ? `${selectedPriceHTML(t)}. Availability and the final price are confirmed when you enquire.`
     : `The price for ${t.title} is confirmed on enquiry. Share your preferred date and group size so our team can quote for your trip.`});
-  items.push({q:`How do I enquire about ${t.title}?`, a:`Choose a preferred date (optional) and the number of guests, then select Enquire and add your name and phone number. The website prepares a summary of your ${t.title} enquiry to share with our team by phone, WhatsApp or email. It is not sent automatically.`});
+  items.push({q:`How do I enquire about ${t.title}?`, a:`Choose a preferred date (optional) and the number of guests, then select Enquire and add your name and phone number. Submit to save your ${t.title} enquiry and receive a reference. Then continue on WhatsApp and press Send to speak with our team.`});
   items.push({q:`What else is there to do in ${d}?`, a:`Browse all <a class="contact-link" href="${URLS.activityDest(t.dest)}">${d} activities</a>${destHasPackages(t.dest) ? `, or see <a class="contact-link" href="${URLS.holidayDest(t.dest)}">${d} holiday packages</a> for multi-day trips` : ""}.`});
   items.push(...catalogueFactFaqs(t, "activity"));
   return items;
@@ -7103,7 +7207,7 @@ function packageFaqItems(p){
     ? `${selectedPriceHTML(p)}. Availability and the final price are confirmed when you enquire.`
     : `The price for ${p.title} is confirmed on enquiry. It depends on your travel dates, group size and room configuration.`});
   items.push({q:`Can ${p.title} be customised?`, a:`You can request extra nights, a different hotel or added tours. Our team confirms which changes are possible for your dates.`});
-  items.push({q:`How do I enquire about ${p.title}?`, a:`Choose a travel month (optional) and the number of travellers, then select Enquire and add your name and phone number. The website prepares a summary to share with our team by phone, WhatsApp or email. It is not sent automatically.`});
+  items.push({q:`How do I enquire about ${p.title}?`, a:`Choose a travel month (optional) and the number of travellers, then select Enquire and add your name and phone number. Submit to save your enquiry and receive a reference. Then continue on WhatsApp and press Send to speak with our team.`});
   const accommodation = packageAccommodation(p);
   if(accommodation && accommodation.options) items.push({q:"Which hotels can I request?", a:`The hotel examples for this itinerary are ${escapeHTML(accommodation.options.map(o=>o.name + (o.orSimilar ? " or similar" : "")).join("; "))}. Your selected hotel, category and room type are confirmed in your quote before booking.`, catalogueDerived:true});
   if(accommodation) items.push({q:`What accommodation is listed for ${escapeHTML(p.title)}?`, a:`${escapeHTML(accommodationSummary(accommodation))}. ${accommodation.name || (accommodation.options || []).some(o => hasRealValue(o.name)) ? "Listed hotels or hotel examples are subject to availability. The final hotel and room type are confirmed in your quote before booking." : "The hotel name and room details are confirmed on enquiry."}`, catalogueDerived:true});
@@ -7121,7 +7225,7 @@ function holidayDestFaqItems(slug){
     ? `${joinList(withVisa.map(p => p.title))} ${withVisa.length === 1 ? "lists" : "list"} a visa among the inclusions; the others don't.`
     : `No ${d} package lists a visa among its inclusions. RAAHHI TOURS offers <a class="contact-link" href="/visas/united-arab-emirates/">UAE visa assistance</a> as a separate service.`});
   items.push({q:`Can I customise a ${d} holiday package?`, a:`You can request extra nights, a different hotel or added tours from the package page. Our team confirms which changes are possible for your dates.`});
-  items.push({q:`How do I enquire about a ${d} holiday package?`, a:`Open the package, choose a travel month and the number of travellers, and select Enquire. The website prepares a summary to share with our team by phone, WhatsApp or email.`});
+  items.push({q:`How do I enquire about a ${d} holiday package?`, a:`Open the package, choose a travel month and the number of travellers, and select Enquire. Submit to save your enquiry and receive a reference. Then continue on WhatsApp and press Send to speak with our team.`});
   return items;
 }
 // General questions for the FAQ page; answers that describe the catalogue are computed from it.

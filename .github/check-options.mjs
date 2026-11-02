@@ -1,3 +1,4 @@
+import {mockEnquiryDelivery} from './enquiry-test-fixture.mjs';
 import {chromium} from 'playwright';
 import {createServer} from 'node:http';
 import {readFile,mkdir} from 'node:fs/promises';
@@ -39,6 +40,7 @@ try{
  const page=await browser.newPage({viewport:{width:390,height:900}}),errors=[],requests=[];
  page.on('pageerror',e=>errors.push(e.message));page.on('request',r=>requests.push(r.url()));
  await page.route('**/*',r=>r.request().url().startsWith(base)?r.continue():r.abort());
+await mockEnquiryDelivery(page);
  const open=async route=>{await page.goto(base+route);await page.waitForFunction(()=>!document.querySelector('[data-currency-select]').disabled);};
  const safari='evening-desert-safari',choices=registry[safari].options;
  await open('/activities/dubai/'+safari+'/');
@@ -68,7 +70,7 @@ try{
  assert((await page.locator('#callbackContextDetails').textContent()).includes(chosen.label));
  await page.locator('#callbackName').fill('Test Traveller');await page.locator('#callbackPhone').fill('+971501234567');
  await page.locator('#callbackSubmit').click();
- let summary=await page.locator('#callbackSummary').textContent();
+ await page.locator('#callbackDone').waitFor({state:'visible'});let summary=await page.locator('#callbackSummary').textContent();
  assert(summary.includes(chosen.label)&&summary.includes('Guests: 4'));
  assert(chosen.policy.paragraphs.every(term=>summary.includes(term)),'Selected cancellation terms are copied with the enquiry');
  assert(!summary.includes('Total price:'),'No unverified group total is manufactured');
@@ -97,7 +99,7 @@ try{
  await page.locator('#holidayMeals').fill('Vegetarian <script>example</script>');
  await page.evaluate(()=>setDisplayCurrency('BHD'));
  assert.equal(await page.locator('#holidayChildAge0').inputValue(),'6');assert.equal(await page.locator('#holidayDeparture').inputValue(),'2027-02-15');
- await page.locator('#callbackSubmit').click();summary=await page.locator('#callbackSummary').textContent();
+ await page.locator('#callbackSubmit').click();await page.locator('#callbackDone').waitFor({state:'visible'});summary=await page.locator('#callbackSummary').textContent();
  for(const value of ['Travellers: 3','Adults: 2','Children: 1','Children ages: 6','Rooms: 2','2027-02-10','2027-02-15','DXB',hotel.label,'Vegetarian <script>example</script>'])assert(summary.includes(value),value+' survives the holiday enquiry');
  assert.equal((summary.match(/Travellers:/g)||[]).length,1,'There is one current group count');
  assert.equal(await page.locator('#callbackSummary script').count(),0,'Free text is not interpreted as markup');
@@ -113,7 +115,7 @@ try{
  await page.locator('#visaEnqForm button[type="submit"]').click();assert(await page.locator('#visaEnqDateErr').isVisible());
  await page.locator('#visaEnqDate').fill('2027-03-15');await page.evaluate(()=>setDisplayCurrency('USD'));
  assert.equal(await page.locator('#visaEnqNationality').inputValue(),'IN');
- await page.locator('#visaEnqForm button[type="submit"]').click();summary=await page.locator('#visaEnqSummary').textContent();
+ await page.locator('#visaEnqForm button[type="submit"]').click();await page.locator('#visaEnqDone').waitFor({state:'visible'});summary=await page.locator('#visaEnqSummary').textContent();
  for(const value of ['Nationality: India','Country of residence: United Arab Emirates','Purpose of travel: Business','Applicants: 3','2027'])assert(summary.includes(value),value+' in visa summary');
  assert(summary.includes('Cancellation terms:'));
  await page.locator('#visaEnquiryModal .modal-close').click();await page.evaluate(()=>openVisaEnquiry('brazil'));

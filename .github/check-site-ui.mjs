@@ -1,3 +1,4 @@
+import {mockEnquiryDelivery} from './enquiry-test-fixture.mjs';
 import {chromium} from 'playwright';
 import {createServer} from 'node:http';
 import {readFile} from 'node:fs/promises';
@@ -37,6 +38,7 @@ try{
    const p=await browser.newPage({viewport:{width,height:900}});const errors=[];
    p.on('pageerror',e=>errors.push(e.message));
    await p.route('**/*',r=>r.request().url().startsWith(base)?r.continue():r.abort());
+await mockEnquiryDelivery(p);
    await p.goto(base+route);await p.waitForFunction(()=>typeof router==='function');
    assert.equal(await p.locator('.page.active h1').count(),1,route);
    const overflow=await p.evaluate(()=>({width:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth}));
@@ -177,7 +179,7 @@ try{
      assert(await p.locator('#visaEnqDateErr').isVisible());
      await p.locator('#visaEnqDate').fill('2027-01-15');
      await p.locator('#visaEnqForm button[type="submit"]').click();
-     const summary=await p.locator('#visaEnqSummary').innerText();
+     await p.locator('#visaEnqDone').waitFor({state:'visible'});const summary=await p.locator('#visaEnqSummary').innerText();
      assert(summary.includes('United Arab Emirates')&&summary.includes('2027')&&summary.includes('Page:'));
     }
     await p.locator('#visaEnquiryModal button.modal-close').click();

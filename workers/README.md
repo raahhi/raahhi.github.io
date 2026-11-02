@@ -10,7 +10,7 @@ Two isolated Workers share only the `raahhi-enquiries` D1 database. Existing DNS
 
 GitHub Actions secrets: `RAAHHI_ENQUIRIES_CF_API_TOKEN`, `RAAHHI_ENQUIRIES_CF_ACCOUNT_ID`. Token needs Editor for both named Workers and D1 Edit for the enquiry DB where resource restrictions are available. The public Worker requires the separately saved `TURNSTILE_SECRET` secret. Production public Site Key supplied by owner: `0x4AAAAAAFn57XPr9uHfgf7C`; widget hostname `raahhi.com`, action `enquiry`.
 
-The deployment workflow tests, applies additive migrations, deploys dashboard before API using the code-only Worker Content API, and checks public readiness. The content API deliberately leaves dashboard-managed configuration untouched; deployment verifies the existing DB binding and encrypted Turnstile secret before upload and compares bindings/compatibility settings afterwards. This avoids Wrangler’s dashboard-takeover metadata fetch, which can require unrelated domain permissions. It does not enable the website forms. Never migrate the accounting database or add DNS/zone permissions for this workflow.
+The deployment workflow tests, applies additive migrations, deploys dashboard before API using the code-only Worker Content API, and checks public readiness. The content API deliberately leaves dashboard-managed configuration untouched; deployment verifies the existing DB binding and encrypted Turnstile secret before upload and compares bindings/compatibility settings afterwards. This avoids Wrangler’s dashboard-takeover metadata fetch, which can require unrelated domain permissions. The separate Pages workflow publishes the website form connection. Never migrate the accounting database or add DNS/zone permissions for this workflow.
 
 ## Current scope
 
@@ -23,4 +23,8 @@ Dashboard lists/searches/filter enquiries, opens WhatsApp/email links, saves not
 
 Local tests cover validation, wrong-origin rejection, real verification requirements, storage, idempotency/conflicts, rate limits, JWT signature/audience/expiry, alternate-host isolation, authenticated search/status/notes/CSRF and CSV formula protection. They simulate external verification and do not submit real customer enquiries or send messages.
 
-Before website activation: verify deployed health, owner login/dashboard, correct Access allow policy, alternate-host redirects and a real owner-authorized submission. Update enquiry disclosures/privacy alongside form activation. An unavailable backend must preserve typed details and offer honest manual contact fallback; never claim a failed save succeeded.
+Website forms now POST validated contact, general, activity, holiday and visa enquiries to the public Worker. Turnstile loads only after a valid submission. The UI displays a reference and WhatsApp handoff only after a confirmed database save; failed saves preserve fields and offer direct manual contact. Retry IDs stay in memory and protect against duplicate records. Privacy and form disclosures explain storage.
+
+After `npm run build`, run `node .github/check-enquiry-delivery.mjs` for the real client-to-Worker-to-SQLite integration check with simulated external verification. This covers failure recovery, idempotency, escaping, product context and duplicate prevention without creating production leads.
+
+Live backend health and both Access entry points have been checked; the owner has confirmed dashboard login. The final production check is an owner submission using the real Turnstile widget, followed by finding its displayed reference in the dashboard. A successful automated test does not prove production Turnstile configuration or WhatsApp delivery. Customers must press Send in WhatsApp themselves.

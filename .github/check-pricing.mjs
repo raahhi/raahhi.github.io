@@ -1,3 +1,4 @@
+import {mockEnquiryDelivery} from './enquiry-test-fixture.mjs';
 import {chromium} from 'playwright';
 import {createServer} from 'node:http';
 import {readFile,mkdtemp,writeFile,rm} from 'node:fs/promises';
@@ -26,6 +27,7 @@ const browser=await chromium.launch();
 try{
  const context=await browser.newContext({viewport:{width:390,height:900}});const p=await context.newPage(),errors=[];
  p.on('pageerror',e=>errors.push(e.message));await p.route('**/*',r=>r.request().url().startsWith(base)?r.continue():r.abort());
+await mockEnquiryDelivery(p);
  await p.goto(base+'/activities/dubai/evening-desert-safari/');
  const select=p.locator('[data-currency-select]');await select.waitFor();await p.waitForFunction(()=>!document.querySelector('[data-currency-select]').disabled);
  assert.equal(await select.locator('option').count(),18);assert.equal(await select.inputValue(),'AED');
@@ -42,7 +44,7 @@ try{
  await p.locator('#callbackOptional summary').click();await p.locator('#callbackNotes').fill('Budget USD 200.00 <script>test</script>');
  await p.evaluate(()=>setDisplayCurrency('INR'));
  assert.equal(await p.locator('#tourEnqGuests').inputValue(),'4');assert.equal(await p.locator('#callbackName').inputValue(),'Test Traveller');
- await p.locator('#callbackSubmit').click();assert((await p.locator('#callbackSummary').textContent()).includes('INR'));
+ await p.locator('#callbackSubmit').click();await p.locator('#callbackDone').waitFor({state:'visible'});assert((await p.locator('#callbackSummary').textContent()).includes('INR'));
  assert((await p.locator('#callbackSummary').textContent()).includes('Budget USD 200.00 <script>test</script>'));
  assert.equal(await p.locator('#callbackSummary script').count(),0,'User input remains text');
  for(const route of ['/holidays/dubai/dubai-grand-stopover/','/visas/united-arab-emirates/','/activities/categories/water-parks/','/compare/uae-water-parks/','/activities/dubai/','/visas/']){
