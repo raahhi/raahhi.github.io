@@ -43,4 +43,4 @@ jobs:
         run: node workers/deploy-worker-content.mjs raahhi-enquiries
       - name: Check public API readiness
         run: |
-          node --input-type=module -e "const r=await fetch('https://raahhi-enquiries.asif-772.workers.dev/health');const b=await r.json();if(!r.ok||!b.ready)throw Error('API is not ready; verify DB and TURNSTILE_SECRET');console.log('Enquiry API ready; live forms remain unchanged until separately activated.');"
+          node --input-type=module -e "const r=await fetch('https://raahhi-enquiries.asif-772.workers.dev/health');const b=await r.json();if(!r.ok||!b.ready||!b.visitorActivity)throw Error('API is not ready; verify database migrations and TURNSTILE_SECRET');console.log('Enquiry saving and independent visitor activity APIs are ready.');"

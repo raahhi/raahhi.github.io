@@ -71,6 +71,9 @@ jobs:
       - name: Check enquiry saving and failure recovery
         run: node .github/check-enquiry-delivery.mjs
 
+      - name: Check independent visitor journeys and analytics choices
+        run: node .github/check-visitor-activity.mjs
+
       - name: Check business identity, human enquiry delivery and answer consistency
         run: node .github/check-readiness.mjs
 

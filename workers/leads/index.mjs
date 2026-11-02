@@ -1,7 +1,9 @@
 import {json,readJSON,text} from '../shared/http.mjs';
 import {authenticate} from './auth.mjs';
+import {report} from '../analytics/index.mjs';
 import html from './dashboard.html';
 import script from './dashboard.js';
+import visitorScript from './visitors.js';
 const HOME = 'https://leads.raahhi.com';
 const STATUSES = ['new','contacted','follow_up','booked','closed'];
 export function csvCell(value) {
@@ -20,8 +22,10 @@ export async function handle(request, env, fetcher = fetch) {
   const security = {'Cache-Control':'no-store','X-Robots-Tag':'noindex, nofollow','X-Content-Type-Options':'nosniff','Referrer-Policy':'no-referrer','Content-Security-Policy':"default-src 'none'; script-src 'self'; style-src 'unsafe-inline'; connect-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'",'Permissions-Policy':'camera=(), microphone=(), geolocation=()'};
   if (url.pathname === '/' && request.method === 'GET') return new Response(html,{headers:{...security,'Content-Type':'text/html; charset=utf-8'}});
   if (url.pathname === '/dashboard.js' && request.method === 'GET') return new Response(script,{headers:{...security,'Content-Type':'application/javascript; charset=utf-8'}});
+  if (url.pathname === '/visitors.js' && request.method === 'GET') return new Response(visitorScript,{headers:{...security,'Content-Type':'application/javascript; charset=utf-8'}});
   if (url.pathname === '/api/me' && request.method === 'GET') return json({email:user.email});
   try {
+    if(request.method==='GET' && /^\/api\/(visitors(?:\/|$)|visitor-stats$)/.test(url.pathname)) return await report(url,env);
     if (url.pathname === '/api/leads' && request.method === 'GET') {
       const status = url.searchParams.get('status') || '', q = (url.searchParams.get('q') || '').trim().slice(0,120);
       if (status && !STATUSES.includes(status)) return json({error:'invalid_filter'},400);

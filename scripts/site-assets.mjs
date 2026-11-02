@@ -2,6 +2,7 @@ import {createHash} from 'node:crypto';
 import {gzipSync} from 'node:zlib';
 import {transform} from 'esbuild';
 import {SEARCH_LOADER_SOURCE} from './runtime-search.mjs';
+import {readFile} from 'node:fs/promises';
 
 // Keep the authoring preview intact. Only the published assets are optimized.
 // Top-level names must survive: static HTML uses inline event handlers.
@@ -70,6 +71,7 @@ export async function compileSiteAssets(source, appScript, catalogue) {
     });
     return;
   }`);
+  runtime += '\n' + await readFile(new URL('./visitor-runtime.js',import.meta.url),'utf8');
   const [js, css] = await Promise.all([
     transform(runtime, {loader:'js', target:'es2020', minifyWhitespace:true, minifySyntax:true, minifyIdentifiers:false, legalComments:'none'}),
     transform(styles[1], {loader:'css', minify:true, legalComments:'none'})

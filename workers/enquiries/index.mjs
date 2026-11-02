@@ -1,4 +1,5 @@
 import {json, readJSON, digest, text} from '../shared/http.mjs';
+import {collect} from '../analytics/index.mjs';
 const ORIGIN = 'https://raahhi.com';
 const SITEVERIFY = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
@@ -25,12 +26,14 @@ function validate(data) {
 }
 export async function handle(request, env, fetcher = fetch) {
   const url = new URL(request.url), origin = request.headers.get('Origin');
+  if(url.pathname === '/api/activity') return collect(request,env);
   const cors = origin === ORIGIN ? {'Access-Control-Allow-Origin':ORIGIN,'Vary':'Origin'} : {};
   const reply = (data, status=200) => json(data,status,cors);
   if (url.pathname === '/health' && request.method === 'GET') {
     try {
       await env.DB.prepare('SELECT id FROM enquiries LIMIT 1').first();
-      return reply({service:'raahhi-enquiries',ready:!!env.TURNSTILE_SECRET,version:1});
+      await env.DB.prepare('SELECT id FROM visitor_sessions LIMIT 1').first();
+      return reply({service:'raahhi-enquiries',ready:!!env.TURNSTILE_SECRET,visitorActivity:true,version:2});
     } catch { return reply({service:'raahhi-enquiries',ready:false},503); }
   }
   if (url.pathname !== '/api/enquiries') return reply({error:'not_found'},404);
