@@ -16,3 +16,16 @@ export function deviceInfo(header){
   const device=/iPad|Tablet|Android(?!.*Mobile)/.test(ua)?'tablet':/Mobile|iPhone|iPod/.test(ua)?'mobile':os!=='Other / unknown'?'desktop':null;
   return {browser,major,os,device};
 }
+export function describeDevice(session){
+  const os=session.operating_system||'Unknown',architecture=['arm','x86'].includes(session.cpu_architecture)?session.cpu_architecture:'';
+  let family='Unknown device family',confidence='Unknown',reason='The browser has not supplied enough information to estimate a device family.';
+  if(os==='macOS'){
+    family='Mac — processor family unknown';confidence='Limited';reason='The browser reports macOS, but architecture is unavailable. The exact hardware is not verified.';
+    if(architecture==='arm'){family='Apple Silicon Mac';confidence='Moderate';reason='Inferred from browser-reported macOS and ARM architecture. This does not establish the Mac model, chip generation or verified hardware.';}
+    if(architecture==='x86'){family='Mac — Intel or Apple Silicon with an x86 browser';reason='An x86 browser report alone cannot reliably identify the physical Mac processor. The word Intel in a standard browser string is not proof of an Intel Mac.';}
+  }else if(['Windows','Android','iOS','ChromeOS','Linux'].includes(os)){
+    family=({Windows:architecture==='arm'?'Windows ARM device':'Windows computer',Android:session.device==='tablet'?'Android tablet':'Android device',iOS:'Apple iOS device',ChromeOS:'ChromeOS device',Linux:'Linux device'})[os];
+    confidence=architecture?'Moderate':'Limited';reason='Estimated from the browser-reported operating system'+(architecture?' and architecture':'')+'. Manufacturer, exact model and physical hardware are not verified.';
+  }
+  return {detected:[os,session.browser?(session.browser+(session.browser_major?' '+session.browser_major:'')):'Browser unknown',session.device||'Device category unknown'].join(' · '),family,exactModel:'Unknown',confidence,reason,architecture:architecture==='arm'?'ARM (browser-reported)':architecture==='x86'?'x86 (browser-reported)':'Unavailable'};
+}

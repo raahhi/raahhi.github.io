@@ -1,13 +1,14 @@
 import {json,readJSON} from '../shared/http.mjs';
 import pages from './pages.json' with {type:'json'};
-import {networkAddress,deviceInfo} from './device.mjs';
+import {networkAddress,deviceInfo,describeDevice} from './device.mjs';
 const UUID=/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 export const stages=['Browsing','Enquiry opened','Form started','Save attempted','Enquiry saved','WhatsApp clicked'];
 const ranks={page_view:0,page_engagement:0,enquiry_open:1,form_start:2,form_error:2,save_started:3,save_failed:3,enquiry_saved:4,whatsapp_click:5,email_click:0,phone_click:0};
 const DEVICES=['mobile','tablet','desktop'], SOURCES=['Direct / unknown','Google','Bing','Instagram','Facebook','Other referral'];
 const allowed=(value,keys)=>value&&typeof value==='object'&&!Array.isArray(value)&&Object.keys(value).every(k=>keys.includes(k));
 function validate(data){
-  if(!allowed(data,['sessionId','consent','device','source','events','noticeVersion'])||data.consent!==true||(data.noticeVersion!==undefined&&data.noticeVersion!==2)||typeof data.sessionId!=='string'||!UUID.test(data.sessionId)||!DEVICES.includes(data.device)||!SOURCES.includes(data.source)||!Array.isArray(data.events)||!data.events.length||data.events.length>10)throw Error('invalid_activity');
+  if(!allowed(data,['sessionId','consent','device','source','events','noticeVersion','architecture'])||data.consent!==true||(data.noticeVersion!==undefined&&![2,3].includes(data.noticeVersion))||typeof data.sessionId!=='string'||!UUID.test(data.sessionId)||!DEVICES.includes(data.device)||!SOURCES.includes(data.source)||!Array.isArray(data.events)||!data.events.length||data.events.length>10)throw Error('invalid_activity');
+  if(data.architecture!==undefined&&(!['','arm','x86'].includes(data.architecture)||data.noticeVersion!==3))throw Error('invalid_activity');
   const now=Date.now();
   const events=data.events.map(e=>{
     if(!allowed(e,['id','sequence','at','type','page','seconds','scroll'])||typeof e.id!=='string'||!UUID.test(e.id)||typeof e.at!=='string'||e.at.length>40||typeof e.page!=='string'||typeof e.type!=='string'||!Number.isSafeInteger(e.sequence)||e.sequence<1||e.sequence>400||!Object.hasOwn(ranks,e.type)||!Object.hasOwn(pages,e.page))throw Error('invalid_activity');
@@ -41,23 +42,23 @@ export async function collect(request,env){
     const first=data.events[0],last=data.events.at(-1),rank=Math.max(...data.events.map(e=>ranks[e.type]));
     const country=/^[A-Z]{2}$/.test(request.cf?.country||'')?request.cf.country:'ZZ';
     // Legacy clients agreed to the earlier notice that excluded stored IP/browser details.
-    const ip=data.noticeVersion===2?networkAddress(request.headers.get('CF-Connecting-IP')):'';
-    const device=data.noticeVersion===2?deviceInfo(request.headers.get('User-Agent')):{browser:'',major:'',os:'',device:null};
+    const ip=data.noticeVersion>=2?networkAddress(request.headers.get('CF-Connecting-IP')):'';
+    const device=data.noticeVersion>=2?deviceInfo(request.headers.get('User-Agent')):{browser:'',major:'',os:'',device:null};
     // Conditions are repeated inside one D1 transaction so concurrent requests cannot bypass the daily cap.
     const grant="EXISTS(SELECT 1 FROM visitor_limits WHERE bucket=? AND requests<=2000 AND events<=5000) AND EXISTS(SELECT 1 FROM visitor_limits WHERE bucket=? AND requests<=600)";
     const queries=[
       env.DB.prepare('INSERT INTO visitor_limits(bucket,requests,events,expires_at) VALUES (?,1,?,?) ON CONFLICT(bucket) DO UPDATE SET requests=requests+1,events=events+excluded.events').bind(day,data.events.length,epoch+172800),
       env.DB.prepare('INSERT INTO visitor_limits(bucket,requests,events,expires_at) VALUES (?,1,0,?) ON CONFLICT(bucket) DO UPDATE SET requests=requests+1').bind(bucket,epoch+7200),
-      env.DB.prepare(`INSERT INTO visitor_sessions(id,first_seen,last_seen,entry_page,last_page,last_sequence,last_type,stage,device,source,country,ip_address,browser,browser_major,operating_system,notice_version,event_count)
-        SELECT ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,0 WHERE ${grant}
+      env.DB.prepare(`INSERT INTO visitor_sessions(id,first_seen,last_seen,entry_page,last_page,last_sequence,last_type,stage,device,source,country,ip_address,browser,browser_major,operating_system,notice_version,cpu_architecture,event_count)
+        SELECT ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,0 WHERE ${grant}
         ON CONFLICT(id) DO UPDATE SET last_seen=MAX(last_seen,excluded.last_seen),
         entry_page=CASE WHEN excluded.first_seen<first_seen THEN excluded.entry_page ELSE entry_page END,first_seen=MIN(first_seen,excluded.first_seen),
         last_page=CASE WHEN excluded.last_sequence>last_sequence THEN excluded.last_page ELSE last_page END,
         ip_address=CASE WHEN excluded.last_sequence>last_sequence AND excluded.ip_address<>'' THEN excluded.ip_address ELSE ip_address END,
         browser=CASE WHEN excluded.last_sequence>last_sequence THEN excluded.browser ELSE browser END,browser_major=CASE WHEN excluded.last_sequence>last_sequence THEN excluded.browser_major ELSE browser_major END,
-        notice_version=MAX(notice_version,excluded.notice_version),operating_system=CASE WHEN excluded.last_sequence>last_sequence THEN excluded.operating_system ELSE operating_system END,
+        cpu_architecture=CASE WHEN excluded.last_sequence>last_sequence AND excluded.notice_version>=3 THEN excluded.cpu_architecture ELSE cpu_architecture END,notice_version=MAX(notice_version,excluded.notice_version),operating_system=CASE WHEN excluded.last_sequence>last_sequence THEN excluded.operating_system ELSE operating_system END,
         device=CASE WHEN excluded.last_sequence>last_sequence THEN excluded.device ELSE device END,
-        last_type=CASE WHEN excluded.last_sequence>last_sequence THEN excluded.last_type ELSE last_type END,last_sequence=MAX(last_sequence,excluded.last_sequence),stage=MAX(stage,excluded.stage)`).bind(data.sessionId,first.at,last.at,first.page,last.page,last.sequence,last.type,rank,device.device||data.device,data.source,country,ip,device.browser,device.major,device.os,data.noticeVersion||1,day,bucket),
+        last_type=CASE WHEN excluded.last_sequence>last_sequence THEN excluded.last_type ELSE last_type END,last_sequence=MAX(last_sequence,excluded.last_sequence),stage=MAX(stage,excluded.stage)`).bind(data.sessionId,first.at,last.at,first.page,last.page,last.sequence,last.type,rank,device.device||data.device,data.source,country,ip,device.browser,device.major,device.os,data.noticeVersion||1,data.noticeVersion===3?(data.architecture||''):'',day,bucket),
       ...data.events.map(e=>env.DB.prepare(`INSERT OR IGNORE INTO visitor_events(id,session_id,sequence,occurred_at,received_at,type,page,seconds,scroll)
         SELECT ?,?,?,?,?,?,?,?,? WHERE ${grant}`).bind(e.id,data.sessionId,e.sequence,e.at,now,e.type,e.page,e.seconds,e.scroll,day,bucket)),
       env.DB.prepare('UPDATE visitor_sessions SET event_count=(SELECT COUNT(*) FROM visitor_events WHERE session_id=?) WHERE id=?').bind(data.sessionId,data.sessionId),
@@ -76,7 +77,7 @@ export async function report(url,env){
   if(url.pathname==='/api/visitors'){
     const offset=Number(url.searchParams.get('offset')||0);if(!Number.isSafeInteger(offset)||offset<0||offset>5000)return json({error:'invalid_offset'},400);
     const {results}=await env.DB.prepare('SELECT * FROM visitor_sessions WHERE last_seen>=? ORDER BY last_seen DESC,id LIMIT 51 OFFSET ?').bind(cutoff,offset).all();
-    return json({sessions:results.slice(0,50),more:results.length>50,pages,stages});
+    return json({sessions:results.slice(0,50).map(s=>({...s,device_summary:describeDevice(s)})),more:results.length>50,pages,stages});
   }
   if(url.pathname==='/api/visitor-stats'){
     // Actions are counted independently: a direct WhatsApp click is never treated as a saved enquiry.
@@ -93,7 +94,7 @@ export async function report(url,env){
     const session=await env.DB.prepare('SELECT * FROM visitor_sessions WHERE id=? AND last_seen>=?').bind(id,cutoff).first();
     if(!session)return json({error:'not_found'},404);
     const {results:events}=await env.DB.prepare('SELECT sequence,occurred_at,type,page,seconds,scroll FROM visitor_events WHERE session_id=? AND received_at>=? ORDER BY sequence LIMIT 400').bind(id,new Date(Date.now()-30*86400000).toISOString()).all();
-    return json({session,events,pages,stages});
+    return json({session:{...session,device_summary:describeDevice(session)},events,pages,stages});
   }
   return json({error:'not_found'},404);
 }

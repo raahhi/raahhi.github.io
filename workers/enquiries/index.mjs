@@ -32,8 +32,8 @@ export async function handle(request, env, fetcher = fetch) {
   if (url.pathname === '/health' && request.method === 'GET') {
     try {
       await env.DB.prepare('SELECT id FROM enquiries LIMIT 1').first();
-      await env.DB.prepare('SELECT ip_address,browser FROM visitor_sessions LIMIT 1').first();
-      return reply({service:'raahhi-enquiries',ready:!!env.TURNSTILE_SECRET,visitorActivity:true,visitorNetworkDetails:true,version:3});
+      await env.DB.prepare('SELECT ip_address,browser,cpu_architecture FROM visitor_sessions LIMIT 1').first();
+      return reply({service:'raahhi-enquiries',ready:!!env.TURNSTILE_SECRET,visitorActivity:true,visitorNetworkDetails:true,visitorDeviceInference:true,version:4});
     } catch { return reply({service:'raahhi-enquiries',ready:false},503); }
   }
   if (url.pathname !== '/api/enquiries') return reply({error:'not_found'},404);
