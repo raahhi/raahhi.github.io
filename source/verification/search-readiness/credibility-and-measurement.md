@@ -6,7 +6,7 @@
 - Legal entity: Raahi Tourism PVT LTD (India)
 - Website: https://raahhi.com/
 - Office supplied and confirmed by owner: Sr No 33/2, Ashtavinayak Rd, MITCON Lane, Balewadi, Pune, Maharashtra 411045, India
-- Customer phone / WhatsApp: +91 7678572029
+- Customer phone: UAE +97142087474; India +912066838876. WhatsApp not configured.
 - Customer email: inquire@raahhi.com
 - Support availability: 8:00 am–9:00 pm IST. This is not verification of office walk-in hours or days.
 - Suggested profile description: RAAHHI TOURS helps travellers plan UAE activities, holidays and visa assistance through personal support from a human sales executive. Based in Pune, India, we work with customers from India, the UAE, Saudi Arabia and beyond. Contact our team to discuss dates, guests, preferences and applicable entry requirements before booking.
