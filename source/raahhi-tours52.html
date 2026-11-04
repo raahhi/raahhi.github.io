@@ -1093,7 +1093,7 @@
   .enquiry-storage-note,.enquiry-save-state{margin-top:14px;line-height:1.6;}
   .enquiry-verification{margin-top:16px;max-width:100%;}
   #analyticsChoice[hidden]{display:none!important;}
-</style>
+.phone-entry{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:8px}.phone-entry select,.phone-entry input{width:100%;min-width:0}</style>
 </head>
 <body>
 
@@ -1571,7 +1571,7 @@
           <div class="field"><label for="contactName">Full name</label><input type="text" id="contactName" maxlength="120" autocomplete="name" required aria-describedby="contactNameErr" oninput="clearFieldError(this)"><p class="field-error" id="contactNameErr" hidden></p></div>
           <div class="field"><label for="contactEmail">Email</label><input type="email" id="contactEmail" maxlength="254" autocomplete="email" required aria-describedby="contactEmailErr" oninput="clearFieldError(this)"><p class="field-error" id="contactEmailErr" hidden></p></div>
         </div>
-        <div class="field" style="margin-top:16px;"><label for="contactPhone">Phone / WhatsApp</label><input type="tel" id="contactPhone" maxlength="60" autocomplete="tel" placeholder="e.g. +971 50 123 4567" required aria-describedby="contactPhoneErr" oninput="clearFieldError(this)"><p class="field-error" id="contactPhoneErr" hidden></p></div>
+        <div class="field" style="margin-top:16px;"><label for="contactPhone">Phone / WhatsApp</label><div class="phone-entry"><select id="contactPhoneCode" aria-label="Country calling code" autocomplete="tel-country-code"><option value="">Country code</option></select><input type="tel" id="contactPhone" maxlength="60" autocomplete="tel-national" placeholder="Mobile number" required aria-describedby="contactPhoneErr" oninput="clearFieldError(this)"></div><p class="field-error" id="contactPhoneErr" hidden></p></div>
         <div class="field" style="margin-top:16px;"><label for="contactMessage">Message</label><textarea id="contactMessage" maxlength="3000" placeholder="Tell us what you need help with..." required aria-describedby="contactMessageErr" oninput="clearFieldError(this)"></textarea><p class="field-error" id="contactMessageErr" hidden></p></div>
         <button class="btn btn-gold btn-block" style="margin-top:20px;">Save enquiry</button>
       <p class="form-note enquiry-storage-note">Submitting saves your contact and travel details with RAAHHI TOURS. Then continue by email to speak with our team. <a href="/privacy/">Privacy policy</a>. No payment is taken.</p>
@@ -1704,7 +1704,7 @@
       <form id="callbackForm" novalidate onsubmit="submitCallback(event)">
         <div id="holidayEnquiryFields" hidden></div>
         <div class="field" style="margin-top:18px;"><label for="callbackName">Full name</label><input type="text" id="callbackName" maxlength="120" autocomplete="name" required aria-describedby="callbackNameErr" oninput="clearFieldError(this)"><p class="field-error" id="callbackNameErr" hidden></p></div>
-        <div class="field" style="margin-top:14px;"><label for="callbackPhone">Phone / WhatsApp</label><input type="tel" id="callbackPhone" maxlength="60" autocomplete="tel" placeholder="e.g. +971 50 123 4567" required aria-describedby="callbackPhoneErr" oninput="clearFieldError(this)"><p class="field-error" id="callbackPhoneErr" hidden></p></div>
+        <div class="field" style="margin-top:14px;"><label for="callbackPhone">Phone / WhatsApp</label><div class="phone-entry"><select id="callbackPhoneCode" aria-label="Country calling code" autocomplete="tel-country-code"><option value="">Country code</option></select><input type="tel" id="callbackPhone" maxlength="60" autocomplete="tel-national" placeholder="Mobile number" required aria-describedby="callbackPhoneErr" oninput="clearFieldError(this)"></div><p class="field-error" id="callbackPhoneErr" hidden></p></div>
         <details class="enquiry-optional" id="callbackOptional"><summary>Add a preferred call time or notes</summary>
         <div class="field" style="margin-top:14px;"><label for="callbackTime">Best time to call (optional)</label><input type="text" id="callbackTime" maxlength="120" placeholder="e.g. Today, 6–8 PM"></div>
         <div class="field" style="margin-top:14px;"><label for="callbackNotes">Notes / requirements (optional)</label><textarea id="callbackNotes" maxlength="3000" rows="3" placeholder="Anything else we should know?"></textarea></div>
@@ -1739,7 +1739,7 @@
         <p class="field-error" id="visaEnqSlugErr" hidden></p>
         <div class="field" style="margin-top:18px;"><label for="visaEnqName">Full name</label><input type="text" id="visaEnqName" maxlength="120" name="name" autocomplete="name" required aria-describedby="visaEnqNameErr" oninput="clearVisaEnqError(this)"><p class="field-error" id="visaEnqNameErr" hidden></p></div>
         <div class="field" style="margin-top:14px;"><label for="visaEnqEmail">Email</label><input type="email" id="visaEnqEmail" maxlength="254" name="email" autocomplete="email" required aria-describedby="visaEnqEmailErr" oninput="clearVisaEnqError(this)"><p class="field-error" id="visaEnqEmailErr" hidden></p></div>
-        <div class="field" style="margin-top:14px;"><label for="visaEnqPhone">Phone / WhatsApp</label><input type="tel" id="visaEnqPhone" maxlength="60" name="phone" autocomplete="tel" placeholder="e.g. +971 50 123 4567" required aria-describedby="visaEnqPhoneErr" oninput="clearVisaEnqError(this)"><p class="field-error" id="visaEnqPhoneErr" hidden></p></div>
+        <div class="field" style="margin-top:14px;"><label for="visaEnqPhone">Phone / WhatsApp</label><div class="phone-entry"><select id="visaEnqPhoneCode" aria-label="Country calling code" autocomplete="tel-country-code"><option value="">Country code</option></select><input type="tel" id="visaEnqPhone" maxlength="60" name="phone" autocomplete="tel-national" placeholder="Mobile number" required aria-describedby="visaEnqPhoneErr" oninput="clearVisaEnqError(this)"></div><p class="field-error" id="visaEnqPhoneErr" hidden></p></div>
         <details class="enquiry-optional" id="visaOptional"><summary>Add travel dates or trip details</summary>
         <div class="field" style="margin-top:14px;"><label for="visaEnqDate">Preferred travel date (or choose flexible dates)</label><input type="date" id="visaEnqDate" name="travelDate" aria-describedby="visaEnqDateErr" oninput="clearVisaEnqError(this);if(this.value)document.getElementById('visaEnqFlexible').checked=false"><p class="field-error" id="visaEnqDateErr" hidden></p></div>
         <div class="field" style="margin-top:14px;"><label for="visaEnqMessage">Message (optional)</label><textarea id="visaEnqMessage" maxlength="3000" name="message" placeholder="Anything else we should know about your trip..."></textarea></div>
@@ -4802,7 +4802,7 @@ function isValidEmail(s){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s); }
 // Accepts international formats: optional leading +, digits, spaces, dots, dashes, brackets; 7–15 digits (E.164 max).
 function isValidPhone(s){ const digits = s.replace(/\D/g,"").length; return /^\+?[\d\s().-]+$/.test(s) && digits>=7 && digits<=15; }
 function emailError(s){ return !s ? "Please enter your email address." : isValidEmail(s) ? "" : "Please enter a valid email address, e.g. name@example.com."; }
-function phoneError(s){ return !s ? "Please enter a phone or WhatsApp number." : isValidPhone(s) ? "" : "Please enter a valid phone number, e.g. +971 50 123 4567."; }
+function phoneError(s){ return !s ? "Please enter a phone or WhatsApp number." : isValidPhone(s) ? "" : "Choose a country code and enter your mobile number, or paste your full international number."; }
 function setFieldError(id, msg){
   const input = document.getElementById(id), err = document.getElementById(id+"Err");
   if(msg) input.setAttribute("aria-invalid","true"); else input.removeAttribute("aria-invalid");
@@ -4817,7 +4817,23 @@ function applyFieldErrors(ids, errors){
   if(firstInvalid) document.getElementById(firstInvalid).focus();
   return !firstInvalid;
 }
-const fieldValue = id => document.getElementById(id).value.trim();
+const enquiryCallingCodes = {"US":"1","AG":"1","AI":"1","AS":"1","BB":"1","BM":"1","BS":"1","CA":"1","DM":"1","DO":"1","GD":"1","GU":"1","JM":"1","KN":"1","KY":"1","LC":"1","MP":"1","MS":"1","PR":"1","SX":"1","TC":"1","TT":"1","VC":"1","VG":"1","VI":"1","RU":"7","KZ":"7","EG":"20","ZA":"27","GR":"30","NL":"31","BE":"32","FR":"33","ES":"34","HU":"36","IT":"39","VA":"39","RO":"40","CH":"41","AT":"43","GB":"44","GG":"44","IM":"44","JE":"44","DK":"45","SE":"46","NO":"47","SJ":"47","PL":"48","DE":"49","PE":"51","MX":"52","CU":"53","AR":"54","BR":"55","CL":"56","CO":"57","VE":"58","MY":"60","AU":"61","CC":"61","CX":"61","ID":"62","PH":"63","NZ":"64","SG":"65","TH":"66","JP":"81","KR":"82","VN":"84","CN":"86","TR":"90","IN":"91","PK":"92","AF":"93","LK":"94","MM":"95","IR":"98","SS":"211","MA":"212","EH":"212","DZ":"213","TN":"216","LY":"218","GM":"220","SN":"221","MR":"222","ML":"223","GN":"224","CI":"225","BF":"226","NE":"227","TG":"228","BJ":"229","MU":"230","LR":"231","SL":"232","GH":"233","NG":"234","TD":"235","CF":"236","CM":"237","CV":"238","ST":"239","GQ":"240","GA":"241","CG":"242","CD":"243","AO":"244","GW":"245","IO":"246","AC":"247","SC":"248","SD":"249","RW":"250","ET":"251","SO":"252","DJ":"253","KE":"254","TZ":"255","UG":"256","BI":"257","MZ":"258","ZM":"260","MG":"261","RE":"262","YT":"262","ZW":"263","NA":"264","MW":"265","LS":"266","BW":"267","SZ":"268","KM":"269","SH":"290","TA":"290","ER":"291","AW":"297","FO":"298","GL":"299","GI":"350","PT":"351","LU":"352","IE":"353","IS":"354","AL":"355","MT":"356","CY":"357","FI":"358","AX":"358","BG":"359","LT":"370","LV":"371","EE":"372","MD":"373","AM":"374","BY":"375","AD":"376","MC":"377","SM":"378","UA":"380","RS":"381","ME":"382","XK":"383","HR":"385","SI":"386","BA":"387","MK":"389","CZ":"420","SK":"421","LI":"423","FK":"500","BZ":"501","GT":"502","SV":"503","HN":"504","NI":"505","CR":"506","PA":"507","PM":"508","HT":"509","GP":"590","BL":"590","MF":"590","BO":"591","GY":"592","EC":"593","GF":"594","PY":"595","MQ":"596","SR":"597","UY":"598","CW":"599","BQ":"599","TL":"670","NF":"672","BN":"673","NR":"674","PG":"675","TO":"676","SB":"677","VU":"678","FJ":"679","PW":"680","WF":"681","CK":"682","NU":"683","WS":"685","KI":"686","NC":"687","TV":"688","PF":"689","TK":"690","FM":"691","MH":"692","KP":"850","HK":"852","MO":"853","KH":"855","LA":"856","BD":"880","TW":"886","MV":"960","LB":"961","JO":"962","SY":"963","IQ":"964","KW":"965","SA":"966","YE":"967","OM":"968","PS":"970","AE":"971","IL":"972","BH":"973","QA":"974","BT":"975","MN":"976","NP":"977","TJ":"992","TM":"993","AZ":"994","GE":"995","KG":"996","UZ":"998"};
+const callingRegionNames = new Intl.DisplayNames(["en"],{type:"region"});
+const callingRegions = Object.keys(enquiryCallingCodes).sort((a,b)=>callingRegionNames.of(a).localeCompare(callingRegionNames.of(b),"en"));
+for(const select of document.querySelectorAll(".phone-entry select")){
+  for(const region of ["IN","AE",...callingRegions.filter(c=>c!=="IN"&&c!=="AE")]){
+    const code="+"+enquiryCallingCodes[region];
+    select.add(new Option(callingRegionNames.of(region)+" ("+code+")",code));
+  }
+}
+const fieldValue = id => {
+  const raw=document.getElementById(id).value.trim();
+  const code=document.getElementById(id+"Code");
+  if(!code||!raw)return raw;
+  if(/^(?:\+|00)/.test(raw)&&isValidPhone(raw))return "+"+raw.replace(/\D/g,"").replace(raw.startsWith("00")?/^00/:/^$/,"");
+  if(!code.value||!/^[\d\s().-]+$/.test(raw)||raw.replace(/\D/g,"").length<4)return "invalid";
+  return code.value+raw.replace(/\D/g,"");
+};
 
 /* ============ CALLBACK + CONTACT FORMS ============
    Server-backed enquiry saving precedes the human WhatsApp handoff.
@@ -5174,7 +5190,7 @@ async function submitVisaEnquiry(e){
   if(document.getElementById("visaEnqForm").dataset.saving==="true")return;
   const val = id => document.getElementById(id).value.trim();
   const v = visaBySlug(val("visaEnqSlug"));
-  const name = val("visaEnqName"), email = val("visaEnqEmail"), phone = val("visaEnqPhone");
+  const name = val("visaEnqName"), email = val("visaEnqEmail"), phone = fieldValue("visaEnqPhone");
   const date = val("visaEnqDate"), message = val("visaEnqMessage");
   const errors = {
     visaEnqSlug: (!v || v !== visaEnquiryVisa) ? "No visa destination is selected. Close this form and choose a destination first." : "",
