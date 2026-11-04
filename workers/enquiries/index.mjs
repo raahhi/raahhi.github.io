@@ -20,6 +20,12 @@ function validate(data) {
     if (!Array.isArray(row) || row.length !== 2) throw new Error('invalid_details');
     return [text(row[0],80,true),text(row[1],3000)];
   });
+  const categories = ['Visas','Activities','Packages'];
+  const categoryRows = details.filter(([key]) => key === 'Enquiry type');
+  if (data.enquiryVersion !== undefined || data.category !== undefined || categoryRows.length) {
+    if (data.enquiryVersion !== 2 || !categories.includes(data.category) ||
+        categoryRows.length !== 1 || categoryRows[0][1] !== data.category) throw new Error('invalid_category');
+  }
   const clean = {kind,name,phone,email,product,page:page.href,details};
   if (JSON.stringify(clean).length > 16000) throw new Error('too_large');
   return clean;

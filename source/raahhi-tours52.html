@@ -1571,6 +1571,7 @@
           <div class="field"><label for="contactName">Full name</label><input type="text" id="contactName" maxlength="120" autocomplete="name" required aria-describedby="contactNameErr" oninput="clearFieldError(this)"><p class="field-error" id="contactNameErr" hidden></p></div>
           <div class="field"><label for="contactEmail">Email</label><input type="email" id="contactEmail" maxlength="254" autocomplete="email" required aria-describedby="contactEmailErr" oninput="clearFieldError(this)"><p class="field-error" id="contactEmailErr" hidden></p></div>
         </div>
+        <div class="field"><label for="contactCategory">Enquiry type</label><select id="contactCategory" required aria-describedby="contactCategoryErr" onchange="clearFieldError(this)"><option value="">Select enquiry type</option><option>Visas</option><option>Activities</option><option>Packages</option></select><p class="field-error" id="contactCategoryErr" hidden></p></div>
         <div class="field" style="margin-top:16px;"><label for="contactPhone">Phone / WhatsApp</label><div class="phone-entry"><select id="contactPhoneCode" aria-label="Country calling code" autocomplete="tel-country-code"><option value="">Country code</option></select><input type="tel" id="contactPhone" maxlength="60" autocomplete="tel-national" placeholder="Mobile number" required aria-describedby="contactPhoneErr" oninput="clearFieldError(this)"></div><p class="field-error" id="contactPhoneErr" hidden></p></div>
         <div class="field" style="margin-top:16px;"><label for="contactMessage">Message</label><textarea id="contactMessage" maxlength="3000" placeholder="Tell us what you need help with..." required aria-describedby="contactMessageErr" oninput="clearFieldError(this)"></textarea><p class="field-error" id="contactMessageErr" hidden></p></div>
         <button class="btn btn-gold btn-block" style="margin-top:20px;">Save enquiry</button>
@@ -1704,6 +1705,7 @@
       <form id="callbackForm" novalidate onsubmit="submitCallback(event)">
         <div id="holidayEnquiryFields" hidden></div>
         <div class="field" style="margin-top:18px;"><label for="callbackName">Full name</label><input type="text" id="callbackName" maxlength="120" autocomplete="name" required aria-describedby="callbackNameErr" oninput="clearFieldError(this)"><p class="field-error" id="callbackNameErr" hidden></p></div>
+        <div class="field"><label for="callbackCategory">Enquiry type</label><select id="callbackCategory" required aria-describedby="callbackCategoryErr" onchange="clearFieldError(this)"><option value="">Select enquiry type</option><option>Visas</option><option>Activities</option><option>Packages</option></select><p class="field-error" id="callbackCategoryErr" hidden></p></div>
         <div class="field" style="margin-top:14px;"><label for="callbackPhone">Phone / WhatsApp</label><div class="phone-entry"><select id="callbackPhoneCode" aria-label="Country calling code" autocomplete="tel-country-code"><option value="">Country code</option></select><input type="tel" id="callbackPhone" maxlength="60" autocomplete="tel-national" placeholder="Mobile number" required aria-describedby="callbackPhoneErr" oninput="clearFieldError(this)"></div><p class="field-error" id="callbackPhoneErr" hidden></p></div>
         <details class="enquiry-optional" id="callbackOptional"><summary>Add a preferred call time or notes</summary>
         <div class="field" style="margin-top:14px;"><label for="callbackTime">Best time to call (optional)</label><input type="text" id="callbackTime" maxlength="120" placeholder="e.g. Today, 6–8 PM"></div>
@@ -1739,6 +1741,7 @@
         <p class="field-error" id="visaEnqSlugErr" hidden></p>
         <div class="field" style="margin-top:18px;"><label for="visaEnqName">Full name</label><input type="text" id="visaEnqName" maxlength="120" name="name" autocomplete="name" required aria-describedby="visaEnqNameErr" oninput="clearVisaEnqError(this)"><p class="field-error" id="visaEnqNameErr" hidden></p></div>
         <div class="field" style="margin-top:14px;"><label for="visaEnqEmail">Email</label><input type="email" id="visaEnqEmail" maxlength="254" name="email" autocomplete="email" required aria-describedby="visaEnqEmailErr" oninput="clearVisaEnqError(this)"><p class="field-error" id="visaEnqEmailErr" hidden></p></div>
+        <div class="field"><label for="visaEnqCategory">Enquiry type</label><select id="visaEnqCategory" required aria-describedby="visaEnqCategoryErr" onchange="clearFieldError(this)"><option value="">Select enquiry type</option><option>Visas</option><option>Activities</option><option>Packages</option></select><p class="field-error" id="visaEnqCategoryErr" hidden></p></div>
         <div class="field" style="margin-top:14px;"><label for="visaEnqPhone">Phone / WhatsApp</label><div class="phone-entry"><select id="visaEnqPhoneCode" aria-label="Country calling code" autocomplete="tel-country-code"><option value="">Country code</option></select><input type="tel" id="visaEnqPhone" maxlength="60" name="phone" autocomplete="tel-national" placeholder="Mobile number" required aria-describedby="visaEnqPhoneErr" oninput="clearVisaEnqError(this)"></div><p class="field-error" id="visaEnqPhoneErr" hidden></p></div>
         <details class="enquiry-optional" id="visaOptional"><summary>Add travel dates or trip details</summary>
         <div class="field" style="margin-top:14px;"><label for="visaEnqDate">Preferred travel date (or choose flexible dates)</label><input type="date" id="visaEnqDate" name="travelDate" aria-describedby="visaEnqDateErr" oninput="clearVisaEnqError(this);if(this.value)document.getElementById('visaEnqFlexible').checked=false"><p class="field-error" id="visaEnqDateErr" hidden></p></div>
@@ -4830,7 +4833,7 @@ const fieldValue = id => {
   const raw=document.getElementById(id).value.trim();
   const code=document.getElementById(id+"Code");
   if(!code||!raw)return raw;
-  if(/^(?:\+|00)/.test(raw)&&isValidPhone(raw))return "+"+raw.replace(/\D/g,"").replace(raw.startsWith("00")?/^00/:/^$/,"");
+  if(/^(?:\+|00)/.test(raw)&&isValidPhone(raw)){const full="+"+raw.replace(/\D/g,"").replace(raw.startsWith("00")?/^00/:/^$/,"");return code.value&&!full.startsWith(code.value)?"invalid":full;}
   if(!code.value||!/^[\d\s().-]+$/.test(raw)||raw.replace(/\D/g,"").length<4)return "invalid";
   return code.value+raw.replace(/\D/g,"");
 };
@@ -4890,7 +4893,7 @@ async function saveWebsiteEnquiry(formId,kind,identity,product,rows,pagePath){
   const state=enquirySaveState(form);state.replaceChildren();
   const page=new URL(pagePath||location.pathname,"https://raahhi.com");page.search="";page.hash="";
   const details=rows.filter(([label,value])=>value!==undefined&&value!==null&&String(value).trim()&&!/^(Selected option inclusions|Cancellation terms|Page)$/.test(label)).map(([label,value])=>[label,String(value)]);
-  const payload={kind,...identity,product:product||"",page:page.href,details};
+  const payload={enquiryVersion:2,category:rows[0][1],kind,...identity,product:product||"",page:page.href,details};
   if(details.some(([label,value])=>value.length>3000)||JSON.stringify(payload).length>15000){state.textContent="Please shorten your message or notes to 3,000 characters or fewer, then try again.";return null;}
   const fingerprint=JSON.stringify(payload);
   let attempt=enquiryAttempts.get(form);
@@ -4917,7 +4920,10 @@ async function saveWebsiteEnquiry(formId,kind,identity,product,rows,pagePath){
   }finally{controls.forEach(el=>el.disabled=false);delete form.dataset.saving;form.removeAttribute("aria-busy");}
 }
 
-const CALLBACK_FIELDS = ["callbackName","callbackPhone"];
+const ENQUIRY_CATEGORIES = ["Visas","Activities","Packages"];
+const categoryError = value => ENQUIRY_CATEGORIES.includes(value) ? "" : "Please select an enquiry type.";
+const pageEnquiryCategory = () => ({visas:"Visas",activities:"Activities",holidays:"Packages"})[location.pathname.split("/")[1]] || "";
+const CALLBACK_FIELDS = ["callbackCategory","callbackName","callbackPhone"];
 let callbackContext = null; // {kind, noun, title, details:[[label, value]]} when opened from a product page
 const CALLBACK_INTRO = "Add your name and number to save your enquiry. You can add a preferred call time or notes.";
 // The shared form prepares a product enquiry or a general enquiry summary.
@@ -4932,6 +4938,7 @@ function setCallbackWording(context){
 function openCallback(context){
   resetCallback();
   callbackContext = context || null;
+  document.getElementById("callbackCategory").value = context?.category || (context?.noun==="package"?"Packages":context?.noun==="activity"?"Activities":pageEnquiryCategory());
   setCallbackWording(callbackContext);
   renderHolidayEnquiryFields(callbackContext);
   if(callbackContext){
@@ -4952,7 +4959,7 @@ function enquireAboutProduct(kind, id, mode){
     const rawDate = val("tourEnqDate");
     if(rawDate && rawDate < todayISO()){ setFieldError("tourEnqDate", "Preferred date can't be in the past."); document.getElementById("tourEnqDate").scrollIntoView({block:"center"}); document.getElementById("tourEnqDate").focus({preventScroll:true}); return; }
     setFieldError("tourEnqDate", "");
-    openCallback({kind: mode === "booking" ? "Booking request" : mode === "updates" ? "Update request" : (kind === "addon" ? "Visa add-on" : "Activity"), noun:"activity", title:t.title, details:[
+    openCallback({kind: mode === "booking" ? "Booking request" : mode === "updates" ? "Update request" : (kind === "addon" ? "Visa add-on" : "Activity"), noun:"activity", category:kind==="addon"?"Visas":"Activities", title:t.title, details:[
       ["Destination", kind === "addon" ? "UAE arrival" : destName(t.dest)], ["Availability", statusInfo(t).label],
       ["Preferred date", rawDate && new Date(rawDate+"T00:00").toLocaleDateString(undefined,{day:"numeric", month:"long", year:"numeric"})],
       ["Guests", count("tourEnqGuests")],
@@ -4978,7 +4985,7 @@ async function submitCallback(e){
   e.preventDefault();
   if(document.getElementById("callbackForm").dataset.saving==="true")return;
   const name = fieldValue("callbackName"), phone = fieldValue("callbackPhone"), time = fieldValue("callbackTime"), notes = fieldValue("callbackNotes");
-  if(!applyFieldErrors(CALLBACK_FIELDS, { callbackName: name ? "" : "Please enter your full name.", callbackPhone: phoneError(phone) })) return;
+  if(!applyFieldErrors(CALLBACK_FIELDS, { callbackCategory: categoryError(fieldValue("callbackCategory")), callbackName: name ? "" : "Please enter your full name.", callbackPhone: phoneError(phone) })) return;
   const holidayRows=holidayEnquiryRows();
   if(holidayRows===null)return;
   if(callbackContext?.productKey){
@@ -4992,6 +4999,7 @@ async function submitCallback(e){
     callbackContext.details.push(...enquiryPriceRows(record));
   }
   const rows = [
+    ["Enquiry type",fieldValue("callbackCategory")],
     ...(callbackContext ? [[callbackContext.kind, callbackContext.title], ...(callbackContext.details || [])] : []),
     ...holidayRows, ["Name", name], ["Phone / WhatsApp", phone], ["Best time to call", time], ["Notes / requirements", notes],
   ];
@@ -5025,13 +5033,14 @@ function resetCallback(){
   if(previousProduct) chooseProductOption(productKey(previousProduct),selectedProductOption(previousProduct)?.id || "");
 }
 
-const CONTACT_FIELDS = ["contactName","contactEmail","contactPhone","contactMessage"];
+const CONTACT_FIELDS = ["contactCategory","contactName","contactEmail","contactPhone","contactMessage"];
 const CONTACT_MESSAGE_MIN = 10;
 async function submitContactPage(e){
   e.preventDefault();
   if(document.getElementById("contactPageForm").dataset.saving==="true")return;
   const message = fieldValue("contactMessage");
   const valid = applyFieldErrors(CONTACT_FIELDS, {
+    contactCategory: categoryError(fieldValue("contactCategory")),
     contactName: fieldValue("contactName") ? "" : "Please enter your full name.",
     contactEmail: emailError(fieldValue("contactEmail")),
     contactPhone: phoneError(fieldValue("contactPhone")),
@@ -5041,7 +5050,7 @@ async function submitContactPage(e){
   document.getElementById("contactPageDone").hidden = true;
   if(valid){
     const name=fieldValue("contactName"),email=fieldValue("contactEmail"),phone=fieldValue("contactPhone");
-    const rows=[["Name",name],["Email",email],["Phone / WhatsApp",phone],["Message",message]];
+    const rows=[["Enquiry type",fieldValue("contactCategory")],["Name",name],["Email",email],["Phone / WhatsApp",phone],["Message",message]];
     const reference=await saveWebsiteEnquiry("contactPageForm","contact",{name,email,phone},"",rows);
     if(!reference)return;
     renderSummaryRows(document.getElementById("contactMessagePreview"),[["Enquiry reference",reference],...rows]);
@@ -5082,13 +5091,15 @@ function copyText(text, btn){
   else done(legacy());
 }
 // Copies an enquiry summary as plain text so the customer can paste it into an email or message.
-function enquiryMessage(boxId){
+function enquiryMessage(boxId, whatsapp=false){
   const box=document.getElementById(boxId);
   if(!box)return "";
   const lines=[...box.querySelectorAll("p")].map(p=>p.textContent.trim()).filter(Boolean)
     .filter(text=>!/^Selected option inclusions:|^Cancellation terms:/i.test(text));
   const page=boxId==="callbackSummary" && callbackContext?.productKey ? absUrl(productPath(findProduct(callbackContext.productKey))) : absUrl(location.pathname);
-  return "Hello RAAHHI TOURS, I would like to speak with a sales executive.\n\n"+lines.join("\n")+"\n\nProduct page: "+page;
+  const index=whatsapp?lines.findIndex(line=>line.startsWith("Enquiry type: ")): -1;
+  const first=index<0?"":lines.splice(index,1)[0]+"\n\n";
+  return first+"Hello RAAHHI TOURS, I would like to speak with a sales executive.\n\n"+lines.join("\n")+"\n\nProduct page: "+page;
 }
 function productPath(record){
   if(!record)return location.pathname;
@@ -5101,8 +5112,8 @@ function enquiryWhatsAppHref(boxId){
   const box=document.getElementById(boxId);
   const row=[...(box?.querySelectorAll("p")||[])].find(p=>p.querySelector("strong")?.textContent.trim().replace(/:$/,"")==="Phone / WhatsApp");
   const phone=(row?.textContent.split(":").slice(1).join(":")||"").replace(/[^+\d]/g,"");
-  const india=/^(?:\+91|0091)\d{10}$/.test(phone);
-  return whatsappHref(india?BUSINESS.contact.indiaPhone:BUSINESS.contact.phone)+"?text="+encodeURIComponent(enquiryMessage(boxId));
+  const india=phone.startsWith("+91");
+  return whatsappHref(india?BUSINESS.contact.indiaPhone:BUSINESS.contact.phone)+"?text="+encodeURIComponent(enquiryMessage(boxId,true));
 }
 function prepareEnquiryLink(link, boxId, channel){
   if(channel==="whatsapp"){link.href=enquiryWhatsAppHref(boxId);return;}
@@ -5153,13 +5164,14 @@ document.addEventListener("keydown", e=>{
    WhatsApp messages still require the customer to press Send.
    The destination/type always come from the VISAS entry passed in -- never typed. */
 let visaEnquiryVisa = null; // the VISAS entry the open enquiry is for
-const VISA_ENQ_FIELDS = ["visaEnqSlug","visaEnqName","visaEnqEmail","visaEnqPhone","visaEnqNationality","visaEnqResidence","visaEnqPurpose","visaEnqApplicants","visaEnqDate"];
+const VISA_ENQ_FIELDS = ["visaEnqCategory","visaEnqSlug","visaEnqName","visaEnqEmail","visaEnqPhone","visaEnqNationality","visaEnqResidence","visaEnqPurpose","visaEnqApplicants","visaEnqDate"];
 function todayISO(){ const d = new Date(); return new Date(d.getTime() - d.getTimezoneOffset()*60000).toISOString().slice(0,10); }
 function openVisaEnquiry(slug){
   const v = visaBySlug(slug);
   if(!v) return; // no enquiry without a real destination
   resetVisaEnquiry();
   visaEnquiryVisa = v;
+  document.getElementById("visaEnqCategory").value = "Visas";
   document.getElementById("visaEnqSlug").value = slugify(v.country);
   document.getElementById("visaEnqCountry").textContent = v.flag + " " + v.country;
   document.getElementById("visaEnqType").textContent = v.type || "";
@@ -5193,6 +5205,7 @@ async function submitVisaEnquiry(e){
   const name = val("visaEnqName"), email = val("visaEnqEmail"), phone = fieldValue("visaEnqPhone");
   const date = val("visaEnqDate"), message = val("visaEnqMessage");
   const errors = {
+    visaEnqCategory: categoryError(val("visaEnqCategory")),
     visaEnqSlug: (!v || v !== visaEnquiryVisa) ? "No visa destination is selected. Close this form and choose a destination first." : "",
     visaEnqName: name ? "" : "Please enter your full name.",
     visaEnqEmail: emailError(email),
@@ -5207,7 +5220,7 @@ async function submitVisaEnquiry(e){
 
   // Show what was entered -- as text, never as HTML.
   const rows = [
-    ["Destination", v.flag+" "+v.country], ["Visa type", v.type], ["Name", name], ["Email", email], ["Phone / WhatsApp", phone],
+    ["Enquiry type",val("visaEnqCategory")], ["Destination", v.flag+" "+v.country], ["Visa type", v.type], ["Name", name], ["Email", email], ["Phone / WhatsApp", phone],
     ["Travel date", date && new Date(date+"T00:00").toLocaleDateString(undefined,{day:"numeric", month:"long", year:"numeric"})],
     ...visaIntakeRows(), ["Message", message], ...enquiryPriceRows(v), ["Page", location.href]];
   const reference=await saveWebsiteEnquiry("visaEnqForm","visa",{name,email,phone},v.country+" visa",rows,productPath(v));

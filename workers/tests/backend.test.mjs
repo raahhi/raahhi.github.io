@@ -33,3 +33,16 @@ test('authenticated lead listing, search, notes, CSRF and optimistic version con
 test('CSV protects spreadsheet formulas, quoting and line breaks',async()=>{for(const value of ['=HYPERLINK("https://evil.test")','  +cmd','@SUM(1)','-1','\ttext'])assert(csvCell(value).startsWith('"\''));assert.equal(csvCell('a"b'),'"a""b"');const e=env();await intake(post(body({name:'=SUM(1)'})),e,proof);const result=await leads(await dashboard('/api/export',await jwt()),e,certs);assert.equal(result.status,200);assert((await result.text()).includes('"\'=SUM(1)"'));});
 
 test('owner can read independent visitor sessions and analytics script after JWT authentication',async()=>{const e=env(),sessionId=crypto.randomUUID(),data={sessionId,consent:true,device:'mobile',source:'Direct / unknown',events:[{id:crypto.randomUUID(),sequence:1,at:new Date().toISOString(),type:'page_view',page:'/',seconds:0,scroll:0}]};const received=await intake(new Request('https://api.test/api/activity',{method:'POST',headers:{Origin:'https://raahhi.com','Content-Type':'application/json'},body:JSON.stringify(data)}),e);assert.equal(received.status,202);const token=await jwt();const listing=await leads(await dashboard('/api/visitors',token),e,certs);assert.equal((await listing.json()).sessions[0].id,sessionId);const stats=await leads(await dashboard('/api/visitor-stats',token),e,certs);assert.equal((await stats.json()).totals.sessions,1);const detail=await leads(await dashboard('/api/visitors/'+sessionId,token),e,certs);assert.equal((await detail.json()).events.length,1);assert.equal((await leads(await dashboard('/visitors.js',token),e,certs)).status,200);assert.equal(e.DB.db.prepare('SELECT COUNT(*) n FROM enquiries').get().n,0);});
+
+test('versioned enquiry validates category and exposes it under the saved reference',async()=>{
+  const e=env();
+  for(const invalid of [{},{category:'Other'},{category:'Visas',details:[['Enquiry type','Packages']]}])
+    assert.equal((await intake(post(body({enquiryVersion:2,...invalid})),e,proof)).status,400);
+  const response=await intake(post(body({enquiryVersion:2,category:'Packages',details:[['Enquiry type','Packages'],['Message','Trip request']]})),e,proof);
+  assert.equal(response.status,201);
+  const {reference}=await response.json();
+  const row=e.DB.db.prepare('SELECT id FROM enquiries WHERE reference=?').get(reference);
+  const detail=await (await leads(await dashboard('/api/leads/'+row.id,await jwt()),e,certs)).json();
+  assert.equal(detail.reference,reference);
+  assert.deepEqual(detail.details[0],['Enquiry type','Packages']);
+});

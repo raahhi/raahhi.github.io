@@ -87,7 +87,7 @@ await mockEnquiryDelivery(page);
  await page.locator('#holidayHotelCategory').selectOption('5-star');
  assert((await page.locator('#callbackContextDetails').textContent()).includes('Price confirmed on enquiry for the requested hotel category'),'A category upgrade cannot inherit the base package price');
  await page.locator('#holidayHotel').selectOption(hotel.id);
- await page.locator('#callbackName').fill('Holiday Test');await page.locator('#callbackPhone').fill('+971501234567');
+ assert.equal(await page.locator('#callbackCategory').inputValue(),'Packages');await page.locator('#callbackName').fill('Holiday Test');await page.locator('#callbackPhone').fill('+971501234567');
  await page.locator('#holidayAdults').fill('2');await page.locator('#holidayChildren').fill('1');await page.locator('#holidayChildren').dispatchEvent('change');
  await page.locator('#callbackSubmit').click();assert(await page.locator('#holidayChildAge0Err').isVisible(),'Missing child age is caught');
  await page.locator('#holidayChildAge0').fill('6');
