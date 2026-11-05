@@ -1093,7 +1093,24 @@
   .enquiry-storage-note,.enquiry-save-state{margin-top:14px;line-height:1.6;}
   .enquiry-verification{margin-top:16px;max-width:100%;}
   #analyticsChoice[hidden]{display:none!important;}
-.phone-entry{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:8px}.phone-entry select,.phone-entry input{width:100%;min-width:0}</style>
+.phone-entry{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:8px}.phone-entry select,.phone-entry input{width:100%;min-width:0}
+  /* Approved November 2026 signature and service cards. */
+  .logo .brand-signature{width:196px;height:78px;object-fit:contain;object-position:left center;flex-shrink:0;}
+  .footer-logo .brand-signature{width:234px;height:156px;object-fit:contain;margin:0;}
+  #mobile-nav .mobile-brand .brand-signature{width:196px;height:130px;object-fit:contain;}
+  .home-shortcuts a{display:flex;flex-direction:row;align-items:center;gap:20px;padding:22px 44px 22px 22px;min-height:112px;border:2px solid var(--gold-500);box-shadow:0 5px 14px rgba(11,21,38,.08);}
+  .home-shortcuts a:hover{box-shadow:0 8px 22px rgba(11,21,38,.16);}
+  .home-shortcuts .shortcut-icon{display:flex;align-items:center;justify-content:center;flex:0 0 62px;padding-right:16px;border-right:1px solid var(--gold-500);color:var(--gold-400);}
+  .shortcut-icon svg{display:block;width:46px;height:46px;}
+  .shortcut-copy{display:flex;flex-direction:column;gap:5px;min-width:0;}
+  .shortcut-title{font:600 21px/1.25 'Fraunces',Georgia,serif;}
+  .home-shortcuts small{font-size:14px;line-height:1.4;color:var(--gold-400);}
+  .home-shortcuts small b{font-weight:400;}
+  .home-shortcuts .shortcut-arrow{top:50%;transform:translateY(-50%);right:16px;}
+  @media(min-width:641px) and (max-width:1000px){.home-shortcuts a{gap:12px;padding-left:14px;}.home-shortcuts .shortcut-icon{flex-basis:44px;padding-right:10px;}.shortcut-icon svg{width:34px;height:38px;}.shortcut-title{font-size:17px;}}
+  @media(max-width:640px){.logo .brand-signature{width:145px;height:58px;}.home-shortcuts a{display:flex;gap:16px;min-height:88px;padding:15px 42px 15px 18px;}.home-shortcuts .shortcut-icon{flex-basis:54px;padding-right:14px;}.shortcut-icon svg{width:38px;height:38px;}.shortcut-title{font-size:20px;}.home-shortcuts .wrap{gap:10px;}}
+  @media(max-width:360px){.logo .brand-signature{width:126px;height:54px;}}
+</style>
 </head>
 <body>
 
@@ -1102,7 +1119,7 @@
 <!-- ================= HEADER ================= -->
 <header id="site-header">
   <div class="wrap header-inner">
-    <a href="/" class="logo" aria-label="RAAHHI TOURS home"><span class="logo-mark"><img src="/assets/brand/raahhi-monogram-navy.svg" alt="" role="presentation" aria-hidden="true" width="280" height="280" decoding="async"></span><span class="brand-divider" aria-hidden="true"></span><img class="brand-wordmark" src="/assets/brand/raahhi-wordmark-header-navy.svg" alt="RAAHHI TOURS" width="520" height="310" decoding="async"></a>
+    <a href="/" class="logo" aria-label="RAAHHI TOURS home"><img class="brand-signature" src="/assets/brand/raahhi-signature-navy.webp" alt="RAAHHI TOURS" width="600" height="400" decoding="async"></a>
     <nav class="main-nav" id="mainNav">
       <a href="/visas/" data-route="visas">Visas</a>
       <a href="/activities/" data-route="activities">Activities</a>
@@ -1120,7 +1137,7 @@
 
 <div id="mobile-nav" inert aria-hidden="true">
   <button type="button" class="close-x" aria-label="Close menu" onclick="toggleMobileNav(false)">✕</button>
-  <a href="/" class="mobile-brand" aria-label="RAAHHI TOURS home" onclick="toggleMobileNav(false)"><span class="logo-mark"><img src="/assets/brand/raahhi-monogram-light.svg" alt="" role="presentation" aria-hidden="true" width="280" height="280" decoding="async"></span><span class="brand-divider" aria-hidden="true"></span><img class="brand-wordmark" src="/assets/brand/raahhi-wordmark-header-light.svg" alt="RAAHHI TOURS" width="520" height="310" decoding="async"></a>
+  <a href="/" class="mobile-brand" aria-label="RAAHHI TOURS home" onclick="toggleMobileNav(false)"><img class="brand-signature" src="/assets/brand/raahhi-signature-gold.webp" alt="RAAHHI TOURS" width="600" height="400" decoding="async"></a>
   <a href="/" onclick="toggleMobileNav(false)">Home</a>
   <a href="/visas/" onclick="toggleMobileNav(false)">Visas</a>
   <a href="/activities/" onclick="toggleMobileNav(false)">Activities</a>
@@ -1151,9 +1168,9 @@
 
 <nav class="home-shortcuts" aria-label="Browse RAAHHI services">
   <div class="wrap">
-    <a href="/activities/"><span>UAE activities</span><small><b data-catalogue-count="tours">169</b> experiences</small><span class="shortcut-arrow" aria-hidden="true">→</span></a>
-    <a href="/holidays/"><span>Holiday packages</span><small><b data-catalogue-count="packages">25</b> UAE trips</small><span class="shortcut-arrow" aria-hidden="true">→</span></a>
-    <a href="/visas/"><span>Visa assistance</span><small><b data-catalogue-count="visas">40</b> destinations</small><span class="shortcut-arrow" aria-hidden="true">→</span></a>
+    <a href="/activities/"><span class="shortcut-icon" aria-hidden="true"><svg viewBox="0 0 56 56" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 38c4-3 8-3 12 0s8 3 12 0 8-3 12 0 8 3 12 0M9 29l10-9 10 4 10-1-6 10H12l-5-4zm13-15 6 5 9 1M24 8a3 3 0 1 0 .1 0M18 21l-3 8m17-4 7 8"/></svg></span><span class="shortcut-copy"><span class="shortcut-title">UAE activities</span><small><b data-catalogue-count="tours">169</b> experiences</small></span><span class="shortcut-arrow" aria-hidden="true">→</span></a>
+    <a href="/holidays/"><span class="shortcut-icon" aria-hidden="true"><svg viewBox="0 0 56 56" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="13" y="13" width="28" height="34" rx="4"/><path d="M22 13V6h10v7M20 20v20m14-20v20M19 47v3m16-3v3"/></svg></span><span class="shortcut-copy"><span class="shortcut-title">Holiday packages</span><small><b data-catalogue-count="packages">25</b> UAE trips</small></span><span class="shortcut-arrow" aria-hidden="true">→</span></a>
+    <a href="/visas/"><span class="shortcut-icon" aria-hidden="true"><svg viewBox="0 0 56 56" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="10" y="6" width="34" height="43" rx="4"/><circle cx="27" cy="24" r="11"/><ellipse cx="27" cy="24" rx="5" ry="11"/><path d="M16 24h22M18 40h18M7 12v33"/></svg></span><span class="shortcut-copy"><span class="shortcut-title">Visa assistance</span><small><b data-catalogue-count="visas">40</b> destinations</small></span><span class="shortcut-arrow" aria-hidden="true">→</span></a>
   </div>
 </nav>
 
@@ -1646,7 +1663,7 @@
   <div class="wrap">
     <div class="footer-grid">
       <div>
-        <a href="/" class="footer-logo" aria-label="RAAHHI TOURS home"><span class="logo-mark"><img src="/assets/brand/raahhi-monogram-light.svg" alt="" role="presentation" aria-hidden="true" width="280" height="280" decoding="async"></span><img class="brand-wordmark" src="/assets/brand/raahhi-wordmark-light.svg" alt="RAAHHI TOURS" width="520" height="400" decoding="async"></a><div class="footer-tagline">Visa assistance · UAE activities · UAE holidays</div><p class="footer-identity">RAAHHI TOURS · Raahi Tourism PVT LTD<br>Pune, Maharashtra, India<br><a class="contact-link" href="tel:+97142087474">UAE: +97142087474</a> · <a class="contact-link" href="tel:+912066838876">India: +912066838876</a><br><a href="mailto:inquire@raahhi.com">inquire@raahhi.com</a><br>8:00 am–9:00 pm IST</p>
+        <a href="/" class="footer-logo" aria-label="RAAHHI TOURS home"><img class="brand-signature" src="/assets/brand/raahhi-signature-gold.webp" alt="RAAHHI TOURS" width="600" height="400" decoding="async"></a><div class="footer-tagline">Visa assistance · UAE activities · UAE holidays</div><p class="footer-identity">RAAHHI TOURS · Raahi Tourism PVT LTD<br>Pune, Maharashtra, India<br><a class="contact-link" href="tel:+97142087474">UAE: +97142087474</a> · <a class="contact-link" href="tel:+912066838876">India: +912066838876</a><br><a href="mailto:inquire@raahhi.com">inquire@raahhi.com</a><br>8:00 am–9:00 pm IST</p>
         <p style="margin-top:14px; max-width:300px; font-size:14.5px;">RAAHHI TOURS offers visa assistance for <span data-catalogue-count="visas">40</span> destinations, activities in Dubai, Abu Dhabi and Ras Al Khaimah, and holiday packages in Dubai, Abu Dhabi and Ras Al Khaimah. Prices, availability and requirements are confirmed on enquiry.</p>
       </div>
       <div>

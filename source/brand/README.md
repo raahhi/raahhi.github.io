@@ -1,5 +1,8 @@
 # Approved RAAHHI branding
 
-Reconstructed from the user-approved R monogram and RAAHHI TOURS wordmark mockups on 7 October 2026. Navy and light variants share the same smooth vector shapes. The header preserves the approved mockup proportions: large R, fine vertical divider, and gold motif above the smaller name. Lettering is outlined, so loading a web font is unnecessary.
+The November 2026 signature replaces the previous separated monogram and wordmark in the public website header, mobile menu and footer. Correct spelling: Raahhi Tours (two As and two Hs).
 
-These assets replace site-owned branding only. Attraction photos and third-party logos remain unchanged.
+- `raahhi-signature-navy.webp`: navy lettering and champagne gold details on transparency, for light backgrounds.
+- `raahhi-signature-gold.webp`: champagne gold signature on transparency, for dark backgrounds.
+
+Generated from the user's approved traveller-hat, sweeping-R and aircraft logo. WebP files are optimised encodings of the approved transparent artwork. Existing SVG assets remain for backward compatibility. Attraction photos and third-party logos are unchanged.

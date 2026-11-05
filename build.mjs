@@ -40,7 +40,7 @@ const source = authorSource.replace('</head>', localMedia.bootstrap + '</head>')
 const appScript = extractAppScript(source);
 const brandFiles = new Map();
 for (const filename of await readdir(join(ROOT, 'source', 'brand'))) {
-  if (filename.endsWith('.svg')) brandFiles.set('/assets/brand/' + filename, await readFile(join(ROOT, 'source', 'brand', filename)));
+  if (/\.(svg|webp)$/.test(filename)) brandFiles.set('/assets/brand/' + filename, await readFile(join(ROOT, 'source', 'brand', filename)));
 }
 if (!brandFiles.has('/assets/brand/raahhi-monogram-navy.svg') || !brandFiles.has('/assets/brand/raahhi-lockup-navy.svg')) throw new Error('Approved RAAHHI brand assets missing');
 const fontFiles = new Map();
@@ -56,7 +56,7 @@ const server = createServer((req, res) => {
   const font = fontFiles.get(new URL(req.url, 'http://localhost').pathname);
   if(font){ res.writeHead(200, {'Content-Type':req.url.endsWith('.woff2')?'font/woff2':'text/plain; charset=utf-8'});res.end(font);return; }
   const brand = brandFiles.get(new URL(req.url, 'http://localhost').pathname);
-  if (brand) { res.writeHead(200, {'Content-Type':'image/svg+xml'}); res.end(brand); return; }
+  if (brand) { res.writeHead(200, {'Content-Type':req.url.endsWith('.webp')?'image/webp':'image/svg+xml'}); res.end(brand); return; }
   const media = localMedia.files.get(new URL(req.url, 'http://localhost').pathname);
   if(media){ res.writeHead(200, {'Content-Type':'image/webp'}); res.end(media); return; }
   res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' });
@@ -137,7 +137,8 @@ async function writeBrandAssets() {
   await mkdir(join(DIST, 'assets', 'brand'), { recursive: true });
   for (const [url, content] of brandFiles) await writeFile(join(DIST, url.slice(1)), content);
   const monogram = brandFiles.get('/assets/brand/raahhi-monogram-navy.svg').toString('utf8');
-  const lockup = brandFiles.get('/assets/brand/raahhi-lockup-navy.svg').toString('utf8');
+  const signature = brandFiles.get('/assets/brand/raahhi-signature-navy.webp');
+  const lockup = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1320 640"><image width="1320" height="640" preserveAspectRatio="xMidYMid meet" href="data:image/webp;base64,' + signature.toString('base64') + '"/></svg>';
   const faviconSvg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" rx="72" fill="#FBF9F4"/><svg x="64" y="64" width="384" height="384" viewBox="0 0 280 280">' + monogram.replace(/^<svg[^>]*>/, '').replace(/<\/svg>\s*$/, '') + '</svg></svg>';
   await writeFile(join(DIST, 'assets', 'raahhi-tours-favicon-v2.svg'), faviconSvg);
   const page = await browser.newPage();
