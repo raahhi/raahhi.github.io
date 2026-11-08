@@ -4,7 +4,7 @@ import { join, dirname } from 'node:path';
 import { chromium } from 'playwright';
 import { compileSiteAssets } from './scripts/site-assets.mjs';
 import { loadLocalMedia } from './scripts/local-media.mjs';
-import { faviconSvg as champagneFavicon } from './workers/leads/favicon.mjs';
+import { faviconSvg as ivoryFavicon } from './workers/leads/favicon.mjs';
 
 const ROOT = process.cwd();
 const DIST = join(ROOT, 'dist');
@@ -17,7 +17,7 @@ const EARLY_IMAGE_FALLBACK = '<script data-image-fallback-bootstrap>window.__img
 
 function attachHydrationScripts(html, data = {}) {
   const branded = html.replace(/<link\b[^>]*\brel\s*=\s*(?:"(?:(?:shortcut|alternate)\s+)?icon"|'(?:(?:shortcut|alternate)\s+)?icon'|icon(?=[\s>]))[^>]*>/gi, '')
-    .replace('</head>', '<link rel="alternate icon" type="image/png" href="/assets/raahhi-favicon-champagne.png"><link rel="icon" type="image/svg+xml" href="/assets/raahhi-favicon-champagne.svg"></head>');
+    .replace('</head>', '<link rel="alternate icon" type="image/png" href="/assets/raahhi-favicon-ivory.png"><link rel="icon" type="image/svg+xml" href="/assets/raahhi-favicon-ivory.svg"></head>');
   return assets.attach(branded, EARLY_IMAGE_FALLBACK, data.runtimeActivityId);
 }
 
@@ -152,8 +152,8 @@ async function writeBrandAssets() {
     await page.setViewportSize({width:512,height:512});
     await page.setContent('<html><style>html,body{margin:0}svg{display:block;width:512px;height:512px}</style><body>' + faviconSvg + '</body></html>');
     await page.screenshot({path:join(DIST,'assets','raahhi-tours-favicon-v2.png')});
-    await page.setContent('<html><style>html,body{margin:0}svg{display:block;width:512px;height:512px}</style><body>' + champagneFavicon + '</body></html>');
-    await page.screenshot({path:join(DIST,'assets','raahhi-favicon-champagne.png'),omitBackground:true});
+    await page.setContent('<html><style>html,body{margin:0}svg{display:block;width:512px;height:512px}</style><body>' + ivoryFavicon + '</body></html>');
+    await page.screenshot({path:join(DIST,'assets','raahhi-favicon-ivory.png'),omitBackground:true});
     await page.setViewportSize({width:180,height:180});
     await page.setContent('<html><style>html,body{margin:0}svg{display:block;width:180px;height:180px}</style><body>' + faviconSvg + '</body></html>');
     await page.screenshot({path:join(DIST,'assets','raahhi-tours-apple-touch-v2.png')});
@@ -243,7 +243,7 @@ try {
   await writeFile(join(DIST, '404.html'), notFoundHtml, 'utf8');
 
   await writeBrandAssets();
-  await writeFile(join(DIST, 'assets', 'raahhi-favicon-champagne.svg'), champagneFavicon);
+  await writeFile(join(DIST, 'assets', 'raahhi-favicon-ivory.svg'), ivoryFavicon);
   await mkdir(join(DIST, 'assets', 'fonts'), {recursive:true});
   for(const [url,content] of fontFiles) await writeFile(join(DIST,url.slice(1)),content);
   await mkdir(join(DIST, 'assets', 'media'), {recursive:true});
