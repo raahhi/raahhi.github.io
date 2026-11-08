@@ -4,6 +4,7 @@ import { join, dirname } from 'node:path';
 import { chromium } from 'playwright';
 import { compileSiteAssets } from './scripts/site-assets.mjs';
 import { loadLocalMedia } from './scripts/local-media.mjs';
+import { faviconSvg as champagneFavicon } from './workers/leads/favicon.mjs';
 
 const ROOT = process.cwd();
 const DIST = join(ROOT, 'dist');
@@ -15,7 +16,9 @@ const EXPECTED_SITEMAP_URLS = 270;
 const EARLY_IMAGE_FALLBACK = '<script data-image-fallback-bootstrap>window.__imgFallbackQueue=[];window.imgFallback=function(el){window.__imgFallbackQueue.push(el);};</script>';
 
 function attachHydrationScripts(html, data = {}) {
-  return assets.attach(html, EARLY_IMAGE_FALLBACK, data.runtimeActivityId);
+  const branded = html.replace(/<link\b[^>]*\brel\s*=\s*(?:"(?:shortcut\s+)?icon"|'(?:shortcut\s+)?icon'|icon(?=[\s>]))[^>]*>/gi, '')
+    .replace('</head>', '<link rel="icon" type="image/svg+xml" href="/assets/raahhi-favicon-champagne.svg"></head>');
+  return assets.attach(branded, EARLY_IMAGE_FALLBACK, data.runtimeActivityId);
 }
 
 function extractAppScript(source) {
@@ -238,6 +241,7 @@ try {
   await writeFile(join(DIST, '404.html'), notFoundHtml, 'utf8');
 
   await writeBrandAssets();
+  await writeFile(join(DIST, 'assets', 'raahhi-favicon-champagne.svg'), champagneFavicon);
   await mkdir(join(DIST, 'assets', 'fonts'), {recursive:true});
   for(const [url,content] of fontFiles) await writeFile(join(DIST,url.slice(1)),content);
   await mkdir(join(DIST, 'assets', 'media'), {recursive:true});
