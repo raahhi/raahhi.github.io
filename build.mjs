@@ -16,8 +16,8 @@ const EXPECTED_SITEMAP_URLS = 270;
 const EARLY_IMAGE_FALLBACK = '<script data-image-fallback-bootstrap>window.__imgFallbackQueue=[];window.imgFallback=function(el){window.__imgFallbackQueue.push(el);};</script>';
 
 function attachHydrationScripts(html, data = {}) {
-  const branded = html.replace(/<link\b[^>]*\brel\s*=\s*(?:"(?:shortcut\s+)?icon"|'(?:shortcut\s+)?icon'|icon(?=[\s>]))[^>]*>/gi, '')
-    .replace('</head>', '<link rel="icon" type="image/svg+xml" href="/assets/raahhi-favicon-champagne.svg"></head>');
+  const branded = html.replace(/<link\b[^>]*\brel\s*=\s*(?:"(?:(?:shortcut|alternate)\s+)?icon"|'(?:(?:shortcut|alternate)\s+)?icon'|icon(?=[\s>]))[^>]*>/gi, '')
+    .replace('</head>', '<link rel="alternate icon" type="image/png" href="/assets/raahhi-favicon-champagne.png"><link rel="icon" type="image/svg+xml" href="/assets/raahhi-favicon-champagne.svg"></head>');
   return assets.attach(branded, EARLY_IMAGE_FALLBACK, data.runtimeActivityId);
 }
 
@@ -152,6 +152,8 @@ async function writeBrandAssets() {
     await page.setViewportSize({width:512,height:512});
     await page.setContent('<html><style>html,body{margin:0}svg{display:block;width:512px;height:512px}</style><body>' + faviconSvg + '</body></html>');
     await page.screenshot({path:join(DIST,'assets','raahhi-tours-favicon-v2.png')});
+    await page.setContent('<html><style>html,body{margin:0}svg{display:block;width:512px;height:512px}</style><body>' + champagneFavicon + '</body></html>');
+    await page.screenshot({path:join(DIST,'assets','raahhi-favicon-champagne.png'),omitBackground:true});
     await page.setViewportSize({width:180,height:180});
     await page.setContent('<html><style>html,body{margin:0}svg{display:block;width:180px;height:180px}</style><body>' + faviconSvg + '</body></html>');
     await page.screenshot({path:join(DIST,'assets','raahhi-tours-apple-touch-v2.png')});
