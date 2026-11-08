@@ -4,6 +4,7 @@ import {report} from '../analytics/index.mjs';
 import html from './dashboard.html';
 import script from './dashboard.js';
 import visitorScript from './visitors.js';
+import {faviconSvg} from './favicon.mjs';
 const HOME = 'https://leads.raahhi.com';
 const STATUSES = ['new','contacted','follow_up','booked','closed'];
 export function csvCell(value) {
@@ -21,6 +22,7 @@ export async function handle(request, env, fetcher = fetch) {
   if (request.method === 'POST' && (request.headers.get('Origin') !== HOME || request.headers.get('X-RAAHHI-Request') !== 'dashboard')) return json({error:'origin_not_allowed'},403);
   const security = {'Cache-Control':'no-store','X-Robots-Tag':'noindex, nofollow','X-Content-Type-Options':'nosniff','Referrer-Policy':'no-referrer','Content-Security-Policy':"default-src 'none'; script-src 'self'; style-src 'unsafe-inline'; connect-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'",'Permissions-Policy':'camera=(), microphone=(), geolocation=()'};
   if (url.pathname === '/' && request.method === 'GET') return new Response(html,{headers:{...security,'Content-Type':'text/html; charset=utf-8'}});
+  if (url.pathname === '/raahhi-favicon-champagne.svg' && request.method === 'GET') return new Response(faviconSvg,{headers:{...security,'Content-Type':'image/svg+xml'}});
   if (url.pathname === '/dashboard.js' && request.method === 'GET') return new Response(script,{headers:{...security,'Content-Type':'application/javascript; charset=utf-8'}});
   if (url.pathname === '/visitors.js' && request.method === 'GET') return new Response(visitorScript,{headers:{...security,'Content-Type':'application/javascript; charset=utf-8'}});
   if (url.pathname === '/api/me' && request.method === 'GET') return json({email:user.email});
