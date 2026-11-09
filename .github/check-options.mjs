@@ -75,7 +75,7 @@ await mockEnquiryDelivery(page);
  assert(chosen.policy.paragraphs.every(term=>summary.includes(term)),'Selected cancellation terms are copied with the enquiry');
  assert(!summary.includes('Total price:'),'No unverified group total is manufactured');
  await page.locator('#contactModal .modal-close').click();
- await picker.selectOption('');assert.equal(await page.locator('.page.active .bb-price [data-usd-cents="2665"]').count(),1,'Clearing the option restores the advertised starting price');
+ await picker.selectOption('');assert.equal(await page.locator('.page.active .bb-price [data-usd-cents="'+Math.round(prices[safari].amount*100)+'"]').count(),1,'Clearing the option restores the advertised starting price');
 
  await open('/holidays/dubai/dubai-grand-stopover/');
  const holiday='dubai-grand-stopover',hotel=registry[holiday].options[0];assert(hotel);
