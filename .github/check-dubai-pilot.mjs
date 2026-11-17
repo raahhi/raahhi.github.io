@@ -54,7 +54,6 @@ try {
     await p.setViewportSize({width,height:900});
     for(const path of routes){await open(path);assert.equal(await p.locator('main h1').count(),1);assert(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'No page overflow: '+width+' '+path);}
   }
-  assert.deepEqual(errors,[]);
   const faqAudit=await p.evaluate(()=>[...TOURS.map(record=>({record,kind:'activity'})),...PACKAGES.map(record=>({record,kind:'holiday'}))].map(({record,kind})=>{
     const selected=focusedProductFaqItems(record,kind),authored=(record.faqs||[]).filter(f=>!/^what else is there to do|^how do i enquire|^how do i book/i.test(stripTags(f.q)));
     return {id:record.id,path:kind==='activity'?URLS.activity(record):URLS.holiday(record),count:selected.length,questions:selected.map(f=>stripTags(f.q)),missingAuthored:record.bookingMode==='official-only'?[]:authored.filter(f=>!selected.some(s=>s.q===f.q)).map(f=>f.q),official:record.bookingMode==='official-only'};
@@ -77,5 +76,9 @@ try {
   await open('/activities/categories/theme-parks/');
   assert.equal(await p.getByText('Does every listing include the same things?',{exact:true}).count(),0,'Country categories do not repeat company-wide FAQs');
   assert(await p.locator('main a[href="/faq/"]').count(),'Shared questions link to their owner');
+  assert(await p.locator('main a[href="/activities/dubai/categories/theme-parks/"]').count(),'Country category links to Dubai browsing');
+  await open('/compare/uae-water-parks/');
+  assert(await p.locator('main a[href="/activities/dubai/categories/water-parks/"]').count(),'Comparison links directly to Dubai browsing');
+  assert.deepEqual(errors,[]);
   console.log('PASS four Dubai city categories, complete mapped membership, reciprocal links, primary breadcrumbs, search, four responsive widths and '+faqAudit.length+' focused static product FAQ blocks');
 } finally {await browser.close();server.close();}

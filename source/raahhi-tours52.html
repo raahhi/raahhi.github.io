@@ -6312,7 +6312,7 @@ function comparisonLinksHTML(list){
 }
 function renderComparison(c){
   const list=comparisonTours(c), dests=DESTINATIONS.filter(d=>list.some(t=>t.dest===d.slug));
-  const categories=ACTIVITY_CATEGORIES.filter(cat=>list.some(t=>t.cat===cat.name));
+  const categories=[...ACTIVITY_CATEGORIES,...CITY_ACTIVITY_CATEGORIES].filter(cat=>list.some(t=>t.cat===cat.name && (!cat.dest || t.dest===cat.dest)));
   const guides=GUIDES.filter(g=>g.ids().some(id=>list.some(t=>t.id===id))).slice(0,1);
   const missing="Not stated. Confirm on enquiry.", value=v=>hasRealValue(v)?escapeHTML(v):missing;
   const bullets=values=>(values||[]).filter(hasRealValue).length?`<ul>${values.filter(hasRealValue).map(v=>`<li>${escapeHTML(v)}</li>`).join("")}</ul>`:missing;
