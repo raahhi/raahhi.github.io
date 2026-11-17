@@ -1,7 +1,13 @@
 import {chromium} from 'playwright';
 import {createServer} from 'node:http';
-import {readFile} from 'node:fs/promises';
+import {readFile, readdir} from 'node:fs/promises';
 import assert from 'node:assert/strict';
+import {publicCatalogueData} from '../scripts/site-assets.mjs';
+
+for (const file of await readdir('dist', {recursive:true})) {
+  if (!/\.(html|js)$/.test(file)) continue;
+  assert.doesNotMatch(await readFile('dist/' + file, 'utf8'), /(?:raynatours|raynab2b)\.com|\bRayna Tours\b|\b(?:sourceAmount|supplierProductId)\b/i, file + ' must not publish supplier evidence');
+}
 
 const server = createServer(async (req, res) => {
   const path = new URL(req.url, 'http://localhost').pathname;
@@ -47,7 +53,7 @@ try {
     }), activityId);
     assert.deepEqual(state.summaries, expected.summaries, 'Every card summary stays identical');
     assert.deepEqual(state.images, expected.images, 'Every image list stays identical');
-    if(activityId) assert.deepEqual(state.current, expected.tours.find(t=>t.id===activityId), 'Complete current record retained');
+    if(activityId) assert.deepEqual(state.current, publicCatalogueData(expected.tours.find(t=>t.id===activityId)), 'All customer-facing fields retained');
 
     if(route === '/') {
       let release;

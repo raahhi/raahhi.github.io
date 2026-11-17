@@ -7,7 +7,7 @@ import {readFile} from 'node:fs/promises';
 const supplierDomain = /(?:raynatours|raynab2b)\.com/i;
 const supplierAuditFields = new Set(['supplierProductId', 'sourceAmount', 'sourceTitle', 'hotelSourceUrl', 'hotelSourceCheckedOn']);
 
-function publicCatalogueData(value) {
+export function publicCatalogueData(value) {
   if (Array.isArray(value)) return value
     .filter(item => !(item && typeof item.url === 'string' && supplierDomain.test(item.url)))
     .map(publicCatalogueData);
@@ -47,7 +47,7 @@ export async function compileSiteAssets(source, appScript, catalogue) {
   const activityIds = new Set(catalogue.tours.map(t=>t.id));
   const otherPrices = Object.fromEntries(Object.entries(JSON.parse(priceDeclaration[1])).filter(([id])=>!activityIds.has(id)));
   runtime = runtime.replace(priceDeclaration[0], 'const PRICE_CATALOGUE = '+JSON.stringify(publicCatalogueData(otherPrices))+';');
-  // Option evidence belongs to its activity detail chunk, not every catalogue visit.
+  // Public option details belong in the activity detail chunk, not on every catalogue visit.
   const optionDeclaration = runtime.match(/^const PRODUCT_OPTION_CATALOGUE = (.*);$/m);
   if(!optionDeclaration) throw new Error('Missing checked product option register');
   const otherOptions = Object.fromEntries(Object.entries(JSON.parse(optionDeclaration[1])).filter(([id])=>!activityIds.has(id)));
