@@ -54,7 +54,11 @@ try {
     await p.setViewportSize({width,height:900});
     for(const path of routes){await open(path);assert.equal(await p.locator('main h1').count(),1);assert(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'No page overflow: '+width+' '+path);}
   }
-  const faqAudit=await p.evaluate(()=>[...TOURS.map(record=>({record,kind:'activity'})),...PACKAGES.map(record=>({record,kind:'holiday'}))].map(({record,kind})=>{
+  // Expected questions need complete authoring records, not the lazy summary catalogue.
+  const author=await browser.newPage();
+  await author.route('**/*',r=>r.request().url().startsWith('file:')?r.continue():r.abort());
+  await author.goto('file://'+process.cwd()+'/source/raahhi-tours52.html');
+  const faqAudit=await author.evaluate(()=>[...TOURS.map(record=>({record,kind:'activity'})),...PACKAGES.map(record=>({record,kind:'holiday'}))].map(({record,kind})=>{
     const selected=focusedProductFaqItems(record,kind),authored=(record.faqs||[]).filter(f=>!/^what else is there to do|^how do i enquire|^how do i book/i.test(stripTags(f.q)));
     return {id:record.id,path:kind==='activity'?URLS.activity(record):URLS.holiday(record),count:selected.length,questions:selected.map(f=>stripTags(f.q)),missingAuthored:record.bookingMode==='official-only'?[]:authored.filter(f=>!selected.some(s=>s.q===f.q)).map(f=>f.q),official:record.bookingMode==='official-only'};
   }));
@@ -63,11 +67,16 @@ try {
     assert.deepEqual(row.missingAuthored,[],'Keep authored booking answers: '+row.id);
     assert(!row.questions.some(q=>/^what else is there to do|^how do i enquire/i.test(q)),'General browsing and enquiry belong outside product FAQ: '+row.id);
     const html=await readFile('dist'+row.path+'index.html','utf8');
-    const block=html.match(/<h2>[^<]*: common questions<\/h2><div class="qa-list">([\s\S]*?)<\/div><\/div>/);
-    assert(block,'Static product FAQ is present: '+row.path);
-    assert.equal((block[1].match(/class="qa-item"/g)||[]).length,row.count,'Built HTML matches the focused selection: '+row.id);
+    const count=await author.evaluate(html=>{
+      const doc=new DOMParser().parseFromString(html,'text/html');
+      const heading=[...doc.querySelectorAll('h2')].find(h=>h.textContent.endsWith(': common questions'));
+      return heading ? heading.parentElement.querySelectorAll('.qa-item').length : null;
+    },html);
+    assert.notEqual(count,null,'Static product FAQ is present: '+row.path);
+    assert.equal(count,row.count,'Built HTML matches the focused selection: '+row.id);
     if(row.official) assert.equal(row.count,1,'Official-only product keeps its booking route');
   }
+  await author.close();
   await open('/activities/dubai/categories/water-parks/');
   assert(await p.locator('main a[href="/compare/uae-water-parks/"]').count(),'Browse page links to the separate decision comparison');
   await open('/compare/uae-water-parks/');
