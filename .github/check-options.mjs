@@ -46,7 +46,9 @@ await mockEnquiryDelivery(page);
  await open('/activities/dubai/'+safari+'/');
  const picker=page.locator('[data-product-option="'+safari+'"]');
  assert.equal(await picker.locator('option').count(),choices.length+1);
- await page.locator('#tourEnqDate').fill('2027-01-15');await page.locator('#tourEnqGuests').fill('4');
+ await page.locator('#tourEnqDate').fill('2027-01-15');const guests=page.locator('#tourEnqGuests');
+ for(let count=Number(await guests.inputValue());count<4;count++) await guests.press('ArrowUp');
+ assert.equal(await guests.inputValue(),'4','Guest input accepted before changing currency or option');
  await page.locator('[data-currency-select]').selectOption('USD');
  for(const option of [choices[0],choices.at(-1)]){
   await picker.selectOption(option.id);

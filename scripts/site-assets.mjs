@@ -4,6 +4,20 @@ import {transform} from 'esbuild';
 import {SEARCH_LOADER_SOURCE} from './runtime-search.mjs';
 import {readFile} from 'node:fs/promises';
 
+const supplierDomain = /(?:raynatours|raynab2b)\.com/i;
+const supplierAuditFields = new Set(['supplierProductId', 'sourceAmount', 'sourceTitle', 'hotelSourceUrl', 'hotelSourceCheckedOn']);
+
+function publicCatalogueData(value) {
+  if (Array.isArray(value)) return value
+    .filter(item => !(item && typeof item.url === 'string' && supplierDomain.test(item.url)))
+    .map(publicCatalogueData);
+  if (!value || typeof value !== 'object') return value;
+  return Object.fromEntries(Object.entries(value)
+    .filter(([key, data]) => !supplierAuditFields.has(key)
+      && !(key === 'source' && typeof data === 'string' && supplierDomain.test(data)))
+    .map(([key, data]) => [key, publicCatalogueData(data)]));
+}
+
 // Keep the authoring preview intact. Only the published assets are optimized.
 // Top-level names must survive: static HTML uses inline event handlers.
 export async function compileSiteAssets(source, appScript, catalogue) {
@@ -32,12 +46,12 @@ export async function compileSiteAssets(source, appScript, catalogue) {
   if(!priceDeclaration) throw new Error('Missing central price registry');
   const activityIds = new Set(catalogue.tours.map(t=>t.id));
   const otherPrices = Object.fromEntries(Object.entries(JSON.parse(priceDeclaration[1])).filter(([id])=>!activityIds.has(id)));
-  runtime = runtime.replace(priceDeclaration[0], 'const PRICE_CATALOGUE = '+JSON.stringify(otherPrices)+';');
+  runtime = runtime.replace(priceDeclaration[0], 'const PRICE_CATALOGUE = '+JSON.stringify(publicCatalogueData(otherPrices))+';');
   // Option evidence belongs to its activity detail chunk, not every catalogue visit.
   const optionDeclaration = runtime.match(/^const PRODUCT_OPTION_CATALOGUE = (.*);$/m);
   if(!optionDeclaration) throw new Error('Missing checked product option register');
   const otherOptions = Object.fromEntries(Object.entries(JSON.parse(optionDeclaration[1])).filter(([id])=>!activityIds.has(id)));
-  runtime = runtime.replace(optionDeclaration[0], ()=>'const PRODUCT_OPTION_CATALOGUE = '+JSON.stringify(otherOptions)+';');
+  runtime = runtime.replace(optionDeclaration[0], ()=>'const PRODUCT_OPTION_CATALOGUE = '+JSON.stringify(publicCatalogueData(otherOptions))+';');
   const summaryStart = 'function activitySummaryText(record){';
   const searchOther = 'other:[t.desc,t.description,t.duration,t.timing,t.location,t.pickup,...(t.inclusions||[])].filter(hasRealValue).map(normalizeSearch)';
   if (!runtime.includes(summaryStart) || !runtime.includes(searchOther)) throw new Error('Catalogue summary/search integration changed');
@@ -71,6 +85,13 @@ export async function compileSiteAssets(source, appScript, catalogue) {
     });
     return;
   }`);
+  // The package listing contains JSON source arrays embedded in an otherwise JavaScript catalogue.
+  runtime = runtime.replace(/("sources"\s*:\s*)(\[\s*\{[^\[\]]*\}\s*\])/g, (full, key, list) =>
+    supplierDomain.test(list) ? key + JSON.stringify(publicCatalogueData(JSON.parse(list))) : full);
+  const accommodation = runtime.match(/const PACKAGE_ACCOMMODATION_OVERRIDES = (\{[\s\S]*?\n\});/);
+  if (!accommodation) throw new Error('Missing package accommodation registry');
+  runtime = runtime.replace(accommodation[0], () =>
+    'const PACKAGE_ACCOMMODATION_OVERRIDES = ' + JSON.stringify(publicCatalogueData(JSON.parse(accommodation[1]))) + ';');
   runtime += '\n' + await readFile(new URL('./visitor-runtime.js',import.meta.url),'utf8');
   const [js, css] = await Promise.all([
     transform(runtime, {loader:'js', target:'es2020', minifyWhitespace:true, minifySyntax:true, minifyIdentifiers:false, legalComments:'none'}),
@@ -78,6 +99,9 @@ export async function compileSiteAssets(source, appScript, catalogue) {
   ]);
   const files = new Map();
   function asset(name, extension, content) {
+    if (extension === 'js' && (supplierDomain.test(content) || /\bRayna Tours\b/i.test(content))) {
+      throw new Error('Supplier evidence in published script: ' + name);
+    }
     const buffer = Buffer.isBuffer(content) ? content : Buffer.from(content);
     const hash = createHash('sha256').update(buffer).digest('hex').slice(0, 12);
     const path = `/assets/${name}.${hash}.${extension}`;
@@ -91,7 +115,7 @@ export async function compileSiteAssets(source, appScript, catalogue) {
   const detailUrls = new Map();
   const detailSizes = [];
   const tours = catalogue.tours.map(t => {
-    const compact = {...t}, detail = {};
+    const compact = publicCatalogueData(t), detail = {};
     for (const key of detailKeys) {
       if (Object.hasOwn(compact, key)) { detail[key] = compact[key]; delete compact[key]; }
     }
