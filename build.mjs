@@ -134,13 +134,15 @@ async function snapshot(route) {
     })) : null;
     const urlAudit = await page.evaluate(() => {
       const c=CURRENT;
+      const doc=document.documentElement.cloneNode(true);
+      doc.querySelectorAll('.page:not(.active), #__prerender').forEach(el=>el.remove());
       const id=c.kind === 'activity' || c.kind === 'addon' ? c.t.id : c.kind === 'holiday' ? c.p.id
         : c.kind === 'visa' ? slugify(c.v.country) : c.kind === 'category' ? c.category.slug
         : c.kind === 'comparison' ? c.comparison.slug : c.kind === 'guide' ? c.key
         : ['activityDest','holidayDest'].includes(c.kind) ? c.dest : null;
-      return {pageId:c.kind+(id ? ':'+id : ''),canonical:document.querySelector('link[rel="canonical"]')?.href,
-        ids:[...document.querySelectorAll('[id]')].map(el=>el.id),
-        links:[...document.querySelectorAll('a[href]')].map(a=>({href:a.getAttribute('href'),rel:a.getAttribute('rel'),target:a.getAttribute('target')}))};
+      return {pageId:c.kind+(id ? ':'+id : ''),canonical:doc.querySelector('link[rel="canonical"]')?.getAttribute('href'),
+        ids:[...doc.querySelectorAll('[id]')].map(el=>el.id),
+        links:[...doc.querySelectorAll('a[href]')].map(a=>({href:a.getAttribute('href'),rel:a.getAttribute('rel'),target:a.getAttribute('target')}))};
     });
     return {...JSON.parse(raw), ...urlAudit, planning, runtimeActivityId, runtimeCatalogue};
   } finally {
