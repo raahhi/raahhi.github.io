@@ -198,6 +198,37 @@ try{
  assert.equal(skyDetails['Selected option'],skyOption.label);
  await page.locator('#contactModal .modal-close').click();
 
+ await open('/holidays/dubai/');
+ const chooser=page.getByRole('region',{name:'Choose a Dubai holiday package'});
+ assert.equal(await chooser.locator('.package-choices a').count(),4);
+ await chooser.getByRole('link',{name:'Compare all 15 Dubai packages'}).click();
+ assert.equal(new URL(page.url()).hash,'#pkgDestGuideTitle');
+ const packageRows=page.locator('#pkgDestGuide tbody tr');
+ assert.equal(await packageRows.count(),15);
+ const marina='dubai-marina-overnight';
+ const marinaRow=packageRows.filter({has:page.locator('a[href="/holidays/dubai/'+marina+'/"]')});
+ assert.equal(await marinaRow.locator('[data-usd-cents="'+Math.round(prices[marina].amount*100)+'"]').count(),1);
+ assert.match(await marinaRow.locator('.price-basis').textContent(),/per person.*occupancy/);
+ const easter=packageRows.filter({has:page.locator('a[href="/holidays/dubai/dubai-easter-short-break/"]')});
+ assert.match(await easter.textContent(),/Price confirmed on enquiry/);
+ assert.equal(await easter.locator('[data-usd-cents]').count(),0);
+ await chooser.getByRole('link',{name:'Dubai Marina Overnight Escape'}).click();
+ const marinaHotel=registry[marina].options[0];
+ await page.locator('[data-product-option="'+marina+'"]').selectOption(marinaHotel.id);
+ await page.locator('.mobile-enquiry-bar button').click();
+ await enterText('#callbackName','Dubai Package Test');
+ await enterText('#callbackPhone','+971501234567');
+ const beforePackage=submissions.length;
+ await page.locator('#callbackSubmit').click();
+ await page.locator('#callbackDone').waitFor({state:'visible'});
+ assert.equal(submissions.length,beforePackage+1);
+ const packagePayload=submissions.at(-1),packageDetails=Object.fromEntries(packagePayload.details);
+ assert.equal(packagePayload.category,'Packages');
+ assert.equal(packagePayload.page,'https://raahhi.com/holidays/dubai/'+marina+'/');
+ assert.equal(packageDetails['Option reference'],marinaHotel.id);
+ assert.equal(packageDetails['Selected option'],marinaHotel.label);
+ await page.locator('#contactModal .modal-close').click();
+
  await open('/holidays/dubai/dubai-grand-stopover/');
  const holiday='dubai-grand-stopover',hotel=registry[holiday].options[0];assert(hotel);
  await page.locator('[data-product-option="'+holiday+'"]').selectOption(hotel.id);
