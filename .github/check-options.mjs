@@ -264,7 +264,11 @@ try{
  assert(!summary.includes('USD 531.00'),'The base holiday price does not leak into the selected hotel quote');
  await page.locator('#contactModal .modal-close').click();
 
- await open('/visas/united-arab-emirates/');await page.evaluate(()=>openVisaEnquiry('united-arab-emirates'));
+ await open('/visas/united-arab-emirates/');
+ const entryRoutes=page.getByRole('region',{name:'Check your UAE entry route'});
+ assert.equal(await entryRoutes.locator('a[href^="https://u.ae/"]').count(),3);
+ await page.locator('.mobile-enquiry-bar button').click();
+ const beforeVisa=submissions.length;
  await page.locator('#visaEnqName').fill('Visa Test');await page.locator('#visaEnqEmail').fill('test@example.com');await page.locator('#visaEnqPhone').fill('+971501234567');
  await page.locator('#visaEnqForm button[type="submit"]').click();
  assert(await page.locator('#visaEnqNationalityErr').isVisible()&&await page.locator('#visaEnqResidenceErr').isVisible(),'Nationality and residence are required');
@@ -275,6 +279,16 @@ try{
  assert.equal(await page.locator('#visaEnqNationality').inputValue(),'IN');
  await page.locator('#visaEnqForm button[type="submit"]').click();await page.locator('#visaEnqDone').waitFor({state:'visible'});summary=await page.locator('#visaEnqSummary').textContent();
  for(const value of ['Nationality: India','Country of residence: United Arab Emirates','Purpose of travel: Business','Applicants: 3','2027'])assert(summary.includes(value),value+' in visa summary');
+ assert.equal(submissions.length,beforeVisa+1);
+ const visaPayload=submissions.at(-1),visaDetails=Object.fromEntries(visaPayload.details);
+ assert.equal(visaPayload.category,'Visas');
+ assert.equal(visaPayload.page,'https://raahhi.com/visas/united-arab-emirates/');
+ assert.equal(visaDetails.Nationality,'India');
+ assert.equal(visaDetails['Country of residence'],'United Arab Emirates');
+ assert.match(summary,/Enquiry reference: RH-\d{8}-[0-9A-F]{12}/);
+ const visaHandoff=page.locator('#visaEnqDone');
+ assert(await visaHandoff.getByRole('link',{name:'Start WhatsApp chat'}).isVisible());
+ assert(await visaHandoff.getByRole('link',{name:'Open email enquiry'}).isVisible());
  assert(summary.includes('Cancellation terms:'));
  await page.locator('#visaEnquiryModal .modal-close').click();await page.evaluate(()=>openVisaEnquiry('brazil'));
  assert.equal(await page.locator('#visaEnqNationality').inputValue(),'');assert.equal(await page.locator('#visaEnqApplicants').inputValue(),'1');
