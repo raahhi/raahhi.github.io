@@ -79,8 +79,15 @@ try {
   await author.close();
   await open('/activities/dubai/categories/water-parks/');
   assert(await p.locator('main a[href="/compare/uae-water-parks/"]').count(),'Browse page links to the separate decision comparison');
+  const officialRow=p.locator('.category-products tbody tr').filter({has:p.locator('a[href="/activities/dubai/aqua-fun-dubai/"]')});
+  assert((await officialRow.textContent()).includes('Check the official booking website'));
+  assert(!(await officialRow.textContent()).includes('quote confirmed on enquiry'),'Official-only row does not imply RAAHHI quoting');
+  assert.equal(await officialRow.locator('[data-usd-cents]').count(),0,'Operator-only prices are not presented as RAAHHI quotes');
   await open('/compare/uae-water-parks/');
   assert(await p.locator('main a[href="/activities/categories/water-parks/"]').count(),'Comparison retains country browsing connection');
+  const officialComparison=p.locator('.comparison-table tbody tr[data-product-id="aqua-fun-dubai"]');
+  assert((await officialComparison.textContent()).includes('Check the official booking website'));
+  assert.equal(await officialComparison.locator('[data-usd-cents]').count(),0,'Comparison preserves official-only booking');
   await open('/faq/');assert(await p.getByText('Does a listing status confirm availability for my date?',{exact:true}).count());
   await open('/activities/categories/theme-parks/');
   assert.equal(await p.getByText('Does every listing include the same things?',{exact:true}).count(),0,'Country categories do not repeat company-wide FAQs');

@@ -6237,6 +6237,11 @@ function categoryDiscoveryHTML(){
   return `<nav class="detail-section" aria-label="Browse UAE activity categories"><h2>Browse activities by category</h2>
     <ul class="link-list">${ACTIVITY_CATEGORIES.map(c => `<li><a href="${URLS.activityCategory(c)}">${escapeHTML(c.title)}</a> <span class="index-note">${categoryTours(c).length} listings</span></li>`).join("")}</ul></nav>`;
 }
+function activityListPriceHTML(t){
+  if(t.bookingMode === "official-only") return 'Check the official booking website<p class="index-note">Prices and booking terms are set by the operator.</p>';
+  const price=priceInfo(t);
+  return priceHTML(price)+`<p class="index-note">${escapeHTML(price.basis)}</p>`;
+}
 function renderCategory(c){
   const list = categoryTours(c), dests = DESTINATIONS.filter(d => list.some(t => t.dest === d.slug));
   const guides = GUIDES.filter(g => g.ids().some(id => list.some(t => t.id === id)));
@@ -6256,7 +6261,7 @@ function renderCategory(c){
     ${dests.map(d => `<section ${safari ? `id="safaris-${d.slug}"` : ""} class="detail-section category-products" data-destination="${d.slug}"><h2>${escapeHTML(c.name)} in ${escapeHTML(d.name)}</h2>
       <div class="table-scroll"><table class="data-table"><caption class="sr-only">${escapeHTML(c.name)} listings in ${escapeHTML(d.name)}</caption>
         <thead><tr><th scope="col">Experience</th><th scope="col">Listed duration</th><th scope="col">Listing status</th><th scope="col">Starting price</th></tr></thead>
-        <tbody>${list.filter(t => t.dest === d.slug).map(t => `<tr><th scope="row"><a href="${URLS.activity(t)}">${escapeHTML(t.title)}</a><p class="index-note">${escapeHTML(activitySummaryText(t))}</p></th><td>${hasRealValue(t.duration) ? escapeHTML(t.duration) : "Confirmed on enquiry"}</td><td>${escapeHTML(statusInfo(t).label)}</td><td>${priceHTML(priceInfo(t))}<p class="index-note">${escapeHTML(priceInfo(t).basis)}</p></td></tr>`).join("")}</tbody>
+        <tbody>${list.filter(t => t.dest === d.slug).map(t => `<tr><th scope="row"><a href="${URLS.activity(t)}">${escapeHTML(t.title)}</a><p class="index-note">${escapeHTML(activitySummaryText(t))}</p></th><td>${hasRealValue(t.duration) ? escapeHTML(t.duration) : "Confirmed on enquiry"}</td><td>${escapeHTML(statusInfo(t).label)}</td><td>${activityListPriceHTML(t)}</td></tr>`).join("")}</tbody>
       </table></div><p class="index-note">${list.filter(t=>t.dest===d.slug).length} listings · <a href="${URLS.activityDest(d.slug)}">All ${escapeHTML(d.name)} activities</a></p></section>`).join("")}
     ${comparisonLinksHTML(comparisonsForIds(list.map(t=>t.id)))}
     ${linkedCategories.length || parent ? `<nav class="detail-section" aria-label="Related activity categories"><h2>${c.dest ? "Related categories" : "Browse this category by city"}</h2><ul class="link-list">${linkedCategories.map(x=>`<li><a href="${URLS.activityCategory(x)}">${escapeHTML(x.title)}</a></li>`).join("")}${parent ? `<li><a href="${URLS.activityCategory(parent)}">${escapeHTML(parent.title)} across the emirates</a></li>` : ""}</ul></nav>` : ""}
@@ -6330,7 +6335,7 @@ function renderComparison(c){
       <div class="table-scroll comparison-scroll" tabindex="0" role="region" aria-label="${escapeHTML(c.title)} table"><table class="data-table comparison-table" role="table">
         <caption class="sr-only">Listed duration, inclusions and pickup for ${list.length} experiences</caption>
         <thead role="rowgroup"><tr role="row"><th scope="col" role="columnheader">Experience</th><th scope="col" role="columnheader">Starting price</th><th scope="col" role="columnheader">Listed duration / timing</th><th scope="col" role="columnheader">Listed inclusions</th><th scope="col" role="columnheader">Meeting point / pickup</th></tr></thead>
-        <tbody role="rowgroup">${list.map(t=>`<tr role="row" data-product-id="${t.id}"><th scope="row" role="rowheader"><a href="${URLS.activity(t)}">${escapeHTML(t.title)}</a><p class="index-note">${escapeHTML(destName(t.dest))} · ${escapeHTML(statusInfo(t).label)}</p></th>${cell("Starting price",priceHTML(priceInfo(t))+`<p class="index-note">${escapeHTML(priceInfo(t).basis)}</p>`)}${cell("Listed duration / timing",value(t.duration))}${cell("Listed inclusions",bullets(listedInclusions(t)))}${cell("Meeting point / pickup",hasRealValue(t.meetingPoint)||hasRealValue(t.pickup) ? [hasRealValue(t.meetingPoint)?`<strong>Meeting point:</strong> ${escapeHTML(t.meetingPoint)}`:"",hasRealValue(t.pickup)?`<strong>Pickup:</strong> ${escapeHTML(ticketComparison && t.id==="the-view-at-the-palm" ? "Return hotel transfer is available on selected Prime and Non-Prime tickets." : t.pickup)}`:""].filter(Boolean).join("<br><br>") : missing)}</tr>`).join("")}
+        <tbody role="rowgroup">${list.map(t=>`<tr role="row" data-product-id="${t.id}"><th scope="row" role="rowheader"><a href="${URLS.activity(t)}">${escapeHTML(t.title)}</a><p class="index-note">${escapeHTML(destName(t.dest))} · ${escapeHTML(statusInfo(t).label)}</p></th>${cell("Starting price",activityListPriceHTML(t))}${cell("Listed duration / timing",value(t.duration))}${cell("Listed inclusions",bullets(listedInclusions(t)))}${cell("Meeting point / pickup",hasRealValue(t.meetingPoint)||hasRealValue(t.pickup) ? [hasRealValue(t.meetingPoint)?`<strong>Meeting point:</strong> ${escapeHTML(t.meetingPoint)}`:"",hasRealValue(t.pickup)?`<strong>Pickup:</strong> ${escapeHTML(ticketComparison && t.id==="the-view-at-the-palm" ? "Return hotel transfer is available on selected Prime and Non-Prime tickets." : t.pickup)}`:""].filter(Boolean).join("<br><br>") : missing)}</tr>`).join("")}
         </tbody></table></div></section>
     <section class="detail-section"><h2>Restrictions, exclusions and terms</h2>
       ${list.map(t=>`<details class="detail-section comparison-notes" data-product-id="${t.id}"><summary>${escapeHTML(t.title)}: restrictions and terms</summary>
