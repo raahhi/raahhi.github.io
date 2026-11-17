@@ -111,12 +111,12 @@ try{
  const timings=page.locator('[data-overnight-fact=timing]');
  const transfers=page.locator('[data-overnight-fact=transfer]');
  assert.equal(await page.locator('.page.active .bb-price [data-usd-cents="'+Math.round(prices[overnight].amount*100)+'"]').count(),1);
- assert.deepEqual(await timings.allTextContents(),['Timing varies by option.','Timing varies by option.']);
+ assert.deepEqual(await timings.allTextContents(),['Timing varies by option.']);
  assert((await transfers.allTextContents()).every(x=>/var(y|ies) by option/.test(x)));
  assert.equal(await nightPicker.locator('option').count(),10);
  for(const option of registry[overnight].options){
   await nightPicker.selectOption(option.id);
-  assert.deepEqual(await timings.allTextContents(),[option.time,option.time]);
+  assert.deepEqual(await timings.allTextContents(),[option.time]);
   assert.deepEqual(await transfers.allTextContents(),[option.transferNote,option.transferNote]);
   const detail=await page.locator('[data-option-details-for="'+overnight+'"]').textContent();
   assert(detail.includes(option.transferNote)&&detail.includes(option.time));
@@ -154,7 +154,7 @@ try{
  assert.equal(details['Option timing'],shuttle.time);
  await page.locator('#contactModal .modal-close').click();
  await nightPicker.selectOption('');
- assert.deepEqual(await timings.allTextContents(),['Timing varies by option.','Timing varies by option.']);
+ assert.deepEqual(await timings.allTextContents(),['Timing varies by option.']);
  for(const [id,prefix,privateTime,feature] of [
   [safari,'Evening Safari: Premium','16:30','At reserved area'],
   ['premium-desert-safari','Standalone Premium Safari','15:30','Tanura show'],

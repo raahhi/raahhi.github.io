@@ -1647,6 +1647,18 @@
       "path": "/activities/dubai/categories/cruises/",
       "kind": "category",
       "state": "live"
+    },
+    {
+      "pageId": "category:dubai-theme-parks",
+      "path": "/activities/dubai/categories/theme-parks/",
+      "kind": "category",
+      "state": "live"
+    },
+    {
+      "pageId": "category:dubai-water-parks",
+      "path": "/activities/dubai/categories/water-parks/",
+      "kind": "category",
+      "state": "live"
     }
   ]
 }
