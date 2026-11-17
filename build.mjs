@@ -5,12 +5,15 @@ import { chromium } from 'playwright';
 import { compileSiteAssets } from './scripts/site-assets.mjs';
 import { loadLocalMedia } from './scripts/local-media.mjs';
 import { faviconSvg as ivoryFavicon } from './workers/leads/favicon.mjs';
+import {validateRegistry, registryAtRef, validatePublishedGraph} from './scripts/published-urls.mjs';
 
 const ROOT = process.cwd();
 const DIST = join(ROOT, 'dist');
 const SOURCE_FILE = join(ROOT, 'source', 'raahhi-tours52.html');
 const EXPECTED_ORIGIN = 'https://raahhi.com';
 const EXPECTED_SITEMAP_URLS = 271;
+const publishedURLs = JSON.parse(await readFile(join(ROOT, 'source', 'published-urls.json'), 'utf8'));
+validateRegistry(publishedURLs, registryAtRef(process.env.RAAHHI_URL_BASELINE || 'HEAD'));
 // Image errors can fire while the parser is still reading the page, before app.js loads.
 // hydrate() drains this queue using the real fallback handler once the app is ready.
 const EARLY_IMAGE_FALLBACK = '<script data-image-fallback-bootstrap>window.__imgFallbackQueue=[];window.imgFallback=function(el){window.__imgFallbackQueue.push(el);};</script>';
@@ -129,7 +132,17 @@ async function snapshot(route) {
       tours: TOURS.map(t => ({...t, _cardSummary: activitySummaryText(t)})),
       searchOther: Object.fromEntries(ACTIVITY_SEARCH_INDEX.map(e => [e.t.id, e.other]))
     })) : null;
-    return {...JSON.parse(raw), planning, runtimeActivityId, runtimeCatalogue};
+    const urlAudit = await page.evaluate(() => {
+      const c=CURRENT;
+      const id=c.kind === 'activity' || c.kind === 'addon' ? c.t.id : c.kind === 'holiday' ? c.p.id
+        : c.kind === 'visa' ? slugify(c.v.country) : c.kind === 'category' ? c.category.slug
+        : c.kind === 'comparison' ? c.comparison.slug : c.kind === 'guide' ? c.key
+        : ['activityDest','holidayDest'].includes(c.kind) ? c.dest : null;
+      return {pageId:c.kind+(id ? ':'+id : ''),canonical:document.querySelector('link[rel="canonical"]')?.href,
+        ids:[...document.querySelectorAll('[id]')].map(el=>el.id),
+        links:[...document.querySelectorAll('a[href]')].map(a=>({href:a.getAttribute('href'),rel:a.getAttribute('rel'),target:a.getAttribute('target')}))};
+    });
+    return {...JSON.parse(raw), ...urlAudit, planning, runtimeActivityId, runtimeCatalogue};
   } finally {
     await page.close();
   }
@@ -196,6 +209,8 @@ try {
     }
   }));
 
+  const publishedURLAudit = validatePublishedGraph(publishedURLs, routeResults, home.sitemapPaths);
+
   // Planning links must lead to published routes and remain available without opening a disclosure.
   const published = new Set(home.routes), planningEdges = [];
   for (const [route, data] of routeResults) {
@@ -257,6 +272,7 @@ try {
   await writeFile(join(DIST, 'CNAME'), 'raahhi.com\n', 'utf8');
 
   const report = {
+    publishedURLAudit,
     assets: {...assets.report, localImageVariants:localMedia.files.size, localImageBytes:[...localMedia.files.values()].reduce((sum,b)=>sum+b.length,0)},
     source: 'raahhi-tours52.html',
     productionOrigin: home.siteUrl,
