@@ -1260,7 +1260,7 @@
   <div class="wrap">
     <div class="section-head"><div><p class="eyebrow">Planning guides</p><h2 id="homeGuidesTitle">Compare similar UAE activities</h2></div></div>
     <ul class="guide-cards">
-      <li class="guide-card"><span class="gc-eyebrow">Guide · Dubai</span><h3><a href="/guides/dubai-desert-safari/">Dubai desert safari guide</a></h3><p>Compares the Dubai desert safaris, dune buggy and hot air balloon listings by timing and by what each one describes.</p><span class="gc-more" aria-hidden="true">Read the guide →</span></li>
+      <li class="guide-card"><span class="gc-eyebrow">Guide · Dubai</span><h3><a href="/guides/dubai-desert-safari/">Dubai desert safari guide</a></h3><p>Plan your Dubai desert safari: pickup, what to pack and what to check before you enquire.</p><span class="gc-more" aria-hidden="true">Read the guide →</span></li>
       <li class="guide-card"><span class="gc-eyebrow">Guide · Dubai</span><h3><a href="/guides/dubai-landmarks/">Dubai landmarks guide</a></h3><p>Compares Burj Khalifa At the Top, Dubai Frame, Sky Views, The View at the Palm, Museum of the Future, Dubai Aquarium and AYA Universe.</p><span class="gc-more" aria-hidden="true">Read the guide →</span></li>
       <li class="guide-card"><span class="gc-eyebrow">Guide · Abu Dhabi</span><h3><a href="/guides/abu-dhabi-theme-parks/">Abu Dhabi theme parks guide</a></h3><p>Compares Ferrari World, Warner Bros. World, SeaWorld, KidZania and Yas Waterworld, and the holiday packages with a theme park day.</p><span class="gc-more" aria-hidden="true">Read the guide →</span></li>
     </ul>
@@ -6085,7 +6085,7 @@ const CATEGORY_INFO = {
 };
 // One substantial page per catalogue category; no destination/category route permutations.
 const ACTIVITY_CATEGORIES = [
-  {name:"Desert Safari", slug:"desert-safaris", title:"UAE desert safaris", compare:"Compare the time of day, listed duration, camp activities and pickup arrangements. Read each listing for the activities included in that particular safari."},
+  {name:"Desert Safari", slug:"desert-safaris", title:"UAE desert safaris", compare:"Choose your departure emirate, then compare morning, evening and overnight formats. Check whether your option includes a shared or private transfer, meals and any extras you want. Options with similar names can include different activities."},
   {name:"City Tours", slug:"city-tours", title:"UAE city tours and sightseeing", compare:"Check the route and named stops, whether the listing is a guided tour or an individual venue, and the pickup or meeting point."},
   {name:"Landmarks", slug:"landmarks", title:"UAE landmarks and attractions", compare:"Compare the venue, ticket option, listed visit time and entry conditions. Open the attraction page for its inclusions and restrictions."},
   {name:"Theme Parks", slug:"theme-parks", title:"UAE theme parks", compare:"Compare the parks and ticket options. Check each listing for ride restrictions, what admission includes and any transfer option."},
@@ -6106,6 +6106,7 @@ function categoryDiscoveryHTML(){
 function renderCategory(c){
   const list = categoryTours(c), dests = DESTINATIONS.filter(d => list.some(t => t.dest === d.slug));
   const guides = GUIDES.filter(g => g.ids().some(id => list.some(t => t.id === id)));
+  const safari = c.slug === "desert-safaris";
   document.getElementById("categoryBody").innerHTML = `
     <nav class="breadcrumb" aria-label="Breadcrumb">${breadcrumbHTML([{label:"Home",href:"/"},{label:"Activities",href:URLS.activities},{label:c.name}])}</nav>
     <p class="eyebrow" style="margin-top:20px;">Browse the UAE catalogue</p>
@@ -6113,7 +6114,8 @@ function renderCategory(c){
     <p class="lede" style="margin-top:18px;">${escapeHTML(CATEGORY_INFO[c.name])} RAAHHI TOURS lists ${list.length} experiences in ${joinList(dests.map(d => d.name))}. Prices and current availability are confirmed on enquiry.</p>
     <section class="detail-section"><h2>Choosing an experience</h2><p class="body-copy">${escapeHTML(c.compare)}</p>
     <p class="index-note">The list follows catalogue order within each destination. It is not a popularity ranking. Listed duration and status come from the individual activity record; they are not live availability.</p></section>
-    ${dests.map(d => `<section class="detail-section category-products" data-destination="${d.slug}"><h2>${escapeHTML(c.name)} in ${escapeHTML(d.name)}</h2>
+    ${safari ? `<p class="body-copy">Short on time? Start with <a href="#safaris-dubai">Dubai safari options</a>. For pickup, packing and planning advice, read the <a href="${URLS.safariGuide}">Dubai desert safari guide</a>.</p>` : ""}
+    ${dests.map(d => `<section ${safari ? `id="safaris-${d.slug}"` : ""} class="detail-section category-products" data-destination="${d.slug}"><h2>${escapeHTML(c.name)} in ${escapeHTML(d.name)}</h2>
       <div class="table-scroll"><table class="data-table"><caption class="sr-only">${escapeHTML(c.name)} listings in ${escapeHTML(d.name)}</caption>
         <thead><tr><th scope="col">Experience</th><th scope="col">Listed duration</th><th scope="col">Listing status</th><th scope="col">Starting price</th></tr></thead>
         <tbody>${list.filter(t => t.dest === d.slug).map(t => `<tr><th scope="row"><a href="${URLS.activity(t)}">${escapeHTML(t.title)}</a><p class="index-note">${escapeHTML(activitySummaryText(t))}</p></th><td>${hasRealValue(t.duration) ? escapeHTML(t.duration) : "Confirmed on enquiry"}</td><td>${escapeHTML(statusInfo(t).label)}</td><td>${priceHTML(priceInfo(t))}<p class="index-note">${escapeHTML(priceInfo(t).basis)}</p></td></tr>`).join("")}</tbody>
@@ -6412,44 +6414,31 @@ function packagesWithDaysHTML(entries){
 // ---- Guide 1: Dubai desert safari guide (the v34 guide, moved into the registry) ----
 function renderSafariGuideBody(g){
   const safaris = TOURS.filter(t => t.dest === "dubai" && t.cat === "Desert Safari");
-  const related = ["dune-buggy-dubai", "hot-air-balloon-dubai"].map(byId).filter(Boolean);
-  const abuDhabi = TOURS.filter(t => t.dest === "abu-dhabi" && t.cat === "Desert Safari");
-  const rows = [...safaris, ...related].map(t => `<tr><th scope="row">${tourLink(t)}</th><td>${t.cat}</td><td>${durOf(t)}</td><td>${escapeHTML(activitySummaryText(t))}</td></tr>`);
-  // Each line restates what that activity's own listing says -- no extra claims.
-  const tips = [
-    ["evening-desert-safari", "an evening safari with dune bashing, camel riding and a barbecue buffet dinner"],
-    ["morning-desert-safari", "an earlier start, with dune bashing and photo stops in the morning"],
-    ["overnight-desert-safari", "a night at a desert camp, with dinner, breakfast and a sunrise drive back"],
-    ["premium-desert-safari", "upgraded seating, private setups and a larger dining spread"],
-    ["dune-buggy-dubai", "driving across the dunes yourself, in a self-drive or tandem buggy"],
-    ["hot-air-balloon-dubai", "seeing the desert from the air on a sunrise balloon flight"],
-  ].filter(([id]) => byId(id)).map(([id, want]) => `<li>For ${want}: ${tourLink(byId(id))}.</li>`).join("");
-  const ev = byId("evening-desert-safari"), mo = byId("morning-desert-safari"), ov = byId("overnight-desert-safari");
-  const faq = [{q:"What does a Dubai desert safari include?", a:`It depends on the safari. ${safaris.map(t => `${t.title}: ${activitySummaryText(t).replace(/\.$/, "")}.`).join(" ")} Full inclusions are confirmed when you enquire.`}];
-  if(ev && hasRealValue(ev.duration)) faq.push({q:`How long is the ${ev.title} in Dubai?`, a:`RAAHHI TOURS lists the ${ev.title} as ${ev.duration}. Exact timings are confirmed when you enquire.`});
-  if(ev && mo) faq.push({q:"What is the difference between the morning and evening desert safari in Dubai?", a:`${mo.title}: ${activitySummaryText(mo)} ${activitySummaryText(ev)} Check each listing for its departure time and inclusions.`});
-  if(ov) faq.push({q:"Which Dubai desert safari includes an overnight stay?", a:`The ${tourLink(ov)} (${durOf(ov)}): ${lowerFirst(activitySummaryText(ov))}`});
-  faq.push({q:"Are desert safari prices listed?", a:activityPriceNote(safaris)});
-  const feat = packagesFeaturing("evening-desert-safari").concat(packagesFeaturing("overnight-desert-safari"));
+  const category = URLS.activityCategory(categoryBySlug("desert-safaris"));
+  const faq = [
+    {q:"What should I bring on a Dubai desert safari?", a:"Check your listing for any ID requirement. Pack water, sun protection and a light layer if you will be out after sunset. Check what is provided before you pack."},
+    {q:"What should I check if I am travelling with children?", a:"Share each child’s age and ask which parts they can join. Confirm dune bashing restrictions, child-seat arrangements and alternatives before booking."},
+    {q:"How should I plan around hotel pickup?", a:"Share the hotel or neighbourhood when you enquire. Confirm whether you will be collected there or need to go to a meeting point, and ask for a return window before scheduling anything afterwards."},
+  ];
   const html = `${guideHead(g)}
-    <p class="answer-lede">RAAHHI TOURS lists ${safaris.length} desert safaris in Dubai: ${joinList(safaris.map(t => t.title))}. It also lists ${related.length} related desert activities: ${joinList(related.map(t => t.title))}. They differ mainly in timing and in what each listing includes. This guide compares them using the details on each activity page; prices and availability are confirmed when you enquire.</p>
-    <div class="detail-section">
-      <h2>Dubai desert safaris compared</h2>
-      ${comparisonTable("Dubai desert safaris and related desert activities listed by RAAHHI TOURS", ["Activity", "Category", "Duration / timing", "What the listing describes"], rows)}
-    </div>
-    <div class="detail-section">
-      <h2>Which Dubai desert safari suits you?</h2>
-      <ul class="plain-list">${tips}</ul>
-    </div>
-    ${abuDhabi.length ? `<div class="detail-section"><h2>Staying in Abu Dhabi?</h2><p class="body-copy">${joinList(abuDhabi.map(tourLink))} ${abuDhabi.length === 1 ? "is" : "are"} listed as a desert safari based out of Abu Dhabi${hasRealValue(abuDhabi[0].duration) && abuDhabi.length === 1 ? ` (${abuDhabi[0].duration})` : ""}.</p></div>` : ""}
-    ${feat.length ? `<div class="detail-section"><h2>Desert safaris in holiday package itineraries</h2><p class="body-copy">These RAAHHI TOURS holiday packages name an evening or overnight desert safari in their itinerary. The packages are separate products; what each includes is confirmed when you enquire.</p>${packagesWithDaysHTML(feat.map(f => ({p:f.p, days:(f.p.itinerary || []).filter(d => /(evening|overnight) desert safari/i.test(d.text))})))}</div>` : ""}
-    <div class="detail-section">
-      <h2>Before you enquire</h2>
-      <p class="body-copy">Each activity page asks for a preferred date and the number of guests. Have those ready, along with any questions about timings or what is included. Our team confirms these details, the price and availability. Nothing is booked or paid for on this website.</p>
-    </div>
-    <div class="detail-section"><h2>Dubai desert safari FAQs</h2>${qaHTML(faq)}</div>
-    ${guideSourcesHTML({packages: feat.length > 0})}
-    <p class="cross-link">See every listing on the <a class="contact-link" href="/activities/dubai/">Dubai activities</a> page.</p>`;
+    <p class="answer-lede">Plan your Dubai desert safari around your pickup location, the time you need to be back and what everyone in your group can comfortably do. Confirm transfer arrangements and any activity restrictions before booking. If you are still choosing a safari, <a href="${category}#safaris-dubai">compare the Dubai listings</a>.</p>
+    <section class="detail-section"><h2>Plan pickup and the rest of your day</h2>
+      <p class="body-copy">Send your hotel name or neighbourhood when you enquire. Check the pickup window, whether the transfer is shared or private, and where you will be dropped off. Leave room between the expected return and any timed dinner, show or airport transfer.</p>
+    </section>
+    <section class="detail-section"><h2>Pack for the outdoor parts of the trip</h2>
+      <p class="body-copy">Bring sun protection and shoes you are comfortable walking in on sand. If you will be out after sunset, pack a light layer. Check the individual listing for ID, bag and clothing guidance.</p>
+    </section>
+    <section class="detail-section"><h2>Check what your group can take part in</h2>
+      <p class="body-copy">When enquiring, mention children’s ages and whether anyone wants to skip dune bashing or needs easier access. Ask if the selected option has an alternative and whether it changes the pickup or camp arrangements.</p>
+    </section>
+    <section class="detail-section"><h2>Before you enquire</h2>
+      <p class="body-copy">Have your preferred date, party size and pickup area ready. Ask which activities are included, what costs extra, and which change or cancellation terms apply to your option.</p>
+      <p class="body-copy">${activityPriceNote(safaris)}</p>
+      <p class="body-copy"><a href="${category}#safaris-dubai">Compare Dubai safari options and open a listing to enquire</a>.</p>
+    </section>
+    <section class="detail-section"><h2>Dubai desert safari planning questions</h2>${qaHTML(faq)}</section>
+    ${guideSourcesHTML()}
+    <p class="cross-link">Planning more of your trip? Browse <a href="${URLS.activityDest("dubai")}">all Dubai activities</a>.</p>`;
   return {html, faq};
 }
 
@@ -6583,11 +6572,11 @@ function renderPlanningGuideBody(g){
 }
 const GUIDES = [
   {slug:"dubai-desert-safari", dest:"dubai", categories:["Desert Safari"], name:"Dubai desert safari guide", crumb:"Desert safari guide", h1:"Dubai desert safari guide",
-    title:"Dubai Desert Safari Guide: Compare the Options",
-    description:"Compare the Evening, Premium, Overnight and Morning desert safaris in Dubai, plus dune buggy and hot air balloon options by timing and listed inclusions.",
-    blurb:"Compares the Dubai desert safaris, dune buggy and hot air balloon listings by timing and by what each one describes.",
+    title:"Dubai Desert Safari Planning Guide: Pickup, Packing and What to Check",
+    description:"Plan a Dubai desert safari with practical advice on pickup, what to bring, group restrictions and what to confirm before enquiring.",
+    blurb:"Plan your Dubai desert safari: pickup, what to pack and what to check before you enquire.",
     image:IMG.safariDubaiDunes2, render:renderSafariGuideBody,
-    ids:() => TOURS.filter(t => t.dest === "dubai" && (t.cat === "Desert Safari" || ["dune-buggy-dubai", "hot-air-balloon-dubai"].includes(t.id))).map(t => t.id)},
+    ids:() => TOURS.filter(t => t.dest === "dubai" && t.cat === "Desert Safari").map(t => t.id)},
   {slug:"dubai-landmarks", dest:"dubai", categories:["Landmarks"], name:"Dubai landmarks guide", crumb:"Landmarks guide", h1:"Dubai landmarks guide: viewpoints, museums and more",
     title:"Dubai Landmarks Guide: Observation Decks, Museums & More",
     description:"Compare Dubai viewpoints, museums and indoor or outdoor landmark experiences by their listed duration, ticket differences and practical visitor information.",
@@ -7584,7 +7573,7 @@ function pageMeta(c){
         {"@type":"Article", "@id":url + "#article", "headline":g.h1, "description":g.description, "url":url, "inLanguage":SEO_CONFIG.defaultLanguage,
           "author":{"@id":ORG_ID()}, "publisher":{"@id":ORG_ID()}, "dateModified":"2026-10-25", "mainEntityOfPage":{"@id":url + "#webpage"}, "image":imgAt(g.image, 1200),
           "about":{"@id":absUrl("/#destination-" + g.dest)}, "mentions":ids.map(id => ({"@id":absUrl(URLS.activity(byId(id))) + "#trip"}))},
-        itemListNode(url + "#list", `Activities compared in the ${g.name}`, ids.map(id => byId(id)).map(t => ({path:URLS.activity(t), name:t.title})))];
+        ...(g.render === renderSafariGuideBody ? [] : [itemListNode(url + "#list", `Activities compared in the ${g.name}`, ids.map(id => byId(id)).map(t => ({path:URLS.activity(t), name:t.title})))])];
       m.citation = [...new Set(ids.flatMap(id => publicListingSources(byId(id).sources).map(s => s.url)))];
       m.mainEntity = {"@id":url + "#article"}; m.about = [{"@id":absUrl("/#destination-" + g.dest)}]; m.image = g.image || m.image; break;
     }
