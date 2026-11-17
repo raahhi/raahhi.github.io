@@ -19,12 +19,16 @@ jobs:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: 22
       - run: npm ci --no-audit --no-fund
       - run: npx playwright install --with-deps chromium
+      - run: node --test scripts/published-urls.test.mjs
       - run: npm run build
+        env:
+          RAAHHI_URL_BASELINE: ${{ github.event.pull_request.base.sha }}
       - name: Run Pages release checks
         run: |
           for check in site-ui search published-data pricing presentation options enquiry-delivery visitor-activity readiness; do

@@ -22,6 +22,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -49,6 +51,11 @@ jobs:
 
       - name: Build static RAAHHI site
         run: npm run build
+        env:
+          RAAHHI_URL_BASELINE: ${{ github.event_name == 'push' && github.event.before || github.sha }}
+
+      - name: Check permanent URL regression cases
+        run: node --test scripts/published-urls.test.mjs
 
       - name: Check responsive pages and early image failures
         run: node .github/check-site-ui.mjs

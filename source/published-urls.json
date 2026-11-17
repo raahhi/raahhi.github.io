@@ -1,0 +1,1634 @@
+{
+  "version": 1,
+  "origin": "https://raahhi.com",
+  "baselineObservedOn": "2026-11-18",
+  "notes": "Existing public paths recorded from the production sitemap. This observation date is not an original publication or content verification date. IDs and paths are append-only until a separately reviewed lifecycle implementation supports retirement.",
+  "pages": [
+    {
+      "pageId": "home",
+      "path": "/",
+      "kind": "home",
+      "state": "live"
+    },
+    {
+      "pageId": "visas",
+      "path": "/visas/",
+      "kind": "visas",
+      "state": "live"
+    },
+    {
+      "pageId": "visa:united-arab-emirates",
+      "path": "/visas/united-arab-emirates/",
+      "kind": "visa",
+      "state": "live"
+    },
+    {
+      "pageId": "visa:schengen-area",
+      "path": "/visas/schengen-area/",
+      "kind": "visa",
+      "state": "live"
+    },
+    {
+      "pageId": "visa:united-kingdom",
+      "path": "/visas/united-kingdom/",
+      "kind": "visa",
+      "state": "live"
+    },
+    {
+      "pageId": "visa:united-states",
+      "path": "/visas/united-states/",
+      "kind": "visa",
+      "state": "live"
+    },
+    {
+      "pageId": "visa:saudi-arabia",
+      "path": "/visas/saudi-arabia/",
+      "kind": "visa",
+      "state": "live"
+    },
+    {
+      "pageId": "visa:egypt",
+      "path": "/visas/egypt/",
+      "kind": "visa",
+      "state": "live"
+    },
+    {
+      "pageId": "visa:turkey",
+      "path": "/visas/turkey/",
+      "kind": "visa",
+      "state": "live"
+    },
+    {
+      "pageId": "visa:singapore",
+      "path": "/visas/singapore/",
+      "kind": "visa",
+      "state": "live"
+    },
+    {
+      "pageId": "visa:thailand",
+      "path": "/visas/thailand/",
+      "kind": "visa",
+      "state": "live"
+    },
+    {
+      "pageId": "visa:indonesia",
+      "path": "/visas/indonesia/",
+      "kind": "visa",
+      "state": "live"
+    },
+    {
+      "pageId": "visa:india",
+      "path": "/visas/india/",
+      "kind": "visa",
+      "state": "live"
+    },
+    {
+      "pageId": "visa:malaysia",
+      "path": "/visas/malaysia/",
+      "kind": "visa",
+      "state": "live"
+    },
+    {
+      "pageId": "visa:georgia",
+      "path": "/visas/georgia/",
+      "kind": "visa",
+      "state": "live"
+    },
+    {
+      "pageId": "visa:sri-lanka",
+      "path": "/visas/sri-lanka/",
+      "kind": "visa",
+      "state": "live"
+    },
+    {
+      "pageId": "visa:vietnam",
+      "path": "/visas/vietnam/",
+      "kind": "visa",
+      "state": "live"
+    },
+    {
+      "pageId": "visa:philippines",
+      "path": "/visas/philippines/",
+      "kind": "visa",
+      "state": "live"
+    },
+    {
+      "pageId": "visa:japan",
+      "path": "/visas/japan/",
+      "kind": "visa",
+      "state": "live"
+    },
+    {
+      "pageId": "visa:canada",
+      "path": "/visas/canada/",
+      "kind": "visa",
+      "state": "live"
+    },
+    {
+      "pageId": "visa:australia",
+      "path": "/visas/australia/",
+      "kind": "visa",
+      "state": "live"
+    },
+    {
+      "pageId": "visa:china",
+      "path": "/visas/china/",
+      "kind": "visa",
+      "state": "live"
+    },
+    {
+      "pageId": "visa:russia",
+      "path": "/visas/russia/",
+      "kind": "visa",
+      "state": "live"
+    },
+    {
+      "pageId": "visa:south-korea",
+      "path": "/visas/south-korea/",
+      "kind": "visa",
+      "state": "live"
+    },
+    {
+      "pageId": "visa:south-africa",
+      "path": "/visas/south-africa/",
+      "kind": "visa",
+      "state": "live"
+    },
+    {
+      "pageId": "visa:kenya",
+      "path": "/visas/kenya/",
+      "kind": "visa",
+      "state": "live"
+    },
+    {
+      "pageId": "visa:tanzania",
+      "path": "/visas/tanzania/",
+      "kind": "visa",
+      "state": "live"
+    },
+    {
+      "pageId": "visa:uganda",
+      "path": "/visas/uganda/",
+      "kind": "visa",
+      "state": "live"
+    },
+    {
+      "pageId": "visa:ghana",
+      "path": "/visas/ghana/",
+      "kind": "visa",
+      "state": "live"
+    },
+    {
+      "pageId": "visa:morocco",
+      "path": "/visas/morocco/",
+      "kind": "visa",
+      "state": "live"
+    },
+    {
+      "pageId": "visa:hong-kong",
+      "path": "/visas/hong-kong/",
+      "kind": "visa",
+      "state": "live"
+    },
+    {
+      "pageId": "visa:bahrain",
+      "path": "/visas/bahrain/",
+      "kind": "visa",
+      "state": "live"
+    },
+    {
+      "pageId": "visa:oman",
+      "path": "/visas/oman/",
+      "kind": "visa",
+      "state": "live"
+    },
+    {
+      "pageId": "visa:kuwait",
+      "path": "/visas/kuwait/",
+      "kind": "visa",
+      "state": "live"
+    },
+    {
+      "pageId": "visa:lebanon",
+      "path": "/visas/lebanon/",
+      "kind": "visa",
+      "state": "live"
+    },
+    {
+      "pageId": "visa:azerbaijan",
+      "path": "/visas/azerbaijan/",
+      "kind": "visa",
+      "state": "live"
+    },
+    {
+      "pageId": "visa:armenia",
+      "path": "/visas/armenia/",
+      "kind": "visa",
+      "state": "live"
+    },
+    {
+      "pageId": "visa:uzbekistan",
+      "path": "/visas/uzbekistan/",
+      "kind": "visa",
+      "state": "live"
+    },
+    {
+      "pageId": "visa:new-zealand",
+      "path": "/visas/new-zealand/",
+      "kind": "visa",
+      "state": "live"
+    },
+    {
+      "pageId": "visa:ireland",
+      "path": "/visas/ireland/",
+      "kind": "visa",
+      "state": "live"
+    },
+    {
+      "pageId": "visa:brazil",
+      "path": "/visas/brazil/",
+      "kind": "visa",
+      "state": "live"
+    },
+    {
+      "pageId": "visa:ethiopia",
+      "path": "/visas/ethiopia/",
+      "kind": "visa",
+      "state": "live"
+    },
+    {
+      "pageId": "addon:tourist-sim-card-eand",
+      "path": "/visas/arrival-essentials/tourist-sim-card-eand/",
+      "kind": "addon",
+      "state": "live"
+    },
+    {
+      "pageId": "activities",
+      "path": "/activities/",
+      "kind": "activities",
+      "state": "live"
+    },
+    {
+      "pageId": "category:desert-safaris",
+      "path": "/activities/categories/desert-safaris/",
+      "kind": "category",
+      "state": "live"
+    },
+    {
+      "pageId": "category:city-tours",
+      "path": "/activities/categories/city-tours/",
+      "kind": "category",
+      "state": "live"
+    },
+    {
+      "pageId": "category:landmarks",
+      "path": "/activities/categories/landmarks/",
+      "kind": "category",
+      "state": "live"
+    },
+    {
+      "pageId": "category:theme-parks",
+      "path": "/activities/categories/theme-parks/",
+      "kind": "category",
+      "state": "live"
+    },
+    {
+      "pageId": "category:water-parks",
+      "path": "/activities/categories/water-parks/",
+      "kind": "category",
+      "state": "live"
+    },
+    {
+      "pageId": "category:cruises",
+      "path": "/activities/categories/cruises/",
+      "kind": "category",
+      "state": "live"
+    },
+    {
+      "pageId": "category:adventure",
+      "path": "/activities/categories/adventure/",
+      "kind": "category",
+      "state": "live"
+    },
+    {
+      "pageId": "category:nature-wildlife",
+      "path": "/activities/categories/nature-wildlife/",
+      "kind": "category",
+      "state": "live"
+    },
+    {
+      "pageId": "category:water-activities",
+      "path": "/activities/categories/water-activities/",
+      "kind": "category",
+      "state": "live"
+    },
+    {
+      "pageId": "category:dining-events",
+      "path": "/activities/categories/dining-events/",
+      "kind": "category",
+      "state": "live"
+    },
+    {
+      "pageId": "category:transfers",
+      "path": "/activities/categories/transfers/",
+      "kind": "category",
+      "state": "live"
+    },
+    {
+      "pageId": "activityDest:dubai",
+      "path": "/activities/dubai/",
+      "kind": "activityDest",
+      "state": "live"
+    },
+    {
+      "pageId": "activityDest:abu-dhabi",
+      "path": "/activities/abu-dhabi/",
+      "kind": "activityDest",
+      "state": "live"
+    },
+    {
+      "pageId": "activityDest:ras-al-khaimah",
+      "path": "/activities/ras-al-khaimah/",
+      "kind": "activityDest",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:evening-desert-safari",
+      "path": "/activities/dubai/evening-desert-safari/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:premium-desert-safari",
+      "path": "/activities/dubai/premium-desert-safari/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:overnight-desert-safari",
+      "path": "/activities/dubai/overnight-desert-safari/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:morning-desert-safari",
+      "path": "/activities/dubai/morning-desert-safari/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:dune-buggy-dubai",
+      "path": "/activities/dubai/dune-buggy-dubai/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:desert-safari-abu-dhabi",
+      "path": "/activities/abu-dhabi/desert-safari-abu-dhabi/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:dubai-city-tour",
+      "path": "/activities/dubai/dubai-city-tour/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:abu-dhabi-city-tour-from-dubai",
+      "path": "/activities/abu-dhabi/abu-dhabi-city-tour-from-dubai/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:full-day-abu-dhabi-city-tour",
+      "path": "/activities/abu-dhabi/full-day-abu-dhabi-city-tour/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:dhow-cruise-marina",
+      "path": "/activities/dubai/dhow-cruise-marina/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:dhow-cruise-creek",
+      "path": "/activities/dubai/dhow-cruise-creek/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:musandam-dibba-tour",
+      "path": "/activities/ras-al-khaimah/musandam-dibba-tour/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:burj-khalifa-top",
+      "path": "/activities/dubai/burj-khalifa-top/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:dubai-frame",
+      "path": "/activities/dubai/dubai-frame/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:museum-of-the-future",
+      "path": "/activities/dubai/museum-of-the-future/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:sky-views-observatory",
+      "path": "/activities/dubai/sky-views-observatory/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:the-view-at-the-palm",
+      "path": "/activities/dubai/the-view-at-the-palm/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:dubai-aquarium",
+      "path": "/activities/dubai/dubai-aquarium/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:aya-universe-dubai",
+      "path": "/activities/dubai/aya-universe-dubai/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:dubai-miracle-garden",
+      "path": "/activities/dubai/dubai-miracle-garden/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:global-village-dubai",
+      "path": "/activities/dubai/global-village-dubai/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:img-worlds-of-adventure",
+      "path": "/activities/dubai/img-worlds-of-adventure/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:ferrari-world-abu-dhabi",
+      "path": "/activities/abu-dhabi/ferrari-world-abu-dhabi/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:warner-bros-world",
+      "path": "/activities/abu-dhabi/warner-bros-world/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:seaworld-abu-dhabi",
+      "path": "/activities/abu-dhabi/seaworld-abu-dhabi/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:kidzania-abu-dhabi",
+      "path": "/activities/abu-dhabi/kidzania-abu-dhabi/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:atlantis-aquaventure",
+      "path": "/activities/dubai/atlantis-aquaventure/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:yas-waterworld",
+      "path": "/activities/abu-dhabi/yas-waterworld/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:louvre-abu-dhabi",
+      "path": "/activities/abu-dhabi/louvre-abu-dhabi/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:qasr-al-watan",
+      "path": "/activities/abu-dhabi/qasr-al-watan/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:national-aquarium-abu-dhabi",
+      "path": "/activities/abu-dhabi/national-aquarium-abu-dhabi/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:hot-air-balloon-dubai",
+      "path": "/activities/dubai/hot-air-balloon-dubai/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:skydive-dubai-palm",
+      "path": "/activities/dubai/skydive-dubai-palm/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:helicopter-tour-dubai",
+      "path": "/activities/dubai/helicopter-tour-dubai/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:luxury-yacht-rental-dubai",
+      "path": "/activities/dubai/luxury-yacht-rental-dubai/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:jebel-jais-zipline",
+      "path": "/activities/ras-al-khaimah/jebel-jais-zipline/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:legoland-dubai",
+      "path": "/activities/dubai/legoland-dubai/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:legoland-water-park-dubai",
+      "path": "/activities/dubai/legoland-water-park-dubai/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:motiongate-dubai",
+      "path": "/activities/dubai/motiongate-dubai/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:real-madrid-world-dubai",
+      "path": "/activities/dubai/real-madrid-world-dubai/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:dubai-parks-and-resorts-multi-park-pass",
+      "path": "/activities/dubai/dubai-parks-and-resorts-multi-park-pass/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:wild-wadi-water-park",
+      "path": "/activities/dubai/wild-wadi-water-park/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:aqua-fun-dubai",
+      "path": "/activities/dubai/aqua-fun-dubai/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:aventura-parks-dubai",
+      "path": "/activities/dubai/aventura-parks-dubai/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:kidzania-dubai",
+      "path": "/activities/dubai/kidzania-dubai/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:olioli-childrens-play-museum",
+      "path": "/activities/dubai/olioli-childrens-play-museum/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:play-dxb",
+      "path": "/activities/dubai/play-dxb/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:loco-bear-entertainment-hub",
+      "path": "/activities/dubai/loco-bear-entertainment-hub/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:house-of-hype-dubai",
+      "path": "/activities/dubai/house-of-hype-dubai/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:3d-world-selfie-museum-dubai",
+      "path": "/activities/dubai/3d-world-selfie-museum-dubai/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:madame-tussauds-dubai",
+      "path": "/activities/dubai/madame-tussauds-dubai/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:sky-views-edge-walk",
+      "path": "/activities/dubai/sky-views-edge-walk/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:ain-dubai",
+      "path": "/activities/dubai/ain-dubai/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:the-lost-chambers-aquarium",
+      "path": "/activities/dubai/the-lost-chambers-aquarium/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:dolphin-bay-atlantis",
+      "path": "/activities/dubai/dolphin-bay-atlantis/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:dubai-dolphinarium",
+      "path": "/activities/dubai/dubai-dolphinarium/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:dubai-crocodile-park",
+      "path": "/activities/dubai/dubai-crocodile-park/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:the-green-planet-dubai",
+      "path": "/activities/dubai/the-green-planet-dubai/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:dubai-butterfly-garden",
+      "path": "/activities/dubai/dubai-butterfly-garden/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:dubai-garden-glow",
+      "path": "/activities/dubai/dubai-garden-glow/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:arte-museum-dubai",
+      "path": "/activities/dubai/arte-museum-dubai/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:expo-city-dubai",
+      "path": "/activities/dubai/expo-city-dubai/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:al-shindagha-museum",
+      "path": "/activities/dubai/al-shindagha-museum/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:mysore-palace-restaurant-dubai",
+      "path": "/activities/dubai/mysore-palace-restaurant-dubai/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:chillout-ice-lounge-dubai",
+      "path": "/activities/dubai/chillout-ice-lounge-dubai/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:dubai-ice-rink",
+      "path": "/activities/dubai/dubai-ice-rink/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:ifly-dubai",
+      "path": "/activities/dubai/ifly-dubai/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:ski-dubai",
+      "path": "/activities/dubai/ski-dubai/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:overnight-desert-safari-with-hot-air-balloon",
+      "path": "/activities/dubai/overnight-desert-safari-with-hot-air-balloon/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:camel-riding-dubai",
+      "path": "/activities/dubai/camel-riding-dubai/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:guided-camel-farm-trip",
+      "path": "/activities/dubai/guided-camel-farm-trip/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:horse-riding-dubai",
+      "path": "/activities/dubai/horse-riding-dubai/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:hatta-mountain-safari",
+      "path": "/activities/dubai/hatta-mountain-safari/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:hatta-wadi-hub-activities",
+      "path": "/activities/dubai/hatta-wadi-hub-activities/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:the-dubai-balloon-at-atlantis",
+      "path": "/activities/dubai/the-dubai-balloon-at-atlantis/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:gyrocopter-flight-dubai",
+      "path": "/activities/dubai/gyrocopter-flight-dubai/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:xline-dubai-marina",
+      "path": "/activities/dubai/xline-dubai-marina/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:full-day-dubai-city-tour",
+      "path": "/activities/dubai/full-day-dubai-city-tour/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:big-bus-tour-dubai",
+      "path": "/activities/dubai/big-bus-tour-dubai/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:6-emirates-in-a-day-tour",
+      "path": "/activities/dubai/6-emirates-in-a-day-tour/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:sharjah-city-tour-from-dubai",
+      "path": "/activities/dubai/sharjah-city-tour-from-dubai/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:al-ain-city-tour",
+      "path": "/activities/abu-dhabi/al-ain-city-tour/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:fujairah-east-coast-tour",
+      "path": "/activities/dubai/fujairah-east-coast-tour/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:khasab-musandam-tour",
+      "path": "/activities/dubai/khasab-musandam-tour/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:abu-dhabi-cultural-heritage-tour",
+      "path": "/activities/abu-dhabi/abu-dhabi-cultural-heritage-tour/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:heritage-street-food-tour-dubai",
+      "path": "/activities/dubai/heritage-street-food-tour-dubai/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:inside-burj-al-arab-guided-tour",
+      "path": "/activities/dubai/inside-burj-al-arab-guided-tour/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:the-palm-monorail",
+      "path": "/activities/dubai/the-palm-monorail/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:lotus-mega-yacht-brunch-cruise",
+      "path": "/activities/dubai/lotus-mega-yacht-brunch-cruise/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:lotus-mega-yacht-dinner-cruise",
+      "path": "/activities/dubai/lotus-mega-yacht-dinner-cruise/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:lotus-mega-yacht-sunset-cruise",
+      "path": "/activities/dubai/lotus-mega-yacht-sunset-cruise/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:ocean-empress-dinner-cruise",
+      "path": "/activities/dubai/ocean-empress-dinner-cruise/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:palm-dinner-cruise",
+      "path": "/activities/dubai/palm-dinner-cruise/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:dubai-canal-cruise",
+      "path": "/activities/dubai/dubai-canal-cruise/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:xclusive-dinner-cruise",
+      "path": "/activities/dubai/xclusive-dinner-cruise/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:xclusive-shared-yacht-tour",
+      "path": "/activities/dubai/xclusive-shared-yacht-tour/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:xclusive-sunset-cruise",
+      "path": "/activities/dubai/xclusive-sunset-cruise/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:xclusive-superyacht-experience",
+      "path": "/activities/dubai/xclusive-superyacht-experience/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:sky-walker-shared-yacht-tour",
+      "path": "/activities/dubai/sky-walker-shared-yacht-tour/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:bristol-private-yacht-charter",
+      "path": "/activities/dubai/bristol-private-yacht-charter/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:bristol-shared-yacht-charter",
+      "path": "/activities/dubai/bristol-shared-yacht-charter/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:love-boat-speedboat-ride-dubai",
+      "path": "/activities/dubai/love-boat-speedboat-ride-dubai/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:sunseeker-superyacht-experience",
+      "path": "/activities/dubai/sunseeker-superyacht-experience/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:dubai-marina-yacht-party",
+      "path": "/activities/dubai/dubai-marina-yacht-party/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:new-years-eve-cruises-dubai-marina",
+      "path": "/activities/dubai/new-years-eve-cruises-dubai-marina/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:deep-sea-cruising-dubai",
+      "path": "/activities/dubai/deep-sea-cruising-dubai/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:deep-sea-fishing-dubai",
+      "path": "/activities/dubai/deep-sea-fishing-dubai/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:black-boat-tour-dubai",
+      "path": "/activities/dubai/black-boat-tour-dubai/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:yellow-boats-dubai",
+      "path": "/activities/dubai/yellow-boats-dubai/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:splash-boat-tour-dubai",
+      "path": "/activities/dubai/splash-boat-tour-dubai/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:dubai-fountain-lake-ride",
+      "path": "/activities/dubai/dubai-fountain-lake-ride/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:adventure-zone-seakart-ride",
+      "path": "/activities/dubai/adventure-zone-seakart-ride/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:banana-boat-ride-dubai",
+      "path": "/activities/dubai/banana-boat-ride-dubai/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:jet-ski-dubai",
+      "path": "/activities/dubai/jet-ski-dubai/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:jet-car-dubai",
+      "path": "/activities/dubai/jet-car-dubai/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:jetovator-dubai",
+      "path": "/activities/dubai/jetovator-dubai/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:jetpack-dubai",
+      "path": "/activities/dubai/jetpack-dubai/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:flyboarding-dubai",
+      "path": "/activities/dubai/flyboarding-dubai/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:e-foil-dubai",
+      "path": "/activities/dubai/e-foil-dubai/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:kayaking-dubai",
+      "path": "/activities/dubai/kayaking-dubai/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:wakeboarding-dubai",
+      "path": "/activities/dubai/wakeboarding-dubai/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:surf-high-experience-dubai",
+      "path": "/activities/dubai/surf-high-experience-dubai/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:parasailing-dubai",
+      "path": "/activities/dubai/parasailing-dubai/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:deep-dive-dubai",
+      "path": "/activities/dubai/deep-dive-dubai/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:dubai-airport-transfer",
+      "path": "/activities/dubai/dubai-airport-transfer/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:dubai-abu-dhabi-airport-transfer",
+      "path": "/activities/dubai/dubai-abu-dhabi-airport-transfer/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:al-maktoum-dwc-airport-transfer",
+      "path": "/activities/dubai/al-maktoum-dwc-airport-transfer/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:dubai-airport-to-ras-al-khaimah-transfer",
+      "path": "/activities/dubai/dubai-airport-to-ras-al-khaimah-transfer/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:intercity-private-transfer-uae",
+      "path": "/activities/dubai/intercity-private-transfer-uae/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:dubai-intracity-transfer",
+      "path": "/activities/dubai/dubai-intracity-transfer/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:shared-transfers-to-uae-attractions",
+      "path": "/activities/dubai/shared-transfers-to-uae-attractions/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:private-vehicle-with-driver",
+      "path": "/activities/dubai/private-vehicle-with-driver/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:private-limousine-rental-dubai",
+      "path": "/activities/dubai/private-limousine-rental-dubai/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:atlantis-lunch-or-dinner",
+      "path": "/activities/dubai/atlantis-lunch-or-dinner/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:dinner-in-the-sky-dubai",
+      "path": "/activities/dubai/dinner-in-the-sky-dubai/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:private-bespoke-desert-dinner",
+      "path": "/activities/dubai/private-bespoke-desert-dinner/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:la-perle-by-dragone",
+      "path": "/activities/dubai/la-perle-by-dragone/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:yas-island-theme-parks-pass",
+      "path": "/activities/abu-dhabi/yas-island-theme-parks-pass/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:teamlab-phenomena-abu-dhabi",
+      "path": "/activities/abu-dhabi/teamlab-phenomena-abu-dhabi/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:snow-abu-dhabi",
+      "path": "/activities/abu-dhabi/snow-abu-dhabi/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:emirates-park-zoo",
+      "path": "/activities/abu-dhabi/emirates-park-zoo/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:al-ain-zoo",
+      "path": "/activities/abu-dhabi/al-ain-zoo/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:natural-history-museum-abu-dhabi",
+      "path": "/activities/abu-dhabi/natural-history-museum-abu-dhabi/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:zayed-national-museum",
+      "path": "/activities/abu-dhabi/zayed-national-museum/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:emirates-national-auto-museum",
+      "path": "/activities/abu-dhabi/emirates-national-auto-museum/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:sunrise-desert-safari-abu-dhabi",
+      "path": "/activities/abu-dhabi/sunrise-desert-safari-abu-dhabi/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:camel-trekking-abu-dhabi",
+      "path": "/activities/abu-dhabi/camel-trekking-abu-dhabi/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:quad-biking-abu-dhabi",
+      "path": "/activities/abu-dhabi/quad-biking-abu-dhabi/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:morning-dune-buggy-and-quad-bike-abu-dhabi",
+      "path": "/activities/abu-dhabi/morning-dune-buggy-and-quad-bike-abu-dhabi/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:al-ain-adventure",
+      "path": "/activities/abu-dhabi/al-ain-adventure/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:jet-ski-abu-dhabi",
+      "path": "/activities/abu-dhabi/jet-ski-abu-dhabi/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:kayaking-abu-dhabi",
+      "path": "/activities/abu-dhabi/kayaking-abu-dhabi/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:helicopter-ride-abu-dhabi",
+      "path": "/activities/abu-dhabi/helicopter-ride-abu-dhabi/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:half-day-abu-dhabi-city-tour",
+      "path": "/activities/abu-dhabi/half-day-abu-dhabi-city-tour/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:big-bus-tour-abu-dhabi",
+      "path": "/activities/abu-dhabi/big-bus-tour-abu-dhabi/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:yas-marina-circuit-tour",
+      "path": "/activities/abu-dhabi/yas-marina-circuit-tour/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:dubai-city-tour-from-abu-dhabi",
+      "path": "/activities/dubai/dubai-city-tour-from-abu-dhabi/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:qasr-al-hosn",
+      "path": "/activities/abu-dhabi/qasr-al-hosn/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:martabaan-by-hemant-oberoi-emirates-palace",
+      "path": "/activities/abu-dhabi/martabaan-by-hemant-oberoi-emirates-palace/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:dhow-cruise-abu-dhabi",
+      "path": "/activities/abu-dhabi/dhow-cruise-abu-dhabi/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:deep-sea-cruising-abu-dhabi",
+      "path": "/activities/abu-dhabi/deep-sea-cruising-abu-dhabi/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:yellow-boats-abu-dhabi",
+      "path": "/activities/abu-dhabi/yellow-boats-abu-dhabi/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:abu-dhabi-airport-transfer",
+      "path": "/activities/abu-dhabi/abu-dhabi-airport-transfer/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:camel-riding-ras-al-khaimah",
+      "path": "/activities/ras-al-khaimah/camel-riding-ras-al-khaimah/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:overnight-desert-camping-ras-al-khaimah",
+      "path": "/activities/ras-al-khaimah/overnight-desert-camping-ras-al-khaimah/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:desert-safari-with-dinner-ras-al-khaimah",
+      "path": "/activities/ras-al-khaimah/desert-safari-with-dinner-ras-al-khaimah/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:quad-biking-ras-al-khaimah",
+      "path": "/activities/ras-al-khaimah/quad-biking-ras-al-khaimah/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:hot-air-balloon-ras-al-khaimah",
+      "path": "/activities/ras-al-khaimah/hot-air-balloon-ras-al-khaimah/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "activity:house-of-pearls-suwaidi-pearl-farm",
+      "path": "/activities/ras-al-khaimah/house-of-pearls-suwaidi-pearl-farm/",
+      "kind": "activity",
+      "state": "live"
+    },
+    {
+      "pageId": "holidays",
+      "path": "/holidays/",
+      "kind": "holidays",
+      "state": "live"
+    },
+    {
+      "pageId": "holidayDest:dubai",
+      "path": "/holidays/dubai/",
+      "kind": "holidayDest",
+      "state": "live"
+    },
+    {
+      "pageId": "holidayDest:abu-dhabi",
+      "path": "/holidays/abu-dhabi/",
+      "kind": "holidayDest",
+      "state": "live"
+    },
+    {
+      "pageId": "holidayDest:ras-al-khaimah",
+      "path": "/holidays/ras-al-khaimah/",
+      "kind": "holidayDest",
+      "state": "live"
+    },
+    {
+      "pageId": "holiday:dubai-grand-stopover",
+      "path": "/holidays/dubai/dubai-grand-stopover/",
+      "kind": "holiday",
+      "state": "live"
+    },
+    {
+      "pageId": "holiday:ultimate-dubai-explorer",
+      "path": "/holidays/dubai/ultimate-dubai-explorer/",
+      "kind": "holiday",
+      "state": "live"
+    },
+    {
+      "pageId": "holiday:dubai-premium-kosher",
+      "path": "/holidays/dubai/dubai-premium-kosher/",
+      "kind": "holiday",
+      "state": "live"
+    },
+    {
+      "pageId": "holiday:dubai-sky-sea-adventure",
+      "path": "/holidays/dubai/dubai-sky-sea-adventure/",
+      "kind": "holiday",
+      "state": "live"
+    },
+    {
+      "pageId": "holiday:dubai-jain-comfort",
+      "path": "/holidays/dubai/dubai-jain-comfort/",
+      "kind": "holiday",
+      "state": "live"
+    },
+    {
+      "pageId": "holiday:dubai-group-indian-meals",
+      "path": "/holidays/dubai/dubai-group-indian-meals/",
+      "kind": "holiday",
+      "state": "live"
+    },
+    {
+      "pageId": "holiday:dubai-easter-short-break",
+      "path": "/holidays/dubai/dubai-easter-short-break/",
+      "kind": "holiday",
+      "state": "live"
+    },
+    {
+      "pageId": "holiday:abu-dhabi-stay-play",
+      "path": "/holidays/abu-dhabi/abu-dhabi-stay-play/",
+      "kind": "holiday",
+      "state": "live"
+    },
+    {
+      "pageId": "holiday:abu-dhabi-grand-with-dubai-day",
+      "path": "/holidays/abu-dhabi/abu-dhabi-grand-with-dubai-day/",
+      "kind": "holiday",
+      "state": "live"
+    },
+    {
+      "pageId": "holiday:abu-dhabi-express-getaway",
+      "path": "/holidays/abu-dhabi/abu-dhabi-express-getaway/",
+      "kind": "holiday",
+      "state": "live"
+    },
+    {
+      "pageId": "holiday:abu-dhabi-explorer-dubai-iconic",
+      "path": "/holidays/abu-dhabi/abu-dhabi-explorer-dubai-iconic/",
+      "kind": "holiday",
+      "state": "live"
+    },
+    {
+      "pageId": "holiday:dubai-marina-overnight",
+      "path": "/holidays/dubai/dubai-marina-overnight/",
+      "kind": "holiday",
+      "state": "live"
+    },
+    {
+      "pageId": "holiday:dubai-skyline-overnight",
+      "path": "/holidays/dubai/dubai-skyline-overnight/",
+      "kind": "holiday",
+      "state": "live"
+    },
+    {
+      "pageId": "holiday:dubai-gardens-seasonal-escape",
+      "path": "/holidays/dubai/dubai-gardens-seasonal-escape/",
+      "kind": "holiday",
+      "state": "live"
+    },
+    {
+      "pageId": "holiday:dubai-city-safari-value",
+      "path": "/holidays/dubai/dubai-city-safari-value/",
+      "kind": "holiday",
+      "state": "live"
+    },
+    {
+      "pageId": "holiday:dubai-downtown-discovery",
+      "path": "/holidays/dubai/dubai-downtown-discovery/",
+      "kind": "holiday",
+      "state": "live"
+    },
+    {
+      "pageId": "holiday:dubai-waterpark-city-explorer",
+      "path": "/holidays/dubai/dubai-waterpark-city-explorer/",
+      "kind": "holiday",
+      "state": "live"
+    },
+    {
+      "pageId": "holiday:dubai-family-discovery-waterpark",
+      "path": "/holidays/dubai/dubai-family-discovery-waterpark/",
+      "kind": "holiday",
+      "state": "live"
+    },
+    {
+      "pageId": "holiday:dubai-family-theme-park-week",
+      "path": "/holidays/dubai/dubai-family-theme-park-week/",
+      "kind": "holiday",
+      "state": "live"
+    },
+    {
+      "pageId": "holiday:ras-al-khaimah-coast-heritage",
+      "path": "/holidays/ras-al-khaimah/ras-al-khaimah-coast-heritage/",
+      "kind": "holiday",
+      "state": "live"
+    },
+    {
+      "pageId": "holiday:ras-al-khaimah-safari-short-break",
+      "path": "/holidays/ras-al-khaimah/ras-al-khaimah-safari-short-break/",
+      "kind": "holiday",
+      "state": "live"
+    },
+    {
+      "pageId": "holiday:ras-al-khaimah-mountain-coast",
+      "path": "/holidays/ras-al-khaimah/ras-al-khaimah-mountain-coast/",
+      "kind": "holiday",
+      "state": "live"
+    },
+    {
+      "pageId": "holiday:ras-al-khaimah-coastal-safari",
+      "path": "/holidays/ras-al-khaimah/ras-al-khaimah-coastal-safari/",
+      "kind": "holiday",
+      "state": "live"
+    },
+    {
+      "pageId": "holiday:ras-al-khaimah-heritage-desert",
+      "path": "/holidays/ras-al-khaimah/ras-al-khaimah-heritage-desert/",
+      "kind": "holiday",
+      "state": "live"
+    },
+    {
+      "pageId": "holiday:ras-al-khaimah-zipline-safari",
+      "path": "/holidays/ras-al-khaimah/ras-al-khaimah-zipline-safari/",
+      "kind": "holiday",
+      "state": "live"
+    },
+    {
+      "pageId": "comparison:dubai-dinner-cruises",
+      "path": "/compare/dubai-dinner-cruises/",
+      "kind": "comparison",
+      "state": "live"
+    },
+    {
+      "pageId": "comparison:uae-water-parks",
+      "path": "/compare/uae-water-parks/",
+      "kind": "comparison",
+      "state": "live"
+    },
+    {
+      "pageId": "comparison:dubai-observation-decks",
+      "path": "/compare/dubai-observation-decks/",
+      "kind": "comparison",
+      "state": "live"
+    },
+    {
+      "pageId": "comparison:uae-balloon-helicopter-experiences",
+      "path": "/compare/uae-balloon-helicopter-experiences/",
+      "kind": "comparison",
+      "state": "live"
+    },
+    {
+      "pageId": "guide:dubai-desert-safari",
+      "path": "/guides/dubai-desert-safari/",
+      "kind": "guide",
+      "state": "live"
+    },
+    {
+      "pageId": "guide:dubai-landmarks",
+      "path": "/guides/dubai-landmarks/",
+      "kind": "guide",
+      "state": "live"
+    },
+    {
+      "pageId": "guide:abu-dhabi-theme-parks",
+      "path": "/guides/abu-dhabi-theme-parks/",
+      "kind": "guide",
+      "state": "live"
+    },
+    {
+      "pageId": "guide:dubai-first-visit-planning",
+      "path": "/guides/dubai-first-visit-planning/",
+      "kind": "guide",
+      "state": "live"
+    },
+    {
+      "pageId": "guide:dubai-family-planning",
+      "path": "/guides/dubai-family-planning/",
+      "kind": "guide",
+      "state": "live"
+    },
+    {
+      "pageId": "guide:choose-a-uae-emirate",
+      "path": "/guides/choose-a-uae-emirate/",
+      "kind": "guide",
+      "state": "live"
+    },
+    {
+      "pageId": "about",
+      "path": "/about/",
+      "kind": "about",
+      "state": "live"
+    },
+    {
+      "pageId": "contact",
+      "path": "/contact/",
+      "kind": "contact",
+      "state": "live"
+    },
+    {
+      "pageId": "faq",
+      "path": "/faq/",
+      "kind": "faq",
+      "state": "live"
+    },
+    {
+      "pageId": "terms",
+      "path": "/terms/",
+      "kind": "terms",
+      "state": "live"
+    },
+    {
+      "pageId": "privacy",
+      "path": "/privacy/",
+      "kind": "privacy",
+      "state": "live"
+    }
+  ]
+}
