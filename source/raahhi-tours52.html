@@ -5624,6 +5624,18 @@ function checkedDateHTML(iso){
   if(date.getUTCFullYear() !== y || date.getUTCMonth() !== mo - 1 || date.getUTCDate() !== day) return "";
   return `<time datetime="${escapeHTML(iso)}">${formatDate(iso)}</time>`;
 }
+// Supplier evidence is kept in the authoring catalogue and is not a public citation.
+function publicListingSources(list){
+  return (list || []).filter(source => {
+    if (!source?.url) return false;
+    try {
+      const host = new URL(source.url).hostname.toLowerCase().replace(/\.$/, "");
+      return !/(^|\.)(raynatours\.com|raynab2b\.com)$/.test(host);
+    } catch {
+      return false;
+    }
+  });
+}
 function sourcesHTML(list){
   return `<ul class="source-list">${(list || []).map(s => {
     const linkDate = checkedDateHTML(s.linkCheckedOn), factsDate = checkedDateHTML(s.lastVerified);
@@ -5647,7 +5659,7 @@ function freshnessSummaryHTML(record, kind){
 function sourcesAndFreshnessHTML(record, kind){
   const isVisa = kind === "visa";
   const src = isVisa ? record.officialSource : null;
-  const sources = isVisa ? (src ? [{name:src.host, url:src.url, type:src.type, linkCheckedOn:src.linkCheckedOn}] : []) : (record.sources || []);
+  const sources = isVisa ? (src ? [{name:src.host, url:src.url, type:src.type, linkCheckedOn:src.linkCheckedOn}] : []) : publicListingSources(record.sources);
   const explanation = isVisa
     ? `Visa rules, fees and processing times for ${escapeHTML(record.country)} are set by government authorities and can change at short notice. Check the current rules before you travel.`
     : record.bookingMode === "official-only" ? "Visitor information is checked against the specific operator sources below. Purchase tickets directly from AquaFun and check current terms with the operator."
@@ -5657,7 +5669,7 @@ function sourcesAndFreshnessHTML(record, kind){
     <h2>Sources and freshness</h2>
     <p class="body-copy">${explanation}</p>
     ${sources.length ? `<div class="source-links">${sourcesHTML(sources)}</div>`
-      : `<p class="source-status">${isVisa ? "No official source link is recorded for this destination. Our team can point you to the official source during your enquiry." : "External source links are not recorded for this listing."}</p>`}
+      : `<p class="source-status">${isVisa ? "No official source link is recorded for this destination. Our team can point you to the official source during your enquiry." : "No external references are listed for this experience."}</p>`}
     ${isVisa ? `<p class="source-status"><strong>Visa type, validity and processing time:</strong> ${factsDate
       ? `Checked against the official source on ${factsDate}.`
       : "RAAHHI TOURS catalogue values, not yet checked against the official source. Our team confirms the current details for your trip."}</p>` : ""}
@@ -7527,7 +7539,7 @@ function pageMeta(c){
         itemNode = serviceItemNode(url, t.title, t.description || t.desc, t.images, t.cat, extra);
       }
       m.nodes = [destNode(t.dest), itemNode];
-      m.citation = (t.sources || []).map(s => s.url);
+      m.citation = publicListingSources(t.sources).map(s => s.url);
       m.about = [{"@id":url + idKey}, {"@id":absUrl("/#destination-" + t.dest)}]; m.mainEntity = {"@id":url + idKey};
       m.image = (t.images || [])[0] || m.image; break;
     }
@@ -7560,7 +7572,7 @@ function pageMeta(c){
       const extra = (p.itinerary || []).length ? {"itinerary":{"@type":"ItemList", "numberOfItems":p.itinerary.length, "itemListElement":p.itinerary.map((it, i) => ({"@type":"ListItem", "position":i + 1, "name":`${it.day}: ${it.text}`}))}} : {};
       if(offer) extra.offers = offer;
       m.nodes = [destNode(p.dest), tripNode(url, p.title, `${durAdj(p.dur)} holiday package in ${d}. Inclusions: ${joinList(p.incl || [])}.`, p.images, extra)];
-      m.citation = (p.sources || []).map(s => s.url);
+      m.citation = publicListingSources(p.sources).map(s => s.url);
       m.about = [{"@id":url + "#trip"}, {"@id":absUrl("/#destination-" + p.dest)}]; m.mainEntity = {"@id":url + "#trip"};
       m.image = (p.images || [])[0] || m.image; break;
     }
@@ -7573,7 +7585,7 @@ function pageMeta(c){
           "author":{"@id":ORG_ID()}, "publisher":{"@id":ORG_ID()}, "dateModified":"2026-10-25", "mainEntityOfPage":{"@id":url + "#webpage"}, "image":imgAt(g.image, 1200),
           "about":{"@id":absUrl("/#destination-" + g.dest)}, "mentions":ids.map(id => ({"@id":absUrl(URLS.activity(byId(id))) + "#trip"}))},
         itemListNode(url + "#list", `Activities compared in the ${g.name}`, ids.map(id => byId(id)).map(t => ({path:URLS.activity(t), name:t.title})))];
-      m.citation = [...new Set(ids.flatMap(id => (byId(id).sources || []).map(s => s.url)))];
+      m.citation = [...new Set(ids.flatMap(id => publicListingSources(byId(id).sources).map(s => s.url)))];
       m.mainEntity = {"@id":url + "#article"}; m.about = [{"@id":absUrl("/#destination-" + g.dest)}]; m.image = g.image || m.image; break;
     }
     case "about":
