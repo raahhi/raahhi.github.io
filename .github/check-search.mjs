@@ -24,7 +24,7 @@ try {
    decks:relatedActivities(TOURS.find(t=>t.id==='burj-khalifa-top')).slice(0,2).every(t=>['sky-views-observatory','the-view-at-the-palm'].includes(t.id)),
    repeatable:JSON.stringify(relatedActivities(TOURS[0]))===JSON.stringify(relatedActivities(TOURS[0])),
    statusHonesty:statusInfo({status:'unable-to-verify'}).label==='Confirm availability'&&statusInfo({status:'temporarily-closed'}).label==='Check reopening'&&statusOf({})==='unable-to-verify',
-   summaryConsistency:!activitySummaryText(TOURS.find(t=>t.id==='evening-desert-safari')).toLowerCase().includes('sandboarding')&&activitySummaryText(TOURS.find(t=>t.id==='evening-desert-safari')).toLowerCase().includes('barbecue'),
+   summaryConsistency:!activitySummaryText(TOURS.find(t=>t.id==='evening-desert-safari')).toLowerCase().includes('sandboarding')&&/\b(?:barbecue|bbq)\b/i.test(activitySummaryText(TOURS.find(t=>t.id==='evening-desert-safari'))),
    truthfulAvailability:all.every(t=>!availabilityAnswer(t).includes('is available')),
 
   };
