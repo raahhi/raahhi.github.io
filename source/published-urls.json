@@ -1629,6 +1629,24 @@
       "path": "/privacy/",
       "kind": "privacy",
       "state": "live"
+    },
+    {
+      "pageId": "destinationHub:dubai",
+      "path": "/dubai/",
+      "kind": "destinationHub",
+      "state": "live"
+    },
+    {
+      "pageId": "category:dubai-desert-safaris",
+      "path": "/activities/dubai/categories/desert-safaris/",
+      "kind": "category",
+      "state": "live"
+    },
+    {
+      "pageId": "category:dubai-cruises",
+      "path": "/activities/dubai/categories/cruises/",
+      "kind": "category",
+      "state": "live"
     }
   ]
 }

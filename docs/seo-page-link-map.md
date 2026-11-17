@@ -25,14 +25,15 @@ The guard verifies complete route coverage, canonical/robots/sitemap agreement, 
 | Comparison | `/compare/{slug}/` | Decide among distinct options | Clarify browse-versus-comparison intent, especially UAE water parks. |
 | Company | Current about/contact/FAQ/policy paths | Identity, help and accurate terms | Remain connected to commercial journeys. |
 
-Proposed new paths are not yet published:
+The Dubai pilot adds `/dubai/`, `/activities/dubai/categories/desert-safaris/` and `/activities/dubai/categories/cruises/`, increasing the registered inventory to 274. Existing paths remain unchanged. The planning hub is linked from the homepage and relevant Dubai pages; city categories link to the country category and every mapped product, whose primary breadcrumbs link back. Remaining expansion candidates follow below.
 
 | Proposed role/path | Owns | Links |
 |---|---|---|
 | `/uae/` | Multi-emirate planning and country overview | City planning hubs, activities, holidays, UAE visa and emirate guide. |
-| `/dubai/` | Dubai stay length, districts and transport | Dubai services, guides and relevant country essentials. |
+| `/dubai/` (pilot) | Connect stay length, activity choices, hotel/transfer arrangements and entry checks | Dubai services, city categories and relevant guides. |
 | `/abu-dhabi/`, `/ras-al-khaimah/` | Their own local planning | Their services and genuinely relevant guides/day trips. |
-| `/activities/dubai/categories/desert-safaris/` | Choosing a Dubai safari | All mapped products, Dubai list, UAE safari category and safari guide. |
+| `/activities/dubai/categories/desert-safaris/` (pilot) | Choosing a Dubai safari | All mapped products, Dubai list, UAE safari category and safari guide. |
+| `/activities/dubai/categories/cruises/` (pilot) | Choosing a Dubai cruise or yacht outing | All mapped products, Dubai list, UAE cruise category and dinner-cruise comparison. |
 | `/attractions/dubai/burj-khalifa/` | Ticket-tier/combination choice and visit facts | Mapped products, Dubai list, deck comparison and nearby attractions. |
 | `/guides/` and useful destination guide hubs | Editorial discovery | Existing guides and matched commercial pages. |
 
