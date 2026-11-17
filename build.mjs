@@ -11,7 +11,7 @@ const ROOT = process.cwd();
 const DIST = join(ROOT, 'dist');
 const SOURCE_FILE = join(ROOT, 'source', 'raahhi-tours52.html');
 const EXPECTED_ORIGIN = 'https://raahhi.com';
-const EXPECTED_SITEMAP_URLS = 271;
+const EXPECTED_SITEMAP_URLS = 274;
 const publishedURLs = JSON.parse(await readFile(join(ROOT, 'source', 'published-urls.json'), 'utf8'));
 validateRegistry(publishedURLs, registryAtRef(process.env.RAAHHI_URL_BASELINE || 'HEAD'));
 // Image errors can fire while the parser is still reading the page, before app.js loads.
@@ -137,9 +137,9 @@ async function snapshot(route) {
       const doc=document.documentElement.cloneNode(true);
       doc.querySelectorAll('.page:not(.active), #__prerender').forEach(el=>el.remove());
       const id=c.kind === 'activity' || c.kind === 'addon' ? c.t.id : c.kind === 'holiday' ? c.p.id
-        : c.kind === 'visa' ? slugify(c.v.country) : c.kind === 'category' ? c.category.slug
+        : c.kind === 'visa' ? slugify(c.v.country) : c.kind === 'category' ? (c.category.id || c.category.slug)
         : c.kind === 'comparison' ? c.comparison.slug : c.kind === 'guide' ? c.key
-        : ['activityDest','holidayDest'].includes(c.kind) ? c.dest : null;
+        : ['activityDest','holidayDest','destinationHub'].includes(c.kind) ? c.dest : null;
       return {pageId:c.kind+(id ? ':'+id : ''),canonical:doc.querySelector('link[rel="canonical"]')?.getAttribute('href'),
         ids:[...doc.querySelectorAll('[id]')].map(el=>el.id),
         links:[...doc.querySelectorAll('a[href]')].map(a=>({href:a.getAttribute('href'),rel:a.getAttribute('rel'),target:a.getAttribute('target')}))};
@@ -227,7 +227,7 @@ try {
         planningEdges.push({from:route, to:link.href});
       }
     }
-    if (['activity', 'holiday', 'guide', 'category', 'comparison', 'activityDest', 'holidayDest', 'addon'].includes(data.kind) && !(data.planning || []).length) {
+    if (['activity', 'holiday', 'guide', 'category', 'comparison', 'activityDest', 'holidayDest', 'destinationHub', 'addon'].includes(data.kind) && !(data.planning || []).length) {
       throw new Error('Missing contextual planning links on ' + route);
     }
   }
