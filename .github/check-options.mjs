@@ -235,6 +235,46 @@ try{
  assert.equal(packageDetails['Selected option'],marinaHotel.label);
  await page.locator('#contactModal .modal-close').click();
 
+ for(const [city,count] of [['abu-dhabi',4],['ras-al-khaimah',6]]){
+  await open('/holidays/'+city+'/');
+  const rows=page.locator('#pkgDestGuide tbody tr');
+  assert.equal(await rows.count(),count);
+  const packagePaths=await rows.locator('th a').evaluateAll(links=>links.map(link=>link.getAttribute('href')));
+  for(const path of packagePaths){
+   const id=path.split('/').filter(Boolean).at(-1);
+   const row=rows.filter({has:page.locator('a[href="'+path+'"]')});
+   const price=prices[id];
+   if(price?.amount>0){
+    assert.equal(await row.locator('[data-usd-cents="'+Math.round(price.amount*100)+'"]').count(),1);
+    assert.match(await row.locator('.price-basis').textContent(),/per person/);
+   }else assert.match(await row.textContent(),/Price confirmed on enquiry/);
+  }
+  if(city==='abu-dhabi'){
+   assert.equal(await page.getByRole('link',{name:'Compare Abu Dhabi theme parks for your holiday'}).getAttribute('href'),'/guides/abu-dhabi-theme-parks/');
+  }
+ }
+ await open('/activities/ras-al-khaimah/');
+ const musandam='musandam-dibba-tour',musandamPath='/activities/ras-al-khaimah/'+musandam+'/';
+ await page.locator('.product-card h3 a[href="'+musandamPath+'"]').click();
+ await waitForProduct(musandamPath);
+ const place=page.locator('.key-facts dt').filter({hasText:/^Destination$/}).locator('xpath=following-sibling::dd[1]');
+ assert.equal(await place.textContent(),'Musandam, Oman');
+ const shared=registry[musandam].options.find(option=>option.label.endsWith('Sharing transfer'));
+ await page.locator('[data-product-option="'+musandam+'"]').selectOption(shared.id);
+ await page.locator('.mobile-enquiry-bar button').click();
+ await enterText('#callbackName','Musandam Test');
+ await enterText('#callbackPhone','+971501234567');
+ const beforeMusandam=submissions.length;
+ await page.locator('#callbackSubmit').click();
+ await page.locator('#callbackDone').waitFor({state:'visible'});
+ assert.equal(submissions.length,beforeMusandam+1);
+ const musandamPayload=submissions.at(-1),musandamDetails=Object.fromEntries(musandamPayload.details);
+ assert.equal(musandamPayload.category,'Activities');
+ assert.equal(musandamPayload.page,'https://raahhi.com'+musandamPath);
+ assert.equal(musandamDetails.Destination,'Musandam, Oman');
+ assert.equal(musandamDetails['Option reference'],shared.id);
+ await page.locator('#contactModal .modal-close').click();
+
  await open('/holidays/dubai/dubai-grand-stopover/');
  const holiday='dubai-grand-stopover',hotel=registry[holiday].options[0];assert(hotel);
  await page.locator('[data-product-option="'+holiday+'"]').selectOption(hotel.id);

@@ -4722,7 +4722,8 @@ function setActivePkgDest(slug){
     lede: list.length
       ? `RAAHHI TOURS lists ${list.length} holiday ${list.length === 1 ? "package" : "packages"} based in ${name}, from ${nightRange(list)}. Compare day-by-day itineraries, inclusions, and starting prices and hotel details where available. Final quotes and availability are confirmed on enquiry.`
       : `No holiday packages are listed for ${name} yet.`})}
-  ${slug === "dubai" ? dubaiPackageChooserHTML(list) : ""}`;
+  ${slug === "dubai" ? dubaiPackageChooserHTML(list) : ""}
+  ${slug === "abu-dhabi" ? `<p class="body-copy"><a class="contact-link" href="${URLS.guide("abu-dhabi-theme-parks")}">Compare Abu Dhabi theme parks for your holiday</a></p>` : ""}`;
     tiles.style.display = "none";
     document.getElementById("pkgGridTitle").textContent = list.length ? `All ${name} holiday packages` : "";
     document.getElementById("pkgGridTitle").hidden = !list.length;
@@ -5013,7 +5014,7 @@ function enquireAboutProduct(kind, id, mode){
     if(rawDate && rawDate < todayISO()){ setFieldError("tourEnqDate", "Preferred date can't be in the past."); document.getElementById("tourEnqDate").scrollIntoView({block:"center"}); document.getElementById("tourEnqDate").focus({preventScroll:true}); return; }
     setFieldError("tourEnqDate", "");
     openCallback({kind: mode === "booking" ? "Booking request" : mode === "updates" ? "Update request" : (kind === "addon" ? "Visa add-on" : "Activity"), noun:"activity", category:kind==="addon"?"Visas":"Activities", title:t.title, details:[
-      ["Destination", kind === "addon" ? "UAE arrival" : destName(t.dest)], ["Availability", statusInfo(t).label],
+      ["Destination", kind === "addon" ? "UAE arrival" : activityDestinationName(t)], ["Availability", statusInfo(t).label],
       ["Preferred date", rawDate && new Date(rawDate+"T00:00").toLocaleDateString(undefined,{day:"numeric", month:"long", year:"numeric"})],
       ["Guests", count("tourEnqGuests")],
       ...enquiryPriceRows(t),
@@ -6419,7 +6420,7 @@ function holidayDestGuideHTML(slug){
   const byNights = [...new Set(list.map(nightsOf).filter(n => n != null))].sort((a, b) => a - b)
     .map(n => `<li><strong>${n} ${n === 1 ? "night" : "nights"}</strong>${joinList(list.filter(p => nightsOf(p) === n).map(link))}</li>`).join("");
   const transfers = list.filter(p => (p.incl || []).some(i => /transfer/i.test(i)));
-  const showPrices = slug === "dubai";
+  const showPrices = ["dubai", "abu-dhabi", "ras-al-khaimah"].includes(slug);
   const rows = list.map(p => {
     const a = packageAccommodation(p);
     return `<tr><th scope="row">${link(p)}</th><td>${hasRealValue(p.dur) ? durText(p.dur) : "Confirmed on enquiry"}</td>${showPrices ? `<td>${priceInfo(p).known ? priceBlockHTML(p, true) : PACKAGE_PRICE_MISSING}</td>` : ""}<td>${a ? escapeHTML(accommodationSummary(a)) : "Not listed"}</td><td>${(p.incl || []).join(", ")}</td></tr>`;
@@ -6437,7 +6438,7 @@ function holidayDestGuideHTML(slug){
     destHasTours(slug) ? `Want to add day trips? The <a href="${URLS.activityDest(slug)}">${d} activities</a> are listed separately and can be enquired about on their own.` : "",
   ].filter(Boolean);
   return `<section class="dest-guide" aria-labelledby="pkgDestGuideTitle">
-      <h2 id="pkgDestGuideTitle"${showPrices ? ' tabindex="-1"' : ""}>Compare ${d} holiday packages</h2>
+      <h2 id="pkgDestGuideTitle"${slug === "dubai" ? ' tabindex="-1"' : ""}>Compare ${d} holiday packages</h2>
       ${planningLinksHTML(slug, URLS.holidayDest(slug), GUIDES.filter(g => g.dest === slug || list.some(p => packageGuides(p).includes(g))))}
       <p class="body-copy">Each ${d} package page lists a day-by-day itinerary, the inclusions and the accommodation details that are known. This table puts the ${list.length} packages side by side.</p>
       <div class="table-scroll"><table class="data-table">
@@ -6721,12 +6722,15 @@ function renderVisaAddons(){
   el.innerHTML = VISA_ADDONS.map(tourCard).join("");
   initSlideshows(el);
 }
+function activityDestinationName(t){
+  return t.id === "musandam-dibba-tour" ? "Musandam, Oman" : destName(t.dest);
+}
 function tourCard(t){
   const images = t.images.slice(0,1);
   const href = itemURL(t), price = priceInfo(t);
   // The `badge` field (Popular / New / …) is never rendered: no data backs popularity or recency claims.
   return `<article class="product-card reveal">
-    <div class="pc-media">${slideshowHTML(images, t.title, "", {href, meta:`${destName(t.dest)} · ${t.cat}`, deferSlides:true})}</div>
+    <div class="pc-media">${slideshowHTML(images, t.title, "", {href, meta:`${activityDestinationName(t)} · ${t.cat}`, deferSlides:true})}</div>
     <div class="pc-content">
       <h3><a href="${href}">${t.title}</a></h3>
       <div class="pc-meta">${statusTagHTML(t)}<span>${t.cat}</span>${hasRealValue(t.duration) ? `<span>${t.duration}</span>` : ""}</div>
@@ -7037,7 +7041,7 @@ function renderTourDetail(id, expectedDest, opts){
     return;
   }
   if(relatedSection) relatedSection.style.display = "";
-  const dn = destName(t.dest), price = priceInfo(t);
+  const dn = destName(t.dest), tripDestination = activityDestinationName(t), price = priceInfo(t);
   if(breadcrumb) breadcrumb.innerHTML = isAddon
     ? breadcrumbHTML([{label:"Home", href:"/"}, {label:"Visas", href:"/visas/"}, {label:"Arrival essentials"}, {label:t.title, href:URLS.addon(t)}])
     : breadcrumbHTML([{label:"Home", href:"/"}, {label:"Activities", href:"/activities/"}, {label:dn, href:URLS.activityDest(t.dest)}, {label:t.title, href:URLS.activity(t)}]);
@@ -7045,7 +7049,7 @@ function renderTourDetail(id, expectedDest, opts){
   backLink.href = isAddon ? "/visas/" : URLS.activityDest(t.dest);
   backLink.textContent = isAddon ? "← Back to visas" : "← Back to "+dn+" activities";
   const st = statusOf(t), sti = statusInfo(t);
-  setDetailGallery("tourDetailGallery", "tourDetailCredit", t.images, t.title, `${dn} · ${t.cat}`, PRODUCT_PHOTO_CONTEXT[t.id]);
+  setDetailGallery("tourDetailGallery", "tourDetailCredit", t.images, t.title, `${tripDestination} · ${t.cat}`, PRODUCT_PHOTO_CONTEXT[t.id]);
 
   /* Every optional section renders only when the activity carries that data (see the schema
      notes above TOURS); a missing field means no section and no empty heading. */
@@ -7088,9 +7092,9 @@ function renderTourDetail(id, expectedDest, opts){
   document.getElementById("tourDetailMain").innerHTML = `
     <h1>${t.title}</h1>
     ${sti.note ? `<div class="status-banner status-${st}" role="status"><strong>${sti.label}.</strong> ${sti.note}</div>` : ""}
-    <div class="detail-tags">${statusTagHTML(t)}<span class="tag">${dn}</span><span class="tag">${t.cat}</span>${hasRealValue(t.duration) ? `<span class="tag">${t.duration}</span>` : ""}</div>
+    <div class="detail-tags">${statusTagHTML(t)}<span class="tag">${tripDestination}</span><span class="tag">${t.cat}</span>${hasRealValue(t.duration) ? `<span class="tag">${t.duration}</span>` : ""}</div>
     ${detailEnquiryHTML(t, isAddon ? "addon" : "activity")}
-    ${atAGlanceHTML(compactDescription(t), [[isAddon ? "Service" : "Destination", isAddon ? `<a class="contact-link" href="/visas/">UAE arrival essentials</a>` : `<a class="contact-link" href="${URLS.activityDest(t.dest)}">${dn}</a>`], ["Category", t.cat], ["Duration", hasRealValue(t.duration) ? t.duration : ""], ["Timing", t.id === "overnight-desert-safari" ? overnightFact(t,"timing") : t.timing || ""], ["Availability", sti.label], ["Price", t.bookingMode === "official-only" ? "Check the official ticket website" : selectedPriceHTML(t)]], "", freshnessSummaryHTML(t, isAddon ? "addon" : "activity"))}
+    ${atAGlanceHTML(compactDescription(t), [[isAddon ? "Service" : "Destination", isAddon ? `<a class="contact-link" href="/visas/">UAE arrival essentials</a>` : tripDestination === dn ? `<a class="contact-link" href="${URLS.activityDest(t.dest)}">${dn}</a>` : escapeHTML(tripDestination)], ["Category", t.cat], ["Duration", hasRealValue(t.duration) ? t.duration : ""], ["Timing", t.id === "overnight-desert-safari" ? overnightFact(t,"timing") : t.timing || ""], ["Availability", sti.label], ["Price", t.bookingMode === "official-only" ? "Check the official ticket website" : selectedPriceHTML(t)]], "", freshnessSummaryHTML(t, isAddon ? "addon" : "activity"))}
     ${sections.join("")}
     <div class="detail-section"><h2>${t.title}: common questions</h2>${qaHTML(productFaqItems(t,mergeFaqItems(t.faqs || [], isAddon ? [] : activityFaqItems(t))))}</div>`;
   moveDetailHeading("tour");
@@ -7251,6 +7255,7 @@ function jumpToProductSection(event, id){
   target.focus({preventScroll:true});
 }
 function activitySummaryText(record){
+  if(record.id === "musandam-dibba-tour") return "Cruise from Dibba harbour in Oman’s Musandam region. Choose Dubai pickup with the shared transfer option, or meet at the harbour.";
   if(record.id === "overnight-desert-safari") return "Overnight camp stay with dinner and breakfast. Pickup and timing vary by option.";
   if(record.id === "evening-desert-safari") return "Dune bashing, camel ride and BBQ dinner. Evening Premium options list BBQ in a reserved area.";
   if(record.id === "premium-desert-safari") return "Standalone safari with a camp camel ride, traditional BBQ, Tanura and double-apple shisha.";
@@ -7600,22 +7605,25 @@ function pageMeta(c){
       // Only a real tour/cruise is a TouristTrip; every other activity type is a generic Service
       // (RAAHHI is not verified as the underlying operator of every individual experience).
       const isTrip = /^(tour|cruise)$/.test(t.productType || "");
+      const destination = t.id === "musandam-dibba-tour"
+        ? {"@type":"TouristDestination", "@id":url + "#destination", "name":activityDestinationName(t), "containedInPlace":{"@type":"Country","name":"Oman"}}
+        : destNode(t.dest);
       const idKey = t.bookingMode === "official-only" ? "#place" : isTrip ? "#trip" : "#service";
       let itemNode;
       if(t.bookingMode === "official-only"){
         itemNode = {"@type":"TouristAttraction", "@id":url + "#place", name:t.title, description:t.description, sameAs:t.officialBookingUrl, isAccessibleForFree:false};
       } else if(isTrip){
-        const extra = {"itinerary":{"@id":absUrl("/#destination-" + t.dest)}};
+        const extra = {"itinerary":{"@id":destination["@id"]}};
         if(offer) extra.offers = offer;
         itemNode = tripNode(url, t.title, t.description || t.desc, t.images, extra);
       } else {
-        const extra = {"areaServed":{"@id":absUrl("/#destination-" + t.dest)}};
+        const extra = {"areaServed":{"@id":destination["@id"]}};
         if(offer) extra.offers = offer;
         itemNode = serviceItemNode(url, t.title, t.description || t.desc, t.images, t.cat, extra);
       }
-      m.nodes = [destNode(t.dest), itemNode];
+      m.nodes = [destination, itemNode];
       m.citation = publicListingSources(t.sources).map(s => s.url);
-      m.about = [{"@id":url + idKey}, {"@id":absUrl("/#destination-" + t.dest)}]; m.mainEntity = {"@id":url + idKey};
+      m.about = [{"@id":url + idKey}, {"@id":destination["@id"]}]; m.mainEntity = {"@id":url + idKey};
       m.image = (t.images || [])[0] || m.image; break;
     }
     case "holidays":
