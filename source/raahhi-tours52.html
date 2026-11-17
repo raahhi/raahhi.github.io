@@ -5503,7 +5503,7 @@ function visaFaqItems(v){
     ? `The listed starting fee is ${priceHTML(priceInfo(v))}. Final fees, including any government charges, are confirmed during your enquiry.`
     : `Fees depend on the visa type and your circumstances. Our team confirms the current fees, including any government charges, during your enquiry. No payment is needed to enquire.`});
   items.push({q:`Does RAAHHI TOURS decide whether my ${n} visa is approved?`, a:`No. Visa decisions are made by the relevant government authority. RAAHHI TOURS cannot guarantee approval or processing times.`});
-  items.push({q:`How do I start a ${n} visa enquiry?`, a:`Select “Start Visa Enquiry” on this page and enter your name, email, phone number and, if you know it, your travel date. Submit to save your enquiry and receive a reference. Continue by email and press Send to speak with our visa team.`});
+  items.push({q:`How do I start a ${n} visa enquiry?`, a:`Select Start Visa Enquiry and enter your contact details, passport nationality, country of residence, travel purpose, applicant count and dates or flexibility. Submit to save the enquiry and receive a reference. Then choose WhatsApp or email and send the prepared message.`});
   if(src) items.push({q:`Where can I check the official ${n} visa rules?`, a:`On the official source, ${sourceLinkHTML(src)}. Government rules can change at short notice, so check there before you travel.`});
   return items;
 }
@@ -5942,9 +5942,9 @@ function priceBlockHTML(record, compact = false){
   return priceHTML(price) + (basis ? `<span class="price-basis">${escapeHTML(basis)}</span>` : "");
 }
 function enquiryJourneyHTML(kind){
-  const first = kind === "visa" ? "Share your nationality and travel plans" : "Choose your dates and guests";
+  const first = kind === "visa" ? "Share your passport nationality and travel plans" : "Choose your dates and guests";
   return `<div class="enquiry-journey" aria-label="Enquiry steps"><h3>How your enquiry works</h3><ol>
-    <li><strong>${first}</strong><span>Save your enquiry and reference, then continue by email and press Send. You can also copy your details.</span></li>
+    <li><strong>${first}</strong><span>${kind === "visa" ? "Submit to save your enquiry and receive a reference. Then choose WhatsApp or email and send the prepared message." : "Save your enquiry and reference, then continue by email and press Send. You can also copy your details."}</span></li>
     <li><strong>Receive a confirmed quote</strong><span>Our team checks availability${kind === "visa" ? ", requirements and fees" : ", inclusions and the final price"}.</span></li>
     <li><strong>Review before proceeding</strong><span>Check the confirmed details and terms before payment.</span></li>
   </ol></div>`;
@@ -6923,6 +6923,15 @@ function renderVisaDetail(slug){
     <h1><span aria-hidden="true">${v.flag}</span> ${n} visa assistance</h1>
     <div class="detail-tags"><span class="tag">${typeText}</span><span class="tag">Validity: ${validityText}</span></div>
     ${detailEnquiryHTML(v, "visa", slugV)}
+    ${slugV === "united-arab-emirates" ? `<section class="detail-section" aria-labelledby="uaeEntryRoutesTitle">
+      <h2 id="uaeEntryRoutesTitle">Check your UAE entry route</h2>
+      <p class="body-copy">Start with the nationality on the passport you will travel on. Check your country of residence separately, especially if you hold a residence permit from another GCC country.</p>
+      <ul class="plain-list">
+        <li><a class="contact-link" href="https://u.ae/en/information-and-services/visa-and-emirates-id/Visa-information/do-you-need-an-entry-permit-or-a-visa-to-enter-the-uae">Visa-free entry or visa on arrival</a>. Check the UAE government’s eligibility guidance for your passport.</li>
+        <li><a class="contact-link" href="https://u.ae/en/information-and-services/visa-and-emirates-id/residence-visas/tourist-visa">Pre-arranged tourist visa</a>. Check this route if your trip is for tourism and you need a visa before departure.</li>
+        <li><a class="contact-link" href="https://u.ae/en/information-and-services/visa-and-emirates-id/residence-visas/evisa-for-gcc-residents">GCC resident eVisa</a>. If you hold a GCC residence permit, check this separate route and its conditions.</li>
+      </ul>
+    </section>` : ""}
     ${atAGlanceHTML(`RAAHHI TOURS helps you understand ${n} visa options and prepare your application information. Requirements, fees and eligibility are confirmed for your passport and trip; government authorities decide approval.`, [["Destination", n], ["Visa type", typeText], ["Validity", validityText], ["Typical processing time", dateText], ["Fee", feeText]], detailNote, freshnessSummaryHTML(vm, "visa"))}
     <div class="detail-section">
       <h2>What ${n} visa requirements depend on</h2>
@@ -6957,8 +6966,9 @@ function renderVisaDetail(slug){
       <h2>How to start a ${n} visa enquiry</h2>
       <ol class="plain-list">
         <li>Select <strong>Start Visa Enquiry</strong> on this page.</li>
-        <li>Enter your name, email and phone number, and your travel date if you know it.</li>
-        <li>Use Continue by email or Open email enquiry, then review and send the message in that app. You choose when to send the enquiry in your email app.</li>
+        <li>Enter your name, email and phone number. Add your passport nationality, country of residence, travel purpose, number of applicants and travel date or select flexible dates.</li>
+        <li>Submit the form to save your enquiry and receive a reference.</li>
+        <li>Choose <strong>Start WhatsApp chat</strong> or <strong>Open email enquiry</strong>, then review and send the prepared message in your chosen app.</li>
       </ol>
     </div>
     <p class="form-note">Your executive confirms the final document list for your nationality, residence and selected application route before you proceed.</p>
@@ -6978,7 +6988,7 @@ function renderVisaDetail(slug){
     <div class="field"><label>Visa type</label><p style="margin-top:6px; font-size:14.5px; color:var(--ink-600);">${typeText}</p></div>
     <div class="field"><label>Typical processing time</label><p style="margin-top:6px; font-size:14.5px; color:var(--ink-600);">${dateText}</p></div>
     <button type="button" class="btn btn-gold btn-block" style="margin-top:16px;" onclick="openVisaEnquiry('${slugV}')">Start Visa Enquiry</button>
-    <p class="form-note" style="text-align:center;">Confirm requirements and current fees with our team. Submitting saves an enquiry; continue by email and press Send to speak with our team. No payment required to enquire.</p>${enquiryJourneyHTML("visa")}`;
+    <p class="form-note" style="text-align:center;">Confirm requirements and current fees with our team. Submit to save an enquiry and receive a reference. Then choose WhatsApp or email. No payment required to enquire.</p>${enquiryJourneyHTML("visa")}`;
   document.getElementById("visaDetailFaqTitle").textContent = `${n} visa questions`;
   document.getElementById("visaDetailFaq").innerHTML = qaHTML(productFaqItems(v,visaFaqItems(v)));
 }

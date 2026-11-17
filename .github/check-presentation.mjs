@@ -36,7 +36,12 @@ try{
    if(width>900){assert(panel.x>gallery.x+gallery.width,'Desktop enquiry is beside the gallery');assert(Math.abs(panel.y-gallery.y)<2,'Enquiry and gallery start together');}
    else assert(panel.y>gallery.y+gallery.height,'Mobile enquiry follows the gallery and information');
    assert.equal(await active.locator('.enquiry-journey li').count(),3,'Three accurate enquiry steps');
-   assert((await active.locator('.enquiry-journey').textContent()).includes('copy'),'Journey explains the existing manual handoff');
+   const journey=await active.locator('.enquiry-journey').textContent();
+   if(route.startsWith('/visas/')){
+    assert.match(journey,/receive a reference.*choose WhatsApp or email and send the prepared message/);
+   }else{
+    assert(journey.includes('copy'),'Journey explains the existing manual handoff');
+   }
    const nav=active.locator('.detail-section-nav');
    assert(await nav.locator('a').count()>=3,'Useful crawlable section navigation');
    const target=(await nav.locator('a').first().getAttribute('href')).slice(1);
