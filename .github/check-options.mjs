@@ -47,6 +47,10 @@ try{
   assert.equal(await field.inputValue(),value);
  };
  const open=async route=>{await page.goto(base+route);await page.waitForFunction(()=>!document.querySelector('[data-currency-select]').disabled);};
+ const waitForProduct=async path=>{
+  await page.waitForURL(base+path);
+  await page.waitForFunction(()=>typeof chooseProductOption==='function'&&document.querySelector('[data-currency-select]')?.disabled===false);
+ };
  const safari='evening-desert-safari',choices=registry[safari].options;
  await open('/activities/dubai/'+safari+'/');
  const picker=page.locator('[data-product-option="'+safari+'"]');
@@ -181,6 +185,7 @@ try{
  const sky=deckRows.filter({has:page.locator('a[href="/activities/dubai/sky-views-observatory/"]')});
  assert.match(await sky.textContent(),/One Glass Slide ride.*No transfer/);
  await sky.getByRole('link',{name:'Sky Views Observatory'}).click();
+ await waitForProduct('/activities/dubai/sky-views-observatory/');
  const skyOption=registry['sky-views-observatory'].options[0];
  await page.locator('[data-product-option="sky-views-observatory"]').selectOption(skyOption.id);
  await page.locator('.mobile-enquiry-bar button').click();
@@ -213,6 +218,7 @@ try{
  assert.match(await easter.textContent(),/Price confirmed on enquiry/);
  assert.equal(await easter.locator('[data-usd-cents]').count(),0);
  await chooser.getByRole('link',{name:'Dubai Marina Overnight Escape'}).click();
+ await waitForProduct('/holidays/dubai/'+marina+'/');
  const marinaHotel=registry[marina].options[0];
  await page.locator('[data-product-option="'+marina+'"]').selectOption(marinaHotel.id);
  await page.locator('.mobile-enquiry-bar button').click();
