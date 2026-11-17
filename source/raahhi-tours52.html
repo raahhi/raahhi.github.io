@@ -5530,6 +5530,8 @@ function activityDestFaqItems(slug){
 }
 // Questions about how this website itself works -- shown on the FAQ page.
 const SITE_FAQ = [
+  {q:"Does a listing status confirm availability for my date?",a:"No. A status describes the catalogue record, not live places for your dates. Seasonal dates, current operating details, the selected option and the final price are confirmed during your enquiry before booking."},
+  {q:"Do all activity tickets include the same services?",a:"No. Each product and option has its own inclusions, exclusions, transfer arrangements and cancellation terms. Read the exact listing and confirm your chosen option in the quote; a photograph or a similar product name does not establish an inclusion."},
   {q:"Can I book or pay on this website?", a:"No. RAAHHI TOURS products are enquiry-based: prices, availability and visa requirements are confirmed directly with our team, and nothing is booked or charged on this website."},
   {q:"Is my enquiry sent when I submit a form?", a:`Submitting saves your enquiry with RAAHHI TOURS and displays a reference. Continue by email, review the message and press Send to start the conversation. Saving an enquiry does not send a WhatsApp message or confirm a booking.`},
   {q:"Which destinations do RAAHHI TOURS activities and holidays cover?", a:"__COVERAGE__"},
@@ -6118,7 +6120,7 @@ const CATEGORY_INFO = {
   "Dining & Events": "Dining experiences, shows and date-specific events.",
   "Transfers": "Airport, intercity and in-city transfers, and vehicles with a driver.",
 };
-// One substantial page per catalogue category; no destination/category route permutations.
+// Country categories compare the actual UAE inventory; selected city categories have distinct local choosing content.
 const ACTIVITY_CATEGORIES = [
   {name:"Desert Safari", slug:"desert-safaris", title:"UAE desert safaris", compare:"Choose your departure emirate, then compare morning, evening and overnight formats. Check whether your option includes a shared or private transfer, meals and any extras you want. Options with similar names can include different activities."},
   {name:"City Tours", slug:"city-tours", title:"UAE city tours and sightseeing", compare:"Check the route and named stops, whether the listing is a guided tour or an individual venue, and the pickup or meeting point."},
@@ -6134,9 +6136,36 @@ const ACTIVITY_CATEGORIES = [
 ].filter(c => TOURS.filter(t => t.cat === c.name).length >= 3);
 // City categories are distinct browsing pages; the country categories retain their URLs.
 const CITY_ACTIVITY_CATEGORIES = [
+  {id:"dubai-theme-parks",dest:"dubai",name:"Theme Parks",slug:"theme-parks",title:"Dubai theme parks and indoor attractions",intro:"Browse Dubai park tickets, indoor play and entertainment listings. This collection includes different outing formats, from a park day to skating, snow or a play session.",compare:"Start with the experience and time your group wants, then compare the exact admission or session. Large parks, multi-park passes and indoor entertainment have different inclusions. Check the child's age or height requirements, which adults need tickets, and whether transfers or extras are included.",selection:[
+    ["A park day or multiple parks","Compare the named park admissions with the Dubai Parks and Resorts pass; check the pass's included venues and validity.",["img-worlds-of-adventure","legoland-dubai","motiongate-dubai","real-madrid-world-dubai","dubai-parks-and-resorts-multi-park-pass"]],
+    ["Play and entertainment indoors","Compare the actual session and participation conditions rather than assuming every venue is a full-day theme park.",["kidzania-dubai","olioli-childrens-play-museum","play-dxb","loco-bear-entertainment-hub"]],
+    ["Snow, ice or a cold-room visit","Choose the activity first: a snow ticket, a skating session and an ice-lounge visit have different clothing and participation needs.",["ski-dubai","dubai-ice-rink","chillout-ice-lounge-dubai"]]
+  ]},
+  {id:"dubai-water-parks",dest:"dubai",name:"Water Parks",slug:"water-parks",title:"Dubai water parks and inflatable water play",intro:"Browse Dubai water-park admissions and the separate inflatable-water-play listing at JBR. Choose a product below for its ticket options, participant conditions and booking route.",compare:"Choose between a ride park and inflatable water play before comparing prices. Check the selected ticket's admissions, slide or activity restrictions, swimming requirements and supervision conditions. Add transfers and on-site extras only when they are listed as included; AquaFun directs you to its official booking website.",selection:[
+    ["Water-park admissions","Open each park for its own ticket inclusions and restrictions; neighbouring attractions and upgraded passes are separate choices.",["atlantis-aquaventure","wild-wadi-water-park","legoland-water-park-dubai"]],
+    ["Inflatable water play at JBR","AquaFun uses an official-only booking route. Read its conditions and continue to the operator when ready to buy.",["aqua-fun-dubai"]]
+  ]},
   {id:"dubai-desert-safaris",dest:"dubai",name:"Desert Safari",slug:"desert-safaris",title:"Desert safaris in Dubai",compare:"Start with morning, evening or overnight, then compare the activities in the selected option. A Dubai safari can have shared or private pickup, a camp meal or an overnight stay; those features are not included in every listing. Read the option and participant restrictions before choosing."},
   {id:"dubai-cruises",dest:"dubai",name:"Cruises",slug:"cruises",title:"Dubai cruises and yacht trips",compare:"Choose the departure area first, then the kind of outing: dinner cruise, shared sightseeing or private yacht time. Compare the sailing duration, food and drink inclusions, boarding point and transfer arrangements. A longer trip or a similar name does not mean the same vessel, route or menu."}
 ];
+function cityParkFaqItems(c){
+  if(c.name==="Theme Parks") return [
+    {q:"Does this list contain only large theme parks?",a:"No. The Dubai catalogue also groups indoor play, skating, snow and other entertainment venues here. Start with the type of outing you want, then open the exact listing; an indoor play session and a full park admission are different experiences."},
+    {q:"How do I choose between a single park and a multi-park pass?",a:`Compare the named parks, the number of admissions and the validity on the selected pass. Start with the <a href="${URLS.activity(byId("dubai-parks-and-resorts-multi-park-pass"))}">Dubai Parks and Resorts pass listing</a>. Do not assume it covers every venue on this page or every extra inside a park.`},
+    {q:"Are LEGOLAND Dubai and its water park the same admission?",a:`They are separate parks. Check whether your selected ticket covers one or both, and compare the <a href="${URLS.activityCategory(cityCategoryBySlug("dubai","water-parks"))}">Dubai water-park listings</a> if a water day is your priority.`},
+    {q:"Which listing should I open for an indoor family activity?",a:`Compare the activity itself: <a href="${URLS.activity(byId("kidzania-dubai"))}">KidZania</a> for the listed role-play experience, <a href="${URLS.activity(byId("olioli-childrens-play-museum"))}">OliOli</a> for its play-museum visit, or <a href="${URLS.activity(byId("play-dxb"))}">Play DXB</a> for its listed VR options. Check age, height, session and adult-entry conditions individually; these are examples, not a suitability guarantee.`},
+    {q:"Does park admission include every ride or add-on?",a:"Read the selected ticket's inclusions and exclusions. Fast-track access, meals, lockers, premium activities and transfers may be separate. An attraction shown in the park's imagery is not automatically included in every ticket."},
+    {q:"What details help you quote for a family park visit?",a:`Share the park or pass, visit date, adult count and each child's age, plus any transfer request. Check the product's ride restrictions and cancellation terms before choosing. The <a href="${URLS.guide("dubai-family-planning")}">Dubai family planning guide</a> helps organise the day around breaks and travel.`}
+  ];
+  return [
+    {q:"Are all the Dubai listings conventional water parks?",a:`No. This list includes the inflatable-water-play experience at <a href="${URLS.activity(byId("aqua-fun-dubai"))}">AquaFun, JBR</a>, alongside the listed ride parks. Compare the activity format, eligibility, swim requirements and weather arrangements rather than treating the tickets as interchangeable.`},
+    {q:"How do Aquaventure, Wild Wadi and LEGOLAND Water Park compare?",a:`Use the <a href="${URLS.comparison(comparisonBySlug("uae-water-parks"))}">UAE water-park comparison</a> for recorded inclusions, restrictions, pickup and terms side by side. This page is the Dubai browsing list; the comparison also includes the catalogue's Abu Dhabi-area choices.`},
+    {q:"Does an Atlantis or LEGOLAND ticket cover the neighbouring attraction?",a:"Check the exact pass. Aquaventure water-park admission and its aquarium combination have different inclusions; LEGOLAND Dubai and LEGOLAND Water Park are separate parks. Only the named inclusions on the selected ticket establish what you can visit."},
+    {q:"Can I enquire through RAAHHI about every water-park ticket here?",a:`AquaFun is marked official-only: follow its <a href="${URLS.activity(byId("aqua-fun-dubai"))}">listing to the official booking website</a>. For the other listed products, use the product enquiry to confirm the available option and final quote. A catalogue link is not a reservation.`},
+    {q:"Which conditions matter when choosing for children?",a:"Check the exact product's age and height requirements, adult-supervision rules and any swimming conditions. Park entry does not establish eligibility for every slide or activity. Ask about any access need before selecting a ticket."},
+    {q:"Should I add transfers, towels or lockers to the budget?",a:"Read the selected option before assuming any are included. Compare admission, transfers, equipment and on-site extras separately, then confirm the full group quote and cancellation terms. Arrange the return journey as well as arrival."}
+  ];
+}
 function cityCategoryBySlug(dest,slug){ return CITY_ACTIVITY_CATEGORIES.find(c=>c.dest===dest && c.slug===slug); }
 function primaryCityCategory(t){ return CITY_ACTIVITY_CATEGORIES.find(c=>c.dest===t.dest && c.name===t.cat); }
 function categoryBreadcrumb(c){
@@ -6150,6 +6179,7 @@ function activityBreadcrumb(t){
     ...(category ? [{label:category.title,href:URLS.activityCategory(category)}] : []),{label:t.title,href:URLS.activity(t)}];
 }
 function cityCategoryFaqItems(c){
+  if(["Theme Parks","Water Parks"].includes(c.name)) return cityParkFaqItems(c);
   const safari=c.name==="Desert Safari";
   return safari ? [
     {q:"Morning, evening or overnight: how should I choose?",a:`Choose the time you want to spend in the desert, then check the listing's itinerary. An overnight option adds a stay, while an evening or morning format has different timings and inclusions. The <a href="${URLS.safariGuide}">Dubai safari planning guide</a> explains the checks to make.`},
@@ -6187,7 +6217,7 @@ function renderDubaiPlanningHub(){
         ["Choosing a skyline visit",`<a href="${URLS.comparison(comparisonBySlug("dubai-observation-decks"))}">Compare observation decks</a>`,"Select the venue and ticket level first; a different ticket can include a different experience."]
       ].map(row=>`<tr>${row.map((v,i)=>i?`<td>${v}</td>`:`<th scope="row">${v}</th>`).join("")}</tr>`))}
     </section>
-    <section class="detail-section"><h2>Choose a desert or waterfront experience</h2><p class="body-copy">Compare the type of outing before comparing its headline price. A morning desert trip, an overnight camp stay, a dinner cruise and private yacht time need different time commitments and arrangements.</p><ul class="link-list">
+    <section class="detail-section"><h2>Choose an experience category</h2><p class="body-copy">Compare the type of outing before comparing its headline price. A desert trip, a cruise, a park day and an indoor play session need different time commitments and arrangements.</p><ul class="link-list">
       ${categories.map(c=>`<li><a href="${URLS.activityCategory(c)}">${escapeHTML(c.title)}</a><span class="index-note planning-link-note">${categoryTours(c).length} listings, with a choosing guide and direct product links.</span></li>`).join("")}
     </ul></section>
     <section class="detail-section"><h2>Match your hotel and departure arrangements</h2><p class="body-copy">Check where each experience begins before choosing a hotel or combining bookings. Dubai Marina and Dubai Creek cruise listings have different boarding arrangements; safari pickup also depends on the product and option. Confirm whether you need a hotel transfer, a meeting-point arrival or a separate vehicle.</p><p class="body-copy">For a multi-emirate stay, compare the itinerary and travel arrangements rather than assuming every outing starts in Dubai. The <a href="${URLS.guide("choose-a-uae-emirate")}">Dubai, Abu Dhabi and Ras Al Khaimah comparison</a> helps you choose a base.</p></section>
@@ -6217,10 +6247,11 @@ function renderCategory(c){
     <nav class="breadcrumb" aria-label="Breadcrumb">${breadcrumbHTML(categoryBreadcrumb(c))}</nav>
     <p class="eyebrow" style="margin-top:20px;">${c.dest ? `Explore ${escapeHTML(destName(c.dest))}` : "Browse the UAE catalogue"}</p>
     <h1 style="font-size:clamp(28px,4vw,44px);">${escapeHTML(c.title)}</h1>
-    <p class="lede" style="margin-top:18px;">${escapeHTML(CATEGORY_INFO[c.name])} RAAHHI TOURS lists ${list.length} experiences in ${joinList(dests.map(d => d.name))}. Prices and current availability are confirmed on enquiry.</p>
+    <p class="lede" style="margin-top:18px;">${escapeHTML(c.intro || CATEGORY_INFO[c.name])} RAAHHI TOURS lists ${list.length} experiences in ${joinList(dests.map(d => d.name))}. Prices and current availability are confirmed on enquiry.</p>
     ${c.dest ? `<p class="body-copy">Start with the <a href="${URLS.destinationHub(c.dest)}">${escapeHTML(destName(c.dest))} trip planner</a> if you are choosing a base or combining activities with a stay.</p>` : ""}
     <section class="detail-section"><h2>Choosing an experience</h2><p class="body-copy">${escapeHTML(c.compare)}</p>
     <p class="index-note">The list follows catalogue order within each destination. It is not a popularity ranking. Listed duration and status come from the individual activity record; they are not live availability.</p></section>
+    ${c.selection ? `<section class="detail-section"><h2>Choose your outing</h2><ul class="guide-cards">${c.selection.map(([title,note,ids])=>`<li class="guide-card"><h3>${escapeHTML(title)}</h3><p>${escapeHTML(note)}</p><ul class="link-list">${ids.map(byId).filter(Boolean).map(t=>`<li><a href="${URLS.activity(t)}">${escapeHTML(t.title)}</a></li>`).join("")}</ul></li>`).join("")}</ul></section>` : ""}
     ${safari ? `<p class="body-copy">Short on time? Start with <a href="#safaris-dubai">Dubai safari options</a>. For pickup, packing and planning advice, read the <a href="${URLS.safariGuide}">Dubai desert safari guide</a>.</p>` : ""}
     ${dests.map(d => `<section ${safari ? `id="safaris-${d.slug}"` : ""} class="detail-section category-products" data-destination="${d.slug}"><h2>${escapeHTML(c.name)} in ${escapeHTML(d.name)}</h2>
       <div class="table-scroll"><table class="data-table"><caption class="sr-only">${escapeHTML(c.name)} listings in ${escapeHTML(d.name)}</caption>
@@ -6233,7 +6264,7 @@ function renderCategory(c){
     <nav class="detail-section planning-links" aria-label="Related destinations and guides"><h2>Plan your visit</h2><ul class="link-list">
       ${dests.map(d=>`<li><a href="${URLS.activityDest(d.slug)}">All ${escapeHTML(d.name)} activities</a></li>`).join("")}
       ${guides.slice(0,2).map(g=>`<li><a href="${URLS.guide(g.slug)}">${escapeHTML(g.name)}</a><span class="index-note planning-link-note">${escapeHTML(g.blurb)}</span></li>`).join("")}
-    </ul></nav><p class="index-note">Open a listing for inclusions, restrictions, cancellation terms and recorded source checks. Confirm current details before booking.</p>`;
+    </ul></nav><p class="index-note">Open a listing for inclusions, restrictions, cancellation terms and recorded source checks. Confirm current details before booking. For the shared enquiry and availability process, read <a href="${URLS.faq}">how RAAHHI TOURS enquiries work</a>.</p>`;
 }
 
 // Focused comparisons with distinct product sets and a useful decision to make.
@@ -7202,7 +7233,7 @@ function renderTourDetail(id, expectedDest, opts){
     ${detailEnquiryHTML(t, isAddon ? "addon" : "activity")}
     ${atAGlanceHTML(compactDescription(t), [[isAddon ? "Service" : "Destination", isAddon ? `<a class="contact-link" href="/visas/">UAE arrival essentials</a>` : tripDestination === dn ? `<a class="contact-link" href="${URLS.activityDest(t.dest)}">${dn}</a>` : escapeHTML(tripDestination)], ["Category", t.cat], ["Duration", hasRealValue(t.duration) ? t.duration : ""], ["Timing", t.id === "overnight-desert-safari" ? overnightFact(t,"timing") : t.timing || ""], ["Availability", sti.label], ["Price", t.bookingMode === "official-only" ? "Check the official ticket website" : selectedPriceHTML(t)]], "", freshnessSummaryHTML(t, isAddon ? "addon" : "activity"))}
     ${sections.join("")}
-    <div class="detail-section"><h2>${t.title}: common questions</h2>${qaHTML(productFaqItems(t,mergeFaqItems(t.faqs || [], isAddon ? [] : activityFaqItems(t))))}</div>`;
+    <div class="detail-section"><h2>${t.title}: common questions</h2>${qaHTML(productFaqItems(t,focusedProductFaqItems(t,isAddon ? "addon" : "activity")))}</div>`;
   moveDetailHeading("tour");
   document.getElementById("tourBookingBox").style.display = "";
   // Date and guests are passed into the enquiry by enquireAboutProduct(); nothing here books or reserves.
@@ -7295,7 +7326,7 @@ function renderPkgDetail(id, expectedDest){
     ${p.description ? `<p class="pkg-overview">${p.description}</p>` : ""}
     ${sections.join("")}
     <div class="detail-section"><h2>Cancellation policy</h2>${cancellationHTML(p)}</div>
-    <div class="detail-section"><h2>${p.title}: common questions</h2>${qaHTML(productFaqItems(p,mergeFaqItems(p.faqs || [], packageFaqItems(p))))}</div>`;
+    <div class="detail-section"><h2>${p.title}: common questions</h2>${qaHTML(productFaqItems(p,focusedProductFaqItems(p,"holiday")))}</div>`;
   moveDetailHeading("pkg");
   document.getElementById("pkgBookingBox").style.display = "";
   document.getElementById("pkgBookingBox").innerHTML = `
@@ -7405,7 +7436,7 @@ function statusCTAs(t, kind){
 const FAQ_INTENTS = [
   /option|variant|ticket type/i,
   /cancel|refund/i, /not included|exclu|extra cost/i, /pickup|pick-up|transfer|meeting point|where.*meet/i,
-  /includ|ticket cover/i, /restriction|eligib|minimum age|children|child|height/i,
+  /includ|ticket cover/i, /restriction|eligib|minimum age|children|child|height|weight|toddler|young|adult|accessib|suitab/i,
   /opening|operating hours|what time|when.*open/i, /how long|duration|time.*allow/i,
   /where|location/i, /cost|price/i, /customis|customiz/i, /enquir|how.*book/i, /hotel|accommodation/i,
 ];
@@ -7418,6 +7449,25 @@ function mergeFaqItems(authored, generated){
     items.push(f); seen.add(key); if(topic >= 0) covered.add(topic);
   }
   return items;
+}
+// Keep authored booking doubts; add only relevant gaps, never the whole reusable bank.
+// Main fact sections retain full options, restrictions, inclusions, timing and policies.
+function focusedProductFaqItems(record,kind){
+  if(record.bookingMode==="official-only") return activityFaqItems(record);
+  const authored=(record.faqs || []).filter(f=>!/^what else is there to do|^how do i enquire|^how do i book/i.test(stripTags(f.q)));
+  if(kind==="addon") return authored;
+  const facts=catalogueFactFaqs(record,kind);
+  const priorities=[/restriction|eligib/i,/option|variant/i,/pickup|where.*meet/i,/cancel|refund/i];
+  const generated=priorities.flatMap(re=>facts.filter(f=>re.test(stripTags(f.q))));
+  if(["seasonal","temporarily-closed"].includes(statusOf(record))) generated.unshift({q:`What should I check about ${escapeHTML(record.title)} availability?`,a:availabilityAnswer(record)});
+  if(kind==="holiday"){
+    const packageQuestions=packageFaqItems(record);
+    generated.push(...packageQuestions.filter(f=>/customis|customiz|which hotels|accommodation/i.test(stripTags(f.q))));
+  }
+  const merged=mergeFaqItems(authored,generated);
+  // Do not silently discard an authored answer. Release checks require editorial review
+  // if a future record itself carries more than eight authored booking questions.
+  return [...authored,...merged.slice(authored.length,authored.length+Math.max(0,8-authored.length))];
 }
 function scrollToProductFact(event){
   const target=document.getElementById(event.currentTarget.getAttribute("href").slice(1));
@@ -7455,9 +7505,6 @@ function categoryFaqItems(c){
   const list = categoryTours(c), dests = DESTINATIONS.filter(d => list.some(t => t.dest === d.slug));
   return [
     {q:`Where are ${escapeHTML(c.name.toLowerCase())} listed?`, a:`This category has ${list.length} listings across ${joinList(dests.map(d => `<a href="${URLS.activityDest(d.slug)}">${escapeHTML(d.name)}</a>`))}. The destination sections above link to every listing.`},
-    {q:`How should I compare ${escapeHTML(c.name.toLowerCase())}?`, a:escapeHTML(c.compare)},
-    {q:"Does every listing include the same things?", a:"No single set of inclusions applies to the whole category. Open the individual listing for its inclusions, exclusions and options; confirm the option you want before booking."},
-    {q:"Does a listing status confirm availability for my date?", a:"No. Status describes the listing, not live booking availability. Seasonal dates, current price and availability are confirmed when you enquire from the individual activity page."},
   ];
 }
 
