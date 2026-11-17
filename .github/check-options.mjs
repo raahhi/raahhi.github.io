@@ -174,7 +174,9 @@ try{
  const decksLink=page.getByRole('link',{name:'Compare Dubai observation decks',exact:true});
  assert.equal(await decksLink.getAttribute('href'),'/compare/dubai-observation-decks/');
  await decksLink.click();
+ await page.waitForURL(base+'/compare/dubai-observation-decks/',{waitUntil:'domcontentloaded'});
  const deckRows=page.locator('.comparison-table tbody tr');
+ await deckRows.first().waitFor({state:'visible'});
  assert.equal(await deckRows.count(),3);
  const burj=await deckRows.filter({has:page.locator('a[href="/activities/dubai/burj-khalifa-top/"]')}).textContent();
  assert.match(burj,/124 and 125/);
