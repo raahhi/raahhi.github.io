@@ -6252,7 +6252,7 @@ function durationGroup(dur){
 function guidesFor(filter){ return GUIDES.filter(filter); }
 function guideCardsHTML(list, eyebrow){
   return `<ul class="guide-cards">${list.map(g => `<li class="guide-card">
-      <span class="gc-eyebrow">${eyebrow || `Guide · ${destName(g.dest)}`}</span>
+      <span class="gc-eyebrow">${eyebrow || (g.destinations ? "Guide · UAE" : `Guide · ${destName(g.dest)}`)}</span>
       <h3><a href="${URLS.guide(g.slug)}">${g.name}</a></h3>
       <p>${g.blurb}</p>
       <span class="gc-more" aria-hidden="true">Read the guide →</span>
@@ -6469,9 +6469,9 @@ function guideSourcesHTML(extra){
     </div>`;
 }
 function guideHead(g){
-  return `<nav class="breadcrumb" aria-label="Breadcrumb">${breadcrumbHTML([{label:"Home", href:"/"}, {label:"Activities", href:"/activities/"}, {label:destName(g.dest), href:URLS.activityDest(g.dest)}, {label:g.crumb}])}</nav>
-    <p class="eyebrow" style="margin-top:14px;">Guide · ${destName(g.dest)} activities</p>
-    <h1 style="font-size:clamp(28px,4vw,42px);">${g.h1}</h1><p class="form-note">Prepared by RAAHHI TOURS · Planning guidance reviewed <time datetime="2026-10-25">25 October 2026</time> · <a class="contact-link" href="/about/#editorial-standards">How we prepare our guides</a></p>`;
+  return `<nav class="breadcrumb" aria-label="Breadcrumb">${breadcrumbHTML([{label:"Home", href:"/"}, {label:"Activities", href:"/activities/"}, ...(g.destinations ? [] : [{label:destName(g.dest), href:URLS.activityDest(g.dest)}]), {label:g.crumb}])}</nav>
+    <p class="eyebrow" style="margin-top:14px;">Guide · ${g.destinations ? "UAE" : destName(g.dest)+" activities"}</p>
+    <h1 style="font-size:clamp(28px,4vw,42px);">${g.h1}</h1><p class="form-note">Prepared by RAAHHI TOURS · Planning guidance reviewed <time datetime="${g.reviewedOn || "2026-10-25"}">${formatDate(g.reviewedOn || "2026-10-25")}</time> · <a class="contact-link" href="/about/#editorial-standards">How we prepare our guides</a></p>`;
 }
 function comparisonTable(caption, head, rows){
   return `<div class="table-scroll"><table class="data-table">
@@ -6638,10 +6638,33 @@ function renderPlanningGuideBody(g){
     <section class="detail-section"><h2>${family ? "Choose the type of day that suits your family" : "A flexible four-day outline"}</h2>${comparisonTable("Planning choices and checks",[family?"Type of day":"Day","Activity options","What to settle first"],rows.map(r=>`<tr><th scope="row">${r[0]}</th><td>${r[1]}</td><td>${r[2]}</td></tr>`))}</section>
     <section class="detail-section"><h2>Before asking for a quote</h2><ul class="plain-list"><li>Choose your actual travel dates, hotel area and a realistic daily pace.</li><li>List adults, children’s ages and any accessibility or assistance requirements.</li><li>Decide which admissions, meals and transfers you want included.</li><li>Compare standard, upgraded and private options by their inclusions, not just the headline price.</li><li>Ask for the final total, payment currency and cancellation conditions in writing.</li></ul></section>
     <section class="detail-section"><h2>Transport, meals and timing</h2><p class="body-copy">Keep time between admission slots and transfers; the activity duration is not a door-to-door travel estimate. Check whether pickup covers your hotel and whether a meal is included or needs its own budget. Share flight details if your plan includes an airport transfer. If a venue, child rule or pickup arrangement is unclear, settle it before payment.</p></section>
-    <section class="detail-section"><h2>Compare the individual options</h2><ul class="link-list"><li><a href="/compare/dubai-observation-decks/">Observation-deck ticket differences</a></li><li><a href="/compare/dubai-dinner-cruises/">Dinner-cruise inclusions and arrangements</a></li><li><a href="/guides/dubai-desert-safari/">Desert safari options and restrictions</a></li><li><a href="/holidays/dubai/">Dubai holiday packages</a></li><li><a href="/visas/united-arab-emirates/">UAE entry and visa preparation</a></li></ul></section>
+    <section class="detail-section"><h2>Compare the individual options</h2><ul class="link-list"><li><a href="/compare/dubai-observation-decks/">Observation-deck ticket differences</a></li><li><a href="/compare/dubai-dinner-cruises/">Dinner-cruise inclusions and arrangements</a></li><li><a href="/guides/dubai-desert-safari/">Desert safari options and restrictions</a></li><li><a href="/holidays/dubai/">${family ? "Choose a Dubai holiday package for your family" : "Dubai holiday packages"}</a></li>${family ? '<li><a href="/compare/uae-water-parks/">Compare UAE water parks</a></li>' : ""}<li><a href="/guides/choose-a-uae-emirate/">Compare Dubai, Abu Dhabi and Ras Al Khaimah</a></li><li><a href="/visas/united-arab-emirates/">UAE entry and visa preparation</a></li></ul></section>
     <section class="detail-section"><h2>Planning questions</h2>${qaHTML(faq)}</section>
     <section class="detail-section"><h2>Plan with a human executive</h2><p class="body-copy">We welcome travellers from India, the UAE, Saudi Arabia and beyond. Share the plan you like through our <a class="contact-link" href="/contact/">Contact page</a> or <a class="contact-link" href="mailto:inquire@raahhi.com">email</a>. A real sales executive checks the details with you during 8:00 am–9:00 pm IST.</p></section>`;
   return {html,faq};
+}
+function renderEmirateGuide(g){
+  const choices = [
+    ["dubai", "For skyline sights and varied sightseeing", "A four-day first visit", "Use one main experience per day. Pair Downtown and an observation deck with a city tour, a desert evening and a final visit that fits your departure plan.", URLS.guide("dubai-first-visit-planning"), "Plan a first Dubai visit"],
+    ["abu-dhabi", "For Yas Island parks and cultural visits", "A two-night park break or a longer mixed stay", "Abu Dhabi Stay and Play Luxury lists one theme park in its itinerary. For a longer trip, allow a separate day for a cultural visit or check the packages with a Dubai day tour.", URLS.guide("abu-dhabi-theme-parks"), "Compare Abu Dhabi theme parks"],
+    ["ras-al-khaimah", "For mountain, coast and desert experiences", "A two-night safari break or four nights on the coast", "Compare the Safari Short Break and Zipline and Safari packages for a shorter trip. The four-night Mountain and Coast package lists Jebel Jais Zipline admission.", URLS.holidayDest("ras-al-khaimah"), "Compare Ras Al Khaimah stays"],
+  ];
+  const faq = [
+    {q:"Which emirate fits a short UAE trip?",a:"Choose the main experience first. Consider a Dubai overnight package for skyline sightseeing or a Marina dinner cruise, an Abu Dhabi two-night stay for a Yas Island park, or a Ras Al Khaimah two-night break for a safari. Check flight and transfer times before choosing."},
+    {q:"Can I stay in one emirate and visit another?",a:"Yes, if the journey fits your dates and schedule. Some Abu Dhabi packages list a Dubai day tour. Confirm where each outing departs and whether inter-emirate transfers are included before booking."},
+    {q:"Where can I check UAE entry requirements?",a:`Use <a href="${URLS.visa(visaBySlug("united-arab-emirates"))}">UAE visa assistance and official entry links</a> to check the route for your passport and country of residence.`},
+  ];
+  return {faq, html:`${guideHead(g)}
+    <p class="lede" style="margin-top:18px;">Choose Dubai for a varied city itinerary, Abu Dhabi for Yas Island parks or culture, and Ras Al Khaimah for mountain, coast and desert experiences. Start with the experience you most want and the number of nights available.</p>
+    <section class="detail-section"><h2>Compare by trip length and interests</h2>
+      ${comparisonTable("Trip planning by emirate",["Emirate","What to plan around","Suggested length"],choices.map(([slug,interest,length])=>`<tr><th scope="row">${escapeHTML(destName(slug))}</th><td>${escapeHTML(interest)}</td><td>${escapeHTML(length)}</td></tr>`))}
+    </section>
+    ${choices.map(([slug,interest,length,detail,href,label])=>`<section class="detail-section"><h2>${escapeHTML(destName(slug))}</h2><p class="body-copy">${escapeHTML(detail)}</p><a class="contact-link" href="${href}">${escapeHTML(label)}</a></section>`).join("")}
+    <section class="detail-section"><h2>Before choosing a base</h2><p class="body-copy">Check which airport and hotel suit your main activities. Ask where each outing starts, how you return and whether transfers and admissions are included in your selected package. The suggested stays are planning examples. Confirm dates, inclusions and the final price before booking.</p></section>
+    <section class="detail-section"><h2>Questions about choosing an emirate</h2>${qaHTML(faq)}</section>
+    <nav class="detail-section planning-links" aria-label="Browse activities and stays by emirate"><h2>Browse activities and stays by emirate</h2><ul class="link-list">
+      ${g.destinations.map(slug=>`<li><a href="${URLS.activityDest(slug)}">${escapeHTML(destName(slug))} activities</a></li><li><a href="${URLS.holidayDest(slug)}">${escapeHTML(destName(slug))} holiday packages</a></li>`).join("")}
+    </ul></nav>`};
 }
 const GUIDES = [
   {slug:"dubai-desert-safari", dest:"dubai", categories:["Desert Safari"], name:"Dubai desert safari guide", crumb:"Desert safari guide", h1:"Dubai desert safari guide",
@@ -6664,12 +6687,13 @@ const GUIDES = [
     ids:() => TOURS.filter(t => t.dest === "abu-dhabi" && (t.cat === "Theme Parks" || t.cat === "Water Parks")).map(t => t.id)},
   {slug:"dubai-first-visit-planning",dest:"dubai",categories:["Landmarks","City Tours","Desert Safari"],name:"Plan your first Dubai visit",crumb:"First visit planning",h1:"Your first Dubai visit: a plan for four days",title:"First Dubai Visit: A Flexible Four-Day Planning Guide",description:"Plan a first Dubai visit around city sightseeing, Downtown, a desert evening and one final experience, with practical checks for tickets, transfers and costs.",blurb:"A flexible four-day outline with ticket, transfer and quote checks, rather than a fixed booking.",image:IMG.burjTopView,render:renderPlanningGuideBody,ids:()=>["dubai-city-tour","burj-khalifa-top","dubai-aquarium","evening-desert-safari","museum-of-the-future","the-view-at-the-palm","dhow-cruise-marina"].filter(byId)},
   {slug:"dubai-family-planning",dest:"dubai",categories:["Theme Parks","Water Parks","Landmarks"],name:"Dubai family activity planning",crumb:"Family planning",h1:"Dubai with children: plan a day that suits your family",title:"Dubai Family Activities: Ages, Tickets & Planning Checks",description:"Plan Dubai family activities around ages, ride restrictions, rest time and transfers. Compare indoor visits, theme parks, waterparks and evening experiences.",blurb:"A practical family planning guide covering children’s needs, ticket differences and the questions to settle before booking.",image:IMG.burjTopView,render:renderPlanningGuideBody,ids:()=>["dubai-aquarium","aya-universe-dubai","img-worlds-of-adventure","legoland-dubai","atlantis-aquaventure","wild-wadi-water-park","dhow-cruise-marina","evening-desert-safari"].filter(byId)},
+  {slug:"choose-a-uae-emirate",dest:"dubai",destinations:["dubai","abu-dhabi","ras-al-khaimah"],categories:[],name:"Choose a UAE emirate for your trip",crumb:"Choose an emirate",h1:"Dubai, Abu Dhabi or Ras Al Khaimah: where should you stay?",title:"Dubai, Abu Dhabi or Ras Al Khaimah? Compare Your Trip Options",description:"Compare Dubai, Abu Dhabi and Ras Al Khaimah by trip length, interests and available package itineraries. Browse activities and stays in each emirate.",blurb:"Compare the three emirates by trip length, interests and listed stays.",image:IMG.dubaiDuskPanorama,reviewedOn:"2026-11-17",render:renderEmirateGuide,ids:()=>[]},
 ];
 function guideBySlug(slug){ return GUIDES.find(g => g.slug === slug); }
 function renderGuide(slug){
   const g = guideBySlug(slug);
   const out = g.render(g);
-  document.getElementById("guideBody").innerHTML = out.html + planningLinksHTML(g.dest, URLS.guide(g.slug), GUIDES.filter(x => x.dest === g.dest));
+  document.getElementById("guideBody").innerHTML = out.html + (g.destinations ? "" : planningLinksHTML(g.dest, URLS.guide(g.slug), GUIDES.filter(x => x.dest === g.dest)));
   return out.faq;
 }
 
@@ -7662,14 +7686,16 @@ function pageMeta(c){
     case "guide": {
       const g = guideBySlug(c.key), url = absUrl(URLS.guide(g.slug)), ids = g.ids();
       m.path = URLS.guide(g.slug); m.title = `${g.title} | ${S}`; m.ogType = "article"; m.description = g.description;
-      m.bc = [home, {name:"Activities", path:URLS.activities}, {name:destName(g.dest), path:URLS.activityDest(g.dest)}, {name:g.crumb, path:m.path}];
-      m.nodes = [destNode(g.dest),
+      const destinations = g.destinations || [g.dest];
+      const about = destinations.map(dest=>({"@id":absUrl("/#destination-" + dest)}));
+      m.bc = [home, {name:"Activities", path:URLS.activities}, ...(g.destinations ? [] : [{name:destName(g.dest), path:URLS.activityDest(g.dest)}]), {name:g.crumb, path:m.path}];
+      m.nodes = [...destinations.map(destNode),
         {"@type":"Article", "@id":url + "#article", "headline":g.h1, "description":g.description, "url":url, "inLanguage":SEO_CONFIG.defaultLanguage,
-          "author":{"@id":ORG_ID()}, "publisher":{"@id":ORG_ID()}, "dateModified":"2026-10-25", "mainEntityOfPage":{"@id":url + "#webpage"}, "image":imgAt(g.image, 1200),
-          "about":{"@id":absUrl("/#destination-" + g.dest)}, "mentions":ids.map(id => ({"@id":absUrl(URLS.activity(byId(id))) + "#trip"}))},
-        ...(g.render === renderSafariGuideBody ? [] : [itemListNode(url + "#list", `Activities compared in the ${g.name}`, ids.map(id => byId(id)).map(t => ({path:URLS.activity(t), name:t.title})))])];
+          "author":{"@id":ORG_ID()}, "publisher":{"@id":ORG_ID()}, "dateModified":g.reviewedOn || "2026-10-25", "mainEntityOfPage":{"@id":url + "#webpage"}, "image":imgAt(g.image, 1200),
+          "about":g.destinations ? about : about[0], "mentions":ids.map(id => ({"@id":absUrl(URLS.activity(byId(id))) + "#trip"}))},
+        ...(g.render === renderSafariGuideBody || !ids.length ? [] : [itemListNode(url + "#list", `Activities compared in the ${g.name}`, ids.map(id => byId(id)).map(t => ({path:URLS.activity(t), name:t.title})))])];
       m.citation = [...new Set(ids.flatMap(id => publicListingSources(byId(id).sources).map(s => s.url)))];
-      m.mainEntity = {"@id":url + "#article"}; m.about = [{"@id":absUrl("/#destination-" + g.dest)}]; m.image = g.image || m.image; break;
+      m.mainEntity = {"@id":url + "#article"}; m.about = about; m.image = g.image || m.image; break;
     }
     case "about":
       m.path = URLS.about; m.title = `About RAAHHI TOURS | Visa Assistance, UAE Activities & Holidays`; m.pageType = "AboutPage";
@@ -8075,8 +8101,8 @@ const GLOBAL_SEARCH_INDEX = [
   ...DESTINATIONS.filter(d => destHasTours(d.slug)).map(d => ({type:"activity", url: URLS.activityDest(d.slug), label: `Things to do in ${d.name}`,
     sub: `All ${TOURS.filter(t => t.dest === d.slug).length} ${d.name} activities`, title: normalizeSearch(`${d.name} activities`),
     aliases: [], place: searchPlaces(d.slug), category: [normalizeSearch("activities things to do")], other: [normalizeSearch(d.blurb)]})),
-  ...GUIDES.map(g => ({type:"guide", url: URLS.guide(g.slug), label: g.name, sub: destName(g.dest) + " · " + g.blurb.replace(/\.$/, ""),
-    title: normalizeSearch(g.name), aliases: [], place: searchPlaces(g.dest), category: [normalizeSearch("guide " + g.categories.join(" "))], other: [normalizeSearch(g.description)]})),
+  ...GUIDES.map(g => ({type:"guide", url: URLS.guide(g.slug), label: g.name, sub: (g.destinations ? "UAE" : destName(g.dest)) + " · " + g.blurb.replace(/\.$/, ""),
+    title: normalizeSearch(g.name), aliases: [], place: (g.destinations || [g.dest]).flatMap(searchPlaces), category: [normalizeSearch("guide " + g.categories.join(" "))], other: [normalizeSearch(g.description)]})),
   ...VISA_ADDONS.map(t => ({type:"visa", url: URLS.addon(t), label: t.title, sub: "Visa add-on · Arrival essentials",
     title: normalizeSearch(t.title), aliases: searchAliases(t.aliases), place: [normalizeSearch("UAE")], category: [normalizeSearch("sim card arrival visa add-on")], other: [normalizeSearch(t.desc)]})),
   ...ACTIVITY_SEARCH_INDEX,
