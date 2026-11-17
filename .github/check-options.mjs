@@ -79,6 +79,65 @@ await mockEnquiryDelivery(page);
  await page.locator('#contactModal .modal-close').click();
  await picker.selectOption('');assert.equal(await page.locator('.page.active .bb-price [data-usd-cents="'+Math.round(prices[safari].amount*100)+'"]').count(),1,'Clearing the option restores the advertised starting price');
 
+ // Take the real mobile path into the comparison, then verify every overnight choice.
+ await open('/guides/dubai-desert-safari/');
+ await page.locator('a[href="/activities/categories/desert-safaris/#safaris-dubai"]').first().click();
+ assert.equal(new URL(page.url()).hash,'#safaris-dubai');
+ const pilotPrices={morning:2659,evening:2665,premium:3604,overnight:13278};
+ for(const [name,cents] of Object.entries(pilotPrices)){
+  const path='/activities/dubai/'+name+'-desert-safari/';
+  assert.equal(await page.locator('#safaris-dubai tr').filter({has:page.locator('a[href="'+path+'"]')}).locator('[data-usd-cents="'+cents+'"]').count(),1);
+ }
+ const overnight='overnight-desert-safari';
+ await page.locator('#safaris-dubai a[href="/activities/dubai/'+overnight+'/"]').click();
+ const nightPicker=page.locator('[data-product-option="'+overnight+'"]');
+ const timings=page.locator('[data-overnight-fact=timing]');
+ const transfers=page.locator('[data-overnight-fact=transfer]');
+ assert.deepEqual(await timings.allTextContents(),['Timing varies by option.','Timing varies by option.']);
+ assert((await transfers.allTextContents()).every(x=>/var(y|ies) by option/.test(x)));
+ assert.equal(await nightPicker.locator('option').count(),10);
+ for(const option of registry[overnight].options){
+  await nightPicker.selectOption(option.id);
+  assert.deepEqual(await timings.allTextContents(),[option.time,option.time]);
+  assert.deepEqual(await transfers.allTextContents(),[option.transferNote,option.transferNote]);
+  const detail=await page.locator('[data-option-details-for="'+overnight+'"]').textContent();
+  assert(detail.includes(option.transferNote)&&detail.includes(option.time));
+  assert(option.inclusions.every(x=>detail.includes(x)));
+  const noTransfer=option.label.endsWith('Without transfer');
+  if(noTransfer){
+   assert(detail.includes('Hotel pickup is not included.'));
+   assert(!/shared transfers to camp from hotel|return hotel transfer/i.test(detail));
+   assert.equal(option.time.startsWith('Activity starts at 22:00'),!option.label.includes('Morning Safari Adventure'));
+  } else assert.match(option.time,/20:00–21:00.*08:00–09:00/);
+  const notes=await page.locator('[data-cancellation-for="'+overnight+'"]').allTextContents();
+  assert(notes.length>=2&&notes.every(x=>option.policy.paragraphs.every(term=>x.includes(term))));
+ }
+ const shuttle=registry[overnight].options.find(x=>x.label.startsWith('Desert Safari & Overnight Camp')&&x.label.endsWith('Without transfer'));
+ await nightPicker.selectOption(shuttle.id);
+ const overnightGuests=page.locator('#tourEnqGuests');
+ await overnightGuests.press('ArrowUp');await overnightGuests.press('ArrowUp');
+ assert.equal(await overnightGuests.inputValue(),'4');
+ await page.locator('.mobile-enquiry-bar button').click();
+ const context=await page.locator('#callbackContextDetails').textContent();
+ assert(context.includes(shuttle.label)&&context.includes('Guests: 4')&&context.includes('22:00')&&context.includes('parking point'));
+ await page.locator('#contactModal .modal-close').click();
+ await nightPicker.selectOption('');
+ assert.deepEqual(await timings.allTextContents(),['Timing varies by option.','Timing varies by option.']);
+ for(const [id,prefix,privateTime,feature] of [
+  [safari,'Evening Safari: Premium','16:30','At reserved area'],
+  ['premium-desert-safari','Standalone Premium Safari','15:30','Tanura show'],
+ ]){
+  await open('/activities/dubai/'+id+'/');
+  const compare=page.getByRole('heading',{name:'Compare the two Premium safari listings'});
+  assert.equal(await compare.count(),1);
+  for(const transfer of ['Shared','Private']){
+   const option=registry[id].options.find(o=>o.label===prefix+' · '+transfer+' transfer');assert(option);
+   await page.locator('[data-product-option="'+id+'"]').selectOption(option.id);
+   const detail=await page.locator('[data-option-details-for="'+id+'"]').textContent();
+   assert(detail.includes(transfer==='Private'?privateTime:'15:00–15:30')&&detail.includes(feature));
+  }
+ }
+
  await open('/holidays/dubai/dubai-grand-stopover/');
  const holiday='dubai-grand-stopover',hotel=registry[holiday].options[0];assert(hotel);
  await page.locator('[data-product-option="'+holiday+'"]').selectOption(hotel.id);
