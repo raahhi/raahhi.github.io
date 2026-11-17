@@ -601,6 +601,8 @@
   .comparison-choice p{font-size:16px;line-height:1.6;margin:0 0 12px;}
   .comparison-choice ul{padding-left:20px;margin:0;}
   .comparison-choice li{margin:8px 0;font-size:14px;line-height:1.5;}
+  .package-choices{grid-template-columns:repeat(2,minmax(0,1fr));}
+  #pkgDestGuideTitle{scroll-margin-top:100px;}
   .comparison-table{min-width:860px;}
   .comparison-table ul{padding-left:18px;margin:0;}
   .comparison-table li{margin-bottom:6px;}
@@ -4719,7 +4721,8 @@ function setActivePkgDest(slug){
     count:list.length, countLabel:list.length === 1 ? "package" : "packages",
     lede: list.length
       ? `RAAHHI TOURS lists ${list.length} holiday ${list.length === 1 ? "package" : "packages"} based in ${name}, from ${nightRange(list)}. Compare day-by-day itineraries, inclusions, and starting prices and hotel details where available. Final quotes and availability are confirmed on enquiry.`
-      : `No holiday packages are listed for ${name} yet.`})}`;
+      : `No holiday packages are listed for ${name} yet.`})}
+  ${slug === "dubai" ? dubaiPackageChooserHTML(list) : ""}`;
     tiles.style.display = "none";
     document.getElementById("pkgGridTitle").textContent = list.length ? `All ${name} holiday packages` : "";
     document.getElementById("pkgGridTitle").hidden = !list.length;
@@ -6383,6 +6386,30 @@ function holidayAccommodationNote(list){
     "Hotel examples and any stated alternatives are subject to availability. The final hotel and room type are confirmed in your quote before booking."
   ].join(" ");
 }
+function dubaiPackageChooserHTML(list){
+  const groups = [
+    {title:"One-night stays", choices:[
+      ["dubai-marina-overnight","Dubai Marina dhow dinner cruise"],
+      ["dubai-skyline-overnight","Prime-hour Burj Khalifa entry and a Dubai Fountain lake ride"],
+    ]},
+    {title:"Five-night waterpark trips", choices:[
+      ["dubai-family-discovery-waterpark","Wild Wadi, KidZania and Play DXB"],
+      ["dubai-waterpark-city-explorer","Atlantis Aquaventure and House of Hype"],
+    ]},
+  ];
+  const link = ([id, highlight]) => {
+    const p = list.find(item => item.id === id);
+    return p ? `<li><a class="contact-link" href="${URLS.holiday(p)}">${escapeHTML(p.title)}</a><span class="index-note planning-link-note">${escapeHTML(highlight)}</span></li>` : "";
+  };
+  return `<section class="detail-section" aria-labelledby="dubaiPackageChooserTitle">
+    <h2 id="dubaiPackageChooserTitle">Choose a Dubai holiday package</h2>
+    <div class="comparison-choices package-choices">${groups.map(({title,choices})=>{
+      const links=choices.map(link).join("");
+      return links ? `<article class="comparison-choice"><h3>${escapeHTML(title)}</h3><ul>${links}</ul></article>` : "";
+    }).join("")}</div>
+    <a class="contact-link" href="#pkgDestGuideTitle">Compare all ${list.length} Dubai packages</a>
+  </section>`;
+}
 function holidayDestGuideHTML(slug){
   const d = destName(slug), list = PACKAGES.filter(p => p.dest === slug);
   if(!list.length) return planningLinksHTML(slug, URLS.holidayDest(slug), GUIDES.filter(g => g.dest === slug));
@@ -6392,9 +6419,10 @@ function holidayDestGuideHTML(slug){
   const byNights = [...new Set(list.map(nightsOf).filter(n => n != null))].sort((a, b) => a - b)
     .map(n => `<li><strong>${n} ${n === 1 ? "night" : "nights"}</strong>${joinList(list.filter(p => nightsOf(p) === n).map(link))}</li>`).join("");
   const transfers = list.filter(p => (p.incl || []).some(i => /transfer/i.test(i)));
+  const showPrices = slug === "dubai";
   const rows = list.map(p => {
     const a = packageAccommodation(p);
-    return `<tr><th scope="row">${link(p)}</th><td>${hasRealValue(p.dur) ? durText(p.dur) : "Confirmed on enquiry"}</td><td>${a ? escapeHTML(accommodationSummary(a)) : "Not listed"}</td><td>${(p.incl || []).join(", ")}</td></tr>`;
+    return `<tr><th scope="row">${link(p)}</th><td>${hasRealValue(p.dur) ? durText(p.dur) : "Confirmed on enquiry"}</td>${showPrices ? `<td>${priceInfo(p).known ? priceBlockHTML(p, true) : PACKAGE_PRICE_MISSING}</td>` : ""}<td>${a ? escapeHTML(accommodationSummary(a)) : "Not listed"}</td><td>${(p.incl || []).join(", ")}</td></tr>`;
   }).join("");
   const accText = [
     `${withHotel.length === list.length ? `All ${list.length}` : `${withHotel.length} of ${list.length}`} ${d} packages list a hotel stay.`,
@@ -6409,12 +6437,12 @@ function holidayDestGuideHTML(slug){
     destHasTours(slug) ? `Want to add day trips? The <a href="${URLS.activityDest(slug)}">${d} activities</a> are listed separately and can be enquired about on their own.` : "",
   ].filter(Boolean);
   return `<section class="dest-guide" aria-labelledby="pkgDestGuideTitle">
-      <h2 id="pkgDestGuideTitle">Compare ${d} holiday packages</h2>
+      <h2 id="pkgDestGuideTitle"${showPrices ? ' tabindex="-1"' : ""}>Compare ${d} holiday packages</h2>
       ${planningLinksHTML(slug, URLS.holidayDest(slug), GUIDES.filter(g => g.dest === slug || list.some(p => packageGuides(p).includes(g))))}
       <p class="body-copy">Each ${d} package page lists a day-by-day itinerary, the inclusions and the accommodation details that are known. This table puts the ${list.length} packages side by side.</p>
       <div class="table-scroll"><table class="data-table">
-        <caption class="sr-only">${d} holiday packages listed by RAAHHI TOURS, with duration, stay and listed inclusions</caption>
-        <thead><tr><th scope="col">Package</th><th scope="col">Duration</th><th scope="col">Stay</th><th scope="col">Listed inclusions</th></tr></thead>
+        <caption class="sr-only">${d} holiday packages listed by RAAHHI TOURS, with duration, ${showPrices ? "starting price, " : ""}stay and listed inclusions</caption>
+        <thead><tr><th scope="col">Package</th><th scope="col">Duration</th>${showPrices ? '<th scope="col">Starting price</th>' : ""}<th scope="col">Stay</th><th scope="col">Listed inclusions</th></tr></thead>
         <tbody>${rows}</tbody>
       </table></div>
       <div class="seo-cols">
