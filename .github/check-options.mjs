@@ -166,6 +166,38 @@ try{
   }
  }
 
+ await open('/activities/dubai/');
+ const decksLink=page.getByRole('link',{name:'Compare Dubai observation decks',exact:true});
+ assert.equal(await decksLink.getAttribute('href'),'/compare/dubai-observation-decks/');
+ await decksLink.click();
+ const deckRows=page.locator('.comparison-table tbody tr');
+ assert.equal(await deckRows.count(),3);
+ const burj=await deckRows.filter({has:page.locator('a[href="/activities/dubai/burj-khalifa-top/"]')}).textContent();
+ assert.match(burj,/124 and 125/);
+ assert.doesNotMatch(burj,/148|Rooftop/);
+ const palm=await deckRows.filter({has:page.locator('a[href="/activities/dubai/the-view-at-the-palm/"]')}).textContent();
+ assert.match(palm,/Level 52.*Prime or Non-Prime/);
+ assert.doesNotMatch(palm,/Level 54|VIP lounge/);
+ const sky=deckRows.filter({has:page.locator('a[href="/activities/dubai/sky-views-observatory/"]')});
+ assert.match(await sky.textContent(),/One Glass Slide ride.*No transfer/);
+ await sky.getByRole('link',{name:'Sky Views Observatory'}).click();
+ const skyOption=registry['sky-views-observatory'].options[0];
+ await page.locator('[data-product-option="sky-views-observatory"]').selectOption(skyOption.id);
+ await page.locator('.mobile-enquiry-bar button').click();
+ assert.match(await page.locator('#callbackContextDetails').textContent(),/Sky Views Observatory \+ Glass Slide/);
+ const beforeSky=submissions.length;
+ await enterText('#callbackName','Observation Deck Test');
+ await enterText('#callbackPhone','+971501234567');
+ await page.locator('#callbackSubmit').click();
+ await page.locator('#callbackDone').waitFor({state:'visible'});
+ assert.equal(submissions.length,beforeSky+1);
+ const skyPayload=submissions.at(-1), skyDetails=Object.fromEntries(skyPayload.details);
+ assert.equal(skyPayload.category,'Activities');
+ assert.equal(skyPayload.page,'https://raahhi.com/activities/dubai/sky-views-observatory/');
+ assert.equal(skyDetails['Option reference'],skyOption.id);
+ assert.equal(skyDetails['Selected option'],skyOption.label);
+ await page.locator('#contactModal .modal-close').click();
+
  await open('/holidays/dubai/dubai-grand-stopover/');
  const holiday='dubai-grand-stopover',hotel=registry[holiday].options[0];assert(hotel);
  await page.locator('[data-product-option="'+holiday+'"]').selectOption(hotel.id);
