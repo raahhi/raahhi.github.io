@@ -1149,6 +1149,10 @@
 .catalogue-page-links {display:flex;flex-wrap:wrap;gap:8px;list-style:none;padding:0;}
 .catalogue-page-links a,.catalogue-page-links [aria-current] {display:block;padding:10px 14px;border:1px solid var(--line);border-radius:8px;}
 .catalogue-page-links [aria-current] {background:var(--ink-900);color:white;}
+.editorial-responsibility {margin:18px 0;padding:12px 16px;border-left:3px solid var(--gold-500);background:var(--sand-100);font-size:14px;color:var(--ink-600);}
+.editorial-responsibility p {margin:4px 0;}
+.editorial-owner {font-size:14px;color:var(--ink-600);}
+.editorial-owner a {text-decoration:underline;text-underline-offset:3px;}
 </style>
 </head>
 <body>
@@ -1590,7 +1594,7 @@
     <li>Activity browse lists follow catalogue order; search results follow how closely the query matches recorded information. Related suggestions stay within the same destination and use comparison groups, categories, listed duration or package itinerary stops. None of these is a popularity ranking.</li>
   </ul>
 </div>
-      <div class="about-block" id="editorial-standards" tabindex="-1"><h2>Our editorial standards</h2><p class="body-copy">RAAHHI TOURS prepares the planning guidance on this website from recorded product information, official destination sources and the practical choices travellers need to make. We distinguish supplier facts, government guidance and our own planning suggestions. Our comparisons explain differences; they do not claim a sales or popularity ranking.</p><p class="body-copy">Government guidance is linked next to the claims it supports, with the scope and review date. A checked link does not verify every statement on a page. Product options, price references and cancellation rules have separate source records; final availability and your complete quote are confirmed by a human executive.</p><p class="body-copy">We do not publish fabricated reviews, ratings, team qualifications or firsthand visits. Photographs may be representative where stated. To report an error, email <a class="contact-link" href="mailto:inquire@raahhi.com?subject=Website%20correction">inquire@raahhi.com</a> with the page link and the detail to check. Editorial contact: Raahi Tourism PVT LTD, Pune, India.</p></div><div class="about-block">
+      <div class="about-block" id="editorial-standards" tabindex="-1"><h2>Our editorial standards</h2><p class="body-copy">RAAHHI TOURS prepares the planning guidance on this website from recorded product information, official destination sources and the practical choices travellers need to make. We distinguish supplier facts, government guidance and our own planning suggestions. Our comparisons explain differences; they do not claim a sales or popularity ranking.</p><p class="body-copy">Government guidance is linked next to the claims it supports, with the scope and review date. A checked link does not verify every statement on a page. Product options, price references and cancellation rules have separate source records; final availability and your complete quote are confirmed by a human executive.</p><p class="body-copy">We do not publish fabricated reviews, ratings, team qualifications or firsthand visits. Photographs may be representative where stated. To report an error, email <a class="contact-link" href="mailto:inquire@raahhi.com?subject=Website%20correction">inquire@raahhi.com</a> with the page link and the detail to check. Editorial contact: Raahi Tourism PVT LTD, Pune, India.</p><h3>Responsibility and corrections</h3><p class="body-copy">RAAHHI TOURS is responsible for the planning copy, comparisons and presentation of catalogue information. Raahi Tourism PVT LTD is the operating company and editorial contact. An organisation byline identifies that responsibility; it does not imply a named travel expert or a firsthand inspection. Send the page link, the statement in question and any supporting official source to the correction email above. Our team assesses the specific claim before changing its wording or recorded check date.</p><h3>What our dates mean</h3><ul class="about-list"><li>Published: when the planning page was first released, where that date is recorded.</li><li>Substantive content updated: a recorded change to the page's planning guidance. A design change, automated build or currency conversion does not establish a new content-update date.</li><li>Planning guidance review: the recorded review of the editorial outline; it does not verify every linked product or commercial term.</li><li>Selected facts or source checked: only the named statements and sources were checked on that date.</li><li>Source link checked: the link was checked; this does not establish that every fact on its destination page was verified.</li></ul><p class="body-copy">Where a date or hotel/meal detail is not recorded, we state the gap instead of inventing it. Unknown publication and substantive-update dates are omitted from article metadata. Product pricing, availability, eligibility, pickup and applicable booking terms still require their own confirmation.</p></div><div class="about-block">
         <h2>What RAAHHI TOURS does not control</h2>
         <ul class="about-list">
           <li>Visa decisions and processing times, which are set by the relevant government or immigration authority. RAAHHI TOURS does not guarantee visa approval or processing times.</li>
@@ -5616,6 +5620,7 @@ function faqPageEntities(items){ return items.map(f => ({"@type":"Question", "na
 // Rebuilds every [data-seo] tag in <head> for the current route. The static build captures the
 // result into each pre-rendered page; in the preview it keeps the head in step with navigation.
 function applySeo(){
+  renderEditorialResponsibility(CURRENT);
   const m = pageMeta(CURRENT);
   const head = document.head;
   head.querySelectorAll("[data-seo]").forEach(el => el.remove());
@@ -5717,6 +5722,25 @@ function freshnessSummaryHTML(record, kind){
   return `<p class="freshness-summary">${date ? `${label} checked on ${date}.`
     : `${label}: check date not recorded. Current details confirmed on enquiry.`}</p>`;
 }
+
+// Publication, substantive changes and scoped reviews are distinct records.
+function recordedEditorialDate(iso){return checkedDateHTML(iso) && iso<=todayISO() ? iso : null;}
+function editorialArticleDates(record){
+  const published=recordedEditorialDate(record.publishedOn),updated=recordedEditorialDate(record.contentUpdatedOn);
+  return {...(published ? {datePublished:published} : {}),...(updated && (!published || updated>=published) ? {dateModified:updated} : {})};
+}
+function editorialOwnerHTML(){return `<p class="editorial-owner">Prepared by <a href="/about/#editorial-standards">RAAHHI TOURS</a>, operated by Raahi Tourism PVT LTD. <a href="mailto:inquire@raahhi.com?subject=Website%20correction">Report a correction</a> with this page's link and the detail to check.</p>`;}
+function renderEditorialResponsibility(context){
+  if(!["guide","category","comparison","destinationHub","countryHub","attraction"].includes(context.kind))return;
+  const main=document.querySelector(".page.active"),heading=main?.querySelector("h1");if(!heading)return;
+  main.querySelectorAll(".editorial-responsibility").forEach(el=>el.remove());
+  const guide=context.kind==="guide" ? guideBySlug(context.key) : null;
+  const dates=guide ? editorialArticleDates(guide) : {};
+  const labels=[dates.datePublished ? `Published ${checkedDateHTML(dates.datePublished)}.` : "",dates.dateModified ? `Substantive content updated ${checkedDateHTML(dates.dateModified)}.` : "",guide&&recordedEditorialDate(guide.reviewedOn) ? `Planning guidance review recorded ${checkedDateHTML(guide.reviewedOn)}.` : ""].filter(Boolean);
+  const note=guide ? (labels.length ? labels.join(" ")+" Review dates do not establish live availability or a check of every product fact." : "A page-wide publication, substantive-update or review date is not recorded. Dates beside sources cover only the statements described.") : "Publication dates describe the release of planning content. Dates beside sources describe the specific statements checked; they do not confirm live prices or availability.";
+  heading.insertAdjacentHTML("afterend",`<aside class="editorial-responsibility" aria-label="Editorial responsibility">${editorialOwnerHTML()}<p class="editorial-date-scope">${note}</p></aside>`);
+}
+
 function sourcesAndFreshnessHTML(record, kind){
   const isVisa = kind === "visa";
   const src = isVisa ? record.officialSource : null;
@@ -5728,6 +5752,7 @@ function sourcesAndFreshnessHTML(record, kind){
   const factsDate = isVisa ? checkedDateHTML(record.lastVerified) : "";
   return `<div class="detail-section sources-and-freshness">
     <h2>Sources and freshness</h2>
+    ${editorialOwnerHTML()}
     <p class="body-copy">${explanation}</p>
     ${sources.length ? `<div class="source-links">${sourcesHTML(sources)}</div>`
       : `<p class="source-status">${isVisa ? "No official source link is recorded for this destination. Our team can point you to the official source during your enquiry." : "No external references are listed for this experience."}</p>`}
@@ -7518,7 +7543,7 @@ function renderPkgDetail(id, expectedDest){
     ${psti.note ? `<div class="status-banner status-${pst}" role="status"><strong>${psti.label}.</strong> ${psti.note}</div>` : ""}
     <div class="detail-tags">${statusTagHTML(p)}<span class="tag">${dn}</span>${hasRealValue(p.dur) ? `<span class="tag">${p.dur}</span>` : ""}</div>
     ${detailEnquiryHTML(p, "holiday")}
-    ${atAGlanceHTML(`${escapeHTML(p.title)} is ${hasRealValue(p.dur) ? `a ${durAdj(p.dur)}` : "a"} holiday package based in ${dn}.`, [["Destination", `<a class="contact-link" href="${URLS.holidayDest(p.dest)}">${dn}</a>`], ["Duration", hasRealValue(p.dur) ? durText(p.dur) : ""], ["Accommodation", acc ? escapeHTML(accommodationSummary(acc)) + (acc.name ? "" : ". Confirmed on enquiry") : ""], ["Meals", acc && acc.board ? escapeHTML(acc.board) : ""], ["Availability", psti.label], ["Price", selectedPriceHTML(p)]], "", freshnessSummaryHTML(p, "holiday"))}
+    ${atAGlanceHTML(`${escapeHTML(p.title)} is ${hasRealValue(p.dur) ? `a ${durAdj(p.dur)}` : "a"} holiday package based in ${dn}.`, [["Destination", `<a class="contact-link" href="${URLS.holidayDest(p.dest)}">${dn}</a>`], ["Duration", hasRealValue(p.dur) ? durText(p.dur) : ""], ["Accommodation", acc ? escapeHTML(accommodationSummary(acc)) + (acc.name ? "" : ". Confirmed on enquiry") : "Hotel details not recorded; check the listed inclusions and confirm the accommodation basis"], ["Meals", acc && acc.board ? escapeHTML(acc.board) : "Meal arrangements not recorded; confirm in your quote"], ["Availability", psti.label], ["Price", selectedPriceHTML(p)]], "", freshnessSummaryHTML(p, "holiday"))}
     ${overview ? `<p class="pkg-overview">${overview}</p>` : ""}
     ${p.description ? `<p class="pkg-overview">${p.description}</p>` : ""}
     ${sections.join("")}
@@ -8054,7 +8079,7 @@ function pageMeta(c){
       m.bc = [home, {name:"Activities", path:URLS.activities}, ...(g.destinations ? [] : [{name:destName(g.dest), path:URLS.activityDest(g.dest)}]), {name:g.crumb, path:m.path}];
       m.nodes = [...destinations.map(destNode),
         {"@type":"Article", "@id":url + "#article", "headline":g.h1, "description":g.description, "url":url, "inLanguage":SEO_CONFIG.defaultLanguage,
-          "author":{"@id":ORG_ID()}, "publisher":{"@id":ORG_ID()}, "dateModified":g.reviewedOn || "2026-10-25", "mainEntityOfPage":{"@id":url + "#webpage"}, "image":imgAt(g.image, 1200),
+          "author":{"@id":ORG_ID()}, "publisher":{"@id":ORG_ID()}, ...editorialArticleDates(g), "mainEntityOfPage":{"@id":url + "#webpage"}, "image":imgAt(g.image, 1200),
           "about":g.destinations ? about : about[0], "mentions":ids.map(id => ({"@id":absUrl(URLS.activity(byId(id))) + "#trip"}))},
         ...(g.render === renderSafariGuideBody || !ids.length ? [] : [itemListNode(url + "#list", `Activities compared in the ${g.name}`, ids.map(id => byId(id)).map(t => ({path:URLS.activity(t), name:t.title})))])];
       m.citation = [...new Set(ids.flatMap(id => publicListingSources(byId(id).sources).map(s => s.url)))];

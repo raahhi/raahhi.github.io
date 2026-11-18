@@ -96,6 +96,9 @@ jobs:
       - name: Check independently crawlable catalogue pagination
         run: node .github/check-pagination.mjs
 
+      - name: Check truthful editorial dates and page-type completeness
+        run: node .github/check-editorial.mjs
+
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
 

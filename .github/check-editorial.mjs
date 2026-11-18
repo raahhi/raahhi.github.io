@@ -1,0 +1,49 @@
+import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
+import {createServer} from 'node:http';
+import {chromium} from 'playwright';
+const registry=JSON.parse(await readFile('source/published-urls.json','utf8'));
+const editorialKinds=new Set(['guide','category','comparison','destinationHub','countryHub','attraction']);
+const productKinds=new Set(['activity','holiday','visa','addon']);
+const counts={pages:0,editorial:0,products:0,articlesWithRecordedContentDates:0,articlesWithoutRecordedContentDates:0,listingCheckDateNotRecorded:0};
+for(const item of registry.pages){
+ const html=await readFile('dist'+item.path+'index.html','utf8');counts.pages++;
+ const has=word=>html.includes(word);
+ if(editorialKinds.has(item.kind)){
+  counts.editorial++;assert.equal((html.match(/class="editorial-responsibility"/g)||[]).length,1,'One visible accountability block '+item.path);
+  assert(has('Raahi Tourism PVT LTD')&&has('Report a correction')&&has('href="/about/#editorial-standards"'),item.path);
+ }
+ if(productKinds.has(item.kind)){
+  counts.products++;assert(has('sources-and-freshness')&&has('editorial-owner')&&has('freshness-summary'),'Product source scope and responsibility '+item.path);
+  if(has('check date not recorded'))counts.listingCheckDateNotRecorded++;
+ }
+ if(item.kind==='guide'){
+  const graph=JSON.parse(html.match(/<script[^>]*type="application\/ld\+json"[^>]*>(.*?)<\/script>/s)[1])['@graph'];
+  const article=graph.find(n=>n['@type']==='Article'),org=graph.find(n=>n['@type']==='Organization');
+  assert.deepEqual(article.author,{'@id':org['@id']},'Retain truthful organisation author');
+  if(article.datePublished||article.dateModified){counts.articlesWithRecordedContentDates++;for(const date of [article.datePublished,article.dateModified].filter(Boolean))assert(has('datetime="'+date+'"'),'Visible/schema date parity '+item.path);}
+  else counts.articlesWithoutRecordedContentDates++;
+  assert((html.match(/<h2(?:\s|>)/g)||[]).length>=3&&has('planning-links'),'Useful guide and onward planning '+item.path);
+ }
+ if(item.kind==='holiday'){
+  assert(/<h2[^>]*>[^<]*[Ii]tinerary/.test(html),'Package itinerary '+item.path);
+  assert(has('Accommodation</dt>')&&has('Meals</dt>'),'Show known or explicitly unrecorded stay/meal basis '+item.path);
+ }
+ if(item.kind==='category')assert(has('category-products')&&has('Choosing an experience'),'Category choice and full membership '+item.path);
+ if(item.kind==='comparison')assert(has('comparison-table'),'Comparison members '+item.path);
+ if(item.kind==='attraction')assert(has('attraction-products'),'Separate bookable choices '+item.path);
+ if(['countryHub','destinationHub'].includes(item.kind))assert(has('planning-links')&&has('qa-item'),'Planning connections and scoped questions '+item.path);
+}
+assert.equal(counts.pages,286);assert.equal(counts.products,235);assert.equal(counts.articlesWithRecordedContentDates+counts.articlesWithoutRecordedContentDates,6);
+const server=createServer(async(req,res)=>{const path=new URL(req.url,'http://local').pathname;try{res.setHeader('Content-Type',path.endsWith('.js')?'text/javascript':path.endsWith('.css')?'text/css':'text/html');res.end(await readFile('dist'+(path.endsWith('/')?path+'index.html':path)));}catch{res.statusCode=404;res.end();}});
+await new Promise(r=>server.listen(0,'127.0.0.1',r));const origin='http://127.0.0.1:'+server.address().port,browser=await chromium.launch();
+try{
+ const p=await browser.newPage(),errors=[];p.on('pageerror',e=>errors.push(e.message));await p.route('**/*',r=>r.request().url().startsWith(origin)?r.continue():r.abort());
+ await p.goto(origin+'/guides/choose-a-uae-emirate/');await p.waitForFunction(()=>!document.querySelector('[data-currency-select]').disabled);
+ const dates=await p.evaluate(()=>({reviewOnly:editorialArticleDates({reviewedOn:'2026-11-17'}),recorded:editorialArticleDates({publishedOn:'2026-11-16',contentUpdatedOn:'2026-11-17'}),invalid:editorialArticleDates({publishedOn:'2026-02-30',contentUpdatedOn:'2099-01-01'})}));
+ assert.deepEqual(dates.reviewOnly,{});assert.deepEqual(dates.recorded,{datePublished:'2026-11-16',dateModified:'2026-11-17'});assert.deepEqual(dates.invalid,{});
+ await p.evaluate(()=>{applySeo();applySeo();});assert.equal(await p.locator('main .editorial-responsibility').count(),1,'No duplicate ownership after metadata refresh');
+ assert((await p.locator('main .editorial-responsibility').textContent()).includes('17 November 2026'));
+ for(const width of [320,390,768,1440]){await p.setViewportSize({width,height:900});for(const path of ['/guides/dubai-desert-safari/','/guides/choose-a-uae-emirate/','/holidays/dubai/dubai-grand-stopover/','/about/']){await p.goto(origin+path);await p.waitForFunction(()=>!document.querySelector('[data-currency-select]').disabled);assert(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'No overflow '+width+' '+path);}}
+ assert.deepEqual(errors,[]);console.log('PASS page-type completeness, truthful organisation responsibility, separate review/content/source dates, omitted unknown article dates, correction path, explicit package gaps and responsive presentation '+JSON.stringify(counts));
+}finally{await browser.close();server.close();}
