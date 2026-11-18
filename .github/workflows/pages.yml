@@ -93,6 +93,9 @@ jobs:
       - name: Check Abu Dhabi and Ras Al Khaimah planning hubs
         run: node .github/check-city-hubs.mjs
 
+      - name: Check independently crawlable catalogue pagination
+        run: node .github/check-pagination.mjs
+
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
 
