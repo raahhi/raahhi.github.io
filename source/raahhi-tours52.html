@@ -1212,7 +1212,7 @@
 <section class="home-selection" aria-labelledby="homeActivitiesTitle">
   <div class="wrap">
     <div class="section-head"><div><p class="eyebrow">Explore the UAE</p><h2 id="homeActivitiesTitle">Explore UAE activities</h2></div><a class="contact-link" href="/activities/">Browse all activities →</a></div>
-    <p class="selection-intro">Compare a Dubai safari, an Abu Dhabi theme park and a Ras Al Khaimah mountain adventure. Planning your stay first? Use the <a class="contact-link" href="/dubai/">Dubai trip planner</a>.</p>
+    <p class="selection-intro">Compare a Dubai safari, an Abu Dhabi theme park and a Ras Al Khaimah mountain adventure. Planning your stay first? Use the <a class="contact-link" href="/dubai/">Dubai trip planner</a>, <a class="contact-link" href="/abu-dhabi/">Abu Dhabi trip planner</a> or <a class="contact-link" href="/ras-al-khaimah/">Ras Al Khaimah trip planner</a>.</p>
     <div class="product-grid" id="homeActivitySelection"></div><div class="detail-section home-visa-shortcuts"><h3>Featured visa assistance</h3><p class="body-copy">Start with your destination, then check the route for your passport and residence.</p><div class="detail-tags"><a class="btn btn-line btn-sm" href="/visas/united-arab-emirates/">UAE / Dubai</a><a class="btn btn-line btn-sm" href="/visas/schengen-area/">Schengen</a><a class="btn btn-line btn-sm" href="/visas/united-states/">USA</a><a class="btn btn-line btn-sm" href="/visas/singapore/">Singapore</a></div></div>
   </div>
 </section>
@@ -3211,8 +3211,8 @@ function router(){
   // --- Canonical semantic routes: /activities[...], /holidays[...], /visas[...] ---
   } else if(route==="attractions" && n===3 && attractionByRoute(seg1,seg2)){
     const attraction=attractionByRoute(seg1,seg2); renderAttraction(attraction); CURRENT={kind:"attraction",attraction}; showPage("attraction","activities");
-  } else if(route==="dubai" && n===1){
-    renderDubaiPlanningHub(); CURRENT={kind:"destinationHub",dest:"dubai"}; showPage("destination-hub");
+  } else if(n===1 && planningHubBySlug(route)){
+    renderDestinationPlanningHub(route); CURRENT={kind:"destinationHub",dest:route}; showPage("destination-hub");
   } else if(route==="activities" && n===4 && seg2==="categories" && cityCategoryBySlug(seg1,parts[3])){
     const category=cityCategoryBySlug(seg1,parts[3]);
     renderCategory(category); CURRENT={kind:"category",category}; showPage("category","activities");
@@ -6247,6 +6247,66 @@ function cityCategoryFaqItems(c){
     {q:"What should I check about children, accessibility and cancellation?",a:"Read the exact product's age and access conditions, boarding arrangements and cancellation policy. Ask the team to confirm any requirement that is missing from the listing; conditions for one boat do not establish those for another."}
   ];
 }
+// Planning hubs have permanent identities and distinct local editorial responsibilities.
+const DESTINATION_HUBS = [
+  {slug:"dubai",title:"Dubai trip planner",description:"Plan a Dubai stay around activities, hotel arrangements and entry checks. Connect safari and cruise choices with holiday packages and practical guides.",sources:[]},
+  {slug:"abu-dhabi",title:"Abu Dhabi trip planner",description:"Plan an Abu Dhabi stay around Yas Island parks, cultural visits and departure arrangements. Connect activities, holiday packages and UAE entry checks.",sources:[{name:"Experience Abu Dhabi: Saadiyat Island and Yas Island",url:"https://visitabudhabi.ae/en/plan-your-trip/article-hub/saadiyat-island-vs-yas-island",type:"tourism",supports:"Yas Island's park focus and Saadiyat's cultural attractions. Individual ticket inclusions, hours and transfers are checked separately.",lastVerified:"2026-11-18"}]},
+  {slug:"ras-al-khaimah",title:"Ras Al Khaimah trip planner",description:"Plan Ras Al Khaimah around mountain, desert and heritage outings or a holiday stay. Check meeting points, recorded status and entry requirements.",sources:[{name:"Visit Ras Al Khaimah: travel FAQ",url:"https://visitrasalkhaimah.com/faqs/",type:"tourism",supports:"Mountain, coastal and heritage planning; Musandam is an Oman excursion across the border. Not confirmation of a RAAHHI departure, admission or border permission.",lastVerified:"2026-11-18"},{name:"Visit Ras Al Khaimah: Suwaidi Pearl Farm",url:"https://visitrasalkhaimah.com/discover/activities/suwaidi-pearls/",type:"tourism",supports:"The pearl-farm visit is based at Al Rams. Its selected product's transport and inclusions are checked separately.",lastVerified:"2026-11-18"}]}
+];
+function planningHubBySlug(slug){ return DESTINATION_HUBS.find(h=>h.slug===slug); }
+function planningHubServices(dest){ return [
+  {path:URLS.activityDest(dest),name:`${destName(dest)} activities`,note:`${TOURS.filter(t=>t.dest===dest).length} catalogue listings. Check each experience's actual location, departure and selected option.`},
+  {path:URLS.holidayDest(dest),name:`${destName(dest)} holiday packages`,note:`${PACKAGES.filter(p=>p.dest===dest).length} listed stays based in ${destName(dest)}. Compare nights, hotel basis and the day-by-day itinerary.`},
+  {path:URLS.visa(visaBySlug("united-arab-emirates")),name:"UAE visa assistance",note:"Check the entry route for your passport and residence separately from your activity or hotel booking."}
+]; }
+function hubServiceCardsHTML(dest){ return `<section class="detail-section"><h2>Choose your starting point</h2><ul class="guide-cards">${planningHubServices(dest).map(s=>`<li class="guide-card"><h3><a href="${s.path}">${escapeHTML(s.name)}</a></h3><p>${escapeHTML(s.note)}</p></li>`).join("")}</ul></section>`; }
+function hubProductLinksHTML(ids){ return `<ul class="link-list">${ids.map(byId).filter(Boolean).map(t=>`<li><a href="${URLS.activity(t)}">${escapeHTML(t.title)}</a><span class="index-note planning-link-note">${escapeHTML(statusInfo(t).label)}</span></li>`).join("")}</ul>`; }
+function hubPackageLinksHTML(ids){ return `<ul class="link-list">${ids.map(id=>PACKAGES.find(p=>p.id===id)).filter(Boolean).map(p=>`<li><a href="${URLS.holiday(p)}">${escapeHTML(p.title)}</a><span class="index-note planning-link-note">${escapeHTML(durText(p.dur))}; check the full itinerary and hotel basis.</span></li>`).join("")}</ul>`; }
+function hubRecordedStatusHTML(dest){
+  const items=TOURS.filter(t=>t.dest===dest && ["seasonal","temporarily-closed"].includes(publicStatusOf(t)));
+  return items.length ? `<section class="detail-section recorded-hub-status"><h2>Check recorded operating status before fixing dates</h2><p class="body-copy">These are catalogue records, not live availability checks. Resolve the status with the team before arranging the rest of your day.</p><ul class="link-list">${items.map(t=>`<li><a href="${URLS.activity(t)}">${escapeHTML(t.title)}</a><span class="index-note planning-link-note">${escapeHTML(statusInfo(t).label)}. ${escapeHTML(availabilityAnswer(t))}</span></li>`).join("")}</ul></section>` : "";
+}
+function otherPlanningHubsHTML(current){ return `<nav class="detail-section planning-links" aria-label="Compare emirate plans"><h2>Compare emirate plans</h2><ul class="link-list">${DESTINATION_HUBS.filter(h=>h.slug!==current).map(h=>`<li><a href="${URLS.destinationHub(h.slug)}">${escapeHTML(h.title)}</a></li>`).join("")}<li><a href="${URLS.guide("choose-a-uae-emirate")}">Choose between Dubai, Abu Dhabi and Ras Al Khaimah</a></li></ul></nav>`; }
+function renderDestinationPlanningHub(dest){
+  if(dest==="dubai"){renderDubaiPlanningHub();return;}
+  const hub=planningHubBySlug(dest),body=dest==="abu-dhabi" ? abuDhabiPlanningBody() : rakPlanningBody();
+  document.getElementById("destinationHubBody").innerHTML=`
+    <nav class="breadcrumb" aria-label="Breadcrumb">${breadcrumbHTML([{label:"Home",href:"/"},{label:hub.title}])}</nav>
+    <p class="eyebrow" style="margin-top:20px;">Plan your stay</p><h1>${escapeHTML(hub.title)}</h1>
+    <p class="lede" style="margin-top:18px;">${body.intro}</p>
+    <p class="index-note">Planning content published ${checkedDateHTML("2026-11-18")}. Counts and status labels come from the catalogue, not a live availability feed. Product facts, prices and booking terms retain their own recorded checks.</p>
+    ${hubServiceCardsHTML(dest)}${body.html}${hubRecordedStatusHTML(dest)}
+    <section class="detail-section"><h2>Questions about planning ${escapeHTML(destName(dest))}</h2>${qaHTML(body.faq)}</section>
+    <section class="detail-section"><h2>Planning sources and scope</h2><p class="body-copy">The linked RAAHHI listings support the examples and package choices. The tourism sources below support the selected destination context, checked on ${formatDate("2026-11-18")}; they do not establish ticket inclusions, current operating status or a confirmed booking.</p>${sourcesHTML(hub.sources)}</section>
+    ${otherPlanningHubsHTML(dest)}
+    <nav class="detail-section planning-links" aria-label="Continue planning ${escapeHTML(destName(dest))}"><h2>Continue planning ${escapeHTML(destName(dest))}</h2><ul class="link-list"><li><a href="${URLS.activityDest(dest)}">All ${escapeHTML(destName(dest))} activities</a></li><li><a href="${URLS.holidayDest(dest)}">${escapeHTML(destName(dest))} holiday packages</a></li><li><a href="${URLS.contact}">Discuss your travel plans</a></li></ul></nav>`;
+}
+function abuDhabiPlanningBody(){ return {
+  intro:"Choose the main reason for your Abu Dhabi stay before filling each day: Yas Island parks, cultural visits, city sightseeing or an outing farther afield. Match the hotel and departure arrangements to those choices, then compare individual activities with a multi-day package. A listing filed under Abu Dhabi does not mean it starts at your Abu Dhabi hotel.",
+  html:`<section class="detail-section"><h2>A park-focused day or stay</h2><p class="body-copy">Yas Island brings together the parks named below. Start with the experience your group wants, then compare a single admission with a pass. Check which parks the chosen pass covers, its validity and each child's participation conditions. A multi-park ticket does not remove ride restrictions or travel time.</p>${hubProductLinksHTML(["ferrari-world-abu-dhabi","warner-bros-world","seaworld-abu-dhabi","yas-waterworld","yas-island-theme-parks-pass"])}<p class="body-copy">Use the <a href="${URLS.guide("abu-dhabi-theme-parks")}">Abu Dhabi theme-park planning guide</a> for the wider comparison and links to packages with a listed park day.</p></section>
+    <section class="detail-section"><h2>Culture and city sightseeing</h2><p class="body-copy">Saadiyat's cultural attractions offer a different planning focus from a Yas park day. Compare a museum visit with a palace or city tour, checking admission times and the actual route. A city tour's named stops may be photo stops rather than admission to every venue, so read the itinerary before adding separate tickets.</p>${hubProductLinksHTML(["louvre-abu-dhabi","teamlab-phenomena-abu-dhabi","qasr-al-watan","full-day-abu-dhabi-city-tour"])}<p class="body-copy">Choose the visits you most want first and leave room for meals, rest and travel between them. Treat the duration on a listing as the described experience, not necessarily the full time away from your hotel.</p></section>
+    <section class="detail-section"><h2>Match the tour to your departure point</h2><p class="body-copy">The <a href="${URLS.activity(byId("abu-dhabi-city-tour-from-dubai"))}">Abu Dhabi City Tour from Dubai</a> is a different starting arrangement from a stay based in Abu Dhabi. The catalogue also includes <a href="${URLS.activity(byId("al-ain-city-tour"))}">Al Ain City Tour from Dubai</a>. Check the pickup city, hotel area, meeting point and return journey on the exact option. Do not assume an Al Ain visit or a desert outing is a nearby stop that can be added between city admissions.</p><p class="body-copy">Tell the team where you are staying before requesting transfers. If you are changing emirates, settle the inter-emirate journey and luggage arrangements separately from attraction admission.</p></section>
+    <section class="detail-section"><h2>Compare the length and purpose of your stay</h2><p class="body-copy">Compare the listed two-night Stay and Play itinerary with a longer Abu Dhabi stay that names a Dubai day tour. The package nights and itinerary are examples to review, not a minimum visit length or a promise that every activity above is included.</p>${hubPackageLinksHTML(["abu-dhabi-stay-play","abu-dhabi-grand-with-dubai-day"])}<p class="body-copy">Open each package for its hotel basis, room or meal arrangements and day-by-day inclusions. Request extra nights or different visits as changes to confirm in the quote. Share dates, adults, children's ages and any transfer needs; compare the final group total in the same currency.</p></section>`,
+  faq:[
+    {q:"Should I stay in Abu Dhabi or visit from Dubai?",a:"Start with your actual base and the days you want in Abu Dhabi. Compare a Dubai-departure tour if you are staying there, or an Abu Dhabi package if you want to compare a local hotel stay and itinerary. Confirm pickup and return arrangements; a destination label does not establish the departure city."},
+    {q:"Can I combine a Yas park day with cultural visits?",a:"Choose the main experience for each day and check its admission window before adding another. Compare the journey between venues and time for breaks. A park pass and a museum or palace admission are separate unless the chosen product explicitly combines them."},
+    {q:"Does an Abu Dhabi package automatically include all the parks?",a:"No. Read the exact itinerary and selected hotel/package option for the named park admissions and number of visits. Activities linked on this planner are separate choices unless that package lists them as included."}
+  ]
+}; }
+function rakPlanningBody(){ return {
+  intro:"Build your Ras Al Khaimah stay around the balance you want between mountain adventure, a desert outing, heritage and time at your hotel. Choose a few main experiences, then check their actual meeting points and recorded operating status. Compare the listed stays without assuming every mountain, desert or coastal activity shares one pickup route.",
+  html:`<section class="detail-section"><h2>A mountain outing needs its own plan</h2><p class="body-copy">If Jebel Jais Zipline is a priority, open the exact product before choosing the rest of that day. Check participant restrictions, the confirmed slot, current operation and the journey to and from the venue. Mountain time, hotel time and transfer time need separate space in your plan; a hotel stay does not establish that this activity or its transport is included.</p>${hubProductLinksHTML(["jebel-jais-zipline"])}<p class="body-copy">Weather or operating arrangements can affect an outdoor plan. Keep an alternative in mind and confirm the applicable cancellation or change terms before committing to related bookings.</p></section>
+    <section class="detail-section"><h2>Choose the desert format you want</h2><p class="body-copy">Compare an evening safari and meal with an overnight camp stay, or consider a separate camel-riding or quad-biking experience. These are different products, not interchangeable safari extras. Read each option for activities, transport, guest restrictions and what is excluded.</p>${hubProductLinksHTML(["desert-safari-with-dinner-ras-al-khaimah","overnight-desert-camping-ras-al-khaimah","camel-riding-ras-al-khaimah","quad-biking-ras-al-khaimah"])}<p class="body-copy">For an overnight outing, settle the accommodation and return arrangements before adding another early start. Confirm whether your hotel nights overlap with the camp night and how luggage will be handled.</p></section>
+    <section class="detail-section"><h2>Make room for an Al Rams heritage visit</h2><p class="body-copy">The pearl-farm experience is based at Al Rams. Compare the <a href="${URLS.activity(byId("house-of-pearls-suwaidi-pearl-farm"))}">House of Pearls by Suwaidi Pearls listing</a> for its boat/visit arrangements and transfer basis. It gives you a different kind of outing from a mountain activity or a desert camp. Check the meeting point, visit time and any optional extras rather than assuming a pearl purchase or meal is included.</p></section>
+    <section class="detail-section"><h2>Compare a short break with a longer hotel stay</h2><p class="body-copy">Start with the two-night Safari Short Break or the four-night Mountain and Coast itinerary, then compare the nights, hotel basis and named activities. The package title alone does not establish a beachfront room, a particular hotel or admission to every activity on this page.</p>${hubPackageLinksHTML(["ras-al-khaimah-safari-short-break","ras-al-khaimah-mountain-coast"])}<p class="body-copy">Keep unallocated time for rest rather than treating every hotel day as an excursion day. Ask for any extra activity, meal arrangement or private transfer as a quote item, and confirm the group total and terms before payment.</p></section>
+    <section class="detail-section"><h2>Check the destination behind the catalogue label</h2><p class="body-copy">The <a href="${URLS.activity(byId("musandam-dibba-tour"))}">Musandam Dibba Tour</a> is an outing to Oman, not a local Ras Al Khaimah attraction. Its catalogue grouping does not promise pickup at your Ras Al Khaimah hotel. Verify the actual departure option, border documentation or permissions, any separate charges and your return arrangements before booking. UAE visa assistance does not by itself establish permission for an Oman excursion.</p></section>`,
+  faq:[
+    {q:"Can I combine Jebel Jais with a hotel and desert stay?",a:"Compare a package that names the activities you want, then check its actual schedule and transfer basis. For separate bookings, allow for each meeting point and the return journey. Confirm the mountain activity's current operation and participation conditions before fixing the rest of the plan."},
+    {q:"Does a Ras Al Khaimah safari always include an overnight stay?",a:"No. The dinner-safari listing and the overnight-camp listing are different choices. Read the selected product for its activities, accommodation, meals and pickup arrangement rather than treating an overnight stay as a standard safari inclusion."},
+    {q:"How should I choose between a short break and a longer Ras Al Khaimah stay?",a:"Compare the two-night and four-night itineraries linked above against the experiences and rest time you want. Match arrival/departure times to the included days and confirm the hotel, meals and transfers in your quote. The listed durations are package choices, not a required length of stay."}
+  ]
+}; }
+
 function renderDubaiPlanningHub(){
   const guides=["dubai-first-visit-planning","dubai-family-planning","dubai-landmarks"].map(guideBySlug);
   const categories=CITY_ACTIVITY_CATEGORIES.filter(c=>c.dest==="dubai");
@@ -6279,6 +6339,7 @@ function renderDubaiPlanningHub(){
       {q:"How many days should I allow?",a:"Work back from the experiences you most want and your arrival and departure times. The linked four-day guide is a flexible example, not a minimum stay or a fixed package. Add time for transfers, rest and any extra emirate you want to visit."},
       {q:"What should I confirm before paying?",a:"Confirm your entry route, exact product and option, travel dates, group total, hotel or pickup arrangements and applicable cancellation terms. Resolve anything marked as a reference, missing detail or availability check before accepting the quote."}
     ])}</section>
+    ${otherPlanningHubsHTML("dubai")}
     <nav class="detail-section planning-links" aria-label="Continue planning Dubai"><h2>Continue planning Dubai</h2><ul class="link-list"><li><a href="${URLS.activityDest("dubai")}">All Dubai activities</a></li><li><a href="${URLS.holidayDest("dubai")}">Dubai holiday packages</a></li><li><a href="${URLS.contact}">Discuss your Dubai plans</a></li></ul></nav>`;
 }
 
@@ -6437,7 +6498,7 @@ function planningLinksHTML(dest, currentPath, guides){
     : context.kind === "holidayDest" ? PACKAGES.filter(p=>p.dest === dest).flatMap(p=>itineraryActivities(p).map(x=>x.t))
     : context.kind === "activityDest" ? TOURS.filter(t=>t.dest === dest) : [];
   const ids = new Set(tours.map(t=>t.id)), links = [];
-  if(dest==="dubai") links.push({href:URLS.destinationHub(dest),label:"Dubai trip planner",note:"Connect activities, stays and entry checks before choosing your bookings."});
+  if(planningHubBySlug(dest)) links.push({href:URLS.destinationHub(dest),label:destName(dest)+" trip planner",note:"Connect activities, stays and entry checks before choosing your bookings."});
   const attractions=attractionsForTours(tours);
   attractions.forEach(a=>links.push({href:URLS.attraction(a),label:a.title+": choose your experience",note:"Plan the attraction visit and compare its separate product choices."}));
   comparisonsForIds([...ids]).slice(0,1).forEach(c=>links.push({href:URLS.comparison(c),label:c.title,note:"Compare listed inclusions, duration, pickup and terms."}));
@@ -6836,7 +6897,7 @@ function renderEmirateGuide(g){
     <section class="detail-section"><h2>Before choosing a base</h2><p class="body-copy">Check which airport and hotel suit your main activities. Ask where each outing starts, how you return and whether transfers and admissions are included in your selected package. The suggested stays are planning examples. Confirm dates, inclusions and the final price before booking.</p></section>
     <section class="detail-section"><h2>Questions about choosing an emirate</h2>${qaHTML(faq)}</section>
     <nav class="detail-section planning-links" aria-label="Browse activities and stays by emirate"><h2>Browse activities and stays by emirate</h2><ul class="link-list">
-      ${g.destinations.map(slug=>`<li><a href="${URLS.activityDest(slug)}">${escapeHTML(destName(slug))} activities</a></li><li><a href="${URLS.holidayDest(slug)}">${escapeHTML(destName(slug))} holiday packages</a></li>`).join("")}
+      ${g.destinations.map(slug=>`<li><a href="${URLS.destinationHub(slug)}">${escapeHTML(destName(slug))} trip planner</a></li><li><a href="${URLS.activityDest(slug)}">${escapeHTML(destName(slug))} activities</a></li><li><a href="${URLS.holidayDest(slug)}">${escapeHTML(destName(slug))} holiday packages</a></li>`).join("")}
     </ul></nav>`};
 }
 const GUIDES = [
@@ -7775,11 +7836,15 @@ function pageMeta(c){
       m.about=[{"@id":url+"#attraction"}];m.mainEntity={"@id":url+"#list"};m.citation=a.sources.map(s=>s.url);m.image=list[0].images[0];break;
     }
     case "destinationHub": {
-      m.path=URLS.destinationHub(c.dest); m.title="Dubai Trip Planner: Activities, Stays & Travel Checks | "+S;
-      m.description="Plan a Dubai stay around activities, hotel arrangements and entry checks. Connect safari and cruise choices with holiday packages and practical guides.";
-      m.pageType="CollectionPage";m.bc=[home,{name:"Dubai trip planning",path:m.path}];
-      m.nodes=[destNode("dubai"),itemListNode(absUrl(m.path)+"#planning","Dubai planning sections",[{path:URLS.activityDest("dubai"),name:"Dubai activities"},{path:URLS.holidayDest("dubai"),name:"Dubai holiday packages"},{path:URLS.visa(visaBySlug("united-arab-emirates")),name:"UAE visa assistance"}])];
-      m.about=[{"@id":absUrl("/#destination-dubai")}];m.mainEntity={"@id":absUrl(m.path)+"#planning"}; break;
+      const hub=planningHubBySlug(c.dest),name=destName(c.dest);
+      m.path=URLS.destinationHub(c.dest);m.title=name+" Trip Planner: Activities, Stays & Travel Checks | "+S;
+      m.description=hub.description;
+      m.pageType="CollectionPage";m.bc=[home,{name:name+" trip planning",path:m.path}];
+      m.nodes=[destNode(c.dest),itemListNode(absUrl(m.path)+"#planning",name+" planning sections",planningHubServices(c.dest))];
+      m.about=[{"@id":absUrl("/#destination-"+c.dest)}];m.mainEntity={"@id":absUrl(m.path)+"#planning"};
+      if(hub.sources.length)m.citation=hub.sources.map(source=>source.url);
+      if(c.dest!=="dubai")m.image=DESTINATIONS.find(d=>d.slug===c.dest).activityImage;
+      break;
     }
     case "activities":
       m.path = URLS.activities; m.title = `UAE Activities & Tours in Dubai, Abu Dhabi & Ras Al Khaimah | ${S}`;
@@ -7981,7 +8046,7 @@ function routeKind(path){
   const parts = h.split("/"), [r, a, b] = parts, n = parts.length, isDest = s => DESTINATIONS.some(d => d.slug === s);
   if(parts.some(x => !x)) return {kind:"notfound"};
   if(r === "attractions" && n === 3){const attraction=attractionByRoute(a,b);return attraction ? {kind:"attraction",attraction} : {kind:"notfound"};}
-  if(r === "dubai" && n === 1) return {kind:"destinationHub",dest:"dubai"};
+  if(n === 1 && planningHubBySlug(r)) return {kind:"destinationHub",dest:r};
   if(r === "activities" && n === 4 && b === "categories"){const category=cityCategoryBySlug(a,parts[3]);return category ? {kind:"category",category} : {kind:"notfound"};}
   if(r === "activities" && n === 3 && a === "categories"){ const category = categoryBySlug(b); return category ? {kind:"category",category} : {kind:"notfound"}; }
   if(r === "activities" && n === 3){ const t = TOURS.find(x => x.id === b && x.dest === a); return t ? {kind:"activity", t} : {kind:"notfound"}; }
@@ -8000,7 +8065,7 @@ function routeKind(path){
 function seoRoutes(){
   return ["/", URLS.visas, ...VISAS.map(URLS.visa),
     ...VISA_ADDONS.map(URLS.addon),
-    URLS.destinationHub("dubai"), URLS.activities, ...ACTIVITY_CATEGORIES.map(URLS.activityCategory), ...CITY_ACTIVITY_CATEGORIES.map(URLS.activityCategory), ...DESTINATIONS.filter(d => destHasTours(d.slug)).map(d => URLS.activityDest(d.slug)), ...TOURS.map(URLS.activity),
+    ...DESTINATION_HUBS.map(h=>URLS.destinationHub(h.slug)), URLS.activities, ...ACTIVITY_CATEGORIES.map(URLS.activityCategory), ...CITY_ACTIVITY_CATEGORIES.map(URLS.activityCategory), ...DESTINATIONS.filter(d => destHasTours(d.slug)).map(d => URLS.activityDest(d.slug)), ...TOURS.map(URLS.activity),
     URLS.holidays, ...DESTINATIONS.map(d => URLS.holidayDest(d.slug)), ...PACKAGES.map(URLS.holiday),
     ...ATTRACTIONS.map(URLS.attraction), ...COMPARISONS.map(URLS.comparison), ...GUIDES.map(g => URLS.guide(g.slug)), URLS.about, URLS.contact, URLS.faq, URLS.terms, URLS.privacy];
 }
@@ -8045,6 +8110,7 @@ function llmsTxt(){
   const sec = (h, list) => list.length ? `## ${h}\n\n${list.map(p => `- [${title(p)}](${absUrl(p)})`).join("\n")}\n\n` : "";
   return (`# ${BUSINESS.name}\n\n> ${BUSINESS.summary}\n\nThis file lists the public pages of the website. The pages themselves are the source of truth; prices, availability and visa requirements are confirmed by the RAAHHI TOURS team on enquiry.\n\n` +
     sec("Main sections", ["/", URLS.visas, URLS.activities, URLS.holidays, URLS.about, URLS.contact, URLS.faq].filter(p => paths.includes(p))) +
+    sec("Destination planning", DESTINATION_HUBS.map(h=>URLS.destinationHub(h.slug))) +
     sec("Attraction planning", ATTRACTIONS.map(URLS.attraction)) +
     sec("Comparisons", paths.filter(p => p.startsWith("/compare/"))) +
     sec("Guides", paths.filter(p => p.startsWith("/guides/"))) +
@@ -8307,7 +8373,7 @@ const PACKAGE_SEARCH_INDEX = PACKAGES.map(p => ({type:"holiday",p,url:URLS.holid
 /* ---- Global search ---- */
 const GLOBAL_SEARCH_INDEX = [
   ...ATTRACTIONS.map(a=>({type:"attraction",url:URLS.attraction(a),label:a.title+": Observatory or Edge Walk",sub:"Choose your experience and plan the visit",title:normalizeSearch(a.title),aliases:searchAliases(["Sky Views planning","Sky Views Observatory Edge Walk"]),place:searchPlaces(a.dest),category:["attraction planning"],other:[]})),
-  {type:"guide",url:URLS.destinationHub("dubai"),label:"Dubai trip planner",sub:"Connect activities, stays and entry checks",title:normalizeSearch("Dubai trip planner"),aliases:[],place:searchPlaces("dubai"),category:["planning"],other:[]},
+  ...DESTINATION_HUBS.map(h=>({type:"guide",url:URLS.destinationHub(h.slug),label:h.title,sub:"Connect activities, stays and entry checks",title:normalizeSearch(h.title),aliases:[],place:searchPlaces(h.slug),category:["planning"],other:[normalizeSearch(h.description)]})),
   ...VISA_SEARCH_INDEX.map(x => Object.assign({}, x, {label: x.v.country + " visa", sub: "Visa assistance" + (hasRealValue(x.v.type) ? " · " + x.v.type : "")})),
   ...DESTINATIONS.filter(d => destHasTours(d.slug)).map(d => ({type:"activity", url: URLS.activityDest(d.slug), label: `Things to do in ${d.name}`,
     sub: `All ${TOURS.filter(t => t.dest === d.slug).length} ${d.name} activities`, title: normalizeSearch(`${d.name} activities`),

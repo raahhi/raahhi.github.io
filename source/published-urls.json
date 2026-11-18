@@ -1665,6 +1665,18 @@
       "path": "/attractions/dubai/sky-views/",
       "kind": "attraction",
       "state": "live"
+    },
+    {
+      "pageId": "destinationHub:abu-dhabi",
+      "path": "/abu-dhabi/",
+      "kind": "destinationHub",
+      "state": "live"
+    },
+    {
+      "pageId": "destinationHub:ras-al-khaimah",
+      "path": "/ras-al-khaimah/",
+      "kind": "destinationHub",
+      "state": "live"
     }
   ]
 }
