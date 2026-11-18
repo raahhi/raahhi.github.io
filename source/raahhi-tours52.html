@@ -1240,7 +1240,7 @@
 
 <section class="section-sand" aria-labelledby="homeWhereTitle">
   <div class="wrap">
-    <div class="section-head"><div><p class="eyebrow">Coverage</p><h2 id="homeWhereTitle">Where RAAHHI TOURS operates</h2></div></div>
+    <div class="section-head"><div><p class="eyebrow">Coverage</p><h2 id="homeWhereTitle">Where RAAHHI TOURS operates</h2><p class="body-copy"><a class="contact-link" href="/united-arab-emirates/">UAE trip planner: connect your destinations, stays and entry checks</a></p></div></div>
     <div class="where-grid">
       <div class="table-scroll"><table class="data-table">
         <caption class="sr-only">RAAHHI TOURS UAE activities and holiday packages by destination</caption>
@@ -1400,7 +1400,7 @@
     <div class="wrap" id="toursDestIntro">
       <p class="eyebrow">UAE Activities</p>
       <h1 style="font-size:clamp(30px,4.4vw,46px); max-width:640px;">Choose where to start.</h1>
-      <p class="lede" style="margin-top:14px;">Browse desert safaris, landmarks, theme parks and cruises by destination.</p>
+      <p class="lede" style="margin-top:14px;">Browse desert safaris, landmarks, theme parks and cruises by destination.</p><p class="body-copy"><a href="/united-arab-emirates/">Plan the wider UAE journey</a></p>
     </div>
   </section>
   <section style="padding-top:0;">
@@ -3211,6 +3211,8 @@ function router(){
   // --- Canonical semantic routes: /activities[...], /holidays[...], /visas[...] ---
   } else if(route==="attractions" && n===3 && attractionByRoute(seg1,seg2)){
     const attraction=attractionByRoute(seg1,seg2); renderAttraction(attraction); CURRENT={kind:"attraction",attraction}; showPage("attraction","activities");
+  } else if(route==="united-arab-emirates" && n===1){
+    renderUaePlanningHub(); CURRENT={kind:"countryHub"}; showPage("destination-hub");
   } else if(n===1 && planningHubBySlug(route)){
     renderDestinationPlanningHub(route); CURRENT={kind:"destinationHub",dest:route}; showPage("destination-hub");
   } else if(route==="activities" && n===4 && seg2==="categories" && cityCategoryBySlug(seg1,parts[3])){
@@ -4628,7 +4630,7 @@ function setActiveTourDest(slug){
     const withTours = DESTINATIONS.filter(d => destHasTours(d.slug));
     intro.innerHTML = `<p class="eyebrow">UAE Activities</p>
       <h1 style="font-size:clamp(30px,4.4vw,46px); max-width:760px;">UAE activities and tours</h1>
-      <p class="lede" style="margin-top:14px; max-width:760px;">RAAHHI TOURS lists ${TOURS.length} UAE activities: ${joinList(withTours.map(d => `${TOURS.filter(t=>t.dest===d.slug).length} in ${d.name}`))}. These include ${catSummary(TOURS)}. Choose a destination to browse, then enquire to confirm price and availability.</p>`;
+      <p class="lede" style="margin-top:14px; max-width:760px;">RAAHHI TOURS lists ${TOURS.length} UAE activities: ${joinList(withTours.map(d => `${TOURS.filter(t=>t.dest===d.slug).length} in ${d.name}`))}. These include ${catSummary(TOURS)}. Choose a destination to browse, then enquire to confirm price and availability.</p><p class="body-copy"><a href="${URLS.countryHub}">Plan the wider UAE journey</a></p>`;
     tiles.style.display = "";
     tiles.innerHTML = destTilesHTML("activities");
     index.hidden = false;
@@ -4759,7 +4761,7 @@ function setActivePkgDest(slug){
     // No package includes a visa, so the old "…and visa — bundled" wording is gone.
     intro.innerHTML = `<p class="eyebrow">UAE Holidays</p>
       <h1 style="font-size:clamp(30px,4.4vw,46px); max-width:760px;">UAE holiday packages</h1>
-      <p class="lede" style="margin-top:14px; max-width:760px;">RAAHHI TOURS lists ${PACKAGES.length} multi-day UAE holiday packages: ${joinList(withPkgs.map(d => `${PACKAGES.filter(p=>p.dest===d.slug).length} based in ${d.name}`))}. Stays range from ${nightRange(PACKAGES)}. Each package lists exactly what it includes and a day-by-day itinerary.</p>`;
+      <p class="lede" style="margin-top:14px; max-width:760px;">RAAHHI TOURS lists ${PACKAGES.length} multi-day UAE holiday packages: ${joinList(withPkgs.map(d => `${PACKAGES.filter(p=>p.dest===d.slug).length} based in ${d.name}`))}. Stays range from ${nightRange(PACKAGES)}. Each package lists exactly what it includes and a day-by-day itinerary.</p><p class="body-copy"><a href="${URLS.countryHub}">Plan the wider UAE journey</a></p>`;
     tiles.style.display = "";
     tiles.innerHTML = destTilesHTML("holidays");
     index.hidden = false;
@@ -5354,7 +5356,7 @@ function initReveal(){
      as a file it still routes on #/..., and clean links are mapped onto those hash routes.
    - Old #/ links keep working: on the deployed site they are redirected to the clean URL. */
 const URLS = {
-  home: "/",
+  home: "/", countryHub: "/united-arab-emirates/",
   visas: "/visas/", visa: v => "/visas/" + slugify(v.country) + "/",
   comparison: c => "/compare/" + c.slug + "/",
   activityCategory: c => c.dest ? "/activities/"+c.dest+"/categories/"+c.slug+"/" : "/activities/categories/" + c.slug + "/",
@@ -6247,6 +6249,48 @@ function cityCategoryFaqItems(c){
     {q:"What should I check about children, accessibility and cancellation?",a:"Read the exact product's age and access conditions, boarding arrangements and cancellation policy. Ask the team to confirm any requirement that is missing from the listing; conditions for one boat do not establish those for another."}
   ];
 }
+
+function uaePlanningSections(){return [
+  ...DESTINATION_HUBS.map(h=>({path:URLS.destinationHub(h.slug),name:h.title,note:h.description})),
+  {path:URLS.activities,name:"UAE activities",note:TOURS.length+" catalogue listings across the three destinations. Check the actual location, departure and selected option."},
+  {path:URLS.holidays,name:"UAE holiday packages",note:PACKAGES.length+" listed itineraries. Compare nights, hotel basis and named inclusions."},
+  {path:URLS.visa(visaBySlug("united-arab-emirates")),name:"UAE visa assistance",note:"Check the entry route for your passport, residence and purpose separately from activities and hotels."}
+];}
+function renderUaePlanningHub(){
+  const faq=[
+    {q:"Should I plan by emirate or choose activities first?",a:"Start with the experiences that matter most, then choose where to stay and check the actual departure arrangements. Use each city planner for local choices. If you change emirates, confirm that journey separately rather than assuming an activity transfer covers it."},
+    {q:"Does a UAE holiday package include every activity and visa assistance?",a:"Only the itinerary and inclusions on the selected package page describe that package. Other activities, extra hotel nights and visa assistance are separate unless expressly included in the confirmed quote. A package enquiry does not itself book services or submit a visa application."},
+    {q:"Can I combine listings under different destinations in one day?",a:"Catalogue grouping alone does not establish distance, pickup coverage or a workable schedule. Check each venue or departure point, the experience duration, travel time and return arrangements before combining bookings. Allow for your arrival, departure and hotel plans."}
+  ];
+  const a=(path,label)=>'<a href="'+path+'">'+escapeHTML(label)+'</a>';
+  const section=(heading,body)=>'<section class="detail-section"><h2>'+heading+'</h2>'+body+'</section>';
+  const p=text=>'<p class="body-copy">'+text+'</p>';
+  const cards='<ul class="guide-cards">'+uaePlanningSections().map(x=>'<li class="guide-card"><h3>'+a(x.path,x.name)+'</h3><p>'+escapeHTML(x.note)+'</p></li>').join('')+'</ul>';
+  const categories='<ul class="link-list">'+ACTIVITY_CATEGORIES.filter(c=>["Desert Safari","Theme Parks","Water Parks","Cruises","City Tours","Adventure"].includes(c.name)).map(c=>'<li>'+a(URLS.activityCategory(c),c.title)+'</li>').join('')+'</ul>';
+  document.getElementById("destinationHubBody").innerHTML=
+    '<nav class="breadcrumb" aria-label="Breadcrumb">'+breadcrumbHTML([{label:"Home",href:"/"},{label:"UAE trip planner"}])+'</nav>'+
+    '<p class="eyebrow" style="margin-top:20px;">Plan the whole journey</p><h1>UAE trip planner</h1>'+
+    '<p class="lede" style="margin-top:18px;">Connect your Dubai, Abu Dhabi and Ras Al Khaimah plans before choosing individual bookings. Start with the emirate where you want to stay, add the experiences that matter to your group, then check travel between them. RAAHHI activities and holidays cover these three destinations; this is not a complete guide to every emirate.</p>'+
+    '<p class="index-note">Planning content published '+checkedDateHTML("2026-11-18")+'. Counts reflect the catalogue, not live availability. Linked product pages retain their own facts, prices, terms and recorded checks.</p>'+
+    '<nav class="detail-section planning-links" aria-label="UAE city planners and travel services"><h2>Choose a city planner or travel service</h2>'+cards+'</nav>'+
+    section("Set your base before filling each day",
+      p('Use the '+a(URLS.guide("choose-a-uae-emirate"),"Dubai, Abu Dhabi and Ras Al Khaimah comparison guide")+' to explore the style of stay you want. The city planners connect local listings and stays. Decide whether to keep one hotel base or change it, checking the named hotels or hotel basis on the exact package.')+
+      p("Plan arrival, hotel check-in, checkout and departure alongside your experiences. A package's nights and day-by-day itinerary describe that product; they do not establish the minimum time needed for a UAE visit."))+
+    section("Compare experiences across the catalogue",
+      p("Compare the format you want, then open the exact listing. A category groups experiences for browsing; it does not establish that they share a venue, transfer route, eligibility rule or cancellation policy.")+categories)+
+    section("Connect the actual departure and return points",
+      p("For every outing, check its venue, departure city, meeting point and selected transfer option. A tour listed under Abu Dhabi may depart from Dubai. A hotel stay does not establish that inter-emirate transport, luggage handling or attraction pickup is included.")+
+      p('The '+a(URLS.destinationHub("ras-al-khaimah"),"Ras Al Khaimah planner")+' explains why the Musandam listing is an Oman outing with separate departure and border checks. Its catalogue placement does not make it a local UAE attraction or establish permission to cross the border.'))+
+    section("Keep entry checks separate from travel services",
+      p('Use '+a(URLS.visa(visaBySlug("united-arab-emirates")),"UAE visa assistance")+' to discuss the route for your passport, residence, purpose and dates. Do not infer eligibility from a hotel reservation or activity ticket. Entry requirements, documents and any application route need their own confirmation.')+
+      p("Activity enquiries, holiday enquiries and visa enquiries are separate services. Review what the selected package expressly includes before requesting additional services."))+
+    section("Build one comparable quote",
+      p("Share your dates, arrival and departure arrangements, hotel base, number of adults and each child's age on the travel date. Compare the total for the same group and currency, separating admission, hotel nights, meals, transfers and optional extras.")+
+      p('Open each listing for recorded operating-status notices and option-specific terms. Confirm current operation, availability, final prices and applicable terms with the team before committing to connected bookings. '+a(URLS.contact,"Discuss your UAE travel plan")+'.'))+
+    section("Questions about connecting a UAE trip",qaHTML(faq))+
+    section("Planning scope and sources",p("This page connects the RAAHHI catalogue and existing planning pages. Local destination context and supporting sources belong to the linked city planners; product facts and commercial terms belong to the selected listing. Publication of this planner does not refresh those underlying checks or confirm a booking."));
+}
+
 // Planning hubs have permanent identities and distinct local editorial responsibilities.
 const DESTINATION_HUBS = [
   {slug:"dubai",title:"Dubai trip planner",description:"Plan a Dubai stay around activities, hotel arrangements and entry checks. Connect safari and cruise choices with holiday packages and practical guides.",sources:[]},
@@ -6266,7 +6310,7 @@ function hubRecordedStatusHTML(dest){
   const items=TOURS.filter(t=>t.dest===dest && ["seasonal","temporarily-closed"].includes(publicStatusOf(t)));
   return items.length ? `<section class="detail-section recorded-hub-status"><h2>Check recorded operating status before fixing dates</h2><p class="body-copy">These are catalogue records, not live availability checks. Resolve the status with the team before arranging the rest of your day.</p><ul class="link-list">${items.map(t=>`<li><a href="${URLS.activity(t)}">${escapeHTML(t.title)}</a><span class="index-note planning-link-note">${escapeHTML(statusInfo(t).label)}. ${escapeHTML(availabilityAnswer(t))}</span></li>`).join("")}</ul></section>` : "";
 }
-function otherPlanningHubsHTML(current){ return `<nav class="detail-section planning-links" aria-label="Compare emirate plans"><h2>Compare emirate plans</h2><ul class="link-list">${DESTINATION_HUBS.filter(h=>h.slug!==current).map(h=>`<li><a href="${URLS.destinationHub(h.slug)}">${escapeHTML(h.title)}</a></li>`).join("")}<li><a href="${URLS.guide("choose-a-uae-emirate")}">Choose between Dubai, Abu Dhabi and Ras Al Khaimah</a></li></ul></nav>`; }
+function otherPlanningHubsHTML(current){ return `<nav class="detail-section planning-links" aria-label="Compare emirate plans"><h2>Compare emirate plans</h2><ul class="link-list">${DESTINATION_HUBS.filter(h=>h.slug!==current).map(h=>`<li><a href="${URLS.destinationHub(h.slug)}">${escapeHTML(h.title)}</a></li>`).join("")}<li><a href="${URLS.countryHub}">UAE trip planner: connect your journey</a></li><li><a href="${URLS.guide("choose-a-uae-emirate")}">Choose between Dubai, Abu Dhabi and Ras Al Khaimah</a></li></ul></nav>`; }
 function renderDestinationPlanningHub(dest){
   if(dest==="dubai"){renderDubaiPlanningHub();return;}
   const hub=planningHubBySlug(dest),body=dest==="abu-dhabi" ? abuDhabiPlanningBody() : rakPlanningBody();
@@ -6525,7 +6569,7 @@ function packageGuides(p){
 }
 function uaePlanningLinksHTML(){
   return `<section class="detail-section uae-planning-links"><h2>Plan your UAE visit</h2>
-    <p class="body-copy">Browse the destinations listed by RAAHHI TOURS. Activities and holiday packages are separate services from visa assistance.</p>
+    <p class="body-copy">Use the <a href="${URLS.countryHub}">UAE trip planner</a> to connect your journey. Activities and holiday packages are separate services from visa assistance.</p>
     ${DESTINATIONS.filter(d => destHasTours(d.slug) || destHasPackages(d.slug)).map(d =>
       planningLinksHTML(d.slug, URLS.visa(visaBySlug("united-arab-emirates")), GUIDES.filter(g => g.dest === d.slug))
         .replace(/<h2>/g, "<h3>").replace(/<\/h2>/g, "</h3>")).join("")}
@@ -6927,7 +6971,7 @@ function guideBySlug(slug){ return GUIDES.find(g => g.slug === slug); }
 function renderGuide(slug){
   const g = guideBySlug(slug);
   const out = g.render(g);
-  document.getElementById("guideBody").innerHTML = out.html + (g.destinations ? "" : planningLinksHTML(g.dest, URLS.guide(g.slug), GUIDES.filter(x => x.dest === g.dest)));
+  document.getElementById("guideBody").innerHTML = out.html + (g.destinations ? `<nav class="detail-section planning-links" aria-label="Plan across the UAE"><a href="${URLS.countryHub}">UAE trip planner: connect cities, stays and entry checks</a></nav>` : planningLinksHTML(g.dest, URLS.guide(g.slug), GUIDES.filter(x => x.dest === g.dest)));
   return out.faq;
 }
 
@@ -7835,6 +7879,14 @@ function pageMeta(c){
       m.nodes=[destNode(a.dest),{"@type":"TouristAttraction","@id":url+"#attraction",name:a.title,url,containedInPlace:{"@id":absUrl("/#destination-"+a.dest)}},itemListNode(url+"#list","Sky Views experience listings",list.map(t=>({path:URLS.activity(t),name:t.title})))];
       m.about=[{"@id":url+"#attraction"}];m.mainEntity={"@id":url+"#list"};m.citation=a.sources.map(s=>s.url);m.image=list[0].images[0];break;
     }
+    case "countryHub": {
+      const url=absUrl(URLS.countryHub);
+      m.path=URLS.countryHub;m.title="UAE Trip Planner: Choose Your Emirate & Plan Your Stay | "+S;
+      m.description="Plan a UAE trip across Dubai, Abu Dhabi and Ras Al Khaimah. Connect city planners, activities, holiday packages and separate entry checks.";
+      m.pageType="CollectionPage";m.bc=[home,{name:"UAE trip planner",path:m.path}];
+      m.nodes=[{"@type":"Country","@id":url+"#country",name:"United Arab Emirates"},itemListNode(url+"#planning","UAE city planners and travel services",uaePlanningSections())];
+      m.about=[{"@id":url+"#country"}];m.mainEntity={"@id":url+"#planning"};m.image=DESTINATIONS[0].activityImage;break;
+    }
     case "destinationHub": {
       const hub=planningHubBySlug(c.dest),name=destName(c.dest);
       m.path=URLS.destinationHub(c.dest);m.title=name+" Trip Planner: Activities, Stays & Travel Checks | "+S;
@@ -8046,6 +8098,7 @@ function routeKind(path){
   const parts = h.split("/"), [r, a, b] = parts, n = parts.length, isDest = s => DESTINATIONS.some(d => d.slug === s);
   if(parts.some(x => !x)) return {kind:"notfound"};
   if(r === "attractions" && n === 3){const attraction=attractionByRoute(a,b);return attraction ? {kind:"attraction",attraction} : {kind:"notfound"};}
+  if(r === "united-arab-emirates" && n === 1) return {kind:"countryHub"};
   if(n === 1 && planningHubBySlug(r)) return {kind:"destinationHub",dest:r};
   if(r === "activities" && n === 4 && b === "categories"){const category=cityCategoryBySlug(a,parts[3]);return category ? {kind:"category",category} : {kind:"notfound"};}
   if(r === "activities" && n === 3 && a === "categories"){ const category = categoryBySlug(b); return category ? {kind:"category",category} : {kind:"notfound"}; }
@@ -8063,7 +8116,7 @@ function routeKind(path){
 }
 // Every URL the static build renders. Indexability comes from each page's own robots meta.
 function seoRoutes(){
-  return ["/", URLS.visas, ...VISAS.map(URLS.visa),
+  return ["/", URLS.countryHub, URLS.visas, ...VISAS.map(URLS.visa),
     ...VISA_ADDONS.map(URLS.addon),
     ...DESTINATION_HUBS.map(h=>URLS.destinationHub(h.slug)), URLS.activities, ...ACTIVITY_CATEGORIES.map(URLS.activityCategory), ...CITY_ACTIVITY_CATEGORIES.map(URLS.activityCategory), ...DESTINATIONS.filter(d => destHasTours(d.slug)).map(d => URLS.activityDest(d.slug)), ...TOURS.map(URLS.activity),
     URLS.holidays, ...DESTINATIONS.map(d => URLS.holidayDest(d.slug)), ...PACKAGES.map(URLS.holiday),
@@ -8110,7 +8163,7 @@ function llmsTxt(){
   const sec = (h, list) => list.length ? `## ${h}\n\n${list.map(p => `- [${title(p)}](${absUrl(p)})`).join("\n")}\n\n` : "";
   return (`# ${BUSINESS.name}\n\n> ${BUSINESS.summary}\n\nThis file lists the public pages of the website. The pages themselves are the source of truth; prices, availability and visa requirements are confirmed by the RAAHHI TOURS team on enquiry.\n\n` +
     sec("Main sections", ["/", URLS.visas, URLS.activities, URLS.holidays, URLS.about, URLS.contact, URLS.faq].filter(p => paths.includes(p))) +
-    sec("Destination planning", DESTINATION_HUBS.map(h=>URLS.destinationHub(h.slug))) +
+    sec("Destination planning", [URLS.countryHub,...DESTINATION_HUBS.map(h=>URLS.destinationHub(h.slug))]) +
     sec("Attraction planning", ATTRACTIONS.map(URLS.attraction)) +
     sec("Comparisons", paths.filter(p => p.startsWith("/compare/"))) +
     sec("Guides", paths.filter(p => p.startsWith("/guides/"))) +
@@ -8372,6 +8425,7 @@ const PACKAGE_SEARCH_INDEX = PACKAGES.map(p => ({type:"holiday",p,url:URLS.holid
   other:[...(p.incl||[]),...(p.itinerary||[]).map(d=>d.text),nightsOf(p)!=null?`${nightsOf(p)} nights`:""].map(normalizeSearch)}));
 /* ---- Global search ---- */
 const GLOBAL_SEARCH_INDEX = [
+  {type:"guide",url:URLS.countryHub,label:"UAE trip planner",sub:"Choose an emirate and connect your travel services",title:normalizeSearch("UAE trip planner"),aliases:searchAliases(["United Arab Emirates travel planning","UAE holiday planning"]),place:searchPlaces("dubai"),category:["planning"],other:[]},
   ...ATTRACTIONS.map(a=>({type:"attraction",url:URLS.attraction(a),label:a.title+": Observatory or Edge Walk",sub:"Choose your experience and plan the visit",title:normalizeSearch(a.title),aliases:searchAliases(["Sky Views planning","Sky Views Observatory Edge Walk"]),place:searchPlaces(a.dest),category:["attraction planning"],other:[]})),
   ...DESTINATION_HUBS.map(h=>({type:"guide",url:URLS.destinationHub(h.slug),label:h.title,sub:"Connect activities, stays and entry checks",title:normalizeSearch(h.title),aliases:[],place:searchPlaces(h.slug),category:["planning"],other:[normalizeSearch(h.description)]})),
   ...VISA_SEARCH_INDEX.map(x => Object.assign({}, x, {label: x.v.country + " visa", sub: "Visa assistance" + (hasRealValue(x.v.type) ? " · " + x.v.type : "")})),

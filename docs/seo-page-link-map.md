@@ -72,3 +72,8 @@ Selected tourism context was checked 18 November 2026 against Experience Abu Dha
 5. Extend proven local content and connections to Abu Dhabi, RAK and country-level discovery.
 
 Retain private application authentication and existing enquiry behavior. These URL checks never submit a customer enquiry or send a message.
+
+
+## UAE country planning hub (18 November 2026)
+
+`/united-arab-emirates/` has immutable identity `countryHub`. It connects the three existing city planners and the three travel services; its six visible cards and schema ItemList share one source. It owns cross-emirate base, transport, entry-service separation and quote planning. The emirate comparison guide retains its choosing-a-base role and permanent path. City planners, homepage, activity/holiday landing pages, UAE visa planning section and emirate guide link back. Sitemap, search, llms and analytics include it. All 279 prior paths and identities remain unchanged; no product, price, policy or historical fact date was refreshed.

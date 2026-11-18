@@ -1677,6 +1677,12 @@
       "path": "/ras-al-khaimah/",
       "kind": "destinationHub",
       "state": "live"
+    },
+    {
+      "pageId": "countryHub",
+      "path": "/united-arab-emirates/",
+      "kind": "countryHub",
+      "state": "live"
     }
   ]
 }
