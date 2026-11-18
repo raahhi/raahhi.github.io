@@ -48,7 +48,7 @@ try{
  await live.goto(origin+'/activities/dubai/');await live.waitForFunction(()=>!document.querySelector('[data-currency-select]').disabled);
  assert.equal(await live.locator('#tourGrid .product-card').count(),24);
  await live.evaluate(()=>loadMoreTours());assert.equal(await live.locator('#tourGrid .product-card').count(),48);
- await live.locator('#tourSearch').fill('waterparks');assert.equal(await live.locator('#tourPageLinks a').count(),0,'Filtered results do not pretend to be an unfiltered page');
+ await live.locator('#tourSearch').fill('waterparks');assert.equal(await live.locator('#tourPageLinks a').count(),0,'Filtered results do not pretend to be an unfiltered page');await live.waitForFunction(()=>document.querySelector('#tourResultsCount').textContent!=='Searching activities…');
  await live.evaluate(()=>clearTourSearch());assert.equal(await live.locator('#tourGrid .product-card').count(),24);assert(await live.locator('#tourPageLinks a').count());
  assert(await live.evaluate(()=>['/activities/dubai/page/1/','/activities/dubai/page/02/','/activities/dubai/page/99/','/activities/dubai/page/2/extra/','/activities/ras-al-khaimah/page/2/'].every(p=>routeKind(p).kind==='notfound')));
  assert.deepEqual(errors,[]);

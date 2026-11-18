@@ -4579,7 +4579,7 @@ function updateLoadMore(id, countId, shown, total){
   if(count) count.textContent = `Showing ${Math.min(shown, total)} of ${total}`;
 }
 function resetVisaPagination(){ visaRowsVisible = GRID_ROWS_STEP; }
-function resetTourPagination(){ tourRowsVisible = GRID_ROWS_STEP; }
+function resetTourPagination(){ tourRowsVisible = GRID_ROWS_STEP; document.getElementById("tourPageLinks")?.replaceChildren(); }
 function resetPkgPagination(){ pkgRowsVisible = GRID_ROWS_STEP; }
 function loadMoreVisas(){ visaRowsVisible += GRID_ROWS_STEP; renderVisaGrid(); }
 function loadMoreTours(){ tourRowsVisible += GRID_ROWS_STEP; renderTours(); }
