@@ -11,7 +11,7 @@ const ROOT = process.cwd();
 const DIST = join(ROOT, 'dist');
 const SOURCE_FILE = join(ROOT, 'source', 'raahhi-tours52.html');
 const EXPECTED_ORIGIN = 'https://raahhi.com';
-const EXPECTED_SITEMAP_URLS = 279;
+const EXPECTED_SITEMAP_URLS = 280;
 const publishedURLs = JSON.parse(await readFile(join(ROOT, 'source', 'published-urls.json'), 'utf8'));
 validateRegistry(publishedURLs, registryAtRef(process.env.RAAHHI_URL_BASELINE || 'HEAD'));
 // Image errors can fire while the parser is still reading the page, before app.js loads.
@@ -227,7 +227,7 @@ try {
         planningEdges.push({from:route, to:link.href});
       }
     }
-    if (['activity', 'holiday', 'guide', 'category', 'comparison', 'activityDest', 'holidayDest', 'destinationHub', 'attraction', 'addon'].includes(data.kind) && !(data.planning || []).length) {
+    if (['activity', 'holiday', 'guide', 'category', 'comparison', 'activityDest', 'holidayDest', 'destinationHub', 'countryHub', 'attraction', 'addon'].includes(data.kind) && !(data.planning || []).length) {
       throw new Error('Missing contextual planning links on ' + route);
     }
   }
