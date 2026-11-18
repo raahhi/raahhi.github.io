@@ -152,7 +152,8 @@ async function snapshot(route) {
         main.querySelectorAll('input[type="date"], input[type="month"]').forEach(el => el.removeAttribute('min'));
         main.querySelectorAll('img[data-image-source]').forEach(el => {
           // The authoring image source stays stable even if the browser swaps a fallback.
-          for (const name of ['src', 'srcset', 'data-src', 'data-srcset']) el.removeAttribute(name);
+          for (const name of ['src', 'srcset', 'sizes', 'data-src', 'data-srcset', 'data-fb', 'onerror']) el.removeAttribute(name);
+          el.classList.remove('img-fallback');
         });
         indexNowContent = JSON.stringify({
           page: main.outerHTML,
