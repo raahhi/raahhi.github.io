@@ -6806,7 +6806,7 @@ function guideSourcesHTML(extra){
 function guideHead(g){
   return `<nav class="breadcrumb" aria-label="Breadcrumb">${breadcrumbHTML([{label:"Home", href:"/"}, {label:"Activities", href:"/activities/"}, ...(g.destinations ? [] : [{label:destName(g.dest), href:URLS.activityDest(g.dest)}]), {label:g.crumb}])}</nav>
     <p class="eyebrow" style="margin-top:14px;">Guide · ${g.destinations ? "UAE" : destName(g.dest)+" activities"}</p>
-    <h1 style="font-size:clamp(28px,4vw,42px);">${g.h1}</h1><p class="form-note">Prepared by RAAHHI TOURS · Planning guidance reviewed <time datetime="${g.reviewedOn || "2026-10-25"}">${formatDate(g.reviewedOn || "2026-10-25")}</time> · <a class="contact-link" href="/about/#editorial-standards">How we prepare our guides</a></p>`;
+    <h1 style="font-size:clamp(28px,4vw,42px);">${g.h1}</h1>`;
 }
 function comparisonTable(caption, head, rows){
   return `<div class="table-scroll"><table class="data-table">

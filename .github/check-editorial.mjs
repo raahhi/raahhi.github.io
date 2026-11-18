@@ -19,7 +19,7 @@ for(const item of registry.pages){
  }
  if(item.kind==='guide'){
   const graph=JSON.parse(html.match(/<script[^>]*type="application\/ld\+json"[^>]*>(.*?)<\/script>/s)[1])['@graph'];
-  const article=graph.find(n=>n['@type']==='Article'),org=graph.find(n=>n['@type']==='Organization');
+  const article=graph.find(n=>n['@type']==='Article'),org=graph.find(n=>n['@type']==='Organization');assert(!html.includes('Planning guidance reviewed <time'), 'No inherited generic byline review date '+item.path);
   assert.deepEqual(article.author,{'@id':org['@id']},'Retain truthful organisation author');
   if(article.datePublished||article.dateModified){counts.articlesWithRecordedContentDates++;for(const date of [article.datePublished,article.dateModified].filter(Boolean))assert(has('datetime="'+date+'"'),'Visible/schema date parity '+item.path);}
   else counts.articlesWithoutRecordedContentDates++;
