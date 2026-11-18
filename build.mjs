@@ -242,7 +242,10 @@ try {
         throw new Error('Visa destination index must contain all 40 visa routes as anchor links.');
       }
     }
-    const html = attachHydrationScripts(data.html, data);
+    const pageHtml = route === '/'
+      ? data.html.replace('</head>', '<meta name="msvalidate.01" content="C531C691CE0B7D523484FAD14113D0EA">\n</head>')
+      : data.html;
+    const html = attachHydrationScripts(pageHtml, data);
     if (!html.includes('src="' + assets.scriptUrl + '"')) throw new Error('Hydration script missing from ' + route);
     if (!html.includes('data-prerendered=')) throw new Error('Static marker missing from ' + route);
     if (data.robots === 'index,follow') {
