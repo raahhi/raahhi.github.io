@@ -1683,6 +1683,42 @@
       "path": "/united-arab-emirates/",
       "kind": "countryHub",
       "state": "live"
+    },
+    {
+      "pageId": "activityPage:dubai:2",
+      "path": "/activities/dubai/page/2/",
+      "kind": "activityPage",
+      "state": "live"
+    },
+    {
+      "pageId": "activityPage:dubai:3",
+      "path": "/activities/dubai/page/3/",
+      "kind": "activityPage",
+      "state": "live"
+    },
+    {
+      "pageId": "activityPage:dubai:4",
+      "path": "/activities/dubai/page/4/",
+      "kind": "activityPage",
+      "state": "live"
+    },
+    {
+      "pageId": "activityPage:dubai:5",
+      "path": "/activities/dubai/page/5/",
+      "kind": "activityPage",
+      "state": "live"
+    },
+    {
+      "pageId": "activityPage:dubai:6",
+      "path": "/activities/dubai/page/6/",
+      "kind": "activityPage",
+      "state": "live"
+    },
+    {
+      "pageId": "activityPage:abu-dhabi:2",
+      "path": "/activities/abu-dhabi/page/2/",
+      "kind": "activityPage",
+      "state": "live"
     }
   ]
 }

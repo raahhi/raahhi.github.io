@@ -1145,6 +1145,10 @@
     .home-shortcuts .shortcut-icon{flex-basis:42px;padding-right:8px;}
     .shortcut-icon svg{width:34px;height:42px;}
   }
+.catalogue-pagination {margin:24px 0;}
+.catalogue-page-links {display:flex;flex-wrap:wrap;gap:8px;list-style:none;padding:0;}
+.catalogue-page-links a,.catalogue-page-links [aria-current] {display:block;padding:10px 14px;border:1px solid var(--ink-200);border-radius:8px;}
+.catalogue-page-links [aria-current] {background:var(--ink-900);color:white;}
 </style>
 </head>
 <body>
@@ -1428,6 +1432,7 @@
         <p class="load-more-count" id="tourLoadMoreCount"></p>
         <button type="button" class="btn btn-navy btn-sm" onclick="loadMoreTours()">Load more activities</button>
       </div>
+      <div id="tourPageLinks"></div>
       <div id="toursDestGuide"></div>
       <p class="cross-link" id="toursCrossLink" hidden></p>
       <div class="dest-faq" id="toursDestFaq"></div>
@@ -3215,6 +3220,8 @@ function router(){
     renderUaePlanningHub(); CURRENT={kind:"countryHub"}; showPage("destination-hub");
   } else if(n===1 && planningHubBySlug(route)){
     renderDestinationPlanningHub(route); CURRENT={kind:"destinationHub",dest:route}; showPage("destination-hub");
+  } else if(route==="activities" && n===4 && seg2==="page" && validActivityPage(seg1,parts[3])){
+    const page=Number(parts[3]);renderActivityPage(seg1,page);CURRENT={kind:"activityPage",dest:seg1,page};showPage("destination-hub","activities");
   } else if(route==="activities" && n===4 && seg2==="categories" && cityCategoryBySlug(seg1,parts[3])){
     const category=cityCategoryBySlug(seg1,parts[3]);
     renderCategory(category); CURRENT={kind:"category",category}; showPage("category","activities");
@@ -4532,6 +4539,28 @@ function buildFaq(containerId, items){
   document.getElementById(containerId).innerHTML = qaHTML(items);
 }
 
+
+const ACTIVITY_PAGE_SIZE=24;
+function activityPageCount(dest){return Math.ceil(TOURS.filter(t=>t.dest===dest).length/ACTIVITY_PAGE_SIZE);}
+function validActivityPage(dest,page){return /^[2-9]$|^[1-9][0-9]+$/.test(String(page)) && DESTINATIONS.some(d=>d.slug===dest) && Number(page)<=activityPageCount(dest);}
+function activityPageRoutes(){return DESTINATIONS.flatMap(d=>Array.from({length:Math.max(0,activityPageCount(d.slug)-1)},(_,i)=>URLS.activityPage(d.slug,i+2)));}
+function activityPageItems(dest,page){return TOURS.filter(t=>t.dest===dest).slice((page-1)*ACTIVITY_PAGE_SIZE,page*ACTIVITY_PAGE_SIZE);}
+function activityPaginationHTML(dest,page){
+  const count=activityPageCount(dest);if(count<=1)return "";
+  const link=(n,label,rel)=>`<a href="${URLS.activityPage(dest,n)}"${rel ? ` rel="${rel}"` : ""}>${label}</a>`;
+  return `<nav class="catalogue-pagination" aria-label="${escapeHTML(destName(dest))} activity catalogue pages"><p class="index-note">Browse the full catalogue by page. Search and filters apply to all listings on the <a href="${URLS.activityDest(dest)}">destination overview</a>.</p><ul class="catalogue-page-links">${page>1 ? `<li>${link(page-1,"Previous page","prev")}</li>` : ""}${Array.from({length:count},(_,i)=>i+1).map(n=>`<li>${n===page ? `<span aria-current="page">Page ${n}</span>` : link(n,"Page "+n)}</li>`).join("")}${page<count ? `<li>${link(page+1,"Next page","next")}</li>` : ""}</ul></nav>`;
+}
+function renderActivityPage(dest,page){
+  const name=destName(dest),list=activityPageItems(dest,page),total=TOURS.filter(t=>t.dest===dest).length;
+  document.getElementById("destinationHubBody").innerHTML=`
+    <nav class="breadcrumb" aria-label="Breadcrumb">${breadcrumbHTML([{label:"Home",href:"/"},{label:"UAE activities",href:URLS.activities},{label:name+" activities",href:URLS.activityDest(dest)},{label:"Page "+page}])}</nav>
+    <p class="eyebrow" style="margin-top:20px;">Activity catalogue</p><h1>${escapeHTML(name)} activities: page ${page}</h1>
+    <p class="lede" style="margin-top:18px;">Listings ${(page-1)*ACTIVITY_PAGE_SIZE+1}–${Math.min(page*ACTIVITY_PAGE_SIZE,total)} of ${total}. Open a listing for its options, inclusions, pickup arrangements and applicable terms. Final prices and availability are confirmed on enquiry.</p>
+    <p class="body-copy"><a href="${URLS.activityDest(dest)}">Return to all ${escapeHTML(name)} activities, search and filters</a></p>
+    ${activityPaginationHTML(dest,page)}<div class="product-grid catalogue-page-grid">${list.map(tourCard).join("")}</div>${activityPaginationHTML(dest,page)}
+    ${planningLinksHTML(dest,URLS.activityPage(dest,page),GUIDES.filter(g=>g.dest===dest))}`;
+}
+
 const GRID_ROWS_STEP = 4;
 let visaRowsVisible = GRID_ROWS_STEP;
 let tourRowsVisible = GRID_ROWS_STEP;
@@ -4681,8 +4710,8 @@ function renderTours(){
   const list=(normalizeSearch(q)?rankEntries(scope,q):scope).map(e=>e.t);
   document.getElementById("tourGridTitle").textContent = activeTourCat === "All" ? `All ${destName(activeTourDest)} activities` : `${activeTourCat} in ${destName(activeTourDest)}`;
   document.getElementById("tourResultsCount").textContent = `${list.length} ${list.length === 1 ? "activity" : "activities"} ${normalizeSearch(q) || activeTourCat !== "All" || document.getElementById("tourAvailFilter")?.value || document.getElementById("tourDurFilter")?.value ? `${list.length === 1 ? "matches" : "match"} your filters` : "to explore"}`;
-  // Keep the initial browse compact: four visual rows at the current breakpoint, then four more rows per click.
-  const shown = list.slice(0, gridVisibleLimit("tour", tourRowsVisible));
+  // The first static slice has 24 cards at every width; Load More progressively adds the next slice.
+  const shown = list.slice(0, ACTIVITY_PAGE_SIZE * tourRowsVisible / GRID_ROWS_STEP);
   // The search text is never echoed back into this HTML.
   document.getElementById("tourGrid").innerHTML = list.length ? shown.map(tourCard).join("") : `
     <div>
@@ -4690,6 +4719,8 @@ function renderTours(){
       <button type="button" class="btn btn-navy btn-sm" style="margin-top:14px;" onclick="clearTourSearch()">Clear search and filters</button>
     </div>`;
   updateLoadMore("tourLoadMore", "tourLoadMoreCount", shown.length, list.length);
+  const pageLinks=document.getElementById("tourPageLinks");
+  if(pageLinks) pageLinks.innerHTML=normalizeSearch(q)||activeTourCat!=="All"||document.getElementById("tourAvailFilter")?.value||document.getElementById("tourDurFilter")?.value ? "" : activityPaginationHTML(activeTourDest,1);
   initSlideshows(document.getElementById("tourGrid"));
   // Prepare the current destination photo without advancing the gallery.
   const heroIntro = document.getElementById("toursDestIntro");
@@ -5360,6 +5391,7 @@ const URLS = {
   visas: "/visas/", visa: v => "/visas/" + slugify(v.country) + "/",
   comparison: c => "/compare/" + c.slug + "/",
   activityCategory: c => c.dest ? "/activities/"+c.dest+"/categories/"+c.slug+"/" : "/activities/categories/" + c.slug + "/",
+  activityPage: (dest,page) => page===1 ? "/activities/"+dest+"/" : "/activities/"+dest+"/page/"+page+"/",
   destinationHub: dest => "/"+dest+"/",
   attraction: a => "/attractions/"+a.dest+"/"+a.slug+"/",
   activities: "/activities/", activityDest: slug => "/activities/" + slug + "/", activity: t => "/activities/" + t.dest + "/" + t.id + "/",
@@ -7040,7 +7072,7 @@ function tourCard(t){
       <div class="pc-foot" style="margin-top:auto;">
         ${t.bookingMode === "official-only" ? `<div class="pc-price" style="font-family:'Inter',sans-serif; font-size:14px;">Tickets from the operator</div>` : price.known ? `<div class="pc-price">${priceBlockHTML(t, true)}</div>`
           : `<div class="pc-price" style="font-family:'Inter',sans-serif; font-size:14px; font-weight:600; color:var(--ink-600);">${ACTIVITY_PRICE_MISSING}</div>`}
-        <a href="${href}" class="btn btn-navy btn-sm">View details<span class="sr-only"> for ${t.title}</span></a>
+
       </div>
       ${mediaCreditHTML(images, {compact:true})}
     </div>
@@ -7922,6 +7954,15 @@ function pageMeta(c){
       m.nodes = [serviceNode("activities"), itemListNode(url + "#list", category.title, list.map(t=>({path:URLS.activity(t),name:t.title})))];
       m.mainEntity = {"@id":url + "#list"}; m.about = [{"@id":absUrl("/activities/#service")}]; m.image = list[0].images[0]; break;
     }
+    case "activityPage": {
+      const name=destName(c.dest),list=activityPageItems(c.dest,c.page),url=absUrl(URLS.activityPage(c.dest,c.page));
+      m.path=URLS.activityPage(c.dest,c.page);m.title=`${name} Activities: Page ${c.page} | ${S}`;
+      m.description=`Browse page ${c.page} of ${name} activities with RAAHHI TOURS. Review these ${list.length} listings, then confirm prices, options and availability on enquiry.`;
+      m.pageType="CollectionPage";m.bc=[home,{name:"Activities",path:URLS.activities},{name:name+" activities",path:URLS.activityDest(c.dest)},{name:"Page "+c.page,path:m.path}];
+      const node=itemListNode(url+"#list",name+" activities, page "+c.page,list.map(t=>({path:URLS.activity(t),name:t.title})));
+      node.itemListElement.forEach(x=>x.position+=(c.page-1)*ACTIVITY_PAGE_SIZE);
+      m.nodes=[serviceNode("activities"),destNode(c.dest),node];m.about=[{"@id":absUrl("/#destination-"+c.dest)}];m.mainEntity={"@id":url+"#list"};m.image=list[0].images[0];break;
+    }
     case "activityDest": {
       const d = DESTINATIONS.find(x => x.slug === c.dest), list = TOURS.filter(t => t.dest === d.slug);
       m.path = URLS.activityDest(d.slug); m.title = `Things to Do in ${d.name}: Tours & Activities | ${S}`;
@@ -8100,6 +8141,7 @@ function routeKind(path){
   if(r === "attractions" && n === 3){const attraction=attractionByRoute(a,b);return attraction ? {kind:"attraction",attraction} : {kind:"notfound"};}
   if(r === "united-arab-emirates" && n === 1) return {kind:"countryHub"};
   if(n === 1 && planningHubBySlug(r)) return {kind:"destinationHub",dest:r};
+  if(r === "activities" && n === 4 && b === "page"){return validActivityPage(a,parts[3]) ? {kind:"activityPage",dest:a,page:Number(parts[3])} : {kind:"notfound"};}
   if(r === "activities" && n === 4 && b === "categories"){const category=cityCategoryBySlug(a,parts[3]);return category ? {kind:"category",category} : {kind:"notfound"};}
   if(r === "activities" && n === 3 && a === "categories"){ const category = categoryBySlug(b); return category ? {kind:"category",category} : {kind:"notfound"}; }
   if(r === "activities" && n === 3){ const t = TOURS.find(x => x.id === b && x.dest === a); return t ? {kind:"activity", t} : {kind:"notfound"}; }
@@ -8116,7 +8158,7 @@ function routeKind(path){
 }
 // Every URL the static build renders. Indexability comes from each page's own robots meta.
 function seoRoutes(){
-  return ["/", URLS.countryHub, URLS.visas, ...VISAS.map(URLS.visa),
+  return ["/", ...activityPageRoutes(), URLS.countryHub, URLS.visas, ...VISAS.map(URLS.visa),
     ...VISA_ADDONS.map(URLS.addon),
     ...DESTINATION_HUBS.map(h=>URLS.destinationHub(h.slug)), URLS.activities, ...ACTIVITY_CATEGORIES.map(URLS.activityCategory), ...CITY_ACTIVITY_CATEGORIES.map(URLS.activityCategory), ...DESTINATIONS.filter(d => destHasTours(d.slug)).map(d => URLS.activityDest(d.slug)), ...TOURS.map(URLS.activity),
     URLS.holidays, ...DESTINATIONS.map(d => URLS.holidayDest(d.slug)), ...PACKAGES.map(URLS.holiday),
