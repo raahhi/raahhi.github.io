@@ -31,6 +31,6 @@ jobs:
           RAAHHI_URL_BASELINE: ${{ github.event.pull_request.base.sha }}
       - name: Run Pages release checks
         run: |
-          for check in site-ui search published-data pricing presentation options enquiry-delivery visitor-activity readiness dubai-pilot attraction; do
+          for check in site-ui search published-data pricing presentation options enquiry-delivery visitor-activity readiness dubai-pilot attraction city-hubs; do
             node ".github/check-${check}.mjs"
           done

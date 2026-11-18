@@ -90,6 +90,9 @@ jobs:
       - name: Check attraction planning and product connections
         run: node .github/check-attraction.mjs
 
+      - name: Check Abu Dhabi and Ras Al Khaimah planning hubs
+        run: node .github/check-city-hubs.mjs
+
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
 

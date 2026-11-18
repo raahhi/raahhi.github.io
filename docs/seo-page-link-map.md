@@ -59,6 +59,12 @@ Primary categories determine a consistent breadcrumb, regardless of the referrin
 
 ## Next implementation gates
 
+The city-planning expansion publishes /abu-dhabi/ and /ras-al-khaimah/ as destinationHub:abu-dhabi and destinationHub:ras-al-khaimah, increasing the registered inventory to 279 while preserving all 277 prior paths. The existing Dubai hub retains its path, content role and metadata. A shared registry connects the three hubs to the homepage, their activities/packages, relevant guides, search and llms.txt; all existing Abu Dhabi/RAK activity and package pages link back to their own planner. Visible service links and ItemList use the same destination-specific records.
+
+Abu Dhabi owns the choice between Yas parks, cultural visits, city sightseeing and excursions, with explicit attention to Dubai-departure listings and Al Ain. Ras Al Khaimah owns mountain/desert/Al Rams choices and hotel-stay planning. Its Musandam entry is explicitly identified as an Oman outing whose catalogue grouping does not establish local pickup or border permission. Seasonal/closed catalogue records are surfaced dynamically and labelled as recorded status, not live availability. Neither hub changes product facts, prices, policies or verification dates.
+
+Selected tourism context was checked 18 November 2026 against Experience Abu Dhabi's Saadiyat/Yas article and Visit Ras Al Khaimah's travel FAQ and Suwaidi Pearl Farm page. These support geography and planning context only. Existing product/source records govern detailed claims. The city-hub release check covers direct discovery, every city activity/package backlink, service/schema agreement, local section differences, status/departure scope, search and four viewport widths. Country-level UAE planning remains a separate part of the same expansion stage.
+
 1. Implement serving-layer lifecycle and alias handling before retiring any current path.
 2. Add stable catalogue identities independent of display labels and normalize route lookup where needed.
 3. Pilot Dubai planning/category/attraction pages with distinct intent and complete links.
