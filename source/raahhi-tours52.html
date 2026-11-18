@@ -3744,8 +3744,8 @@ TOURS.forEach(t => { if(PRODUCT_FACT_CHECKS[t.id]) Object.assign(t, PRODUCT_FACT
 TOURS.filter(t=>["sky-views-observatory","sky-views-edge-walk"].includes(t.id)).forEach(t=>{
   t.timing=(t.id==="sky-views-observatory" ? "Operator FAQ: Observatory 10:00 am to 8:00 pm." : "Operator FAQ: Edge Walk 10:30 am to 8:00 pm.")+" Hours checked 18 November 2026; last admission can be earlier. Confirm your selected date and slot; arrive about 30 minutes early.";
   t.meetingPoint="Operator FAQ: Tower 1 ground-level entrance near the residence entrance, or the Dubai Mall Metro link to the Level 1 entrance. Follow your ticket's confirmed entrance instructions.";
-  t.sources=[...(t.sources || []),{name:"Sky Views: visitor FAQ",url:"https://www.skyviewsdubai.com/faqs/",type:"operator",supports:"Published hours, arrival guidance and entrance routes. General FAQ participation wording differs from the dedicated experience pages; confirm the exact activity's conditions.",lastVerified:"2026-11-18"}];
-  t.importantInformation=[...(t.importantInformation || []),"The operator's general FAQ and dedicated experience pages give different participation limits. Confirm the current rules for your selected experience with the operator before payment; Observatory access does not establish eligibility for the Glass Slide or Edge Walk."];
+  t.sources=[...(t.sources || []).filter(source=>source.url!=="https://www.skyviewsdubai.com/faqs/"),{name:"Sky Views: visitor FAQ",url:"https://www.skyviewsdubai.com/faqs/",type:"operator",supports:"Published hours, arrival guidance and entrance routes. General FAQ participation wording differs from the dedicated experience pages; confirm the exact activity's conditions.",lastVerified:"2026-11-18"}];
+  t.importantInformation=[...new Set([...(t.importantInformation || []),"The operator's general FAQ and dedicated experience pages give different participation limits. Confirm the current rules for your selected experience with the operator before payment; Observatory access does not establish eligibility for the Glass Slide or Edge Walk."])];
 });
 
 // Exact venue photographs with recorded reuse licences, checked 1 October 2026.
