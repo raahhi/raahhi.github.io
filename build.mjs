@@ -142,10 +142,23 @@ async function snapshot(route) {
         : c.kind === 'activityPage' ? c.dest+':'+c.page : c.kind === 'visa' ? slugify(c.v.country) : c.kind === 'category' ? (c.category.id || c.category.slug)
         : c.kind === 'comparison' ? c.comparison.slug : c.kind === 'attraction' ? c.attraction.id : c.kind === 'guide' ? c.key
         : ['activityDest','holidayDest','destinationHub'].includes(c.kind) ? c.dest : null;
-      const indexNowContent = trackIndexNow ? JSON.stringify({
-        page: doc.querySelector('.page.active')?.outerHTML,
-        metadata: [...doc.querySelectorAll('head [data-seo]')].map(el => el.outerHTML)
-      }) : null;
+      let indexNowContent = null;
+      if (trackIndexNow) {
+        const main = doc.querySelector('.page.active').cloneNode(true);
+        // Prerendered controls contain generated IDs and date limits that are not page updates.
+        main.querySelectorAll('.slideshow[id]').forEach(el => el.removeAttribute('id'));
+        main.querySelectorAll('.slideshow [onclick]').forEach(el => el.removeAttribute('onclick'));
+        main.querySelectorAll('.reveal').forEach(el => el.classList.remove('in'));
+        main.querySelectorAll('input[type="date"], input[type="month"]').forEach(el => el.removeAttribute('min'));
+        main.querySelectorAll('img[data-image-source]').forEach(el => {
+          // The authoring image source stays stable even if the browser swaps a fallback.
+          for (const name of ['src', 'srcset', 'data-src', 'data-srcset']) el.removeAttribute(name);
+        });
+        indexNowContent = JSON.stringify({
+          page: main.outerHTML,
+          metadata: [...doc.querySelectorAll('head [data-seo]')].map(el => el.outerHTML)
+        });
+      }
       return {indexNowContent, pageId:c.kind+(id ? ':'+id : ''),canonical:doc.querySelector('link[rel="canonical"]')?.getAttribute('href'),
         ids:[...doc.querySelectorAll('[id]')].map(el=>el.id),
         links:[...doc.querySelectorAll('a[href]')].map(a=>({href:a.getAttribute('href'),rel:a.getAttribute('rel'),target:a.getAttribute('target')}))};
