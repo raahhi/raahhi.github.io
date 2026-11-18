@@ -19,6 +19,8 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-24.04
+    outputs:
+      indexnow_manifest: ${{ steps.indexnow_manifest.outputs.manifest }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -53,6 +55,11 @@ jobs:
         run: npm run build
         env:
           RAAHHI_URL_BASELINE: ${{ github.event_name == 'push' && github.event.before || github.sha }}
+          RAAHHI_INDEXNOW_MANIFEST: ${{ runner.temp }}/indexnow-current.json
+
+      - name: Record IndexNow page fingerprints
+        id: indexnow_manifest
+        run: printf 'manifest=%s\n' "$(cat "$RUNNER_TEMP/indexnow-current.json")" >> "$GITHUB_OUTPUT"
 
       - name: Check permanent URL regression cases
         run: node --test scripts/published-urls.test.mjs
@@ -117,3 +124,40 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+  indexnow:
+    name: Notify IndexNow of published page changes
+    if: github.ref == 'refs/heads/main'
+    needs: [build, deploy]
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Restore the last IndexNow checkpoint
+        uses: actions/cache/restore@v4
+        with:
+          path: ${{ runner.temp }}/indexnow-previous.json
+          key: indexnow-pages-v1-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: indexnow-pages-v1-
+
+      - name: Send changes since the last IndexNow checkpoint
+        id: notify
+        env:
+          INDEXNOW_CURRENT: ${{ needs.build.outputs.indexnow_manifest }}
+          INDEXNOW_CHECKPOINT: ${{ runner.temp }}/indexnow-previous.json
+        run: node scripts/indexnow.mjs
+
+      - name: Save the successful IndexNow checkpoint
+        if: steps.notify.outputs.checkpoint_changed == 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: ${{ runner.temp }}/indexnow-previous.json
+          key: indexnow-pages-v1-${{ github.run_id }}-${{ github.run_attempt }}
