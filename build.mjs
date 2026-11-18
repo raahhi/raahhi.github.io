@@ -1,9 +1,11 @@
+import { createHash } from 'node:crypto';
 import { createServer } from 'node:http';
 import { readFile, readdir, mkdir, writeFile, rm } from 'node:fs/promises';
 import { join, dirname } from 'node:path';
 import { chromium } from 'playwright';
 import { compileSiteAssets } from './scripts/site-assets.mjs';
 import { loadLocalMedia } from './scripts/local-media.mjs';
+import { indexNowKey } from './scripts/indexnow.mjs';
 import { faviconSvg as ivoryFavicon } from './workers/leads/favicon.mjs';
 import {validateRegistry, registryAtRef, validatePublishedGraph} from './scripts/published-urls.mjs';
 
@@ -132,7 +134,7 @@ async function snapshot(route) {
       tours: TOURS.map(t => ({...t, _cardSummary: activitySummaryText(t)})),
       searchOther: Object.fromEntries(ACTIVITY_SEARCH_INDEX.map(e => [e.t.id, e.other]))
     })) : null;
-    const urlAudit = await page.evaluate(() => {
+    const urlAudit = await page.evaluate(trackIndexNow => {
       const c=CURRENT;
       const doc=document.documentElement.cloneNode(true);
       doc.querySelectorAll('.page:not(.active), #__prerender').forEach(el=>el.remove());
@@ -140,11 +142,31 @@ async function snapshot(route) {
         : c.kind === 'activityPage' ? c.dest+':'+c.page : c.kind === 'visa' ? slugify(c.v.country) : c.kind === 'category' ? (c.category.id || c.category.slug)
         : c.kind === 'comparison' ? c.comparison.slug : c.kind === 'attraction' ? c.attraction.id : c.kind === 'guide' ? c.key
         : ['activityDest','holidayDest','destinationHub'].includes(c.kind) ? c.dest : null;
-      return {pageId:c.kind+(id ? ':'+id : ''),canonical:doc.querySelector('link[rel="canonical"]')?.getAttribute('href'),
+      let indexNowContent = null;
+      if (trackIndexNow) {
+        const main = doc.querySelector('.page.active').cloneNode(true);
+        // Prerendered controls contain generated IDs and date limits that are not page updates.
+        main.querySelectorAll('.slideshow[id]').forEach(el => el.removeAttribute('id'));
+        main.querySelectorAll('.slideshow [onclick]').forEach(el => el.removeAttribute('onclick'));
+        main.querySelectorAll('.reveal').forEach(el => el.classList.remove('in'));
+        main.querySelectorAll('input[type="date"], input[type="month"]').forEach(el => el.removeAttribute('min'));
+        main.querySelectorAll('img[data-image-source]').forEach(el => {
+          // The authoring image source stays stable even if the browser swaps a fallback.
+          for (const name of ['src', 'srcset', 'sizes', 'data-src', 'data-srcset', 'data-fb', 'onerror']) el.removeAttribute(name);
+          el.classList.remove('img-fallback');
+        });
+        indexNowContent = JSON.stringify({
+          page: main.outerHTML,
+          metadata: [...doc.querySelectorAll('head [data-seo]')].map(el => el.outerHTML)
+        });
+      }
+      return {indexNowContent, pageId:c.kind+(id ? ':'+id : ''),canonical:doc.querySelector('link[rel="canonical"]')?.getAttribute('href'),
         ids:[...doc.querySelectorAll('[id]')].map(el=>el.id),
         links:[...doc.querySelectorAll('a[href]')].map(a=>({href:a.getAttribute('href'),rel:a.getAttribute('rel'),target:a.getAttribute('target')}))};
-    });
-    return {...JSON.parse(raw), ...urlAudit, planning, runtimeActivityId, runtimeCatalogue};
+    }, Boolean(process.env.RAAHHI_INDEXNOW_MANIFEST));
+    const {indexNowContent, ...audit} = urlAudit;
+    const indexNowHash = indexNowContent && createHash('sha256').update(indexNowContent).digest('hex');
+    return {...JSON.parse(raw), ...audit, indexNowHash, planning, runtimeActivityId, runtimeCatalogue};
   } finally {
     await page.close();
   }
@@ -272,6 +294,11 @@ try {
   await writeFile(join(DIST, 'BingSiteAuth.xml'), await readFile(join(ROOT, 'source', 'BingSiteAuth.xml')));
   await writeFile(join(DIST, 'robots.txt'), home.robotsTxt, 'utf8');
   await writeFile(join(DIST, 'sitemap.xml'), home.sitemapXml, 'utf8');
+  await writeFile(join(DIST, indexNowKey + '.txt'), indexNowKey, 'utf8');
+  if (process.env.RAAHHI_INDEXNOW_MANIFEST) {
+    const manifest = Object.fromEntries(home.sitemapPaths.map(path => [path, routeResults.get(path).indexNowHash]));
+    await writeFile(process.env.RAAHHI_INDEXNOW_MANIFEST, JSON.stringify(manifest) + '\n', 'utf8');
+  }
   await writeFile(join(DIST, 'llms.txt'), home.llmsTxt || '', 'utf8');
   await writeFile(join(DIST, '.nojekyll'), '', 'utf8');
   await writeFile(join(DIST, 'CNAME'), 'raahhi.com\n', 'utf8');

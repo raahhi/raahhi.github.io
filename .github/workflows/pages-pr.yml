@@ -29,6 +29,7 @@ jobs:
       - run: npm run build
         env:
           RAAHHI_URL_BASELINE: ${{ github.event.pull_request.base.sha }}
+          RAAHHI_INDEXNOW_MANIFEST: ${{ runner.temp }}/indexnow-current.json
       - name: Run Pages release checks
         run: |
           for check in site-ui search published-data pricing presentation options enquiry-delivery visitor-activity readiness dubai-pilot attraction city-hubs pagination editorial; do
