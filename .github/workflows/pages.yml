@@ -87,6 +87,9 @@ jobs:
       - name: Check Dubai planning and city category connections
         run: node .github/check-dubai-pilot.mjs
 
+      - name: Check attraction planning and product connections
+        run: node .github/check-attraction.mjs
+
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
 

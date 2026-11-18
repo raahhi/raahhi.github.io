@@ -1659,6 +1659,12 @@
       "path": "/activities/dubai/categories/water-parks/",
       "kind": "category",
       "state": "live"
+    },
+    {
+      "pageId": "attraction:sky-views",
+      "path": "/attractions/dubai/sky-views/",
+      "kind": "attraction",
+      "state": "live"
     }
   ]
 }

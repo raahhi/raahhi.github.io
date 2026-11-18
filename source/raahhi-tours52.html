@@ -876,8 +876,8 @@
   .breadcrumb{ margin-bottom:8px; }
   .detail-layout{ gap:32px; margin-top:28px; }
   #page-tours>section,#page-packages>section,#page-tour-detail>section,
-  #page-pkg-detail>section,#page-visa-detail>section,#page-category>section,#page-comparison>section,#page-destination-hub>section{ padding:56px 0; }
-  #page-destination-hub .detail-section{ padding-bottom:0; }
+  #page-pkg-detail>section,#page-visa-detail>section,#page-category>section,#page-comparison>section,#page-destination-hub>section,#page-attraction>section{ padding:56px 0; }
+  #page-destination-hub .detail-section,#page-attraction .detail-section{ padding-bottom:0; }
   /* Manual galleries expose controls on touch and keyboard as well as mouse. */
   .slideshow-arrow{ width:44px; height:44px; opacity:1; background:rgba(11,21,38,.78); font-size:22px; }
   .slideshow-dots button{ width:44px; height:44px; }
@@ -892,7 +892,7 @@
     .product-card h3,.pkg-card h3,.pc-summary{ min-height:0; }
     .hero-content{ padding-bottom:80px; }
     #page-tours>section,#page-packages>section,#page-tour-detail>section,
-    #page-pkg-detail>section,#page-visa-detail>section,#page-category>section,#page-comparison>section,#page-destination-hub>section{ padding:36px 0; }
+    #page-pkg-detail>section,#page-visa-detail>section,#page-category>section,#page-comparison>section,#page-destination-hub>section,#page-attraction>section{ padding:36px 0; }
   }
   @media(prefers-reduced-motion:reduce){ .slideshow img{ transition:none; } }
 
@@ -1527,6 +1527,7 @@
 
 <!-- ================= GUIDES (content built by renderGuide from GUIDES + the catalogue) ================= -->
 <div id="page-comparison" class="page"><section><div class="wrap" style="max-width:1100px;" id="comparisonBody"></div></section></div>
+<div id="page-attraction" class="page"><section><div class="wrap" style="max-width:1000px;" id="attractionBody"></div></section></div>
 <div id="page-destination-hub" class="page"><section><div class="wrap" style="max-width:1000px;" id="destinationHubBody"></div></section></div>
 <div id="page-category" class="page"><section><div class="wrap" style="max-width:1100px;" id="categoryBody"></div></section></div>
 <div id="page-guide" class="page">
@@ -3181,7 +3182,7 @@ const GENERAL_FAQ = [
    Never invents or patches data; it only reports what's wrong so real data can be fixed. */
 
 /* ============ ROUTER ============ */
-const routes = ["home","visas","visa-detail","tours","packages","tour-detail","pkg-detail","guide","category","comparison","destination-hub","about","contact","faq","terms","privacy","notfound"];
+const routes = ["home","visas","visa-detail","tours","packages","tour-detail","pkg-detail","guide","category","comparison","destination-hub","attraction","about","contact","faq","terms","privacy","notfound"];
 // Page ids that are reachable directly as a single-segment URL (/about/, ...). The other
 // ids in `routes` ("tour-detail", "pkg-detail", ...) are internal page containers only.
 const STATIC_ROUTES = ["home","visas","about","contact","faq","terms","privacy"];
@@ -3208,6 +3209,8 @@ function router(){
     CURRENT = {kind:"notfound"}; showPage("notfound");
 
   // --- Canonical semantic routes: /activities[...], /holidays[...], /visas[...] ---
+  } else if(route==="attractions" && n===3 && attractionByRoute(seg1,seg2)){
+    const attraction=attractionByRoute(seg1,seg2); renderAttraction(attraction); CURRENT={kind:"attraction",attraction}; showPage("attraction","activities");
   } else if(route==="dubai" && n===1){
     renderDubaiPlanningHub(); CURRENT={kind:"destinationHub",dest:"dubai"}; showPage("destination-hub");
   } else if(route==="activities" && n===4 && seg2==="categories" && cityCategoryBySlug(seg1,parts[3])){
@@ -3736,6 +3739,14 @@ const ILLUSTRATIVE_PRODUCT_PHOTOS = new Set(["https://upload.wikimedia.org/wikip
 // Selected-field verification, not blanket confirmation of inventory or commercial terms.
 const PRODUCT_FACT_CHECKS = {"ferrari-world-abu-dhabi":{"desc":"A Ferrari-themed park on Yas Island with racing-themed rides. Check ride closures before choosing your visit date.","description":"Ferrari World Abu Dhabi is a Ferrari-themed park on Yas Island; its Formula Rossa ride is currently listed as closed for maintenance. Check the operator’s ride-updates page before choosing your visit date. Guinness World Records lists Formula Rossa as the fastest rollercoaster, at 240 km/h. The record describes the ride, not its current availability.","cancellationPolicy":"Ferrari World’s direct-ticket FAQ allows some exchanges and date changes subject to review by Yas Concierge. Conditions depend on the ticket. RAAHHI booking cancellation and amendment terms are confirmed before payment.","importantInformation":["Formula Rossa is listed as closed for maintenance on the operator’s ride-updates page, checked on 1 October 2026. Check that page again before travelling."],"sources":[{"name":"Guinness World Records: Fastest rollercoaster","url":"https://www.guinnessworldrecords.com/world-records/93599-fastest-roller-coaster","type":"record","supports":"Formula Rossa at Ferrari World Abu Dhabi is the fastest rollercoaster, at 240 km/h","lastVerified":"2026-09-27"},{"name":"Ferrari World: ride updates","url":"https://www.ferrariworldabudhabi.com/en/park-overview/rides-information","type":"operator","supports":"Formula Rossa maintenance closure; ride information can change.","lastVerified":"2026-10-01"},{"name":"Ferrari World: direct-ticket FAQ","url":"https://www.ferrariworldabudhabi.com/en/faq","type":"operator","supports":"Direct-ticket exchanges and date changes are subject to review; these are not RAAHHI booking terms.","lastVerified":"2026-10-01"}],"verifiedFields":["Ride maintenance notice","Direct-ticket amendment guidance"],"faqs":[{"q":"Where is Ferrari World?","a":"On Yas Island in Abu Dhabi, next to Yas Mall and the other Yas Island parks."},{"q":"Is Formula Rossa running?","a":"At our last check (27 Sep 2026) the official site listed it as closed for maintenance. Check the park's ride updates before visiting."},{"q":"Can I go from Dubai?","a":"Yes. You can add a return hotel transfer from Dubai when booking."},{"q":"Is karting included?","a":"No. Electric karting and the Advanced Scuderia Challenge cost extra."},{"q":"Are there rides for young children?","a":"Yes, including Formula Rossa Junior, Turbo Tower and a children's driving circuit."},{"q":"Is Formula Rossa operating?","a":"The operator lists Formula Rossa as closed for maintenance, checked on 1 October 2026. Check the official ride-updates page before planning a visit around this ride."}],"selectedFactsCheckedOn":"2026-10-01"},"jebel-jais-zipline":{"inclusions":["Jais Flight zipline experience, subject to confirmation of the booked product","Safety briefing and equipment; confirm the selected ticket’s inclusions"],"itinerary":[],"timing":"Session times and weather-related operation are confirmed for your selected date.","options":["Jais Flight: 2.83 km zipline; confirm the selected ticket before booking"],"cancellationPolicy":"Cancellation, weather disruption and refund terms are confirmed for the selected ticket before payment.","importantInformation":["Jais Flight and Jais Sky Tour are separate experiences. The six-zipline Sky Tour is not an alternative automatically included in a Jais Flight ticket.","The official FAQ lists a weight range of 40 to 120 kg and minimum height of 122 cm. Confirm eligibility for the exact experience before paying."],"sources":[{"name":"Guinness World Records: Longest zip wire","url":"https://www.guinnessworldrecords.com/world-records/67883-longest-zip-wire","type":"record","supports":"Jebel Jais Flight in Ras Al Khaimah is the longest zip wire, a single span of 2,831.88 m","lastVerified":"2026-09-27"},{"name":"Jebel Jais: activity definitions","url":"https://visitjebeljais.com/play","type":"operator","supports":"Jais Flight is 2.83 km; Jais Sky Tour is a separate six-zipline experience.","lastVerified":"2026-10-01"},{"name":"Jebel Jais: eligibility FAQ","url":"https://visitjebeljais.com/faqs","type":"operator","supports":"Published zipline weight range 40 to 120 kg and minimum height 122 cm; exact-product eligibility must be confirmed.","lastVerified":"2026-10-01"}],"verifiedFields":["Flight and Sky Tour distinction","Published zipline height and weight guidance"],"selectedFactsCheckedOn":"2026-10-01"},"aqua-fun-dubai":{"bookingMode":"official-only","officialBookingUrl":"https://aquafun.ae/","status":"official-only","desc":"A floating obstacle park off JBR Beach. Tickets must be purchased directly from AquaFun.","description":"AquaFun is a floating inflatable obstacle park at JBR Beach in Dubai. It is reached from the beach by swimming in a life jacket or using the operator’s paid boat service.\n\nThe operator says it does not accept third-party tickets. Buy admission directly from AquaFun; RAAHHI does not offer a ticket enquiry for this listing.","duration":"Day Pass","highlights":["Floating obstacles at JBR Beach","Official direct-ticket purchase required"],"inclusions":["Official Day Pass: same-day access and re-entry","Official Day Pass: life jacket, non-slip socks and waterproof phone case"],"exclusions":["Admission is purchased directly from AquaFun"],"pickup":"RAAHHI does not offer admission or a ticket-and-transfer bundle for this listing.","meetingPoint":"AquaFun, JBR Beach (Marina Beach), Dubai","cancellationPolicy":"Check cancellation and refund terms directly with AquaFun before purchasing.","importantInformation":["Tickets from third-party resellers are not accepted, according to AquaFun’s FAQ."],"restrictions":["Minimum age 6 years and minimum height 110 cm","Children aged 6 to 12 must be with an adult","Basic swimming ability required"],"timing":"From 9 am until sunset; check the official seasonal schedule.","sources":[{"name":"AquaFun: official visitor guidance","url":"https://aquafun.ae/","type":"operator","supports":"Location, minimum age and height, adult supervision and swimming guidance.","lastVerified":"2026-10-01"},{"name":"AquaFun: ticket FAQ","url":"https://aquafun.ae/faq","type":"operator","supports":"Direct tickets only; Day Pass access, equipment and re-entry.","lastVerified":"2026-10-01"}],"verifiedFields":["Official-only ticket policy","Entry eligibility","Official Day Pass access and equipment"],"faqs":[{"q":"Can I buy AquaFun tickets through RAAHHI?","a":"No. AquaFun says third-party tickets are not accepted. Purchase admission directly from AquaFun."}],"selectedFactsCheckedOn":"2026-10-01"},"burj-khalifa-top":{"meetingPoint":"At the Top entrance, lower ground floor of Dubai Mall","inclusions":["At the Top entry (levels 124 and 125)","Level 148 SKY access, refreshments and Guest Ambassador (SKY option only)","Dubai Aquarium and Underwater Zoo entry (combo option only)","Dinner at The Rooftop, Burj Club (Rooftop option only)","Return hotel transfer on selected options"],"importantInformation":["Standard Silver admission covers levels 124 and 125. Access to other floors and add-ons requires the appropriate ticket.","Use the lower ground floor of Dubai Mall to reach the At the Top entrance.","Admission is tied to the booked date and time; confirm the exact ticket and its terms before payment."],"sources":[{"name":"Guinness World Records: Tallest building","url":"https://www.guinnessworldrecords.com/world-records/tallest-building","type":"record","supports":"Burj Khalifa is the tallest building, at 828 m","lastVerified":"2026-09-27"},{"name":"At the Top: Silver experience","url":"https://ticket.atthetop.ae/experiences/at-the-top-burj-khalifa/","type":"operator","supports":"Silver access to levels 124 and 125 and entrance via Dubai Mall lower ground floor.","lastVerified":"2026-10-01"}],"verifiedFields":["Standard Silver observation floors","Entrance location"],"selectedFactsCheckedOn":"2026-10-01"},"dubai-frame":{"meetingPoint":"Dubai Frame, Zabeel Park Gate 4, Dubai","cancellationPolicy":"Cancellation and refund terms are confirmed for the selected ticket before payment.","sources":[{"name":"Dubai Frame: plan your visit","url":"https://www.dubaiframe.ae/en/plan-your-visit","type":"operator","supports":"Published opening hours, Gate 4 location, under-12 adult supervision and free-admission categories.","lastVerified":"2026-10-01"}],"verifiedFields":["Published opening hours","Gate 4 entrance","Age and free-admission guidance"],"faqs":[{"q":"What are the opening hours?","a":"The official site lists 8:00 am to 9:00 pm, all year including weekends and holidays; hours may change in Ramadan."},{"q":"Who gets free entry?","a":"Babies under 3, plus people of determination and up to two companions."},{"q":"Can I bring a pushchair?","a":"Strollers and large bags must be stored at Gate 4 before entry."},{"q":"How do you reach the top?","a":"By glass lift, which takes roughly 75 seconds."},{"q":"Is the ticket refundable?","a":"Cancellation and refund terms depend on the selected ticket and are confirmed before payment."}],"selectedFactsCheckedOn":"2026-10-01"},"louvre-abu-dhabi":{"timing":"Galleries: 10 am to 6:30 pm Tuesday to Thursday; 10 am to 8:30 pm Friday to Sunday. Closed Monday. Check last-admission times directly with the museum.","cancellationPolicy":"Cancellation and refund terms are confirmed for the selected ticket before payment.","sources":[{"name":"Louvre Abu Dhabi: opening times","url":"https://www.louvreabudhabi.ae/en/visit/plan-your-visit/opening-times","type":"operator","supports":"Published gallery opening hours and Monday closure. Last-admission timing is not verified here.","lastVerified":"2026-10-01"}],"verifiedFields":["Gallery hours","Monday closure"],"faqs":[{"q":"Which day is the museum closed?","a":"Monday."},{"q":"Can I travel from Dubai?","a":"Yes, the 'from Dubai' option adds a return transfer to the entry ticket."},{"q":"Do children need tickets?","a":"Yes. They are free but must be booked in advance."},{"q":"Is the ticket refundable?","a":"Cancellation and refund terms depend on the selected ticket and are confirmed before payment."}],"selectedFactsCheckedOn":"2026-10-01"},"evening-desert-safari":{"cancellationPolicy":"The reference operator lists cancellation up to 24 hours before this supplier tour. RAAHHI cancellation and refund terms must be confirmed for the booked option before payment.","sources":[{"name":"Rayna Tours: safari reference","url":"https://www.raynatours.com/dubai/desert-safari-tours/dubai-desert-safari-with-dune-bashing-e-5962","type":"operator","supports":"Reference operator describes dune bashing, dinner and paid sandboarding add-on; not confirmation of RAAHHI supplier allocation or booking terms.","lastVerified":"2026-10-01"}],"verifiedFields":["Reference itinerary and sandboarding exclusion"],"timing":"Afternoon to evening; exact pickup and return times confirmed for the selected option.","selectedFactsCheckedOn":"2026-10-01"},"sky-views-observatory":{"sources":[{"name":"Sky Views: Observatory and Glass Slide","url":"https://www.skyviewsdubai.com/observatory/","type":"operator","supports":"Observatory on levels 52 and 53; Glass Walk; published Glass Slide height and weight limits. Ticket inclusions are confirmed for the selected product.","lastVerified":"2026-10-01"}],"selectedFactsCheckedOn":"2026-10-01","verifiedFields":["Observation floors and Glass Walk","Published Glass Slide height and weight limits"],"options":["Observatory ticket: confirm whether one Glass Slide ride is included","Edge Walk: separate experience; confirm its ticket and eligibility"],"faqs":[{"q":"Does every Sky Views ticket cover the Glass Slide or Edge Walk?","a":"No single inclusion applies to every ticket. The operator’s Observatory page lists one Glass Slide ride for its stated admission product. Edge Walk is a separate experience. Confirm your selected ticket before payment."},{"q":"What are the Glass Slide height and weight limits?","a":"The operator lists a height range of 120 to 200 cm and weight range of 30 to 150 kg, checked on 1 October 2026. These limits concern the Glass Slide, not general deck admission. Confirm all health, age and clothing requirements before participating."}]},"the-view-at-the-palm":{"sources":[{"name":"The View: observation levels","url":"https://www.theviewpalm.ae/en/about-the-view","type":"operator","supports":"The View is on level 52; The Next Level is on level 54. Access depends on the selected ticket.","lastVerified":"2026-10-01"}],"selectedFactsCheckedOn":"2026-10-01","verifiedFields":["Level 52 deck","Separate Level 54 experience"],"options":["Level 52 admission: choose the applicable visit time","The Next Level, level 54: confirm the appropriate upgraded ticket"],"faqs":[{"q":"Does level 52 admission also cover The Next Level?","a":"Do not assume it does. The View is on level 52, while The Next Level is a separate experience on level 54. Confirm which levels your selected ticket covers."}]}};
 TOURS.forEach(t => { if(PRODUCT_FACT_CHECKS[t.id]) Object.assign(t, PRODUCT_FACT_CHECKS[t.id]); });
+// Scoped operator refresh: hours and entrance guidance checked 18 November 2026.
+// This does not relabel prices, policies or all historical product facts as newly checked.
+TOURS.filter(t=>["sky-views-observatory","sky-views-edge-walk"].includes(t.id)).forEach(t=>{
+  t.timing=(t.id==="sky-views-observatory" ? "Operator FAQ: Observatory 10:00 am to 8:00 pm." : "Operator FAQ: Edge Walk 10:30 am to 8:00 pm.")+" Hours checked 18 November 2026; last admission can be earlier. Confirm your selected date and slot; arrive about 30 minutes early.";
+  t.meetingPoint="Operator FAQ: Tower 1 ground-level entrance near the residence entrance, or the Dubai Mall Metro link to the Level 1 entrance. Follow your ticket's confirmed entrance instructions.";
+  t.sources=[...(t.sources || []),{name:"Sky Views: visitor FAQ",url:"https://www.skyviewsdubai.com/faqs/",type:"operator",supports:"Published hours, arrival guidance and entrance routes. General FAQ participation wording differs from the dedicated experience pages; confirm the exact activity's conditions.",lastVerified:"2026-11-18"}];
+  t.importantInformation=[...(t.importantInformation || []),"The operator's general FAQ and dedicated experience pages give different participation limits. Confirm the current rules for your selected experience with the operator before payment; Observatory access does not establish eligibility for the Glass Slide or Edge Walk."];
+});
 
 // Exact venue photographs with recorded reuse licences, checked 1 October 2026.
 const APPROVED_PRODUCT_PHOTOS = {"sky-views-observatory": "https://images.unsplash.com/photo-1708361089093-beef4c4584e7", "al-ain-adventure": "https://upload.wikimedia.org/wikipedia/commons/4/47/Al_Ain_Adventure_Rafting.jpg", "lotus-mega-yacht-dinner-cruise": "https://images.pexels.com/photos/19960510/pexels-photo-19960510.jpeg", "lotus-mega-yacht-sunset-cruise": "https://images.pexels.com/photos/19960510/pexels-photo-19960510.jpeg", "new-years-eve-cruises-dubai-marina": "https://images.pexels.com/photos/19960510/pexels-photo-19960510.jpeg"};
@@ -5348,6 +5359,7 @@ const URLS = {
   comparison: c => "/compare/" + c.slug + "/",
   activityCategory: c => c.dest ? "/activities/"+c.dest+"/categories/"+c.slug+"/" : "/activities/categories/" + c.slug + "/",
   destinationHub: dest => "/"+dest+"/",
+  attraction: a => "/attractions/"+a.dest+"/"+a.slug+"/",
   activities: "/activities/", activityDest: slug => "/activities/" + slug + "/", activity: t => "/activities/" + t.dest + "/" + t.id + "/",
   holidays: "/holidays/", holidayDest: slug => "/holidays/" + slug + "/", holiday: p => "/holidays/" + p.dest + "/" + p.id + "/",
   about: "/about/", contact: "/contact/", faq: "/faq/", terms: "/terms/", privacy: "/privacy/",
@@ -6167,16 +6179,54 @@ function cityParkFaqItems(c){
   ];
 }
 function cityCategoryBySlug(dest,slug){ return CITY_ACTIVITY_CATEGORIES.find(c=>c.dest===dest && c.slug===slug); }
+// Attraction identity and product membership are independent of product labels/options.
+const ATTRACTIONS = [{id:"sky-views",dest:"dubai",slug:"sky-views",title:"Sky Views Dubai",ids:["sky-views-observatory","sky-views-edge-walk"],checkedOn:"2026-11-18",sources:[
+  {name:"Sky Views: Observatory",url:"https://www.skyviewsdubai.com/observatory/",type:"operator",supports:"Observation floors, Glass Walk and the operator's stated Observatory admission inclusions; separate Glass Slide conditions.",lastVerified:"2026-11-18"},
+  {name:"Sky Views: Edge Walk",url:"https://www.skyviewsdubai.com/edge-walk/",type:"operator",supports:"Outdoor ledge experience, its separate participation conditions and weather restrictions.",lastVerified:"2026-11-18"},
+  {name:"Sky Views: visitor FAQ",url:"https://www.skyviewsdubai.com/faqs/",type:"operator",supports:"Published hours, arrival guidance, entrance routes and Observatory access information. Grouped eligibility wording differs from the dedicated experience pages.",lastVerified:"2026-11-18"}
+]}];
+function attractionByRoute(dest,slug){ return ATTRACTIONS.find(a=>a.dest===dest && a.slug===slug); }
+function attractionsForTours(list){ return ATTRACTIONS.filter(a=>list.some(t=>a.ids.includes(t.id))); }
+function attractionBreadcrumb(a){ return [{label:"Home",href:"/"},{label:"UAE activities",href:URLS.activities},{label:`Things to do in ${destName(a.dest)}`,href:URLS.activityDest(a.dest)},{label:a.title}]; }
+function attractionLinksHTML(list){
+  const matches=attractionsForTours(list);
+  return matches.length ? `<nav class="detail-section planning-links" aria-label="Plan an attraction visit"><h2>Plan an attraction visit</h2><ul class="link-list">${matches.map(a=>`<li><a href="${URLS.attraction(a)}">${escapeHTML(a.title)}: choose your experience</a><span class="index-note planning-link-note">Compare the attraction's listed experiences, visit arrangements and participation checks.</span></li>`).join("")}</ul></nav>` : "";
+}
+function renderAttraction(a){
+  const list=a.ids.map(byId),obs=list[0],edge=list[1];
+  document.getElementById("attractionBody").innerHTML=`
+    <nav class="breadcrumb" aria-label="Breadcrumb">${breadcrumbHTML(attractionBreadcrumb(a))}</nav>
+    <p class="eyebrow" style="margin-top:20px;">Choose your Sky Views experience</p>
+    <h1 style="font-size:clamp(28px,4vw,44px);">Sky Views Dubai: Observatory or Edge Walk?</h1>
+    <p class="lede" style="margin-top:18px;">Sky Views brings together observation floors, a glass-floored walk, a slide and an outdoor ledge experience at Address Sky View in Downtown Dubai. Start by choosing the experience, then check the exact ticket. RAAHHI TOURS lists two separate products here; admission to one does not establish access or eligibility for every activity.</p>
+    <p class="form-note">Prepared by RAAHHI TOURS · Published and selected operator facts checked <time datetime="${a.checkedOn}">${formatDate(a.checkedOn)}</time> · <a href="/about/#editorial-standards">Our editorial standards</a>. Product prices and booking terms have their own recorded checks.</p>
+    <section class="detail-section"><h2>Choose between the two listings</h2><ul class="guide-cards attraction-products">
+      <li class="guide-card"><h3><a href="${URLS.activity(obs)}">${escapeHTML(obs.title)}</a></h3><p>Start here for the observation floors and Glass Walk. The operator's stated Observatory admission includes one Glass Slide ride, subject to its participation rules. Confirm the inclusions of the ticket you select; Edge Walk is a different experience.</p></li>
+      <li class="guide-card"><h3><a href="${URLS.activity(edge)}">${escapeHTML(edge.title)}</a></h3><p>Start here for the outdoor ledge walk. Read its separate briefing, clothing, age, size and health conditions before choosing a slot. Check any Observatory access in the selected product's inclusions; do not assume the Glass Slide is included.</p></li>
+    </ul><p class="index-note">Open a product for its available options, recorded price basis, transfer arrangements and enquiry. These are two catalogue choices, not a popularity ranking. A saved enquiry does not reserve admission.</p></section>
+    <section class="detail-section" id="sky-views-eligibility"><h2>Keep the participation rules separate</h2><p class="body-copy">Observatory access, the Glass Slide and Edge Walk have different participation conditions. The dedicated operator pages list different height and weight ranges for the Slide and Edge Walk. The operator's general FAQ groups the two activities with wording that differs from those dedicated pages.</p><p class="body-copy">Confirm the current rules for your exact experience with the operator before payment, particularly if a guest is near a stated limit or needs assistance. General admission is not confirmation of eligibility for a slide or outdoor walk. Read all clothing, consent, health and weather conditions on the product and operator pages; this planning page does not determine fitness to participate.</p></section>
+    <section class="detail-section"><h2>Plan arrival and time at the venue</h2><p class="body-copy">The operator FAQ lists Observatory admission from 10:00 am to 8:00 pm and Edge Walk from 10:30 am to 8:00 pm, checked on ${formatDate(a.checkedOn)}. Last entry can be earlier and hours can change. Confirm the date and timed slot on your ticket, and follow the operator's advice to arrive about 30 minutes early.</p><p class="body-copy">The FAQ describes access near the residence entrance of Tower 1 at ground level, or via the Dubai Mall Metro link to the Level 1 entrance. Use the entrance instructions on your confirmation. Allow separately for travel, arrival and any queue; the experience duration is not your door-to-door outing time. Outdoor sessions may be affected by weather.</p></section>
+    <section class="detail-section"><h2>Access needs and belongings</h2><p class="body-copy">The operator describes wheelchair access for the Observatory. Confirm the route and assistance you need directly; that statement does not establish suitability for the Glass Slide or Edge Walk. The FAQ says luggage, trolleys and strollers should be stored at the entrance, with only small personal handbags taken upstairs. Check your selected activity's rules for phones and other belongings.</p></section>
+    <section class="detail-section"><h2>Fit Sky Views into your Dubai plans</h2><p class="body-copy">Choose your admission time before combining the visit with other bookings. Check whether your product includes a transfer or requires you to reach the venue yourself. If you are choosing between different skyline venues, use the <a href="${URLS.comparison(comparisonBySlug("dubai-observation-decks"))}">Dubai observation-deck comparison</a>; if you have already chosen Sky Views, use the two listings above for the exact experience.</p><p class="body-copy">For a wider itinerary, the <a href="${URLS.guide("dubai-landmarks")}">Dubai landmarks guide</a> connects other attraction listings. Keep admissions separate unless the selected option expressly includes a combination ticket.</p></section>
+    <section class="detail-section"><h2>Questions about choosing Sky Views</h2>${qaHTML([
+      {q:"Is the Glass Walk the same as Edge Walk?",a:"No. The Glass Walk is the glass-floored walkway described with Observatory access. Edge Walk takes place outside on the building's ledge and has its own ticket and participation conditions."},
+      {q:"Can one person choose the Observatory while another chooses Edge Walk?",a:"Start with a separate suitable product for each guest, then confirm timing and meeting arrangements before booking. Do not assume both experiences follow the same schedule or that the group can stay together throughout."},
+      {q:"Where should I confirm the final ticket inclusions and terms?",a:`Open the <a href="${URLS.activity(obs)}">Observatory listing</a> or <a href="${URLS.activity(edge)}">Edge Walk listing</a>, choose the option you want and request a quote. Confirm admissions, slot, transfers, group price and cancellation terms before payment. Operator admission conditions also apply.`}
+    ])}</section>
+    <section class="detail-section"><h2>Official visit sources</h2><p class="body-copy">The operator pages below support the selected visit facts on this page. Their stated admission products are not a guarantee of every RAAHHI option's inclusions. Eligibility wording differs between the general FAQ and dedicated experience pages, so resolve any uncertainty for the selected activity before paying.</p>${sourcesHTML(a.sources)}</section>
+    <nav class="detail-section planning-links" aria-label="Continue planning your Sky Views visit"><h2>Continue planning</h2><ul class="link-list"><li><a href="${URLS.destinationHub(a.dest)}">Dubai trip planner</a></li><li><a href="${URLS.activityDest(a.dest)}">All Dubai activities</a></li><li><a href="${URLS.activityCategory(categoryBySlug("landmarks"))}">UAE landmarks and attractions</a></li><li><a href="${URLS.guide("dubai-family-planning")}">Dubai family activity planning</a></li></ul></nav>`;
+}
+
 function primaryCityCategory(t){ return CITY_ACTIVITY_CATEGORIES.find(c=>c.dest===t.dest && c.name===t.cat); }
 function categoryBreadcrumb(c){
   return [{label:"Home",href:"/"},{label:"UAE activities",href:URLS.activities},
     ...(c.dest ? [{label:`Things to do in ${destName(c.dest)}`,href:URLS.activityDest(c.dest)}] : []),{label:c.title}];
 }
 function activityBreadcrumb(t){
-  const category=primaryCityCategory(t);
+  const category=primaryCityCategory(t),attraction=ATTRACTIONS.find(a=>a.ids.includes(t.id));
   return [{label:"Home",href:"/"},{label:"UAE activities",href:URLS.activities},
     {label:`Things to do in ${destName(t.dest)}`,href:URLS.activityDest(t.dest)},
-    ...(category ? [{label:category.title,href:URLS.activityCategory(category)}] : []),{label:t.title,href:URLS.activity(t)}];
+    ...(attraction ? [{label:attraction.title,href:URLS.attraction(attraction)}] : category ? [{label:category.title,href:URLS.activityCategory(category)}] : []),{label:t.title,href:URLS.activity(t)}];
 }
 function cityCategoryFaqItems(c){
   if(["Theme Parks","Water Parks"].includes(c.name)) return cityParkFaqItems(c);
@@ -6220,6 +6270,7 @@ function renderDubaiPlanningHub(){
     <section class="detail-section"><h2>Choose an experience category</h2><p class="body-copy">Compare the type of outing before comparing its headline price. A desert trip, a cruise, a park day and an indoor play session need different time commitments and arrangements.</p><ul class="link-list">
       ${categories.map(c=>`<li><a href="${URLS.activityCategory(c)}">${escapeHTML(c.title)}</a><span class="index-note planning-link-note">${categoryTours(c).length} listings, with a choosing guide and direct product links.</span></li>`).join("")}
     </ul></section>
+    ${attractionLinksHTML(TOURS.filter(t=>t.dest==="dubai"))}
     <section class="detail-section"><h2>Match your hotel and departure arrangements</h2><p class="body-copy">Check where each experience begins before choosing a hotel or combining bookings. Dubai Marina and Dubai Creek cruise listings have different boarding arrangements; safari pickup also depends on the product and option. Confirm whether you need a hotel transfer, a meeting-point arrival or a separate vehicle.</p><p class="body-copy">For a multi-emirate stay, compare the itinerary and travel arrangements rather than assuming every outing starts in Dubai. The <a href="${URLS.guide("choose-a-uae-emirate")}">Dubai, Abu Dhabi and Ras Al Khaimah comparison</a> helps you choose a base.</p></section>
     <section class="detail-section"><h2>Build a comparable budget</h2><p class="body-copy">Use the same currency and group details when comparing. Check whether a price is per adult, per person or per private vehicle, and whether it is a dated reference. Separate admission, transfers, meals, hotel nights and optional extras. For a package, read the itinerary and hotel basis before comparing it with an activity-only total.</p><p class="body-copy">Send your preferred dates, adult count, children's ages and chosen experiences. RAAHHI TOURS confirms the available options, total price and cancellation terms before booking; a saved enquiry is not a reservation or payment.</p></section>
     <section class="detail-section"><h2>Read a guide for your next decision</h2>${guideCardsHTML(guides)}</section>
@@ -6331,6 +6382,7 @@ function renderComparison(c){
     <p class="lede" style="margin-top:18px;">${escapeHTML(c.intro)}</p>
     <section class="detail-section"><h2>Choose by the experience you want</h2>${comparisonChoicesHTML(c)}<p class="body-copy">${escapeHTML(c.decision)}</p>
       <p class="index-note">These are selected catalogue listings, not a ranking. Prices and live availability need confirmation; official-only listings direct you to the operator. Missing information means it is not recorded, not that a service is excluded. Inclusions can depend on the option you select.</p></section>
+    ${attractionLinksHTML(list)}
     <section class="detail-section"><h2>Side-by-side comparison</h2><p class="index-note">Compare recorded duration, inclusions and pickup arrangements for each listing.</p>
       <div class="table-scroll comparison-scroll" tabindex="0" role="region" aria-label="${escapeHTML(c.title)} table"><table class="data-table comparison-table" role="table">
         <caption class="sr-only">Listed duration, inclusions and pickup for ${list.length} experiences</caption>
@@ -6386,6 +6438,8 @@ function planningLinksHTML(dest, currentPath, guides){
     : context.kind === "activityDest" ? TOURS.filter(t=>t.dest === dest) : [];
   const ids = new Set(tours.map(t=>t.id)), links = [];
   if(dest==="dubai") links.push({href:URLS.destinationHub(dest),label:"Dubai trip planner",note:"Connect activities, stays and entry checks before choosing your bookings."});
+  const attractions=attractionsForTours(tours);
+  attractions.forEach(a=>links.push({href:URLS.attraction(a),label:a.title+": choose your experience",note:"Plan the attraction visit and compare its separate product choices."}));
   comparisonsForIds([...ids]).slice(0,1).forEach(c=>links.push({href:URLS.comparison(c),label:c.title,note:"Compare listed inclusions, duration, pickup and terms."}));
   (guides || []).filter(g=>!ids.size || g.ids().some(id=>ids.has(id))).slice(0,1).forEach(g=>links.push({href:URLS.guide(g.slug),label:g.name,note:g.blurb}));
   ACTIVITY_CATEGORIES.filter(c=>tours.some(t=>t.cat === c.name))
@@ -6396,7 +6450,7 @@ function planningLinksHTML(dest, currentPath, guides){
   const visa = visaBySlug("united-arab-emirates");
   if(visa) links.push({href:URLS.visa(visa),label:"UAE visa assistance",note:"Requirements depend on your passport and trip."});
   const seen = new Set([currentPath]);
-  const items = links.filter(x=>!seen.has(x.href) && seen.add(x.href)).slice(0,6);
+  const items = links.filter(x=>!seen.has(x.href) && seen.add(x.href)).slice(0,attractions.length ? 7 : 6);
   if(!items.length) return "";
   return `<nav class="detail-section planning-links" aria-label="Plan your ${escapeHTML(name)} visit">
     <h2>Plan your ${escapeHTML(name)} visit</h2>
@@ -6449,6 +6503,7 @@ function activityDestGuideHTML(slug){
   return `<section class="dest-guide" aria-labelledby="actDestGuideTitle">
       <h2 id="actDestGuideTitle">Planning your ${d} activities</h2>
       <p class="body-copy">RAAHHI TOURS lists ${list.length} ${list.length === 1 ? "activity" : "activities"} in ${d}. Below they are grouped by category and by the time each listing needs, with the points our team confirms when you enquire.</p>
+      ${attractionLinksHTML(list)}
       ${planningLinksHTML(slug, URLS.activityDest(slug), guides)}
       <button type="button" class="btn btn-line btn-sm dest-guide-toggle" data-guide-toggle="${slug}" aria-expanded="false" aria-controls="${detailsId}" onclick="toggleActivityDestGuide('${slug}', this)">Show more</button>
       <div class="dest-guide-details" id="${detailsId}" hidden>
@@ -7711,6 +7766,14 @@ function pageMeta(c){
       if(vm.officialSource) m.citation = [vm.officialSource.url];
       m.about = [{"@id":url + "#service"}]; m.mainEntity = {"@id":url + "#service"}; m.image = (v.images || [])[0] || m.image; break;
     }
+    case "attraction": {
+      const a=c.attraction,list=a.ids.map(byId),url=absUrl(URLS.attraction(a));
+      m.path=URLS.attraction(a);m.title="Sky Views Dubai: Observatory & Edge Walk Planning | "+S;
+      m.description="Choose between Sky Views Observatory and Edge Walk in Dubai. Compare the two listings, visit arrangements, participation checks and official sources.";
+      m.pageType="CollectionPage";m.bc=attractionBreadcrumb(a).map(b=>({name:b.label,path:b.href || m.path}));
+      m.nodes=[destNode(a.dest),{"@type":"TouristAttraction","@id":url+"#attraction",name:a.title,url,containedInPlace:{"@id":absUrl("/#destination-"+a.dest)}},itemListNode(url+"#list","Sky Views experience listings",list.map(t=>({path:URLS.activity(t),name:t.title})))];
+      m.about=[{"@id":url+"#attraction"}];m.mainEntity={"@id":url+"#list"};m.citation=a.sources.map(s=>s.url);m.image=list[0].images[0];break;
+    }
     case "destinationHub": {
       m.path=URLS.destinationHub(c.dest); m.title="Dubai Trip Planner: Activities, Stays & Travel Checks | "+S;
       m.description="Plan a Dubai stay around activities, hotel arrangements and entry checks. Connect safari and cruise choices with holiday packages and practical guides.";
@@ -7917,6 +7980,7 @@ function routeKind(path){
   const h = String(path || "").replace(/^\/+|\/+$/g, "") || "home";
   const parts = h.split("/"), [r, a, b] = parts, n = parts.length, isDest = s => DESTINATIONS.some(d => d.slug === s);
   if(parts.some(x => !x)) return {kind:"notfound"};
+  if(r === "attractions" && n === 3){const attraction=attractionByRoute(a,b);return attraction ? {kind:"attraction",attraction} : {kind:"notfound"};}
   if(r === "dubai" && n === 1) return {kind:"destinationHub",dest:"dubai"};
   if(r === "activities" && n === 4 && b === "categories"){const category=cityCategoryBySlug(a,parts[3]);return category ? {kind:"category",category} : {kind:"notfound"};}
   if(r === "activities" && n === 3 && a === "categories"){ const category = categoryBySlug(b); return category ? {kind:"category",category} : {kind:"notfound"}; }
@@ -7938,7 +8002,7 @@ function seoRoutes(){
     ...VISA_ADDONS.map(URLS.addon),
     URLS.destinationHub("dubai"), URLS.activities, ...ACTIVITY_CATEGORIES.map(URLS.activityCategory), ...CITY_ACTIVITY_CATEGORIES.map(URLS.activityCategory), ...DESTINATIONS.filter(d => destHasTours(d.slug)).map(d => URLS.activityDest(d.slug)), ...TOURS.map(URLS.activity),
     URLS.holidays, ...DESTINATIONS.map(d => URLS.holidayDest(d.slug)), ...PACKAGES.map(URLS.holiday),
-    ...COMPARISONS.map(URLS.comparison), ...GUIDES.map(g => URLS.guide(g.slug)), URLS.about, URLS.contact, URLS.faq, URLS.terms, URLS.privacy];
+    ...ATTRACTIONS.map(URLS.attraction), ...COMPARISONS.map(URLS.comparison), ...GUIDES.map(g => URLS.guide(g.slug)), URLS.about, URLS.contact, URLS.faq, URLS.terms, URLS.privacy];
 }
 function sitemapPaths(){
   return seoRoutes().filter(p => { const m = pageMeta(routeKind(p)); return m.path === p && m.robots.startsWith("index"); });
@@ -7981,6 +8045,7 @@ function llmsTxt(){
   const sec = (h, list) => list.length ? `## ${h}\n\n${list.map(p => `- [${title(p)}](${absUrl(p)})`).join("\n")}\n\n` : "";
   return (`# ${BUSINESS.name}\n\n> ${BUSINESS.summary}\n\nThis file lists the public pages of the website. The pages themselves are the source of truth; prices, availability and visa requirements are confirmed by the RAAHHI TOURS team on enquiry.\n\n` +
     sec("Main sections", ["/", URLS.visas, URLS.activities, URLS.holidays, URLS.about, URLS.contact, URLS.faq].filter(p => paths.includes(p))) +
+    sec("Attraction planning", ATTRACTIONS.map(URLS.attraction)) +
     sec("Comparisons", paths.filter(p => p.startsWith("/compare/"))) +
     sec("Guides", paths.filter(p => p.startsWith("/guides/"))) +
     sec("Visa assistance by destination", paths.filter(p => /^\/visas\/[^/]+\/$/.test(p))) +
@@ -8241,6 +8306,7 @@ const PACKAGE_SEARCH_INDEX = PACKAGES.map(p => ({type:"holiday",p,url:URLS.holid
   other:[...(p.incl||[]),...(p.itinerary||[]).map(d=>d.text),nightsOf(p)!=null?`${nightsOf(p)} nights`:""].map(normalizeSearch)}));
 /* ---- Global search ---- */
 const GLOBAL_SEARCH_INDEX = [
+  ...ATTRACTIONS.map(a=>({type:"attraction",url:URLS.attraction(a),label:a.title+": Observatory or Edge Walk",sub:"Choose your experience and plan the visit",title:normalizeSearch(a.title),aliases:searchAliases(["Sky Views planning","Sky Views Observatory Edge Walk"]),place:searchPlaces(a.dest),category:["attraction planning"],other:[]})),
   {type:"guide",url:URLS.destinationHub("dubai"),label:"Dubai trip planner",sub:"Connect activities, stays and entry checks",title:normalizeSearch("Dubai trip planner"),aliases:[],place:searchPlaces("dubai"),category:["planning"],other:[]},
   ...VISA_SEARCH_INDEX.map(x => Object.assign({}, x, {label: x.v.country + " visa", sub: "Visa assistance" + (hasRealValue(x.v.type) ? " · " + x.v.type : "")})),
   ...DESTINATIONS.filter(d => destHasTours(d.slug)).map(d => ({type:"activity", url: URLS.activityDest(d.slug), label: `Things to do in ${d.name}`,
@@ -8258,7 +8324,7 @@ const GLOBAL_SEARCH_INDEX = [
   ...[...ACTIVITY_CATEGORIES,...CITY_ACTIVITY_CATEGORIES].map(c=>({type:"category",url:URLS.activityCategory(c),label:c.title,sub:`${categoryTours(c).length} listings · Browse by destination`,title:normalizeSearch(c.title),aliases:[],place:[...new Set(categoryTours(c).flatMap(t=>searchPlaces(t.dest)))],category:[normalizeSearch(c.name),"category"],other:[normalizeSearch(CATEGORY_INFO[c.name])]})),
   ...COMPARISONS.map(c=>({type:"comparison",url:URLS.comparison(c),label:c.title,sub:`${comparisonTours(c).length} listings · Side-by-side comparison`,title:normalizeSearch(c.title),aliases:[],place:[...new Set(comparisonTours(c).flatMap(t=>searchPlaces(t.dest)))],category:["compare comparison",...comparisonTours(c).map(t=>normalizeSearch(t.cat))],other:[normalizeSearch(c.intro)]})),
 ];
-const SEARCH_GROUPS = [{type:"visa", heading:"Visas", label:"Visa", limit:6}, {type:"activity", heading:"Activities", label:"Activity", limit:8}, {type:"holiday", heading:"Holidays", label:"Holiday", limit:6}, {type:"guide", heading:"Guides", label:"Guide", limit:3}, {type:"category", heading:"Categories", label:"Category", limit:4}, {type:"comparison", heading:"Comparisons", label:"Comparison", limit:4}];
+const SEARCH_GROUPS = [{type:"attraction",heading:"Attraction planning",label:"Attraction",limit:4}, {type:"visa", heading:"Visas", label:"Visa", limit:6}, {type:"activity", heading:"Activities", label:"Activity", limit:8}, {type:"holiday", heading:"Holidays", label:"Holiday", limit:6}, {type:"guide", heading:"Guides", label:"Guide", limit:3}, {type:"category", heading:"Categories", label:"Category", limit:4}, {type:"comparison", heading:"Comparisons", label:"Comparison", limit:4}];
 const SEARCH_SUGGESTIONS = ["Japan", "UK", "Desert safari", "Abu Dhabi", "Theme parks", "5N / 6D"];
 
 let globalSearchQuery = "", globalSearchLimits = {};
