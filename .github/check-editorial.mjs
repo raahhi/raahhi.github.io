@@ -110,6 +110,11 @@ try{
   lebanon:{route:/Visit visa route depends/,leadTime:/embassy applications at least one month/,stay:/As specified on the visa/,stale:/5–12 working days/},
   malaysia:{route:/Social visit eVisa where required/,processing:/2–7 working days after payment and complete eVisa submission/,waiver:/up to 30 days for eligible Indian nationals through 31 December 2026/,stale:/3–7 working days/},
   morocco:{route:/Single-entry eVisa/,processing:/72 hours counted on Moroccan working days/,validity:/Up to 180 days from issuance/,stay:/Up to 30 days/,stale:/3–7 working days|eVisa \/ Exemption/},
+  'new-zealand':{route:/Visitor Visa where required or NZeTA/,processing:/Allow 72 hours for an NZeTA.*weekly wait times/,validity:/NZeTA usually valid for two years/,stay:/Visa-waiver visits are usually up to three months/,stale:/NZeTA \/ Visa/},
+  oman:{route:/Tourist eVisa where required/,leadTime:/recommends applying at least four days ahead/,waiver:/visa-free for up to 14 days/,stale:/1–5 working days/},
+  philippines:{route:/Temporary visitor visa or eVisa/,processing:/7–12 working days for a single-entry eVisa and 15–21 working days/,stay:/applicable visa-free route/,waiver:/up to 14 days, or up to 30 days with a qualifying visa or residence permit/,stale:/59 days\/visit|7–21 working days/},
+  russia:{route:/Unified single-entry eVisa/,processing:/Four calendar days.*excluding the submission day/,validity:/Up to 120 days from issuance/,stay:/Up to 30 days from entry/,stale:/eVisa \/ Sticker|4–12 working days/},
+  'south-africa':{route:/Visitor visa where required or Electronic Travel Authorisation/,processing:/visa or ETA application channel/,stay:/up to 90 days; check ETA conditions separately/,stale:/Sticker visa|5–15 working days/},
   brazil:{route:/depends on passport and consular jurisdiction/,processing:/Varies by consular post/,stale:/5–10 working days|eVisa \/ Exemption/}
  };
  for(const [country,expected] of Object.entries(scopedVisas)){
