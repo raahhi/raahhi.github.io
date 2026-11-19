@@ -12,12 +12,19 @@ assert.deepEqual(Object.keys(registry).sort(),Object.keys(prices).sort(),'Every 
 assert.equal(audit.products.length,235);
 const ids=new Set();let optionCount=0,pricedCount=0,verifiedPolicyCount=0;
 const abuDhabiHolidays=['abu-dhabi-explorer-dubai-iconic','abu-dhabi-express-getaway','abu-dhabi-grand-with-dubai-day','abu-dhabi-stay-play'];
+const dubaiQuoteChecks={
+ 'dubai-easter-short-break':{text:/Available Easter departure dates/,itinerary:/optional Atlantis Aquaventure, quoted separately/i},
+ 'dubai-group-indian-meals':{text:/available group departure dates, minimum group size/,stale:/Fixed Group Dates|Indian-style BBQ/},
+ 'dubai-jain-comfort':{itinerary:/optional Abu Dhabi tour with a possible BAPS Hindu Mandir photo stop/,stale:/Dubai city tour including BAPS|Royal Ascot \/ Ascot Hotel|Sea View Hotel Dubai/},
+ 'dubai-premium-kosher':{text:/kosher certification/,stale:/Private desert safari|Marina cruise with kosher menu|Grand Millennium Hotel|Hilton Garden Inn Dubai Jumeirah/},
+ 'dubai-sky-sea-adventure':{itinerary:/snorkeling at Deep Dive Dubai.*Planned evening desert safari/s,stale:/Scuba dive|Overnight desert safari|Private yacht charter with watersports/},
+};
 for(const [key,config] of Object.entries(registry)){
  assert(config.source.startsWith('https://www.raynatours.com/'),key+' checked source');
  for(const option of config.options){
   optionCount++;assert(!ids.has(option.id),'Unique option identity');ids.add(option.id);
   assert(option.label&&option.source&&option.checkedOn);
-  if(abuDhabiHolidays.includes(key)){
+  if(abuDhabiHolidays.includes(key)||Object.hasOwn(dubaiQuoteChecks,key)){
    assert.equal(option.policy.status,'unconfirmed');
    assert.deepEqual(option.policy.paragraphs,[]);
   }else{
@@ -289,6 +296,32 @@ try{
   assert(!/Radisson Blu Hotel, Abu Dhabi Yas Island/.test(JSON.stringify(structured)));
   await page.locator('.mobile-enquiry-bar button').click();
   assert.deepEqual(await page.locator('#holidayHotel option').allTextContents(),['Help me decide',registry[id].options[0].label]);
+  assert.equal(await page.locator('#holidayTransfers option').first().textContent(),'Confirm in my quote');
+  await page.locator('#contactModal .modal-close').click();
+ }
+ await open('/holidays/dubai/');
+ assert.equal(await page.getByRole('columnheader',{name:'Inclusions and planned stops'}).count(),1);
+ for(const slug of Object.keys(dubaiQuoteChecks)){
+  const row=page.locator('#pkgDestGuide tr').filter({has:page.locator('th a[href="/holidays/dubai/'+slug+'/"]')});
+  assert.match(await row.locator('td').last().textContent(),/^Planned: /,slug);
+ }
+ for(const [slug,expected] of Object.entries(dubaiQuoteChecks)){
+  const path='/holidays/dubai/'+slug+'/';
+  await open(path);
+  const main=page.locator('#pkgDetailMain');
+  const quote=main.locator('#holiday-quote-details');
+  assert.match(await quote.textContent(),/transfers?/i,path);
+  if(expected.text) assert.match(await quote.textContent(),expected.text,path);
+  if(expected.itinerary) assert.match((await main.locator('.itin-item p').allTextContents()).join(' '),expected.itinerary,path);
+  const graph=JSON.parse(await page.locator('script[type="application/ld+json"]').textContent())['@graph'];
+  const trip=graph.find(n=>n['@type']==='TouristTrip');
+  assert.equal(trip.offers?.price,prices[slug].amount??undefined,path);
+  const visible=await main.textContent();
+  assert.match(visible,/What will my holiday quote confirm.*cancellation|cancellation.*What will my holiday quote confirm/is,path);
+  assert(!visible.includes('100% of the booking amount'),path);
+  if(expected.stale)assert(!expected.stale.test(visible)&&!expected.stale.test(JSON.stringify(trip)),path);
+  await page.locator('.mobile-enquiry-bar button').click();
+  assert.deepEqual(await page.locator('#holidayHotel option').allTextContents(),['Help me decide',...registry[slug].options.map(o=>o.label)],path);
   assert.equal(await page.locator('#holidayTransfers option').first().textContent(),'Confirm in my quote');
   await page.locator('#contactModal .modal-close').click();
  }

@@ -2354,16 +2354,13 @@
       "source": "https://www.raynatours.com/dubai-packages/dubai-premium-explorer-kosher-journey-556",
       "supplierProductId": "556",
       "checkedOn": "2026-10-25",
-      "options": 2,
+      "options": 1,
       "pricedOptions": 0,
-      "verifiedOptionPolicies": 2,
-      "defaultPolicy": "verified",
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "unconfirmed",
       "gaps": [
-        {
-          "field": "hotel-option",
-          "name": "Hilton Garden Inn Dubai Jumeirah",
-          "reason": "Existing hotel example not matched on the freshly checked supplier package page"
-        }
+        "hotel-option",
+        "cancellation-terms"
       ]
     },
     {
@@ -2375,9 +2372,11 @@
       "checkedOn": "2026-10-25",
       "options": 2,
       "pricedOptions": 0,
-      "verifiedOptionPolicies": 2,
-      "defaultPolicy": "verified",
-      "gaps": []
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "unconfirmed",
+      "gaps": [
+        "cancellation-terms"
+      ]
     },
     {
       "id": "dubai-jain-comfort",
@@ -2386,16 +2385,13 @@
       "source": "https://www.raynatours.com/dubai-packages/dubai-jain-comfort-getaway-572",
       "supplierProductId": "572",
       "checkedOn": "2026-10-25",
-      "options": 2,
+      "options": 1,
       "pricedOptions": 0,
-      "verifiedOptionPolicies": 2,
-      "defaultPolicy": "verified",
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "unconfirmed",
       "gaps": [
-        {
-          "field": "hotel-option",
-          "name": "Sea View Hotel Dubai",
-          "reason": "Existing hotel example not matched on the freshly checked supplier package page"
-        }
+        "hotel-option",
+        "cancellation-terms"
       ]
     },
     {
@@ -2407,9 +2403,11 @@
       "checkedOn": "2026-10-25",
       "options": 1,
       "pricedOptions": 0,
-      "verifiedOptionPolicies": 1,
-      "defaultPolicy": "verified",
-      "gaps": []
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "unconfirmed",
+      "gaps": [
+        "cancellation-terms"
+      ]
     },
     {
       "id": "dubai-easter-short-break",
@@ -2423,14 +2421,8 @@
       "verifiedOptionPolicies": 0,
       "defaultPolicy": "unconfirmed",
       "gaps": [
-        {
-          "field": "hotel-option",
-          "reason": "Hotel preference and any upgrade price require a manual quote"
-        },
-        {
-          "field": "product-cancellation-policy",
-          "reason": "No unambiguous product-level cancellation section found"
-        }
+        "hotel-option",
+        "product-cancellation-policy"
       ]
     },
     {
