@@ -601,7 +601,7 @@
   .comparison-choice p{font-size:16px;line-height:1.6;margin:0 0 12px;}
   .comparison-choice ul{padding-left:20px;margin:0;}
   .comparison-choice li{margin:8px 0;font-size:14px;line-height:1.5;}
-  #pkgDestGuideTitle{scroll-margin-top:100px;}
+  #pkgDestGuideTitle,#visa-questions{scroll-margin-top:100px;}
   .comparison-table{min-width:860px;}
   .comparison-table ul{padding-left:18px;margin:0;}
   .comparison-table li{margin-bottom:6px;}
@@ -1338,7 +1338,7 @@
       <div class="section-head">
         <div>
           <p class="eyebrow">Questions</p>
-          <h2>Frequently asked</h2>
+          <h2 id="visa-questions">Visa assistance questions</h2>
         </div>
       </div>
       <div id="visaFaq"></div>
@@ -1653,7 +1653,7 @@
       <h2 class="faq-group">UAE activities and holidays</h2>
       <div id="generalFaq"></div>
       <h2 class="faq-group">Visas</h2>
-      <div id="faqVisa"></div>
+      <p class="body-copy">Read our <a class="contact-link" href="/visas/#visa-questions">visa assistance questions</a> for help with documents, fees, appointments, processing times and application updates.</p>
       <h2 class="faq-group">Enquiries on this website</h2>
       <div id="faqSite"></div>
     </div>
@@ -3303,7 +3303,10 @@ function router(){
     // Unknown route -- never silently fall back to the homepage.
     CURRENT = {kind:"notfound"}; showPage("notfound");
   }
-  window.scrollTo({top:0, behavior:"instant"});
+  const fragment = HASH_MODE && location.hash.slice(1).split("#", 2)[1];
+  const anchor = fragment ? document.getElementById(fragment) : null;
+  if(anchor?.closest(".page.active")) anchor.scrollIntoView({behavior:"instant"});
+  else window.scrollTo({top:0, behavior:"instant"});
   initReveal();
   return applySeo(); // title, meta description, canonical, robots, Open Graph and JSON-LD for this route
 }
@@ -5409,7 +5412,7 @@ const HASH_MODE = location.protocol === "file:" ||
 const PRERENDERED = !HASH_MODE && document.documentElement.hasAttribute("data-prerendered");
 const IS_PRERENDER_RUN = !HASH_MODE && /[?&]__prerender\b/.test(location.search);
 function routeString(){
-  let s = HASH_MODE ? location.hash.replace(/^#\/?/, "") : location.pathname.replace(/(^|\/)index\.html?$/i, "/").replace(/^\/+/, "");
+  let s = HASH_MODE ? location.hash.replace(/^#\/?/, "").split("#", 1)[0] : location.pathname.replace(/(^|\/)index\.html?$/i, "/").replace(/^\/+/, "");
   s = s.replace(/\/+$/, "");
   try { s = decodeURIComponent(s); } catch(e){}
   return s;
@@ -5418,22 +5421,24 @@ function routeString(){
 // Only "#/..." hashes are treated as routes; ordinary in-page #anchors are left alone.
 function legacyHashTarget(){
   if(!/^#\//.test(location.hash)) return null;
-  const h = location.hash.replace(/^#\/?/, "").replace(/\/+$/, "");
+  const [route, fragment] = location.hash.replace(/^#\/?/, "").split("#", 2);
+  const h = route.replace(/\/+$/, ""), anchor = fragment ? "#" + fragment : "";
   const parts = h.split("/"), [r, a] = parts;
   if(!h || (r === "home" && parts.length === 1)) return "/";
   if(r === "tour" && parts.length === 2){ const t = TOURS.find(x => x.id === a); if(t) return URLS.activity(t); }
   if(r === "package" && parts.length === 2){ const p = PACKAGES.find(x => x.id === a); if(p) return URLS.holiday(p); }
   if(r === "tours") parts[0] = "activities";
   if(r === "packages") parts[0] = "holidays";
-  return "/" + parts.map(encodeURIComponent).join("/") + "/"; // unknown targets land on the honest 404 page
+  return "/" + parts.map(encodeURIComponent).join("/") + "/" + anchor; // unknown targets land on the honest 404 page
 }
 // Preview only: clean links become hash routes, so the single file keeps working when opened directly.
 if(HASH_MODE) document.addEventListener("click", e => {
   const a = e.target.closest && e.target.closest('a[href^="/"]');
   if(!a || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
   e.preventDefault();
-  const p = a.getAttribute("href").replace(/^\/+|\/+$/g, "");
-  const target = "#/" + (p || "home");
+  const [path, fragment] = a.getAttribute("href").split("#", 2);
+  const p = path.replace(/^\/+|\/+$/g, "");
+  const target = "#/" + (p || "home") + (fragment ? "#" + fragment : "");
   if(location.hash === target) router(); else location.hash = target;
 });
 
@@ -8106,7 +8111,7 @@ function pageMeta(c){
       m.path = URLS.faq; m.title = `FAQs: Visas, UAE Activities & Holidays | ${S}`; m.pageType = "FAQPage";
       m.description = "Answers to common questions about RAAHHI TOURS visa assistance, UAE activities and holiday packages, prices, pickup, customisation and how enquiries work.";
       m.bc = [home, {name:"FAQs", path:URLS.faq}];
-      m.mainEntity = faqPageEntities([...generalFaqItems(), ...VISA_FAQ, ...siteFaqItems()]); break;
+      m.mainEntity = faqPageEntities([...generalFaqItems(), ...siteFaqItems()]); break;
     case "terms": case "privacy":
       m.path = URLS[c.kind];
       m.title = `${c.kind === "terms" ? "Terms of Service" : "Privacy Policy"} | ${S}`;
@@ -9590,7 +9595,6 @@ if(PRERENDERED){
     renderVisaAddons();
     buildFaq("visaFaq", VISA_FAQ);
     buildFaq("generalFaq", generalFaqItems());
-    buildFaq("faqVisa", VISA_FAQ);
     buildFaq("faqSite", siteFaqItems());
     if(!IS_PRERENDER_RUN) validateProducts(); // dev-time console check; not run on published pages
     const meta = router();
