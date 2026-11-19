@@ -2619,7 +2619,7 @@
       "options": 0,
       "pricedOptions": 0,
       "verifiedOptionPolicies": 0,
-      "defaultPolicy": "verified",
+      "defaultPolicy": "unconfirmed",
       "gaps": [
         {
           "field": "hotel-option",
@@ -2629,6 +2629,10 @@
         {
           "field": "hotel-option",
           "reason": "Hotel preference and any upgrade price require a manual quote"
+        },
+        {
+          "field": "cancellation-terms",
+          "reason": "Current written terms for the package and its components are required."
         }
       ]
     },
@@ -2641,9 +2645,14 @@
       "checkedOn": "2026-10-25",
       "options": 1,
       "pricedOptions": 0,
-      "verifiedOptionPolicies": 1,
-      "defaultPolicy": "verified",
-      "gaps": []
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "unconfirmed",
+      "gaps": [
+        {
+          "field": "cancellation-terms",
+          "reason": "Current written terms for the package and its components are required."
+        }
+      ]
     },
     {
       "id": "ras-al-khaimah-mountain-coast",
@@ -2655,7 +2664,7 @@
       "options": 0,
       "pricedOptions": 0,
       "verifiedOptionPolicies": 0,
-      "defaultPolicy": "verified",
+      "defaultPolicy": "unconfirmed",
       "gaps": [
         {
           "field": "hotel-option",
@@ -2665,6 +2674,10 @@
         {
           "field": "hotel-option",
           "reason": "Hotel preference and any upgrade price require a manual quote"
+        },
+        {
+          "field": "cancellation-terms",
+          "reason": "Current written terms for the package and its components are required."
         }
       ]
     },
@@ -2678,7 +2691,7 @@
       "options": 0,
       "pricedOptions": 0,
       "verifiedOptionPolicies": 0,
-      "defaultPolicy": "verified",
+      "defaultPolicy": "unconfirmed",
       "gaps": [
         {
           "field": "hotel-option",
@@ -2688,6 +2701,10 @@
         {
           "field": "hotel-option",
           "reason": "Hotel preference and any upgrade price require a manual quote"
+        },
+        {
+          "field": "cancellation-terms",
+          "reason": "Current written terms for the package and its components are required."
         }
       ]
     },
@@ -2700,9 +2717,14 @@
       "checkedOn": "2026-10-25",
       "options": 1,
       "pricedOptions": 0,
-      "verifiedOptionPolicies": 1,
-      "defaultPolicy": "verified",
-      "gaps": []
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "unconfirmed",
+      "gaps": [
+        {
+          "field": "cancellation-terms",
+          "reason": "Current written terms for the package and its components are required."
+        }
+      ]
     },
     {
       "id": "ras-al-khaimah-zipline-safari",
@@ -2714,7 +2736,7 @@
       "options": 0,
       "pricedOptions": 0,
       "verifiedOptionPolicies": 0,
-      "defaultPolicy": "verified",
+      "defaultPolicy": "unconfirmed",
       "gaps": [
         {
           "field": "hotel-option",
@@ -2724,6 +2746,14 @@
         {
           "field": "hotel-option",
           "reason": "Hotel preference and any upgrade price require a manual quote"
+        },
+        {
+          "field": "cancellation-terms",
+          "reason": "Current written terms for the package and its components are required."
+        },
+        {
+          "field": "hotel-option",
+          "reason": "The package reference lists conflicting hotels. Confirm the exact property in the quote."
         }
       ]
     },
