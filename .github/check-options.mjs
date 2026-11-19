@@ -10,14 +10,21 @@ const prices=JSON.parse(source.match(/^const PRICE_CATALOGUE = (.*);$/m)[1]);
 const audit=JSON.parse(await readFile('source/verification/product-options/audit.json','utf8'));
 assert.deepEqual(Object.keys(registry).sort(),Object.keys(prices).sort(),'Every existing product is mapped');
 assert.equal(audit.products.length,235);
-const ids=new Set();let optionCount=0,pricedCount=0;
+const ids=new Set();let optionCount=0,pricedCount=0,verifiedPolicyCount=0;
+const abuDhabiHolidays=['abu-dhabi-explorer-dubai-iconic','abu-dhabi-express-getaway','abu-dhabi-grand-with-dubai-day','abu-dhabi-stay-play'];
 for(const [key,config] of Object.entries(registry)){
  assert(config.source.startsWith('https://www.raynatours.com/'),key+' checked source');
  for(const option of config.options){
   optionCount++;assert(!ids.has(option.id),'Unique option identity');ids.add(option.id);
   assert(option.label&&option.source&&option.checkedOn);
-  assert.equal(option.policy.status,'verified','Published choices carry checked source terms');
-  assert(option.policy.paragraphs.length&&option.policy.source===config.source);
+  if(abuDhabiHolidays.includes(key)){
+   assert.equal(option.policy.status,'unconfirmed');
+   assert.deepEqual(option.policy.paragraphs,[]);
+  }else{
+   assert.equal(option.policy.status,'verified','Published choices carry checked source terms');
+   assert(option.policy.paragraphs.length&&option.policy.source===config.source);
+   verifiedPolicyCount++;
+  }
   if(option.price){
    pricedCount++;assert.equal(Math.round(option.price.sourceAmount*100)-Math.round(option.price.amount*100),200);
    assert.equal(option.price.currency,'USD');assert.equal(option.price.reference,true,'Dated prices remain references');
@@ -27,6 +34,7 @@ for(const [key,config] of Object.entries(registry)){
 }
 assert.equal(optionCount,audit.products.reduce((sum,p)=>sum+p.options,0));
 assert.equal(pricedCount,audit.products.reduce((sum,p)=>sum+p.pricedOptions,0));
+assert.equal(verifiedPolicyCount,audit.products.reduce((sum,p)=>sum+p.verifiedOptionPolicies,0));
 assert(!JSON.stringify(registry).includes('authToken'),'No guest authentication data is published');
 
 const server=createServer(async(req,res)=>{
@@ -261,7 +269,28 @@ try{
   }
   if(city==='abu-dhabi'){
    assert.equal(await page.getByRole('link',{name:'Compare Abu Dhabi theme parks for your holiday'}).getAttribute('href'),'/guides/abu-dhabi-theme-parks/');
+   assert.equal(await page.getByRole('columnheader',{name:'Planned stops'}).count(),1);
   }
+ }
+ for(const id of abuDhabiHolidays){
+  const path='/holidays/abu-dhabi/'+id+'/';
+  await open(path);
+  assert.equal(registry[id].defaultPolicy.status,'unconfirmed');
+  assert.equal(registry[id].options.length,1);
+  assert.match(await page.locator('.acc-options').textContent(),/5 star hotel.*W Abu Dhabi/s);
+  assert.match(await page.locator('.at-a-glance .key-facts').textContent(),/AccommodationHotel options.*MealsConfirm which breakfasts or other meals/s);
+  const quote=page.locator('#holiday-quote-details');
+  assert.match(await quote.textContent(),/admission|ticket/i);
+  assert.match(await quote.textContent(),/transfers/i);
+  assert.match(await page.locator('main').textContent(),/cancellation, amendment and refund conditions will be confirmed/i);
+  assert(!/Radisson Blu Hotel, Abu Dhabi Yas Island|100% of the booking amount/.test(await page.locator('main').textContent()));
+  const structured=JSON.parse(await page.locator('script[type="application/ld+json"]').textContent())['@graph'];
+  assert.match(structured.find(n=>n['@type']==='TouristTrip').description,/Hotel, meals, tickets and transfers are confirmed in your quote/);
+  assert(!/Radisson Blu Hotel, Abu Dhabi Yas Island/.test(JSON.stringify(structured)));
+  await page.locator('.mobile-enquiry-bar button').click();
+  assert.deepEqual(await page.locator('#holidayHotel option').allTextContents(),['Help me decide',registry[id].options[0].label]);
+  assert.equal(await page.locator('#holidayTransfers option').first().textContent(),'Confirm in my quote');
+  await page.locator('#contactModal .modal-close').click();
  }
  await open('/activities/ras-al-khaimah/');
  const musandam='musandam-dibba-tour',musandamPath='/activities/ras-al-khaimah/'+musandam+'/';
