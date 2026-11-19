@@ -18,3 +18,34 @@ test('IP and browser metadata uses updated permission and server headers, not su
 
 test('device estimates distinguish ARM Mac, ambiguous x86 Mac and unknown hardware without inventing models',()=>{const mac={...deviceInfo('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) Chrome/153.0'),operating_system:'macOS',device:'desktop',browser:'Chrome',browser_major:'153'};let result=describeDevice(mac);assert.equal(result.family,'Mac — processor family unknown');assert.equal(result.confidence,'Limited');assert.equal(result.architecture,'Unavailable');result=describeDevice({...mac,cpu_architecture:'arm'});assert.equal(result.family,'Apple Silicon Mac');assert.equal(result.confidence,'Moderate');assert.equal(result.exactModel,'Unknown');assert(result.reason.includes('browser-reported'));result=describeDevice({...mac,cpu_architecture:'x86'});assert(result.family.includes('Intel or Apple Silicon'));assert.equal(result.confidence,'Limited');assert.equal(describeDevice({operating_system:'Windows',cpu_architecture:'arm'}).family,'Windows ARM device');assert.equal(describeDevice({operating_system:'iOS',cpu_architecture:'arm'}).family,'Apple iOS device');assert.equal(describeDevice({cpu_architecture:'arm'}).confidence,'Unknown');});
 test('architecture needs the revised notice, is allowlisted, and appears as an inference in private reports',async()=>{const e=env(),ua='Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 Chrome/153.0 Safari/537.36';for(const extra of [{noticeVersion:2,architecture:'arm'},{noticeVersion:3,architecture:'MacBook M2'},{noticeVersion:3,architecture:{model:'private'}}])assert.equal((await collect(request({...payload(),...extra},{'User-Agent':ua}),e)).status,400);const p={...payload(),noticeVersion:3,architecture:'arm'};assert.equal((await collect(request(p,{'User-Agent':ua}),e)).status,202);const data=await (await report(new URL('https://leads.raahhi.com/api/visitors/'+p.sessionId),e)).json();assert.equal(data.session.cpu_architecture,'arm');assert.equal(data.session.notice_version,3);assert.equal(data.session.device_summary.family,'Apple Silicon Mac');assert.equal(data.session.device_summary.exactModel,'Unknown');assert.equal(e.DB.db.prepare('SELECT COUNT(*) n FROM visitor_sessions').get().n,1);e.DB.db.close();});
+
+test('AI referral stats count session starts once per entry page and keep legacy sources in the denominator',async()=>{
+  const e=env(),landing='/activities/dubai/evening-desert-safari/';
+  const add=async(source,page='/')=>{
+    const p={...payload([event('page_view',page)]),source};
+    assert.equal((await collect(request(p),e)).status,202);
+    return p;
+  };
+  const chat=await add('ChatGPT',landing);
+  await collect(request({...chat,events:[event('page_view','/contact/',2)]}),e);
+  await add('ChatGPT',landing);
+  await add('Perplexity');
+  const old=await add('Claude');
+  await add('Microsoft Copilot');
+  await add('Other referral');
+  await add('Direct / unknown');
+  e.DB.db.prepare("UPDATE visitor_sessions SET first_seen='2020-01-01T00:00:00.000Z' WHERE id=?").run(old.sessionId);
+  assert.equal((await collect(request({...payload(),source:'https://chatgpt.com/private'}),e)).status,400);
+  const result=await (await report(new URL('https://leads.raahhi.com/api/visitor-stats?days=7'),e)).json();
+  assert.equal(result.totals.sessions,7);
+  assert.deepEqual(result.aiReferrals,{
+    eligibleSessions:6,
+    sources:[
+      {source:'ChatGPT',sessions:2,landingPages:[{page:landing,sessions:2}]},
+      {source:'Perplexity',sessions:1,landingPages:[{page:'/',sessions:1}]},
+      {source:'Claude',sessions:0,landingPages:[]},
+      {source:'Microsoft Copilot',sessions:1,landingPages:[{page:'/',sessions:1}]}
+    ]
+  });
+  e.DB.db.close();
+});
