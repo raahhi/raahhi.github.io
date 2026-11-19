@@ -2442,9 +2442,11 @@
       "checkedOn": "2026-10-25",
       "options": 1,
       "pricedOptions": 0,
-      "verifiedOptionPolicies": 1,
-      "defaultPolicy": "verified",
-      "gaps": []
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "unconfirmed",
+      "gaps": [
+        "cancellation-terms"
+      ]
     },
     {
       "id": "abu-dhabi-grand-with-dubai-day",
@@ -2453,11 +2455,13 @@
       "source": "https://www.raynatours.com/abu-dhabi-packages/abu-dhabi-grand-experiences-with-dubai-day-tour-670",
       "supplierProductId": "670",
       "checkedOn": "2026-10-25",
-      "options": 2,
+      "options": 1,
       "pricedOptions": 0,
-      "verifiedOptionPolicies": 2,
-      "defaultPolicy": "verified",
-      "gaps": []
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "unconfirmed",
+      "gaps": [
+        "cancellation-terms"
+      ]
     },
     {
       "id": "abu-dhabi-express-getaway",
@@ -2466,11 +2470,13 @@
       "source": "https://www.raynatours.com/abu-dhabi-packages/abu-dhabi-express-getaway-629",
       "supplierProductId": "629",
       "checkedOn": "2026-10-25",
-      "options": 2,
+      "options": 1,
       "pricedOptions": 0,
-      "verifiedOptionPolicies": 2,
-      "defaultPolicy": "verified",
-      "gaps": []
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "unconfirmed",
+      "gaps": [
+        "cancellation-terms"
+      ]
     },
     {
       "id": "abu-dhabi-explorer-dubai-iconic",
@@ -2479,11 +2485,13 @@
       "source": "https://www.raynatours.com/abu-dhabi-packages/abu-dhabi-explorer-and-dubai-iconic-tour-632",
       "supplierProductId": "632",
       "checkedOn": "2026-10-25",
-      "options": 2,
+      "options": 1,
       "pricedOptions": 0,
-      "verifiedOptionPolicies": 2,
-      "defaultPolicy": "verified",
-      "gaps": []
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "unconfirmed",
+      "gaps": [
+        "cancellation-terms"
+      ]
     },
     {
       "id": "dubai-marina-overnight",
