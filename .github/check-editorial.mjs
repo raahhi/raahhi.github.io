@@ -100,6 +100,11 @@ try{
   ethiopia:{route:/Single-entry tourist eVisa/,processing:/3 days under normal circumstances/,validity:/Starts on the intended date of entry/,stay:/30 or 90 days/,stale:/3–7 working days|30\/90 days/},
   georgia:{route:/Short-stay eVisa/,processing:/At least 5 working days/,stay:/As specified on the visa/,stale:/30 days typical|3–7 working days/},
   ghana:{route:/Visitor eVisa/,processing:/96 hours for standard eVisa processing/,validity:/90 days to enter/,stay:/Up to 60 days, as determined at the border/,stale:/4 business days/},
+  'hong-kong':{route:/Pre-arrival registration for eligible Indian nationals/,processing:/results are immediate.*four weeks after all required documents/,validity:/Six months for successful pre-arrival registration/,stay:/Up to 14 days per visit/,freeRegistration:true,stale:/Pre-arrival \/ Visa/},
+  india:{route:/30 days, one year or five years/,leadTime:/at least 4 days before arrival/,stay:/180 days in total per calendar year/,stale:/30\/90\/365 days|72–96 hours/},
+  indonesia:{route:/B1.*C1 single-entry/,processing:/four working days for C1 after payment/,validity:/90 days to enter from issuance for electronic B1 and C1/,stay:/30 days on B1 or up to 60 days on C1/,stale:/1–5 working days/},
+  ireland:{route:/Short-stay C tourist visa/,processing:/Varies by visa office/,validity:/Entry window as issued/,stay:/Up to 90 days.*determined at the border/,stale:/Sticker \(Type C\)|7–10 working days/},
+  japan:{route:/Single-entry short-term tourism eVisa/,processing:/five working days from the day after/,validity:/Three months for a single-entry visa/,stay:/Up to 90 days/,stale:/eVisa \/ Sticker|5–10 working days/},
   brazil:{route:/depends on passport and consular jurisdiction/,processing:/Varies by consular post/,stale:/5–10 working days|eVisa \/ Exemption/}
  };
  for(const [country,expected] of Object.entries(scopedVisas)){
@@ -118,6 +123,11 @@ try{
   assert(answers.some(answer=>answer.includes(summary['Visa route'])),path+' route in FAQ');
   assert(answers.some(answer=>answer.includes(summary[timingLabel])),path+' timing in FAQ');
   if(expected.stay)assert(answers.some(answer=>answer.includes(summary['Permitted stay'])),path+' stay in FAQ');
+  if(expected.freeRegistration){
+   assert.match(summary['RAAHHI quote'],/Official pre-arrival registration is free/i);
+   assert.match(await staticPage.locator('#visaBookingBox .bb-price').textContent(),/RAAHHI quote.*Official pre-arrival registration is free/i);
+   assert(answers.some(answer=>/Official pre-arrival registration is free.*RAAHHI starting quote/i.test(answer)),path+' distinguishes the free official registration from the commercial quote');
+  }
   const review=staticPage.locator('.sources-and-freshness');
   const sources=await review.locator('.source-list a').evaluateAll(anchors=>anchors.map(a=>a.href));
   const dates=await review.locator('.source-list time').evaluateAll(times=>times.map(time=>time.dateTime));
