@@ -2330,9 +2330,11 @@
       "checkedOn": "2026-10-25",
       "options": 3,
       "pricedOptions": 0,
-      "verifiedOptionPolicies": 3,
-      "defaultPolicy": "verified",
-      "gaps": []
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "unconfirmed",
+      "gaps": [
+        "cancellation-terms"
+      ]
     },
     {
       "id": "ultimate-dubai-explorer",
@@ -2343,9 +2345,11 @@
       "checkedOn": "2026-10-25",
       "options": 2,
       "pricedOptions": 0,
-      "verifiedOptionPolicies": 2,
-      "defaultPolicy": "verified",
-      "gaps": []
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "unconfirmed",
+      "gaps": [
+        "cancellation-terms"
+      ]
     },
     {
       "id": "dubai-premium-kosher",
@@ -2494,9 +2498,11 @@
       "checkedOn": "2026-10-25",
       "options": 3,
       "pricedOptions": 0,
-      "verifiedOptionPolicies": 3,
-      "defaultPolicy": "verified",
-      "gaps": []
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "unconfirmed",
+      "gaps": [
+        "cancellation-terms"
+      ]
     },
     {
       "id": "dubai-skyline-overnight",
@@ -2507,9 +2513,11 @@
       "checkedOn": "2026-10-25",
       "options": 3,
       "pricedOptions": 0,
-      "verifiedOptionPolicies": 3,
-      "defaultPolicy": "verified",
-      "gaps": []
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "unconfirmed",
+      "gaps": [
+        "cancellation-terms"
+      ]
     },
     {
       "id": "dubai-gardens-seasonal-escape",
@@ -2520,9 +2528,11 @@
       "checkedOn": "2026-10-25",
       "options": 3,
       "pricedOptions": 0,
-      "verifiedOptionPolicies": 3,
-      "defaultPolicy": "verified",
-      "gaps": []
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "unconfirmed",
+      "gaps": [
+        "cancellation-terms"
+      ]
     },
     {
       "id": "dubai-city-safari-value",
@@ -2533,9 +2543,11 @@
       "checkedOn": "2026-10-25",
       "options": 2,
       "pricedOptions": 0,
-      "verifiedOptionPolicies": 2,
-      "defaultPolicy": "verified",
-      "gaps": []
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "unconfirmed",
+      "gaps": [
+        "cancellation-terms"
+      ]
     },
     {
       "id": "dubai-downtown-discovery",
@@ -2546,9 +2558,11 @@
       "checkedOn": "2026-10-25",
       "options": 2,
       "pricedOptions": 0,
-      "verifiedOptionPolicies": 2,
-      "defaultPolicy": "verified",
-      "gaps": []
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "unconfirmed",
+      "gaps": [
+        "cancellation-terms"
+      ]
     },
     {
       "id": "dubai-waterpark-city-explorer",
@@ -2559,9 +2573,11 @@
       "checkedOn": "2026-10-25",
       "options": 3,
       "pricedOptions": 0,
-      "verifiedOptionPolicies": 3,
-      "defaultPolicy": "verified",
-      "gaps": []
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "unconfirmed",
+      "gaps": [
+        "cancellation-terms"
+      ]
     },
     {
       "id": "dubai-family-discovery-waterpark",
@@ -2572,9 +2588,11 @@
       "checkedOn": "2026-10-25",
       "options": 3,
       "pricedOptions": 0,
-      "verifiedOptionPolicies": 3,
-      "defaultPolicy": "verified",
-      "gaps": []
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "unconfirmed",
+      "gaps": [
+        "cancellation-terms"
+      ]
     },
     {
       "id": "dubai-family-theme-park-week",
@@ -2585,9 +2603,11 @@
       "checkedOn": "2026-10-25",
       "options": 3,
       "pricedOptions": 0,
-      "verifiedOptionPolicies": 3,
-      "defaultPolicy": "verified",
-      "gaps": []
+      "verifiedOptionPolicies": 0,
+      "defaultPolicy": "unconfirmed",
+      "gaps": [
+        "cancellation-terms"
+      ]
     },
     {
       "id": "ras-al-khaimah-coast-heritage",

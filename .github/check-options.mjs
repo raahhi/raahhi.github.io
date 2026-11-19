@@ -18,6 +18,16 @@ const dubaiQuoteChecks={
  'dubai-jain-comfort':{itinerary:/optional Abu Dhabi tour with a possible BAPS Hindu Mandir photo stop/,stale:/Dubai city tour including BAPS|Royal Ascot \/ Ascot Hotel|Sea View Hotel Dubai/},
  'dubai-premium-kosher':{text:/kosher certification/,stale:/Private desert safari|Marina cruise with kosher menu|Grand Millennium Hotel|Hilton Garden Inn Dubai Jumeirah/},
  'dubai-sky-sea-adventure':{itinerary:/snorkeling at Deep Dive Dubai.*Planned evening desert safari/s,stale:/Scuba dive|Overnight desert safari|Private yacht charter with watersports/},
+ 'dubai-city-safari-value':{text:/which sightseeing journeys are shared and whether both airport transfers are private/},
+ 'dubai-downtown-discovery':{text:/Dubai Creek dhow cruise.*one-way return from Dubai Mall/s},
+ 'dubai-family-discovery-waterpark':{text:/child ages, supervision.*Wild Wadi/s},
+ 'dubai-family-theme-park-week':{text:/Select one Dubai Parks and Resorts park.*museum transfer is private/s},
+ 'dubai-gardens-seasonal-escape':{text:/how you get from Miracle Garden to Global Village, and the one-way hotel return/},
+ 'dubai-grand-stopover':{text:/Dubai Aquarium admission or evening safari dinner is available as a separate quoted item/},
+ 'dubai-marina-overnight':{text:/departure pier, check-in time and dinner menu/,stale:/arrival before 4 pm/},
+ 'dubai-skyline-overnight':{text:/the separate Dubai Fountain Lake Ride ticket/},
+ 'dubai-waterpark-city-explorer':{itinerary:/Ask whether an evening desert safari and dinner can be included in your quote/},
+ 'ultimate-dubai-explorer':{text:/entry versus a sightseeing stop at Dubai Frame and Qasr Al Watan/},
 };
 for(const [key,config] of Object.entries(registry)){
  assert(config.source.startsWith('https://www.raynatours.com/'),key+' checked source');
@@ -300,11 +310,10 @@ try{
   await page.locator('#contactModal .modal-close').click();
  }
  await open('/holidays/dubai/');
- assert.equal(await page.getByRole('columnheader',{name:'Inclusions and planned stops'}).count(),1);
- for(const slug of Object.keys(dubaiQuoteChecks)){
-  const row=page.locator('#pkgDestGuide tr').filter({has:page.locator('th a[href="/holidays/dubai/'+slug+'/"]')});
-  assert.match(await row.locator('td').last().textContent(),/^Planned: /,slug);
- }
+ assert.equal(await page.getByRole('columnheader',{name:'Planned stops'}).count(),1);
+ const plannedRows=page.locator('#pkgDestGuide tbody tr');
+ assert.equal(await plannedRows.count(),Object.keys(dubaiQuoteChecks).length);
+ assert((await plannedRows.locator('td:last-child').allTextContents()).every(text=>text.trim().length>0));
  for(const [slug,expected] of Object.entries(dubaiQuoteChecks)){
   const path='/holidays/dubai/'+slug+'/';
   await open(path);
@@ -313,6 +322,7 @@ try{
   assert.match(await quote.textContent(),/transfers?/i,path);
   if(expected.text) assert.match(await quote.textContent(),expected.text,path);
   if(expected.itinerary) assert.match((await main.locator('.itin-item p').allTextContents()).join(' '),expected.itinerary,path);
+  assert.equal(registry[slug].defaultPolicy.status,'unconfirmed',path);
   const graph=JSON.parse(await page.locator('script[type="application/ld+json"]').textContent())['@graph'];
   const trip=graph.find(n=>n['@type']==='TouristTrip');
   assert.equal(trip.offers?.price,prices[slug].amount??undefined,path);
