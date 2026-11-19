@@ -1538,6 +1538,7 @@
 <div id="page-attraction" class="page"><section><div class="wrap" style="max-width:1000px;" id="attractionBody"></div></section></div>
 <div id="page-destination-hub" class="page"><section><div class="wrap" style="max-width:1000px;" id="destinationHubBody"></div></section></div>
 <div id="page-category" class="page"><section><div class="wrap" style="max-width:1100px;" id="categoryBody"></div></section></div>
+<div id="page-guides" class="page"><section><div class="wrap" style="max-width:1000px;" id="guideIndexBody"></div></section></div>
 <div id="page-guide" class="page">
   <section>
     <div class="wrap" style="max-width:900px;" id="guideBody"></div>
@@ -3190,10 +3191,10 @@ const GENERAL_FAQ = [
    Never invents or patches data; it only reports what's wrong so real data can be fixed. */
 
 /* ============ ROUTER ============ */
-const routes = ["home","visas","visa-detail","tours","packages","tour-detail","pkg-detail","guide","category","comparison","destination-hub","attraction","about","contact","faq","terms","privacy","notfound"];
+const routes = ["home","visas","visa-detail","tours","packages","tour-detail","pkg-detail","guide","guides","category","comparison","destination-hub","attraction","about","contact","faq","terms","privacy","notfound"];
 // Page ids that are reachable directly as a single-segment URL (/about/, ...). The other
 // ids in `routes` ("tour-detail", "pkg-detail", ...) are internal page containers only.
-const STATIC_ROUTES = ["home","visas","about","contact","faq","terms","privacy"];
+const STATIC_ROUTES = ["home","visas","guides","about","contact","faq","terms","privacy"];
 // Route source: the real path on the deployed site (/visas/japan/), the hash in the single-file
 // preview (#/visas/japan). The static build calls this once per URL; pre-rendered pages don't
 // call it at all (see hydrate()).
@@ -3299,6 +3300,7 @@ function router(){
     showPage(route, route);
     if(route==="home") initSlideshows(document.getElementById("homeHeroMedia"));
     if(route==="visas") initSlideshows(document.getElementById("visaGrid"));
+    if(route==="guides") renderGuideIndex();
   } else {
     // Unknown route -- never silently fall back to the homepage.
     CURRENT = {kind:"notfound"}; showPage("notfound");
@@ -5403,7 +5405,7 @@ const URLS = {
   activities: "/activities/", activityDest: slug => "/activities/" + slug + "/", activity: t => "/activities/" + t.dest + "/" + t.id + "/",
   holidays: "/holidays/", holidayDest: slug => "/holidays/" + slug + "/", holiday: p => "/holidays/" + p.dest + "/" + p.id + "/",
   about: "/about/", contact: "/contact/", faq: "/faq/", terms: "/terms/", privacy: "/privacy/",
-  safariGuide: "/guides/dubai-desert-safari/", guide: slug => "/guides/" + slug + "/",
+  guides: "/guides/", safariGuide: "/guides/dubai-desert-safari/", guide: slug => "/guides/" + slug + "/",
   addon: t => "/visas/arrival-essentials/" + t.id + "/",
 };
 // Single-file preview (file:// or raahi-tours*.html) routes on the hash; the deployed site on the path.
@@ -5735,14 +5737,15 @@ function editorialArticleDates(record){
 }
 function editorialOwnerHTML(){return `<p class="editorial-owner">Prepared by <a href="/about/#editorial-standards">RAAHHI TOURS</a>, operated by Raahi Tourism PVT LTD. <a href="mailto:inquire@raahhi.com?subject=Website%20correction">Report a correction</a> with this page's link and the detail to check.</p>`;}
 function renderEditorialResponsibility(context){
-  if(!["guide","category","comparison","destinationHub","countryHub","attraction"].includes(context.kind))return;
+  if(!["guide","guides","category","comparison","destinationHub","countryHub","attraction"].includes(context.kind))return;
   const main=document.querySelector(".page.active"),heading=main?.querySelector("h1");if(!heading)return;
   main.querySelectorAll(".editorial-responsibility").forEach(el=>el.remove());
   const guide=context.kind==="guide" ? guideBySlug(context.key) : null;
   const dates=guide ? editorialArticleDates(guide) : {};
   const labels=[dates.datePublished ? `Published ${checkedDateHTML(dates.datePublished)}.` : "",dates.dateModified ? `Substantive content updated ${checkedDateHTML(dates.dateModified)}.` : "",guide&&recordedEditorialDate(guide.reviewedOn) ? `Planning guidance review recorded ${checkedDateHTML(guide.reviewedOn)}.` : ""].filter(Boolean);
   const note=guide ? (labels.length ? labels.join(" ")+" Review dates do not establish live availability or a check of every product fact." : "A page-wide publication, substantive-update or review date is not recorded. Dates beside sources cover only the statements described.") : "Publication dates describe the release of planning content. Dates beside sources describe the specific statements checked; they do not confirm live prices or availability.";
-  heading.insertAdjacentHTML("afterend",`<aside class="editorial-responsibility" aria-label="Editorial responsibility">${editorialOwnerHTML()}<p class="editorial-date-scope">${note}</p></aside>`);
+  const scope = context.kind === "guides" ? "Each guide shows the scope of its recorded reviews and source checks." : note;
+  heading.insertAdjacentHTML("afterend",`<aside class="editorial-responsibility" aria-label="Editorial responsibility">${editorialOwnerHTML()}<p class="editorial-date-scope">${scope}</p></aside>`);
 }
 
 function sourcesAndFreshnessHTML(record, kind){
@@ -6337,6 +6340,7 @@ function renderUaePlanningHub(){
     section("Set your base before filling each day",
       p('Use the '+a(URLS.guide("choose-a-uae-emirate"),"Dubai, Abu Dhabi and Ras Al Khaimah comparison guide")+' to explore the style of stay you want. The city planners connect local listings and stays. Decide whether to keep one hotel base or change it, checking the named hotels or hotel basis on the exact package.')+
       p("Plan arrival, hotel check-in, checkout and departure alongside your experiences. A package's nights and day-by-day itinerary describe that product; they do not establish the minimum time needed for a UAE visit."))+
+    p(a(URLS.guides,"Browse all UAE travel guides"))+
     section("Compare experiences across the catalogue",
       p("Compare the format you want, then open the exact listing. A category groups experiences for browsing; it does not establish that they share a venue, transfer route, eligibility rule or cancellation policy.")+categories)+
     section("Connect the actual departure and return points",
@@ -6383,6 +6387,7 @@ function renderDestinationPlanningHub(dest){
     ${hubServiceCardsHTML(dest)}${body.html}${hubRecordedStatusHTML(dest)}
     <section class="detail-section"><h2>Questions about planning ${escapeHTML(destName(dest))}</h2>${qaHTML(body.faq)}</section>
     <section class="detail-section"><h2>Planning sources and scope</h2><p class="body-copy">The linked RAAHHI listings support the examples and package choices. The tourism sources below support the selected destination context, checked on ${formatDate("2026-11-18")}; they do not establish ticket inclusions, current operating status or a confirmed booking.</p>${sourcesHTML(hub.sources)}</section>
+    <p class="body-copy"><a href="${URLS.guides}">Browse all UAE travel guides</a></p>
     ${otherPlanningHubsHTML(dest)}
     <nav class="detail-section planning-links" aria-label="Continue planning ${escapeHTML(destName(dest))}"><h2>Continue planning ${escapeHTML(destName(dest))}</h2><ul class="link-list"><li><a href="${URLS.activityDest(dest)}">All ${escapeHTML(destName(dest))} activities</a></li><li><a href="${URLS.holidayDest(dest)}">${escapeHTML(destName(dest))} holiday packages</a></li><li><a href="${URLS.contact}">Discuss your travel plans</a></li></ul></nav>`;
 }
@@ -6438,7 +6443,7 @@ function renderDubaiPlanningHub(){
     ${attractionLinksHTML(TOURS.filter(t=>t.dest==="dubai"))}
     <section class="detail-section"><h2>Match your hotel and departure arrangements</h2><p class="body-copy">Check where each experience begins before choosing a hotel or combining bookings. Dubai Marina and Dubai Creek cruise listings have different boarding arrangements; safari pickup also depends on the product and option. Confirm whether you need a hotel transfer, a meeting-point arrival or a separate vehicle.</p><p class="body-copy">For a multi-emirate stay, compare the itinerary and travel arrangements rather than assuming every outing starts in Dubai. The <a href="${URLS.guide("choose-a-uae-emirate")}">Dubai, Abu Dhabi and Ras Al Khaimah comparison</a> helps you choose a base.</p></section>
     <section class="detail-section"><h2>Build a comparable budget</h2><p class="body-copy">Use the same currency and group details when comparing. Check whether a price is per adult, per person or per private vehicle, and whether it is a dated reference. Separate admission, transfers, meals, hotel nights and optional extras. For a package, read the itinerary and hotel basis before comparing it with an activity-only total.</p><p class="body-copy">Send your preferred dates, adult count, children's ages and chosen experiences. RAAHHI TOURS confirms the available options, total price and cancellation terms before booking; a saved enquiry is not a reservation or payment.</p></section>
-    <section class="detail-section"><h2>Read a guide for your next decision</h2>${guideCardsHTML(guides)}</section>
+    <section class="detail-section"><h2>Read a guide for your next decision</h2>${guideCardsHTML(guides)}<p class="body-copy"><a href="${URLS.guides}">Browse all UAE travel guides</a></p></section>
     <section class="detail-section"><h2>Questions about planning a Dubai trip</h2>${qaHTML([
       {q:"Should I start with a package or individual activities?",a:"Start with a package if you want to compare a multi-day stay and its listed hotel and itinerary together. Choose individual activities if you are arranging your stay separately. In either case, compare the inclusions and ask for the final arrangements in your quote."},
       {q:"How many days should I allow?",a:"Work back from the experiences you most want and your arrival and departure times. The linked four-day guide is a flexible example, not a minimum stay or a fixed package. Add time for transfers, rest and any extra emirate you want to visit."},
@@ -7033,10 +7038,28 @@ const GUIDES = [
   {slug:"choose-a-uae-emirate",dest:"dubai",destinations:["dubai","abu-dhabi","ras-al-khaimah"],categories:[],name:"Choose a UAE emirate for your trip",crumb:"Choose an emirate",h1:"Dubai, Abu Dhabi or Ras Al Khaimah: where should you stay?",title:"Dubai, Abu Dhabi or Ras Al Khaimah? Compare Your Trip Options",description:"Compare Dubai, Abu Dhabi and Ras Al Khaimah by trip length, interests and available package itineraries. Browse activities and stays in each emirate.",blurb:"Compare the three emirates by trip length, interests and listed stays.",image:IMG.dubaiDuskPanorama,reviewedOn:"2026-11-17",render:renderEmirateGuide,ids:()=>[]},
 ];
 function guideBySlug(slug){ return GUIDES.find(g => g.slug === slug); }
+const GUIDE_INDEX_SECTIONS = [
+  {heading:"Choose your base and plan your days", slugs:["choose-a-uae-emirate","dubai-first-visit-planning","dubai-family-planning"]},
+  {heading:"Compare experiences", slugs:["dubai-desert-safari","dubai-landmarks","abu-dhabi-theme-parks"]}
+];
+const GUIDE_INDEX_DESCRIPTION = "Choose where to stay, plan a first Dubai visit or a family day, and compare Dubai safaris, landmarks and Abu Dhabi theme parks.";
+function renderGuideIndex(){
+  document.getElementById("guideIndexBody").innerHTML = `
+    <nav class="breadcrumb" aria-label="Breadcrumb">${breadcrumbHTML([{label:"Home",href:"/"},{label:"UAE travel guides"}])}</nav>
+    <h1>UAE travel guides</h1>
+    <p class="lede">${GUIDE_INDEX_DESCRIPTION}</p>
+    ${GUIDE_INDEX_SECTIONS.map(({heading,slugs})=>`
+      <section class="detail-section"><h2>${escapeHTML(heading)}</h2>${guideCardsHTML(slugs.map(guideBySlug))}</section>`).join("")}
+    <nav class="detail-section planning-links" aria-label="Trip planners"><h2>Continue with a trip planner</h2><ul class="link-list">
+      <li><a href="${URLS.countryHub}">UAE trip planner</a></li>
+      ${DESTINATION_HUBS.map(h=>`<li><a href="${URLS.destinationHub(h.slug)}">${escapeHTML(h.title)}</a></li>`).join("")}
+    </ul></nav>`;
+}
 function renderGuide(slug){
   const g = guideBySlug(slug);
   const out = g.render(g);
   document.getElementById("guideBody").innerHTML = out.html + (g.destinations ? `<nav class="detail-section planning-links" aria-label="Plan across the UAE"><a href="${URLS.countryHub}">UAE trip planner: connect cities, stays and entry checks</a></nav>` : planningLinksHTML(g.dest, URLS.guide(g.slug), GUIDES.filter(x => x.dest === g.dest)));
+  document.getElementById("guideBody").insertAdjacentHTML("beforeend",`<p class="body-copy"><a href="${URLS.guides}">Browse all UAE travel guides</a></p>`);
   return out.faq;
 }
 
@@ -8085,6 +8108,14 @@ function pageMeta(c){
       m.about = [{"@id":url + "#trip"}, {"@id":absUrl("/#destination-" + p.dest)}]; m.mainEntity = {"@id":url + "#trip"};
       m.image = (p.images || [])[0] || m.image; break;
     }
+    case "guides": {
+      m.path = URLS.guides; m.title = `UAE Travel Guides | ${S}`; m.description = GUIDE_INDEX_DESCRIPTION;
+      m.pageType = "CollectionPage"; m.bc = [home, {name:"UAE travel guides", path:m.path}];
+      const id = absUrl(m.path) + "#list";
+      const items = GUIDE_INDEX_SECTIONS.flatMap(({slugs})=>slugs.map(guideBySlug)).map(g=>({path:URLS.guide(g.slug),name:g.name}));
+      m.nodes = [itemListNode(id,"UAE travel guides",items)]; m.mainEntity = {"@id":id};
+      break;
+    }
     case "guide": {
       const g = guideBySlug(c.key), url = absUrl(URLS.guide(g.slug)), ids = g.ids();
       m.path = URLS.guide(g.slug); m.title = `${g.title} | ${S}`; m.ogType = "article"; m.description = g.description;
@@ -8201,7 +8232,7 @@ function seoRoutes(){
     ...VISA_ADDONS.map(URLS.addon),
     ...DESTINATION_HUBS.map(h=>URLS.destinationHub(h.slug)), URLS.activities, ...ACTIVITY_CATEGORIES.map(URLS.activityCategory), ...CITY_ACTIVITY_CATEGORIES.map(URLS.activityCategory), ...DESTINATIONS.filter(d => destHasTours(d.slug)).map(d => URLS.activityDest(d.slug)), ...TOURS.map(URLS.activity),
     URLS.holidays, ...DESTINATIONS.map(d => URLS.holidayDest(d.slug)), ...PACKAGES.map(URLS.holiday),
-    ...ATTRACTIONS.map(URLS.attraction), ...COMPARISONS.map(URLS.comparison), ...GUIDES.map(g => URLS.guide(g.slug)), URLS.about, URLS.contact, URLS.faq, URLS.terms, URLS.privacy];
+    ...ATTRACTIONS.map(URLS.attraction), ...COMPARISONS.map(URLS.comparison), URLS.guides, ...GUIDES.map(g => URLS.guide(g.slug)), URLS.about, URLS.contact, URLS.faq, URLS.terms, URLS.privacy];
 }
 function sitemapPaths(){
   return seoRoutes().filter(p => { const m = pageMeta(routeKind(p)); return m.path === p && m.robots.startsWith("index"); });
@@ -8513,6 +8544,7 @@ const GLOBAL_SEARCH_INDEX = [
   ...DESTINATIONS.filter(d => destHasTours(d.slug)).map(d => ({type:"activity", url: URLS.activityDest(d.slug), label: `Things to do in ${d.name}`,
     sub: `All ${TOURS.filter(t => t.dest === d.slug).length} ${d.name} activities`, title: normalizeSearch(`${d.name} activities`),
     aliases: [], place: searchPlaces(d.slug), category: [normalizeSearch("activities things to do")], other: [normalizeSearch(d.blurb)]})),
+  {type:"guide",url:URLS.guides,label:"UAE travel guides",sub:"Plan by destination or experience",title:normalizeSearch("UAE travel guides"),aliases:searchAliases(["travel guide index","UAE planning guides"]),place:DESTINATIONS.flatMap(d=>searchPlaces(d.slug)),category:["planning"],other:[normalizeSearch(GUIDE_INDEX_DESCRIPTION)]},
   ...GUIDES.map(g => ({type:"guide", url: URLS.guide(g.slug), label: g.name, sub: (g.destinations ? "UAE" : destName(g.dest)) + " · " + g.blurb.replace(/\.$/, ""),
     title: normalizeSearch(g.name), aliases: [], place: (g.destinations || [g.dest]).flatMap(searchPlaces), category: [normalizeSearch("guide " + g.categories.join(" "))], other: [normalizeSearch(g.description)]})),
   ...VISA_ADDONS.map(t => ({type:"visa", url: URLS.addon(t), label: t.title, sub: "Visa add-on · Arrival essentials",
