@@ -1719,6 +1719,12 @@
       "path": "/activities/abu-dhabi/page/2/",
       "kind": "activityPage",
       "state": "live"
+    },
+    {
+      "pageId": "guides",
+      "path": "/guides/",
+      "kind": "guides",
+      "state": "live"
     }
   ]
 }

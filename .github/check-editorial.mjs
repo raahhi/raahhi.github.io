@@ -3,7 +3,7 @@ import {readFile} from 'node:fs/promises';
 import {createServer} from 'node:http';
 import {chromium} from 'playwright';
 const registry=JSON.parse(await readFile('source/published-urls.json','utf8'));
-const editorialKinds=new Set(['guide','category','comparison','destinationHub','countryHub','attraction']);
+const editorialKinds=new Set(['guide','guides','category','comparison','destinationHub','countryHub','attraction']);
 const productKinds=new Set(['activity','holiday','visa','addon']);
 const counts={pages:0,editorial:0,products:0,articlesWithRecordedContentDates:0,articlesWithoutRecordedContentDates:0,listingCheckDateNotRecorded:0};
 for(const item of registry.pages){
@@ -34,7 +34,7 @@ for(const item of registry.pages){
  if(item.kind==='attraction')assert(has('attraction-products'),'Separate bookable choices '+item.path);
  if(['countryHub','destinationHub'].includes(item.kind))assert(has('planning-links')&&has('qa-item'),'Planning connections and scoped questions '+item.path);
 }
-assert.equal(counts.pages,286);assert.equal(counts.products,235);assert.equal(counts.articlesWithRecordedContentDates+counts.articlesWithoutRecordedContentDates,6);
+assert.equal(counts.pages,287);assert.equal(counts.products,235);assert.equal(counts.articlesWithRecordedContentDates+counts.articlesWithoutRecordedContentDates,6);
 const server=createServer(async(req,res)=>{const path=new URL(req.url,'http://local').pathname;try{res.setHeader('Content-Type',path.endsWith('.js')?'text/javascript':path.endsWith('.css')?'text/css':'text/html');res.end(await readFile(path==='/preview.html'?'source/raahhi-tours52.html':'dist'+(path.endsWith('/')?path+'index.html':path)));}catch{res.statusCode=404;res.end();}});
 await new Promise(r=>server.listen(0,'127.0.0.1',r));const origin='http://127.0.0.1:'+server.address().port,browser=await chromium.launch();
 try{
@@ -68,6 +68,28 @@ try{
  await staticPage.getByText(questions[0],{exact:true}).click();
  assert(await staticPage.locator('#visaFaq details[open] .qa-answer').isVisible(),'Native disclosure opens without JavaScript');
  assert(await staticPage.locator('main a[href="/visas/united-arab-emirates/"]').count(),'Visa catalogue still links to destination enquiries');
+ const guidesPath='/guides/',plannerPaths=['/united-arab-emirates/','/dubai/','/abu-dhabi/','/ras-al-khaimah/'];
+ const guidePaths=registry.pages.filter(item=>item.kind==='guide').map(item=>item.path).sort();
+ for(const path of plannerPaths){
+  await staticPage.goto(origin+path);
+  assert.equal(await staticPage.locator('main a[href="/guides/"]').count(),1,'Planner links to the guide index '+path);
+ }
+ await staticPage.locator('main a[href="/guides/"]').click();
+ assert.equal(staticPage.url(),origin+guidesPath);
+ assert.equal(await staticPage.getByRole('heading',{level:1}).textContent(),'UAE travel guides');
+ const guideLinks=await staticPage.locator('main .guide-card h3 a').evaluateAll(anchors=>anchors.map(a=>[a.getAttribute('href'),a.textContent]));
+ assert.deepEqual(guideLinks.map(([path])=>path).sort(),guidePaths,'Every guide is linked once');
+ const guideGraph=JSON.parse(await staticPage.locator('script[type="application/ld+json"]').textContent())['@graph'];
+ const guidePage=guideGraph.find(node=>node['@type']==='CollectionPage');
+ const guideList=guideGraph.find(node=>node['@id']===guidePage.mainEntity['@id']);
+ assert.equal(guideList.numberOfItems,guidePaths.length);
+ assert.deepEqual(guideList.itemListElement.map(item=>[new URL(item.url).pathname,item.name]),guideLinks,'Index schema matches visible guide order and names');
+ const onward=await staticPage.locator('main .planning-links a').evaluateAll(anchors=>anchors.map(a=>a.getAttribute('href')));
+ assert.deepEqual(onward,plannerPaths);
+ await staticPage.locator('main .guide-card h3 a').first().click();
+ assert.equal(staticPage.url(),origin+guideLinks[0][0]);
+ assert.equal(await staticPage.locator('main a[href="/guides/"]').count(),1);
+ assert((await readFile('dist/llms.txt','utf8')).includes('(https://raahhi.com/guides/)'));
  await staticContext.close();
  const p=await browser.newPage(),errors=[];p.on('pageerror',e=>errors.push(e.message));await p.route('**/*',r=>r.request().url().startsWith(origin)?r.continue():r.abort());
  await p.goto(origin+'/preview.html#/faq');
@@ -78,10 +100,13 @@ try{
  await p.goto(origin+'/#/visas#visa-questions');
  await p.waitForURL(origin+'/visas/#visa-questions');
  await p.goto(origin+'/guides/choose-a-uae-emirate/');await p.waitForFunction(()=>!document.querySelector('[data-currency-select]').disabled);
+ await p.evaluate(()=>{openSearch();setGlobalSearch('UAE travel guides');});
+ await p.locator('#globalSearchResults a[href="/guides/"]').waitFor();
+ await p.locator('#globalSearch').press('Escape');
  const dates=await p.evaluate(()=>({reviewOnly:editorialArticleDates({reviewedOn:'2026-11-17'}),recorded:editorialArticleDates({publishedOn:'2026-11-16',contentUpdatedOn:'2026-11-17'}),invalid:editorialArticleDates({publishedOn:'2026-02-30',contentUpdatedOn:'2099-01-01'})}));
  assert.deepEqual(dates.reviewOnly,{});assert.deepEqual(dates.recorded,{datePublished:'2026-11-16',dateModified:'2026-11-17'});assert.deepEqual(dates.invalid,{});
  await p.evaluate(()=>{applySeo();applySeo();});assert.equal(await p.locator('main .editorial-responsibility').count(),1,'No duplicate ownership after metadata refresh');
  assert((await p.locator('main .editorial-responsibility').textContent()).includes('17 November 2026'));
- for(const width of [320,390,768,1440]){await p.setViewportSize({width,height:900});for(const path of ['/guides/dubai-desert-safari/','/guides/choose-a-uae-emirate/','/holidays/dubai/dubai-grand-stopover/','/about/']){await p.goto(origin+path);await p.waitForFunction(()=>!document.querySelector('[data-currency-select]').disabled);assert(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'No overflow '+width+' '+path);}}
+ for(const width of [320,390,768,1440]){await p.setViewportSize({width,height:900});for(const path of ['/guides/','/guides/dubai-desert-safari/','/guides/choose-a-uae-emirate/','/holidays/dubai/dubai-grand-stopover/','/about/']){await p.goto(origin+path);await p.waitForFunction(()=>!document.querySelector('[data-currency-select]').disabled);assert(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'No overflow '+width+' '+path);}}
  assert.deepEqual(errors,[]);console.log('PASS page-type completeness, truthful organisation responsibility, separate review/content/source dates, omitted unknown article dates, correction path, explicit package gaps and responsive presentation '+JSON.stringify(counts));
 }finally{await browser.close();server.close();}
