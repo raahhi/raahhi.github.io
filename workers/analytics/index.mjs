@@ -4,7 +4,8 @@ import {networkAddress,deviceInfo,describeDevice} from './device.mjs';
 const UUID=/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 export const stages=['Browsing','Enquiry opened','Form started','Save attempted','Enquiry saved','WhatsApp clicked'];
 const ranks={page_view:0,page_engagement:0,enquiry_open:1,form_start:2,form_error:2,save_started:3,save_failed:3,enquiry_saved:4,whatsapp_click:5,email_click:0,phone_click:0};
-const DEVICES=['mobile','tablet','desktop'], SOURCES=['Direct / unknown','Google','Bing','Instagram','Facebook','Other referral'];
+const AI_SOURCES=['ChatGPT','Perplexity','Claude','Microsoft Copilot'];
+const DEVICES=['mobile','tablet','desktop'], SOURCES=['Direct / unknown','Google','Bing','Instagram','Facebook','Other referral',...AI_SOURCES];
 const allowed=(value,keys)=>value&&typeof value==='object'&&!Array.isArray(value)&&Object.keys(value).every(k=>keys.includes(k));
 function validate(data){
   if(!allowed(data,['sessionId','consent','device','source','events','noticeVersion','architecture'])||data.consent!==true||(data.noticeVersion!==undefined&&![2,3].includes(data.noticeVersion))||typeof data.sessionId!=='string'||!UUID.test(data.sessionId)||!DEVICES.includes(data.device)||!SOURCES.includes(data.source)||!Array.isArray(data.events)||!data.events.length||data.events.length>10)throw Error('invalid_activity');
@@ -87,7 +88,19 @@ export async function report(url,env){
       MAX(CASE WHEN e.type='enquiry_saved' THEN 1 ELSE 0 END) AS saved,MAX(CASE WHEN e.type='whatsapp_click' THEN 1 ELSE 0 END) AS whatsapp
       FROM visitor_sessions s LEFT JOIN visitor_events e ON e.session_id=s.id WHERE s.last_seen>=? GROUP BY s.id)`).bind(cutoff).first();
     const {results:products}=await env.DB.prepare("SELECT e.page,COUNT(*) AS views,COUNT(DISTINCT e.session_id) AS sessions FROM visitor_events e WHERE e.received_at>=? AND e.type='page_view' AND (e.page LIKE '/activities/%/%/' AND e.page NOT LIKE '/activities/categories/%' OR e.page LIKE '/holidays/%/%/' OR e.page LIKE '/visas/%/') GROUP BY e.page ORDER BY views DESC LIMIT 20").bind(cutoff).all();
-    return json({totals,products,pages,stages});
+    // Use session starts for both numerator and denominator, even if older sessions are still active.
+    const {results:entryGroups}=await env.DB.prepare(`SELECT source,
+      CASE WHEN source IN (?,?,?,?) THEN entry_page END AS page, COUNT(*) AS sessions
+      FROM visitor_sessions WHERE first_seen>=? GROUP BY source,page
+      ORDER BY source,sessions DESC,page`).bind(...AI_SOURCES,cutoff).all();
+    const aiReferrals={
+      eligibleSessions:entryGroups.reduce((total,row)=>total+row.sessions,0),
+      sources:AI_SOURCES.map(source=>{
+        const landingPages=entryGroups.filter(row=>row.source===source).map(({page,sessions})=>({page,sessions}));
+        return {source,sessions:landingPages.reduce((total,row)=>total+row.sessions,0),landingPages};
+      })
+    };
+    return json({totals,products,aiReferrals,pages,stages});
   }
   const id=url.pathname.match(/^\/api\/visitors\/([0-9a-f-]{36})$/)?.[1];
   if(id&&UUID.test(id)){
