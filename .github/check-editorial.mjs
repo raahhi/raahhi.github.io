@@ -35,10 +35,48 @@ for(const item of registry.pages){
  if(['countryHub','destinationHub'].includes(item.kind))assert(has('planning-links')&&has('qa-item'),'Planning connections and scoped questions '+item.path);
 }
 assert.equal(counts.pages,286);assert.equal(counts.products,235);assert.equal(counts.articlesWithRecordedContentDates+counts.articlesWithoutRecordedContentDates,6);
-const server=createServer(async(req,res)=>{const path=new URL(req.url,'http://local').pathname;try{res.setHeader('Content-Type',path.endsWith('.js')?'text/javascript':path.endsWith('.css')?'text/css':'text/html');res.end(await readFile('dist'+(path.endsWith('/')?path+'index.html':path)));}catch{res.statusCode=404;res.end();}});
+const server=createServer(async(req,res)=>{const path=new URL(req.url,'http://local').pathname;try{res.setHeader('Content-Type',path.endsWith('.js')?'text/javascript':path.endsWith('.css')?'text/css':'text/html');res.end(await readFile(path==='/preview.html'?'source/raahhi-tours52.html':'dist'+(path.endsWith('/')?path+'index.html':path)));}catch{res.statusCode=404;res.end();}});
 await new Promise(r=>server.listen(0,'127.0.0.1',r));const origin='http://127.0.0.1:'+server.address().port,browser=await chromium.launch();
 try{
+ const staticContext=await browser.newContext({javaScriptEnabled:false,viewport:{width:390,height:900}});
+ await staticContext.route('**/*',r=>r.request().url().startsWith(origin)?r.continue():r.abort());
+ const staticPage=await staticContext.newPage();
+ const questions=[
+  'How much does my visa cost?',
+  'Which documents will I need?',
+  'What if my visa takes longer than expected?',
+  'Do I need to visit an embassy or consulate?',
+  'Can I track my application?',
+  'What happens if my visa is rejected?'
+ ];
+ await staticPage.goto(origin+'/faq/');
+ const faqGraph=JSON.parse(await staticPage.locator('script[type="application/ld+json"]').textContent())['@graph'];
+ const faqNode=faqGraph.find(node=>node['@type']==='FAQPage');
+ const normalize=value=>value.replace(/\s+/g,' ').trim();
+ const visiblePairs=await staticPage.locator('main .qa-item').evaluateAll(items=>items.map(item=>[
+  item.querySelector('summary').textContent,item.querySelector('.qa-answer').textContent
+ ]));
+ const schemaPairs=faqNode.mainEntity.map(({name,acceptedAnswer})=>[name,acceptedAnswer.text]);
+ assert.equal(visiblePairs.length,14);
+ assert.deepEqual(visiblePairs.map(pair=>pair.map(normalize)),schemaPairs.map(pair=>pair.map(normalize)),'Company FAQ markup matches visible questions and answers');
+ assert(visiblePairs.some(([question])=>question==='Is a UAE visa included in RAAHHI TOURS holiday packages?'));
+ assert(questions.every(q=>!visiblePairs.some(([question])=>question===q)),'Visa process questions are owned by the visa gateway');
+ await staticPage.getByRole('link',{name:'visa assistance questions',exact:true}).click();
+ assert.equal(staticPage.url(),origin+'/visas/#visa-questions');
+ assert.equal(await staticPage.locator('#visa-questions').count(),1);
+ assert.deepEqual(await staticPage.locator('#visaFaq summary').allTextContents(),questions);
+ await staticPage.getByText(questions[0],{exact:true}).click();
+ assert(await staticPage.locator('#visaFaq details[open] .qa-answer').isVisible(),'Native disclosure opens without JavaScript');
+ assert(await staticPage.locator('main a[href="/visas/united-arab-emirates/"]').count(),'Visa catalogue still links to destination enquiries');
+ await staticContext.close();
  const p=await browser.newPage(),errors=[];p.on('pageerror',e=>errors.push(e.message));await p.route('**/*',r=>r.request().url().startsWith(origin)?r.continue():r.abort());
+ await p.goto(origin+'/preview.html#/faq');
+ await p.locator('#page-faq.active').waitFor();
+ await p.getByRole('link',{name:'visa assistance questions',exact:true}).click();
+ await p.locator('#page-visas.active #visa-questions').waitFor();
+ assert.equal(p.url(),origin+'/preview.html#/visas#visa-questions');
+ await p.goto(origin+'/#/visas#visa-questions');
+ await p.waitForURL(origin+'/visas/#visa-questions');
  await p.goto(origin+'/guides/choose-a-uae-emirate/');await p.waitForFunction(()=>!document.querySelector('[data-currency-select]').disabled);
  const dates=await p.evaluate(()=>({reviewOnly:editorialArticleDates({reviewedOn:'2026-11-17'}),recorded:editorialArticleDates({publishedOn:'2026-11-16',contentUpdatedOn:'2026-11-17'}),invalid:editorialArticleDates({publishedOn:'2026-02-30',contentUpdatedOn:'2099-01-01'})}));
  assert.deepEqual(dates.reviewOnly,{});assert.deepEqual(dates.recorded,{datePublished:'2026-11-16',dateModified:'2026-11-17'});assert.deepEqual(dates.invalid,{});
