@@ -7584,7 +7584,7 @@ function renderVisaDetail(slug){
         <li><a class="contact-link" href="https://u.ae/en/information-and-services/visa-and-emirates-id/residence-visas/evisa-for-gcc-residents">GCC resident eVisa</a>. If you hold a GCC residence permit, check this separate route and its conditions.</li>
       </ul>
     </section>` : ""}
-    ${atAGlanceHTML(`RAAHHI TOURS helps you understand ${n} visa options and prepare your application information. Requirements, fees and eligibility are confirmed for your passport and trip; government authorities decide approval.`, [["Destination", n], [vm.review ? "Visa route" : "Visa type", typeText], ["Validity", validityText], ["Permitted stay", vm.permittedStay], ["Entry waiver", vm.entryWaiver], [timingLabel, dateText], [vm.review?.officialFeeNote ? "RAAHHI quote" : "Fee", feeText]], detailNote, freshnessSummaryHTML(vm, "visa"))}
+    ${atAGlanceHTML(`RAAHHI TOURS helps you understand ${n} visa options and prepare your application information. Requirements, fees and eligibility are confirmed for your passport and trip; government authorities decide approval.`, [["Destination", vm.entryWaiver && vm.permittedStay ? null : n], [vm.review ? "Visa route" : "Visa type", typeText], ["Validity", validityText], ["Permitted stay", vm.permittedStay], ["Entry waiver", vm.entryWaiver], [timingLabel, dateText], [vm.review?.officialFeeNote ? "RAAHHI quote" : "Fee", feeText]], detailNote, freshnessSummaryHTML(vm, "visa"))}
     <div class="detail-section">
       <h2>What ${n} visa requirements depend on</h2>
       <div class="depends-box">
