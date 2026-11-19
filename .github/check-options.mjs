@@ -107,6 +107,7 @@ try{
  }
  const overnight='overnight-desert-safari';
  await page.locator('#safaris-dubai a[href="/activities/dubai/'+overnight+'/"]').click();
+ await waitForProduct('/activities/dubai/'+overnight+'/');
  const nightPicker=page.locator('[data-product-option="'+overnight+'"]');
  const timings=page.locator('[data-overnight-fact=timing]');
  const transfers=page.locator('[data-overnight-fact=transfer]');
@@ -212,6 +213,7 @@ try{
  assert.deepEqual(await cityBreaks.getByRole('link').allTextContents(),['Dubai Grand Stopover Experience','Dubai Downtown Discovery']);
  assert.match(await cityBreaks.textContent(),/Abu Dhabi day trip.*Burj Khalifa/s);
  const transferFaq=page.locator('#pkgDestFaq .qa-item').filter({hasText:'Are airport transfers and sightseeing transfers the same?'});
+ await transferFaq.locator('summary').click();
  assert.equal(await transferFaq.getByRole('link',{name:'package comparison'}).getAttribute('href'),'#pkgDestGuideTitle');
  await chooser.getByRole('link',{name:'Compare all 15 Dubai packages'}).click();
  assert.equal(new URL(page.url()).hash,'#pkgDestGuideTitle');
