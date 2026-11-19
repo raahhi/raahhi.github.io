@@ -601,7 +601,6 @@
   .comparison-choice p{font-size:16px;line-height:1.6;margin:0 0 12px;}
   .comparison-choice ul{padding-left:20px;margin:0;}
   .comparison-choice li{margin:8px 0;font-size:14px;line-height:1.5;}
-  .package-choices{grid-template-columns:repeat(2,minmax(0,1fr));}
   #pkgDestGuideTitle{scroll-margin-top:100px;}
   .comparison-table{min-width:860px;}
   .comparison-table ul{padding-left:18px;margin:0;}
@@ -6728,6 +6727,10 @@ function dubaiPackageChooserHTML(list){
       ["dubai-marina-overnight","Dubai Marina dhow dinner cruise"],
       ["dubai-skyline-overnight","Prime-hour Burj Khalifa entry and a Dubai Fountain lake ride"],
     ]},
+    {title:"Three-night city breaks", choices:[
+      ["dubai-grand-stopover","Includes an Abu Dhabi day trip while you stay in Dubai"],
+      ["dubai-downtown-discovery","Includes Burj Khalifa, Dubai Aquarium and an evening desert safari"],
+    ]},
     {title:"Five-night waterpark trips", choices:[
       ["dubai-family-discovery-waterpark","Wild Wadi, KidZania and Play DXB"],
       ["dubai-waterpark-city-explorer","Atlantis Aquaventure and House of Hype"],
@@ -7772,9 +7775,15 @@ function holidayDestFaqItems(slug){
   const d = destName(slug), list = PACKAGES.filter(p => p.dest === slug), items = [];
   const withHotel = list.filter(p => packageAccommodation(p)).length;
   const withVisa = list.filter(p => (p.incl || []).some(i => /visa/i.test(i)));
-  items.push({q:`Which ${d} holiday packages are listed?`, a:`${joinList(list.map(p => `<a class="contact-link" href="${URLS.holiday(p)}">${p.title}</a> (${durText(p.dur)})`))}.`});
+  if(slug === "dubai"){
+    items.push({q:"Are airport transfers and sightseeing transfers the same?", a:`The <a class="contact-link" href="#pkgDestGuideTitle">package comparison</a> lists transport alongside each itinerary. Where a package lists private return airport transfers and shared sightseeing transfers, the airport journeys are private and the listed tours use shared transport. Confirm airport, transfer times and any pickup restrictions in your quote.`});
+  } else {
+    items.push({q:`Which ${d} holiday packages are listed?`, a:`${joinList(list.map(p => `<a class="contact-link" href="${URLS.holiday(p)}">${p.title}</a> (${durText(p.dur)})`))}.`});
+  }
   if(withHotel) items.push({q:`Do ${d} holiday packages include a hotel?`, a:`${withHotel === list.length ? `All ${list.length}` : `${withHotel} of ${list.length}`} ${d} packages list a hotel among their inclusions. ${holidayAccommodationNote(list)}`});
-  items.push({q:`Are prices shown for ${d} holiday packages?`, a:holidayPriceNote(list)});
+  items.push({q:`Are prices shown for ${d} holiday packages?`, a:slug === "dubai"
+    ? holidayPriceNote(list) + " When a starting price is labelled per person, ask for a total for your group using the same dates, hotel category and room occupancy."
+    : holidayPriceNote(list)});
   items.push({q:`Is a UAE visa included in ${d} holiday packages?`, a: withVisa.length
     ? `${joinList(withVisa.map(p => p.title))} ${withVisa.length === 1 ? "lists" : "list"} a visa among the inclusions; the others don't.`
     : `No ${d} package lists a visa among its inclusions. RAAHHI TOURS offers <a class="contact-link" href="/visas/united-arab-emirates/">UAE visa assistance</a> as a separate service.`});
