@@ -95,6 +95,11 @@ try{
   australia:{route:/Visitor visa \(600\), ETA \(601\) or eVisitor \(651\)/,processing:/varies by route/i,stale:/Sticker/},
   azerbaijan:{route:/Single-entry ASAN eVisa/,processing:/Within 3 working days/,validity:/^90 days$/,stay:/^Up to 30 days$/,stale:/30 days typical|3–5 working days/},
   bahrain:{route:/Visit eVisa/,processing:/Varies by the applicable visa category/,stale:/1–4 working days/},
+  china:{route:/Mainland China tourist visa \(L\)/,processing:/Applications in India: 7 working days regular or 4 working days express, counted from the day after passport submission/,stale:/Sticker visa|4–10 working days/},
+  egypt:{route:/Single- or multiple-entry tourism eVisa/,leadTime:/at least 7 days before departure/,stay:/As specified on the visa/,stale:/2–7 working days|up to 90 days/},
+  ethiopia:{route:/Single-entry tourist eVisa/,processing:/3 days under normal circumstances/,validity:/Starts on the intended date of entry/,stay:/30 or 90 days/,stale:/3–7 working days|30\/90 days/},
+  georgia:{route:/Short-stay eVisa/,processing:/At least 5 working days/,stay:/As specified on the visa/,stale:/30 days typical|3–7 working days/},
+  ghana:{route:/Visitor eVisa/,processing:/96 hours for standard eVisa processing/,validity:/90 days to enter/,stay:/Up to 60 days, as determined at the border/,stale:/4 business days/},
   brazil:{route:/depends on passport and consular jurisdiction/,processing:/Varies by consular post/,stale:/5–10 working days|eVisa \/ Exemption/}
  };
  for(const [country,expected] of Object.entries(scopedVisas)){
@@ -104,12 +109,14 @@ try{
    row.querySelector('dt').textContent,row.querySelector('dd').textContent
   ])));
   assert.match(summary['Visa route'],expected.route,path);
-  assert.match(summary['Processing guidance'],expected.processing,path);
+  const timingLabel=expected.leadTime?'Application lead time':'Processing guidance';
+  assert.match(summary[timingLabel],expected.leadTime||expected.processing,path);
+  if(expected.leadTime)assert(!Object.hasOwn(summary,'Processing guidance'),path+' lead time is distinct from processing');
   if(expected.validity)assert.match(summary.Validity,expected.validity,path);
   if(expected.stay)assert.match(summary['Permitted stay'],expected.stay,path);
   const answers=await staticPage.locator('#visaDetailFaq .qa-answer').allTextContents();
   assert(answers.some(answer=>answer.includes(summary['Visa route'])),path+' route in FAQ');
-  assert(answers.some(answer=>answer.includes(summary['Processing guidance'])),path+' timing in FAQ');
+  assert(answers.some(answer=>answer.includes(summary[timingLabel])),path+' timing in FAQ');
   if(expected.stay)assert(answers.some(answer=>answer.includes(summary['Permitted stay'])),path+' stay in FAQ');
   const review=staticPage.locator('.sources-and-freshness');
   const sources=await review.locator('.source-list a').evaluateAll(anchors=>anchors.map(a=>a.href));
