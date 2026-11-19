@@ -99,7 +99,8 @@ try{
  }
  await open('/guides/dubai-desert-safari/');
  await page.getByRole('link',{name:'Compare Dubai safari options and open a listing to enquire'}).click();
- assert.equal(new URL(page.url()).hash,'#safaris-dubai');
+ await page.waitForURL(base+'/activities/categories/desert-safaris/#safaris-dubai');
+ await page.locator('#safaris-dubai tr').first().waitFor({state:'visible'});
  for(const name of safariNames){
   const cents=Math.round(prices[name+'-desert-safari'].amount*100);
   const path='/activities/dubai/'+name+'-desert-safari/';
