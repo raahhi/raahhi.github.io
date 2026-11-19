@@ -105,6 +105,11 @@ try{
   indonesia:{route:/B1.*C1 single-entry/,processing:/four working days for C1 after payment/,validity:/90 days to enter from issuance for electronic B1 and C1/,stay:/30 days on B1 or up to 60 days on C1/,stale:/1–5 working days/},
   ireland:{route:/Short-stay C tourist visa/,processing:/Varies by visa office/,validity:/Entry window as issued/,stay:/Up to 90 days.*determined at the border/,stale:/Sticker \(Type C\)|7–10 working days/},
   japan:{route:/Single-entry short-term tourism eVisa/,processing:/five working days from the day after/,validity:/Three months for a single-entry visa/,stay:/Up to 90 days/,stale:/eVisa \/ Sticker|5–10 working days/},
+  kenya:{route:/Electronic Travel Authorisation/,processing:/Typically three working days/,validity:/90 days to travel from issuance/,stay:/Determined at entry/,stale:/2–5 working days/},
+  kuwait:{route:/Single-entry tourist visa/,processing:/issuing authority/,validity:/30 days to enter from issuance/,stay:/Up to 90 days from entry/,stale:/3–10 working days|eVisa \/ Sticker/},
+  lebanon:{route:/Visit visa route depends/,leadTime:/embassy applications at least one month/,stay:/As specified on the visa/,stale:/5–12 working days/},
+  malaysia:{route:/Social visit eVisa where required/,processing:/2–7 working days after payment and complete eVisa submission/,waiver:/up to 30 days for eligible Indian nationals through 31 December 2026/,stale:/3–7 working days/},
+  morocco:{route:/Single-entry eVisa/,processing:/72 hours counted on Moroccan working days/,validity:/Up to 180 days from issuance/,stay:/Up to 30 days/,stale:/3–7 working days|eVisa \/ Exemption/},
   brazil:{route:/depends on passport and consular jurisdiction/,processing:/Varies by consular post/,stale:/5–10 working days|eVisa \/ Exemption/}
  };
  for(const [country,expected] of Object.entries(scopedVisas)){
@@ -123,6 +128,11 @@ try{
   assert(answers.some(answer=>answer.includes(summary['Visa route'])),path+' route in FAQ');
   assert(answers.some(answer=>answer.includes(summary[timingLabel])),path+' timing in FAQ');
   if(expected.stay)assert(answers.some(answer=>answer.includes(summary['Permitted stay'])),path+' stay in FAQ');
+  if(expected.waiver){
+   assert.match(summary['Entry waiver'],expected.waiver);
+   assert(answers.some(answer=>answer.includes(summary['Entry waiver'])),path+' waiver in FAQ');
+   assert.match(await staticPage.locator('#visaBookingBox .form-note').first().textContent(),expected.waiver);
+  }
   if(expected.freeRegistration){
    assert.match(summary['RAAHHI quote'],/Official pre-arrival registration is free/i);
    assert.match(await staticPage.locator('#visaBookingBox .bb-price').textContent(),/RAAHHI quote.*Official pre-arrival registration is free/i);
