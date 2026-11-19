@@ -115,6 +115,13 @@ try{
   philippines:{route:/Temporary visitor visa or eVisa/,processing:/7–12 working days for a single-entry eVisa and 15–21 working days/,stay:/applicable visa-free route/,waiver:/up to 14 days, or up to 30 days with a qualifying visa or residence permit/,stale:/59 days\/visit|7–21 working days/},
   russia:{route:/Unified single-entry eVisa/,processing:/Four calendar days.*excluding the submission day/,validity:/Up to 120 days from issuance/,stay:/Up to 30 days from entry/,stale:/eVisa \/ Sticker|4–12 working days/},
   'south-africa':{route:/Visitor visa where required or Electronic Travel Authorisation/,processing:/visa or ETA application channel/,stay:/up to 90 days; check ETA conditions separately/,stale:/Sticker visa|5–15 working days/},
+  'south-korea':{route:/Short-term tourist visa for ordinary Indian passports.*K-ETA for eligible visa-free travellers/,processing:/Korean mission or visa application centre/,stale:/K-ETA \/ Sticker|1–7 working days/},
+  'sri-lanka':{route:/Tourist ETA before arrival.*ordinary Indian passport holders/,processing:/application status through the official ETA portal/,stay:/two entries within 30 days from first arrival/,freeETA:/pay no government fee for the tourist ETA/,stale:/Minutes to 24 hours|30 days, double entry/},
+  tanzania:{route:/Ordinary single-entry eVisa/,validity:/Up to 90 days for the ordinary single-entry visa/,leadTime:/Apply ten days before travel, or two months ahead/,processing:/within ten days for online applications outside the referral visa category/,stale:/90 days typical|3–7 working days/},
+  turkey:{route:/Conditional single-entry eVisa or Turkish mission visa/,validity:/One month for the qualifying eVisa/,leadTime:/at least 48 hours before departure/,eligibility:/qualifying valid visa or residence permit from a Schengen member, the US, the UK or Ireland/,stale:/eVisa \/ Sticker|1–3 days/},
+  uganda:{route:/Online single-entry tourist visa/,validity:/Travel within 90 days from visa approval/,stay:/Up to three months/,processing:/current timing with the official Uganda visa portal/,stale:/3–7 working days/},
+  uzbekistan:{route:/Tourist eVisa where eligible and required/,validity:/90 days from eVisa issuance/,stay:/Up to 30 days on the eVisa, within its validity/,leadTime:/at least three working days before arrival/,processing:/two working days for eVisa consideration, excluding the submission day/,waiver:/1 September 2026.*multiple-entry business or tourist visa.*air ticket to India or a third country/,stale:/2–5 working days/},
+  vietnam:{route:/Single- or multiple-entry eVisa/,validity:/Up to 90 days, with dates and entry count as issued/,processing:/three working days for a complete, paid eVisa application/,stale:/3–5 working days/},
   brazil:{route:/depends on passport and consular jurisdiction/,processing:/Varies by consular post/,stale:/5–10 working days|eVisa \/ Exemption/}
  };
  for(const [country,expected] of Object.entries(scopedVisas)){
@@ -133,6 +140,21 @@ try{
   assert(answers.some(answer=>answer.includes(summary['Visa route'])),path+' route in FAQ');
   assert(answers.some(answer=>answer.includes(summary[timingLabel])),path+' timing in FAQ');
   if(expected.stay)assert(answers.some(answer=>answer.includes(summary['Permitted stay'])),path+' stay in FAQ');
+  if(expected.leadTime&&expected.processing){
+   const note=await staticPage.locator('.at-a-glance-note').textContent();
+   assert.match(note,expected.processing,path+' processing alongside labelled lead time');
+   assert(answers.some(answer=>expected.processing.test(answer)),path+' processing in FAQ');
+  }
+  if(expected.eligibility){
+   assert.match(await staticPage.locator('.at-a-glance-note').textContent(),expected.eligibility,path);
+   assert(answers.some(answer=>expected.eligibility.test(answer)),path+' eligibility in FAQ');
+  }
+  if(expected.freeETA){
+   assert.match(summary['RAAHHI quote'],expected.freeETA,path);
+   assert.match(await staticPage.locator('#visaBookingBox .bb-price').textContent(),expected.freeETA,path);
+   assert.match(await staticPage.locator('.mobile-enquiry-summary .price-basis').textContent(),/RAAHHI quote.*Official ETA free for eligible travellers/,path);
+   assert(answers.some(answer=>expected.freeETA.test(answer)&&answer.includes('RAAHHI starting quote')),path+' separates the free ETA and assistance quote');
+  }
   if(expected.waiver){
    assert.match(summary['Entry waiver'],expected.waiver);
    assert(answers.some(answer=>answer.includes(summary['Entry waiver'])),path+' waiver in FAQ');
