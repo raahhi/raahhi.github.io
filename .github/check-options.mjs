@@ -29,12 +29,21 @@ const dubaiQuoteChecks={
  'dubai-waterpark-city-explorer':{itinerary:/Ask whether an evening desert safari and dinner can be included in your quote/},
  'ultimate-dubai-explorer':{text:/entry versus a sightseeing stop at Dubai Frame and Qasr Al Watan/},
 };
+const rakQuoteChecks={
+ 'ras-al-khaimah-coast-heritage':{text:/which heritage stops include admission.*airport transfers separately/s},
+ 'ras-al-khaimah-coastal-safari':{text:/shared safari hotel pickup and return.*airport transfers separately/},
+ 'ras-al-khaimah-heritage-desert':{text:/private city-tour transport.*safari pickup and return/s},
+ 'ras-al-khaimah-mountain-coast':{text:/Plan your own transfers to and from the zipline/,itinerary:/Travel to and from the zipline is excluded/},
+ 'ras-al-khaimah-safari-short-break':{text:/Hilton Garden Inn Ras Al Khaimah.*whether transport is shared or private/s},
+ 'ras-al-khaimah-zipline-safari':{text:/whether the ticket is for Jais Flight.*zipline transport, airport transfers and safari pickup/s,stale:/Pullman Resort Al Marjan Island|Hilton Inn Ras Al Khaimah/},
+};
+const quoteChecks={...dubaiQuoteChecks,...rakQuoteChecks};
 for(const [key,config] of Object.entries(registry)){
  assert(config.source.startsWith('https://www.raynatours.com/'),key+' checked source');
  for(const option of config.options){
   optionCount++;assert(!ids.has(option.id),'Unique option identity');ids.add(option.id);
   assert(option.label&&option.source&&option.checkedOn);
-  if(abuDhabiHolidays.includes(key)||Object.hasOwn(dubaiQuoteChecks,key)){
+  if(abuDhabiHolidays.includes(key)||Object.hasOwn(quoteChecks,key)){
    assert.equal(option.policy.status,'unconfirmed');
    assert.deepEqual(option.policy.paragraphs,[]);
   }else{
@@ -284,9 +293,9 @@ try{
     assert.match(await row.locator('.price-basis').textContent(),/per person/);
    }else assert.match(await row.textContent(),/Price confirmed on enquiry/);
   }
+  assert.equal(await page.getByRole('columnheader',{name:'Planned stops'}).count(),1);
   if(city==='abu-dhabi'){
    assert.equal(await page.getByRole('link',{name:'Compare Abu Dhabi theme parks for your holiday'}).getAttribute('href'),'/guides/abu-dhabi-theme-parks/');
-   assert.equal(await page.getByRole('columnheader',{name:'Planned stops'}).count(),1);
   }
  }
  for(const id of abuDhabiHolidays){
@@ -314,8 +323,9 @@ try{
  const plannedRows=page.locator('#pkgDestGuide tbody tr');
  assert.equal(await plannedRows.count(),Object.keys(dubaiQuoteChecks).length);
  assert((await plannedRows.locator('td:last-child').allTextContents()).every(text=>text.trim().length>0));
- for(const [slug,expected] of Object.entries(dubaiQuoteChecks)){
-  const path='/holidays/dubai/'+slug+'/';
+ for(const [slug,expected] of Object.entries(quoteChecks)){
+  const city=Object.hasOwn(rakQuoteChecks,slug)?'ras-al-khaimah':'dubai';
+  const path='/holidays/'+city+'/'+slug+'/';
   await open(path);
   const main=page.locator('#pkgDetailMain');
   const quote=main.locator('#holiday-quote-details');
