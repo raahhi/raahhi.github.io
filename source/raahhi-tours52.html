@@ -8240,7 +8240,8 @@ function pageMeta(c){
     }
     case "destinationHub": {
       const hub=planningHubBySlug(c.dest),name=destName(c.dest);
-      m.path=URLS.destinationHub(c.dest);m.title=name+" Trip Planner: Activities, Stays & Travel Checks | "+S;
+      const focus=c.dest==="dubai" ? "Activities, Stays & Travel Checks" : "Activities & Stays";
+      m.path=URLS.destinationHub(c.dest);m.title=`${name} Trip Planner: ${focus} | ${S}`;
       m.description=hub.description;
       m.pageType="CollectionPage";m.bc=[home,{name:name+" trip planning",path:m.path}];
       m.nodes=[destNode(c.dest),itemListNode(absUrl(m.path)+"#planning",name+" planning sections",planningHubServices(c.dest))];
