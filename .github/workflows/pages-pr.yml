@@ -24,7 +24,7 @@ jobs:
         with:
           node-version: 22
       - run: npm ci --no-audit --no-fund
-      - run: npx playwright install --with-deps chromium
+      - run: npx playwright install --only-shell chromium
       - run: node --test scripts/published-urls.test.mjs scripts/campaign-attribution.test.mjs workers/tests/backend.test.mjs
       - run: npm run build
         env:
