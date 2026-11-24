@@ -49,7 +49,7 @@ jobs:
         run: npm ci --no-audit --no-fund
 
       - name: Install Chromium for prerendering
-        run: npx playwright install --with-deps chromium
+        run: npx playwright install --only-shell chromium
 
       - name: Build static RAAHHI site
         run: npm run build
@@ -62,7 +62,7 @@ jobs:
         run: printf 'manifest=%s\n' "$(cat "$RUNNER_TEMP/indexnow-current.json")" >> "$GITHUB_OUTPUT"
 
       - name: Check permanent URL regression cases
-        run: node --test scripts/published-urls.test.mjs
+        run: node --test scripts/published-urls.test.mjs scripts/campaign-attribution.test.mjs
 
       - name: Check responsive pages and early image failures
         run: node .github/check-site-ui.mjs
