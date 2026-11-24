@@ -96,6 +96,7 @@ export async function compileSiteAssets(source, appScript, catalogue) {
   if (!runtime.includes(enquiryPayload)) throw new Error('Enquiry attribution integration point changed');
   runtime = runtime.replace(enquiryPayload, '  details.push(...(window.raahhiCampaign?.details()||[]));\n' + enquiryPayload);
   runtime += '\n' + await readFile(new URL('./campaign-attribution.js',import.meta.url),'utf8');
+  runtime += '\n' + await readFile(new URL('./meta-pixel.js',import.meta.url),'utf8');
   runtime += '\n' + await readFile(new URL('./visitor-runtime.js',import.meta.url),'utf8');
   const [js, css] = await Promise.all([
     transform(runtime, {loader:'js', target:'es2020', minifyWhitespace:true, minifySyntax:true, minifyIdentifiers:false, legalComments:'none'}),
@@ -139,7 +140,7 @@ export async function compileSiteAssets(source, appScript, catalogue) {
     if (!images.has(match[0])) images.set(match[0], asset('brand', match[1] === 'jpeg' ? 'jpg' : 'png', Buffer.from(match[2].replace(/\s/g,''), 'base64')));
   }
   function attach(html, bootstrap, activityId) {
-    html = html.replace('No advertising tracker or payment processor is connected.', 'No advertising tracker or payment processor is connected. With optional analytics allowed, recognised campaign labels and numeric ad identifiers from our Dubai holiday promotion are retained in session storage for a 30-minute attribution window and can be included with an enquiry you submit, so our team can identify the campaign. Raw URL queries and Meta click identifiers are not retained for this attribution.');
+    html = html.replace('No advertising tracker or payment processor is connected.', 'No payment processor is connected. Meta advertising tracking is optional and disabled until you choose Allow analytics & ads. With that permission, Meta receives page URLs, referrer and browser/network information, cookie identifiers and a Lead event after an enquiry is saved. We do not deliberately send enquiry names, contact details, nationality, messages or other form field values to Meta. Automatic advanced matching and automatic event detection are not enabled. Meta may process this information for advertising measurement and personalisation. Advertising choice is stored for up to 180 days, separately from first-party analytics permission. Use Analytics preferences in the footer to withdraw; choosing Allow analytics or Decline optional tracking stops future Meta event sending on this site. Existing information already received by Meta is governed by its policies. Browser privacy signals disable optional advertising. With optional analytics allowed, recognised campaign labels and numeric ad identifiers from our Dubai holiday promotion are retained in session storage for a 30-minute attribution window and can be included with an enquiry you submit, so our team can identify the campaign. Raw URL queries and Meta click identifiers are not retained for this attribution.');
     const detailUrl = detailUrls.get(activityId);
     const scripts = `<script data-catalogue src="${catalogueUrl}" defer></script>` +
       (detailUrl ? `<script data-activity-detail src="${detailUrl}" defer></script>` : '') +

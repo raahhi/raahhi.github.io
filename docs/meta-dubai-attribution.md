@@ -29,3 +29,21 @@ No raw query string, `fbclid`, names, email addresses or phone numbers are captu
 `node --test scripts/campaign-attribution.test.mjs workers/tests/backend.test.mjs`
 
 The existing `.github/check-enquiry-delivery.mjs` additionally exercises a campaign landing, consent, navigation to Contact, the real frontend-to-Worker-to-SQLite save, preserved reference, ad-ID detail and exclusion of the raw click ID. The normal Pages pipeline also runs the visitor-journey regression checks before deployment.
+
+
+## Meta website lead tracking (24 November 2026)
+
+- Dataset/pixel: `RAAHHI TOURS Website`, ID `1127806210084924`.
+- Connected ad account: `Raahhi Tours Ads`, ID `1731127207950349`.
+- Browser Pixel only. No CAPI token or secret is committed, and no portfolio-wide automatic CAPI integration is enabled.
+- Separate advertising permission (`raahhi.ads.choice.v1`, 180 days) is required. Existing analytics-only permission does not enable Meta. GPC/DNT, declined/expired/unavailable storage and prerendering prevent loading the Meta script.
+- Banner choices: Allow analytics; Allow analytics & ads; Decline optional tracking. Reopen with Analytics preferences in the footer. Analytics-only and decline revoke advertising permission. Withdrawal stops future event sending; already transmitted information remains governed by Meta policies.
+- Explicit advertising permission loads the vendor Pixel script, initializes only this ID with autoConfig disabled and sends PageView. A valid saved `RH-YYYYMMDD-12HEX` reference triggers Lead, deduplicated by reference in the page runtime. Failed saves, invalid fields, form opening and WhatsApp clicks do not trigger Lead. The opaque reference is used only as eventID; no form fields, price/value or booking outcome is passed.
+- Automatic advanced matching is off in Meta. Automatic events are unchecked in setup. Do not enable either without review of the actual data sharing.
+- Vendor Meta processing can include page URLs/referrers, browser/network details and cookie identifiers. First-party campaign sanitisation does not claim to sanitise Meta's own vendor network requests.
+- No tracking failure may prevent a website enquiry from completing. Browser blocking and consent refusal create reporting gaps; this cannot record every visitor or every ad click.
+- Automated tests use queued vendor commands and a local Worker/SQLite test enquiry; they never send personal test leads to Meta or the production enquiry database.
+
+## Proposed first campaign (owner approved setup; launch remains paused)
+
+UK only, Instagram and Facebook; Leads → Website → Lead; highest-volume bidding; one ad set and two creative variants. Lifetime media budget INR 10,000 for 14 days, plus applicable billing taxes. Set start/end only at launch so setup time cannot consume the campaign window. No giveaway. Destination and approved parameter template above. No ads have been launched by this code release. Assess reachable, qualified enquiries, quotes, bookings and contribution after advertising costs; no CPL or booking volume is guaranteed.

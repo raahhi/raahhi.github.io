@@ -25,7 +25,7 @@ jobs:
           node-version: 22
       - run: npm ci --no-audit --no-fund
       - run: npx playwright install --only-shell chromium
-      - run: node --test scripts/published-urls.test.mjs scripts/campaign-attribution.test.mjs workers/tests/backend.test.mjs
+      - run: node --test scripts/published-urls.test.mjs scripts/campaign-attribution.test.mjs scripts/meta-pixel.test.mjs workers/tests/backend.test.mjs
       - run: npm run build
         env:
           RAAHHI_URL_BASELINE: ${{ github.event.pull_request.base.sha }}
