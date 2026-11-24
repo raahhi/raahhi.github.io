@@ -62,7 +62,7 @@ jobs:
         run: printf 'manifest=%s\n' "$(cat "$RUNNER_TEMP/indexnow-current.json")" >> "$GITHUB_OUTPUT"
 
       - name: Check permanent URL regression cases
-        run: node --test scripts/published-urls.test.mjs
+        run: node --test scripts/published-urls.test.mjs scripts/campaign-attribution.test.mjs
 
       - name: Check responsive pages and early image failures
         run: node .github/check-site-ui.mjs

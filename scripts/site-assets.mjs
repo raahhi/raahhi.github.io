@@ -92,6 +92,10 @@ export async function compileSiteAssets(source, appScript, catalogue) {
   if (!accommodation) throw new Error('Missing package accommodation registry');
   runtime = runtime.replace(accommodation[0], () =>
     'const PACKAGE_ACCOMMODATION_OVERRIDES = ' + JSON.stringify(publicCatalogueData(JSON.parse(accommodation[1]))) + ';');
+  const enquiryPayload = '  const payload={enquiryVersion:2,category:rows[0][1],kind,...identity,product:product||"",page:page.href,details};';
+  if (!runtime.includes(enquiryPayload)) throw new Error('Enquiry attribution integration point changed');
+  runtime = runtime.replace(enquiryPayload, '  details.push(...(window.raahhiCampaign?.details()||[]));\n' + enquiryPayload);
+  runtime += '\n' + await readFile(new URL('./campaign-attribution.js',import.meta.url),'utf8');
   runtime += '\n' + await readFile(new URL('./visitor-runtime.js',import.meta.url),'utf8');
   const [js, css] = await Promise.all([
     transform(runtime, {loader:'js', target:'es2020', minifyWhitespace:true, minifySyntax:true, minifyIdentifiers:false, legalComments:'none'}),
@@ -135,6 +139,7 @@ export async function compileSiteAssets(source, appScript, catalogue) {
     if (!images.has(match[0])) images.set(match[0], asset('brand', match[1] === 'jpeg' ? 'jpg' : 'png', Buffer.from(match[2].replace(/\s/g,''), 'base64')));
   }
   function attach(html, bootstrap, activityId) {
+    html = html.replace('No advertising tracker or payment processor is connected.', 'No advertising tracker or payment processor is connected. With optional analytics allowed, recognised campaign labels and numeric ad identifiers from our Dubai holiday promotion are retained in session storage for a 30-minute attribution window and can be included with an enquiry you submit, so our team can identify the campaign. Raw URL queries and Meta click identifiers are not retained for this attribution.');
     const detailUrl = detailUrls.get(activityId);
     const scripts = `<script data-catalogue src="${catalogueUrl}" defer></script>` +
       (detailUrl ? `<script data-activity-detail src="${detailUrl}" defer></script>` : '') +
