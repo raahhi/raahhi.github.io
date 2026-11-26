@@ -33,6 +33,17 @@ function validate(data) {
 export async function handle(request, env, fetcher = fetch) {
   const url = new URL(request.url), origin = request.headers.get('Origin');
   if(url.pathname === '/api/activity') return collect(request,env);
+  if(url.pathname === '/whatsapp'){
+    if(request.method !== 'GET' && request.method !== 'HEAD')
+      return json({error:'method_not_allowed'},405,{'Allow':'GET, HEAD'});
+    const phone = request.cf?.country === 'IN' ? '912066838876' : '97142087474';
+    return new Response(null,{status:302,headers:{
+      'Location':'https://wa.me/'+phone,
+      'Cache-Control':'no-store',
+      'Referrer-Policy':'no-referrer',
+      'X-Robots-Tag':'noindex'
+    }});
+  }
   const cors = origin === ORIGIN ? {'Access-Control-Allow-Origin':ORIGIN,'Vary':'Origin'} : {};
   const reply = (data, status=200) => json(data,status,cors);
   if (url.pathname === '/health' && request.method === 'GET') {
