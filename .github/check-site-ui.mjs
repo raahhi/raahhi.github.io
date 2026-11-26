@@ -73,11 +73,19 @@ await mockEnquiryDelivery(p);
    if(route==='/'){
     assert.equal(await p.locator('footer a[href="/holidays/ras-al-khaimah/"]').count(),1);
     assert(!(await p.locator('footer').innerText()).includes('Newsletter'));
-    const fab=p.locator('.fab-enquiry');assert.equal(await fab.innerText(),'Enquire');
-    await fab.click();assert(await p.locator('#contactModal').isVisible());
-    assert.equal(await p.locator('#callbackTitle').innerText(),'Prepare an enquiry');
+    const whatsapp=p.getByRole('link',{name:'Chat with Raahhi Tours on WhatsApp',exact:true});
+    assert.equal(await whatsapp.getAttribute('href'),'https://raahhi-enquiries.asif-772.workers.dev/whatsapp');
+    const shortcut=await whatsapp.boundingBox();
+    assert(shortcut && shortcut.x<32 && 900-shortcut.y-shortcut.height<32,'WhatsApp shortcut is fixed at bottom left');
+    const previous=p.locator('.hero-slideshow .slideshow-arrow.prev');
+    const arrow=await previous.boundingBox();
+    assert(arrow && shortcut.x+shortcut.width<=arrow.x,'WhatsApp shortcut leaves the carousel control clear');
+    await whatsapp.click({trial:true});
+    const enquiry=p.locator('footer').getByRole('button',{name:'Prepare an enquiry',exact:true});
+    await enquiry.click();assert(await p.locator('#contactModal').isVisible());
+    assert.equal(await p.locator('#callbackTitle').textContent(),'Prepare an enquiry');
     await p.locator('#contactModal .modal-close').click();
-    assert(await fab.evaluate(el=>el===document.activeElement),'Enquiry trigger regains focus');
+    assert(await enquiry.evaluate(el=>el===document.activeElement),'Enquiry trigger regains focus');
    }
    assert(await p.locator('.page.active .product-card .slideshow[data-count], .page.active .pkg-card .slideshow[data-count], .page.active .visa-card .slideshow[data-count], .page.active .dest-card .slideshow[data-count]').evaluateAll(es=>es.every(e=>e.dataset.count==='1')),route+' static card covers');
    if(route==='/holidays/dubai/dubai-family-theme-park-week/'){
@@ -161,7 +169,7 @@ await mockEnquiryDelivery(p);
     assert.equal(await p.locator('.page.active .detail-enquiry-actions button').count(),1,route+' title enquiry action');
     assert.equal(await bar.isVisible(),width===390,route+' mobile-only bar');
     assert.equal(await p.locator('.page.active .booking-box button').count(),1,route+' one primary enquiry action');
-    if(width===390)assert.equal(await p.locator('.fab-stack').isVisible(),false,route+' callback does not overlap bar');
+    if(width===390)assert.equal(await p.locator('.fab-stack').isVisible(),false,route+' WhatsApp shortcut does not overlap bar');
    }
    if(width===390){await p.getByRole('button',{name:'Open menu',exact:true}).click();assert.equal(await p.locator('#mobileNavToggle').getAttribute('aria-expanded'),'true');await p.locator('#mobile-nav').getByRole('button',{name:'Close menu',exact:true}).click();assert.equal(await p.locator('#mobileNavToggle').getAttribute('aria-expanded'),'false');}
    if(route==='/visas/united-arab-emirates/'){
