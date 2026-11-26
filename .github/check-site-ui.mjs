@@ -83,7 +83,7 @@ await mockEnquiryDelivery(p);
     await whatsapp.click({trial:true});
     const enquiry=p.locator('footer').getByRole('button',{name:'Prepare an enquiry',exact:true});
     await enquiry.click();assert(await p.locator('#contactModal').isVisible());
-    assert.equal(await p.locator('#callbackTitle').innerText(),'Prepare an enquiry');
+    assert.equal(await p.locator('#callbackTitle').textContent(),'Prepare an enquiry');
     await p.locator('#contactModal .modal-close').click();
     assert(await enquiry.evaluate(el=>el===document.activeElement),'Enquiry trigger regains focus');
    }

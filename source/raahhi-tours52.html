@@ -883,7 +883,10 @@
   .hero-slideshow .slideshow-arrow{ top:auto; bottom:12px; transform:none; }
   .hero-slideshow .slideshow-arrow.prev{ left:calc(88px + env(safe-area-inset-left,0px)); }
   .hero-slideshow .slideshow-dots{ bottom:12px; }
-  @media(max-width:640px){ .hero-slideshow .slideshow-dots{ bottom:58px; } }
+  @media(max-width:640px){
+    .hero-slideshow .slideshow-dots{ left:calc(50% + 39px); }
+    .hero-slideshow .slideshow-dots button{ width:26px; }
+  }
   .dhv-slides .slideshow-arrow{ top:16px; transform:none; }
   .dhv-slides .slideshow-dots{ top:16px; bottom:auto; }
   .vc-type,.vc-guarantee,.vc-more,.dest-card-count{ font-size:14px; }
