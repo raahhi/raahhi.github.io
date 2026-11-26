@@ -78,7 +78,17 @@
   const forms=new WeakSet();
   document.addEventListener('focusin',e=>{const form=e.target.closest?.('#callbackForm,#visaEnqForm,#contactPageForm');if(enabled&&form&&!forms.has(form)){forms.add(form);event('form_start');}});
   document.addEventListener('submit',e=>{if(!e.target.matches('#callbackForm,#visaEnqForm,#contactPageForm'))return;queueMicrotask(()=>{if(e.target.querySelector('.field-error:not([hidden])'))event('form_error');});},true);
-  document.addEventListener('click',e=>{const a=e.target.closest?.('a[href]');if(!a)return;const href=a.getAttribute('href')||'';if(/^https:\/\/(wa\.me|api\.whatsapp\.com)\//.test(href))event('whatsapp_click');else if(href.startsWith('mailto:'))event('email_click');else if(href.startsWith('tel:'))event('phone_click');if(/^(https:\/\/(wa\.me|api\.whatsapp\.com)\/|mailto:|tel:)/.test(href)){engagement();flush();}},true);
+  document.addEventListener('click',e=>{
+    const a=e.target.closest?.('a[href]');
+    if(!a)return;
+    const href=a.getAttribute('href')||'';
+    const whatsapp=a.classList.contains('fab-whatsapp')||/^https:\/\/(wa\.me|api\.whatsapp\.com)\//.test(href);
+    if(whatsapp)event('whatsapp_click');
+    else if(href.startsWith('mailto:'))event('email_click');
+    else if(href.startsWith('tel:'))event('phone_click');
+    else return;
+    engagement();flush();
+  },true);
   const originalOpen=openModal;openModal=function(id){if(id==='contactModal'||id==='visaEnquiryModal')event('enquiry_open');return originalOpen.apply(this,arguments);};
   const originalSave=saveWebsiteEnquiry;saveWebsiteEnquiry=async function(){event('save_started');flush();try{const result=await originalSave.apply(this,arguments);event(result?'enquiry_saved':'save_failed');if(result){try{window.raahhiMeta?.lead(result);}catch{}}flush();return result;}catch(e){event('save_failed');throw e;}};
   window.addEventListener('scroll',()=>{if(!enabled)return;const total=document.documentElement.scrollHeight-innerHeight;scroll=Math.max(scroll,total>0?Math.min(100,Math.round(scrollY/total*100)):100);},{passive:true});
